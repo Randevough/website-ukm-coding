@@ -7,5 +7,6 @@
     "paths": {
       "@/*": ["src/*"]
     }
-  }
+  },
+  "exclude": ["dist", "ukm-coding-website", "node_modules", "admin"]
 }
