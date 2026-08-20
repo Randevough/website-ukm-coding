@@ -1,5 +1,5 @@
 import { sanityClient } from "sanity:client";
-import imageUrlBuilder from "@sanity/image-url";
+import { createImageUrlBuilder } from "@sanity/image-url";
 
 const useFixture =
   import.meta.env.PUBLIC_SANITY_PROJECT_ID === undefined ||
@@ -8,7 +8,7 @@ const useFixture =
 
 let builder: any;
 if (!useFixture) {
-  builder = imageUrlBuilder(sanityClient);
+  builder = createImageUrlBuilder(sanityClient);
 }
 
 export function urlFor(source: any) {

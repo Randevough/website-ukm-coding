@@ -86,30 +86,30 @@ const {
     <script src="../scripts/motion.ts"></script>
     <script>
       function initShare() {
-        const buttons = document.querySelectorAll('[data-share]');
-        buttons.forEach(btn => {
-          btn.addEventListener('click', async () => {
+        const buttons = document.querySelectorAll("[data-share]");
+        buttons.forEach((btn) => {
+          btn.addEventListener("click", async () => {
             try {
               if (navigator.share) {
                 await navigator.share({
                   title: document.title,
-                  url: window.location.href
+                  url: window.location.href,
                 });
               } else {
                 await navigator.clipboard.writeText(window.location.href);
                 const originalText = btn.textContent;
-                btn.textContent = 'Tersalin!';
+                btn.textContent = "Tersalin!";
                 setTimeout(() => {
                   btn.textContent = originalText;
                 }, 2000);
               }
             } catch (err) {
-              console.error('Error sharing:', err);
+              console.error("Error sharing:", err);
             }
           });
         });
       }
-      document.addEventListener('astro:page-load', initShare);
+      document.addEventListener("astro:page-load", initShare);
     </script>
   </body>
 </html>

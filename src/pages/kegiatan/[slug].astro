@@ -18,8 +18,12 @@ export async function getStaticPaths() {
   }
 
   posts.sort((a, b) => {
-    const da = new Date((a as any).tanggalPublikasi || (a as any).tanggal || 0).getTime();
-    const db = new Date((b as any).tanggalPublikasi || (b as any).tanggal || 0).getTime();
+    const da = new Date(
+      (a as any).tanggalPublikasi || (a as any).tanggal || 0,
+    ).getTime();
+    const db = new Date(
+      (b as any).tanggalPublikasi || (b as any).tanggal || 0,
+    ).getTime();
     return db - da;
   });
 
@@ -76,13 +80,16 @@ const articleData = {
   datePublished: date,
   authorName: penulis,
 };
-const isEvent = kategori.toLowerCase() === "kegiatan" || kategori.toLowerCase() === "event";
-const eventData = isEvent ? {
-  name: title,
-  startDate: p.tanggalMulai || date,
-  endDate: p.tanggalSelesai,
-  location: typeof p.lokasi === 'string' ? p.lokasi : undefined,
-} : undefined;
+const isEvent =
+  kategori.toLowerCase() === "kegiatan" || kategori.toLowerCase() === "event";
+const eventData = isEvent
+  ? {
+      name: title,
+      startDate: p.tanggalMulai || date,
+      endDate: p.tanggalSelesai,
+      location: typeof p.lokasi === "string" ? p.lokasi : undefined,
+    }
+  : undefined;
 const breadcrumb = [
   { name: "Beranda", item: new URL("/", Astro.site || Astro.url.origin).href },
   {

@@ -43,11 +43,11 @@ function toBlockList(items: string[]) {
 
 async function main() {
   console.log("Seeding data to Sanity...");
-  const { settings, projects, posts, partners, stats } = UKM_FIXTURE;
+  const { settings, projects, posts, stats } = UKM_FIXTURE;
 
   // 1. Site Settings
   await client.createOrReplace({
-    _id: "siteSettings",
+    _id: "drafts.siteSettings",
     _type: "siteSettings",
     namaSitus: settings.nama,
     deskripsiSingkat: settings.tagline,
@@ -64,7 +64,7 @@ async function main() {
       suffix: s.suffix,
     })),
   });
-  console.log("✅ Site Settings");
+  console.log("✅ Site Settings (Draft)");
 
   // 2. Projects
   for (const p of projects) {
@@ -79,7 +79,7 @@ async function main() {
       : [toBlock(p.hasil)];
 
     await client.createOrReplace({
-      _id: `project-${p.slug}`,
+      _id: `drafts.project-${p.slug}`,
       _type: "project",
       nama: `[FIXTURE] ${p.title}`,
       slug: { current: p.slug },
@@ -97,12 +97,12 @@ async function main() {
       hasil: hasilBlock,
     });
   }
-  console.log(`✅ Projects (${projects.length})`);
+  console.log(`✅ Projects (${projects.length} Drafts)`);
 
   // 3. Editorial (Posts)
   for (const p of posts) {
     await client.createOrReplace({
-      _id: `editorial-${p.slug}`,
+      _id: `drafts.editorial-${p.slug}`,
       _type: "editorial",
       judul: `[FIXTURE] ${p.title}`,
       slug: { current: p.slug },
@@ -116,7 +116,7 @@ async function main() {
       lokasi: p.fact?.format || undefined,
     });
   }
-  console.log(`✅ Editorials (${posts.length})`);
+  console.log(`✅ Editorials (${posts.length} Drafts)`);
 
   console.log("Seeding completed successfully!");
 }

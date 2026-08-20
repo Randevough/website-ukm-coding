@@ -50,15 +50,21 @@ const { settings } = UKM_FIXTURE;
 
     function handleTabKey(e: KeyboardEvent) {
       if (!isOpen) return;
-      if (e.key === 'Tab') {
-        const focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
-        const focusables = Array.from(drawer!.querySelectorAll<HTMLElement>(focusableElements)).filter(el => el.tabIndex >= 0);
+      if (e.key === "Tab") {
+        const focusableElements =
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+        const focusables = Array.from(
+          drawer!.querySelectorAll<HTMLElement>(focusableElements),
+        ).filter((el) => el.tabIndex >= 0);
         if (focusables.length === 0) return;
         const firstFocusableElement = focusables[0];
         const lastFocusableElement = focusables[focusables.length - 1];
 
         if (e.shiftKey) {
-          if (document.activeElement === firstFocusableElement || document.activeElement === drawer) {
+          if (
+            document.activeElement === firstFocusableElement ||
+            document.activeElement === drawer
+          ) {
             lastFocusableElement.focus();
             e.preventDefault();
           }
@@ -78,7 +84,7 @@ const { settings } = UKM_FIXTURE;
       document.body.classList.add("is-locked");
       drawer!.setAttribute("tabindex", "-1");
       drawer!.focus();
-      document.addEventListener('keydown', handleTabKey);
+      document.addEventListener("keydown", handleTabKey);
     }
 
     function closeDrawer() {
@@ -86,7 +92,7 @@ const { settings } = UKM_FIXTURE;
       drawer!.setAttribute("aria-hidden", "true");
       burger!.setAttribute("aria-expanded", "false");
       document.body.classList.remove("is-locked");
-      document.removeEventListener('keydown', handleTabKey);
+      document.removeEventListener("keydown", handleTabKey);
       burger!.focus();
     }
 

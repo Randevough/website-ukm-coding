@@ -84,15 +84,21 @@ const projects = UKM_FIXTURE.projects.map((p) => ({
 
     function handleTabKey(e) {
       if (!isOpen) return;
-      if (e.key === 'Tab') {
-        const focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
-        const focusables = Array.from(modal.querySelectorAll<HTMLElement>(focusableElements)).filter(el => el.tabIndex >= 0);
+      if (e.key === "Tab") {
+        const focusableElements =
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+        const focusables = Array.from(
+          modal.querySelectorAll<HTMLElement>(focusableElements),
+        ).filter((el) => el.tabIndex >= 0);
         if (focusables.length === 0) return;
         const firstFocusableElement = focusables[0];
         const lastFocusableElement = focusables[focusables.length - 1];
 
         if (e.shiftKey) {
-          if (document.activeElement === firstFocusableElement || document.activeElement === modal) {
+          if (
+            document.activeElement === firstFocusableElement ||
+            document.activeElement === modal
+          ) {
             lastFocusableElement.focus();
             e.preventDefault();
           }
@@ -138,14 +144,14 @@ const projects = UKM_FIXTURE.projects.map((p) => ({
       document.body.classList.add("is-locked");
       modal.setAttribute("tabindex", "-1");
       modal.focus();
-      document.addEventListener('keydown', handleTabKey);
+      document.addEventListener("keydown", handleTabKey);
     }
 
     function closeModal() {
       isOpen = false;
       modal.setAttribute("aria-hidden", "true");
       document.body.classList.remove("is-locked");
-      document.removeEventListener('keydown', handleTabKey);
+      document.removeEventListener("keydown", handleTabKey);
       if (lastTrigger) {
         lastTrigger.focus();
         lastTrigger = null;

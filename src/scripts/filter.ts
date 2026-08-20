@@ -51,7 +51,9 @@ export function initKegiatanFilter() {
       const cat = el.getAttribute("data-kategori") || "";
       const title = el.getAttribute("data-title") || "";
 
-      const matchCat = currentCategory === "Semua" || cat.toLowerCase() === currentCategory.toLowerCase();
+      const matchCat =
+        currentCategory === "Semua" ||
+        cat.toLowerCase() === currentCategory.toLowerCase();
       const matchSearch = title.includes(currentSearch.toLowerCase());
 
       return matchCat && matchSearch;
@@ -175,7 +177,10 @@ export function initProjectsFilter() {
     // 1. Filter
     const filtered = allItems.filter((el) => {
       const cat = el.getAttribute("data-kategori") || "";
-      return currentCategory === "Semua" || cat.toLowerCase() === currentCategory.toLowerCase();
+      return (
+        currentCategory === "Semua" ||
+        cat.toLowerCase() === currentCategory.toLowerCase()
+      );
     });
 
     // 2. Sort

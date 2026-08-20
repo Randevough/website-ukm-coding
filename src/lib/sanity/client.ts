@@ -1,5 +1,4 @@
 import { sanityClient } from "sanity:client";
-import { UKM_FIXTURE } from "../content/fixture";
 
 const useFixture =
   import.meta.env.PUBLIC_SANITY_PROJECT_ID === undefined ||

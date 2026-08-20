@@ -69,7 +69,7 @@ Setelah perubahan:
 
 1. Identifikasi deployment terakhir yang sehat di tab Actions GitHub atau dashboard Cloudflare Pages.
 2. Rollback deployment tersebut:
-   - **Lewat GitHub**: Jalankan *revert commit* terhadap perubahan bermasalah, lalu gabungkan PR revert tersebut ke `main`.
+   - **Lewat GitHub**: Jalankan _revert commit_ terhadap perubahan bermasalah, lalu gabungkan PR revert tersebut ke `main`.
    - **Lewat Cloudflare Pages** (darurat konten statis): Di dashboard Cloudflare Pages, buka deployment lama yang sehat dan pilih "Rollback" (menjadikannya alias untuk domain utama).
 3. Jika masalah berasal dari konten Sanity, unpublish/koreksi konten lalu simpan ulang (akan memicu rebuild).
 4. Catat penyebab, dampak, dan perbaikan.

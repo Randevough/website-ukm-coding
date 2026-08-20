@@ -4,7 +4,7 @@ import Art from "../global/Art.astro";
 import SanityImage from "../sanity/SanityImage.astro";
 
 export interface Props {
-  post: any;
+  post: Post | any;
 }
 const { post: p } = Astro.props;
 
