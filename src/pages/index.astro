@@ -18,12 +18,18 @@ let featuredProjects = UKM_FIXTURE.projects.slice(0, 3);
 let latestPosts = UKM_FIXTURE.posts.slice(0, 4);
 let galleryItems = [0, 1, 2, 3, 4, 5].map((i) => ({ _type: "placeholder", i }));
 
-const sanitySettings = await fetchSanity<any>(siteSettingsQuery);
+const [sanitySettings, sanityProjects, sanityPosts, sanityGallery] =
+  await Promise.all([
+    fetchSanity<any>(siteSettingsQuery),
+    fetchSanity<any[]>(allProjectsQuery),
+    fetchSanity<any[]>(allEditorialsQuery),
+    fetchSanity<any[]>(galleryQuery),
+  ]);
+
 if (sanitySettings) {
   settings = { ...settings, ...sanitySettings };
 }
 
-const sanityProjects = await fetchSanity<any[]>(allProjectsQuery);
 if (sanityProjects && sanityProjects.length > 0) {
   featuredProjects = sanityProjects.filter((p) => p.featured).slice(0, 3);
   if (featuredProjects.length === 0) {
@@ -31,12 +37,10 @@ if (sanityProjects && sanityProjects.length > 0) {
   }
 }
 
-const sanityPosts = await fetchSanity<any[]>(allEditorialsQuery);
 if (sanityPosts && sanityPosts.length > 0) {
   latestPosts = sanityPosts.slice(0, 4);
 }
 
-const sanityGallery = await fetchSanity<any[]>(galleryQuery);
 if (sanityGallery && sanityGallery.length > 0) {
   galleryItems = sanityGallery.slice(0, 6);
 }
@@ -257,26 +261,46 @@ if (sanityGallery && sanityGallery.length > 0) {
           <span class="label">Kerja sama</span>
           <span class="idx">05</span>
         </div>
-        <div class="shead__body">
-          <h2 data-reveal="">Mulai percakapan dengan kami.</h2>
-          <p class="dek" data-reveal="">
-            Baik untuk kolaborasi event, program edukasi, atau project
-            teknologi—kami terbuka untuk diskusi.
-          </p>
-        </div>
       </div>
-      <div class="pcta__boxes">
-        <div class="pcta__box" data-reveal="">
-          <span class="label">Kontak Resmi</span>
-          <a class="pcta__h" data-mailto="" href={`mailto:${settings.email}`}
-            ><span>{settings.email}</span></a
+      <div class="pcta__grid">
+        <div class="pcta__main">
+          <h2 class="pcta__title" data-reveal="">
+            Mari membangun <em>sesuatu yang berarti</em> bersama.
+          </h2>
+          <div
+            class="pcta__actions"
+            data-reveal=""
+            style="--reveal-delay: 120ms"
           >
-          <span class="idx">SUREL</span>
+            <a
+              class="btn btn--primary btn--lg"
+              data-mailto=""
+              href={`mailto:${settings.email}`}
+              >Ajukan kerja sama <span class="arrow">→</span></a
+            >
+            <p class="pcta__alt">
+              Atau kenali kami lebih dulu lewat <a href="#tentang">profil UKM</a
+              >
+              dan <a href="/projects">daftar project</a>.
+            </p>
+          </div>
         </div>
-        <div class="pcta__box" data-reveal="" style="--reveal-delay: 100ms">
-          <span class="label">Ikuti Proses Kami</span>
-          <a class="pcta__h" href={settings.instagramUrl}>@ukmcoding</a>
-          <span class="idx">INSTAGRAM</span>
+        <div class="pcta__side" data-reveal="" style="--reveal-delay: 200ms">
+          <p class="pcta__dek">
+            UKM Coding terbuka untuk kolaborasi program, media partnership,
+            dukungan kegiatan, dan project yang memberi dampak bagi mahasiswa.
+          </p>
+          <div class="pcta__rows">
+            <span class="pcta__row"
+              ><span class="idx">01</span>Program &amp; kegiatan</span
+            >
+            <span class="pcta__row"
+              ><span class="idx">02</span>Media partnership</span
+            >
+            <span class="pcta__row"
+              ><span class="idx">03</span>Project kolaboratif</span
+            >
+          </div>
         </div>
       </div>
     </div>

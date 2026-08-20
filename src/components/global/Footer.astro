@@ -7,92 +7,146 @@ import SanityImage from "@/components/sanity/SanityImage.astro";
 let settings: any = UKM_FIXTURE.settings;
 let partners: any = UKM_FIXTURE.partners;
 
-const sanitySettings = await fetchSanity<any>(siteSettingsQuery);
+const [sanitySettings, sanityPartners] = await Promise.all([
+  fetchSanity<any>(siteSettingsQuery),
+  fetchSanity<any[]>(partnersQuery),
+]);
+
 if (sanitySettings) {
   settings = { ...settings, ...sanitySettings };
 }
 
-const sanityPartners = await fetchSanity<any[]>(partnersQuery);
 if (sanityPartners && sanityPartners.length > 0) {
   partners = sanityPartners;
+}
+
+function glyphOf(name: string): string {
+  if (!name) return "";
+  const parts = name.trim().split(/\s+/);
+  if (parts.length === 1) return parts[0][0].toUpperCase();
+  return (parts[0][0] + parts[1][0]).toUpperCase();
 }
 ---
 
 <footer class="site-footer">
-  <div class="ticker">
-    <div class="ticker__track" aria-hidden="true">
-      {
-        partners.map((p: any) => (
-          <div class="ticker__item">
-            {p.logo && p.izinTampilLogo ? (
-              <div style="height: 32px; width: 64px; position: relative;">
-                <SanityImage node={p.logo} className="logo-slot" />
-              </div>
-            ) : (
-              <span class="logo-slot">LOGO</span>
-            )}
-            <span>{p.nama}</span>
-          </div>
-        ))
-      }
+  <section class="partners">
+    <div class="container">
+      <div class="partners__head">
+        <div class="stack" style="gap: 10px">
+          <span class="label" style="color: rgba(246, 245, 242, 0.45)">
+            Media partner &amp; kolaborator
+          </span>
+          <h3 style="color: var(--paper)">
+            Bertumbuh bersama para kolaborator.
+          </h3>
+        </div>
+        <a class="btn btn--onink" href="/#kerjasama">Jadi partner berikutnya</a>
+      </div>
+      <div class="partners__grid" id="partnerGrid">
+        {
+          partners.map((p: any) => (
+            <a
+              class="plogo"
+              href={p.url && p.url !== "#" ? p.url : "/#kerjasama"}
+              target={p.url && p.url.startsWith("http") ? "_blank" : undefined}
+              rel={p.url && p.url.startsWith("http") ? "noopener" : undefined}
+            >
+              <span class="plogo__slot">
+                {p.logo && p.izinTampilLogo ? (
+                  <SanityImage node={p.logo} />
+                ) : (
+                  <span>{glyphOf(p.nama)}</span>
+                )}
+              </span>
+              <span class="plogo__name">{p.nama}</span>
+              <span class="plogo__tier">
+                {p.tier || p.tipe || "KOLABORATOR"}
+              </span>
+            </a>
+          ))
+        }
+      </div>
+      <p class="idx" style="margin-top: 16px">
+        PLACEHOLDER LOGO · AKAN DIGANTI DENGAN ASET RESMI
+      </p>
+    </div>
+  </section>
+
+  <div class="container site-footer__main">
+    <div class="site-footer__brand">
+      <span class="logo-slot logo-slot--footer">LOGO</span>
+      <strong style="color: var(--paper)">
+        {settings.nama || "UKM Coding Cyber University"}
+      </strong>
+      <p class="dek" style="color: rgba(246, 245, 242, 0.6)">
+        {
+          settings.tagline ||
+            settings.deskripsiSingkat ||
+            "Unit kegiatan mahasiswa bidang teknologi di Cyber University"
+        }
+      </p>
+    </div>
+
+    <div class="fcol">
+      <h4>Halaman</h4>
+      <a href="/">Beranda</a>
+      <a href="/kegiatan">Updates</a>
+      <a href="/projects">Projects</a>
+    </div>
+
+    <div class="fcol">
+      <h4>Kontak</h4>
+      <a data-mailto="" href={`mailto:${settings.email}`}>
+        <span>{settings.email}</span>
+      </a>
+      <a
+        href={settings.instagramUrl ||
+          "https://www.instagram.com/coding.cyberuniversity/"}
+        target="_blank"
+        rel="noopener"
+      >
+        <span>{settings.instagram || "@coding.cyberuniversity"}</span>
+      </a>
+      <a
+        href={settings.githubUrl ||
+          `https://${settings.github || "github.com/ukmcoding"}`}
+        target="_blank"
+        rel="noopener"
+      >
+        <span>{settings.github || "github.com/ukmcoding"}</span>
+      </a>
+    </div>
+
+    <div class="fcol">
+      <h4>Terhubung</h4>
+      <a
+        href={settings.instagramUrl ||
+          "https://www.instagram.com/coding.cyberuniversity/"}
+        target="_blank"
+        rel="noopener"
+      >
+        Instagram
+      </a>
+      <a
+        href={settings.linkedinUrl ||
+          "https://id.linkedin.com/in/ukm-coding-cyber-university-541459379"}
+        target="_blank"
+        rel="noopener"
+      >
+        LinkedIn
+      </a>
+      <a
+        href={settings.githubUrl || "https://github.com/RandDevs"}
+        target="_blank"
+        rel="noopener"
+      >
+        GitHub
+      </a>
     </div>
   </div>
-  <div class="container site-footer__inner">
-    <div class="site-footer__main">
-      <h2 class="site-footer__title">Mari berkarya<br />bersama.</h2>
-      <a class="btn btn--primary btn--lg" href="/#kerjasama"
-        >Ajukan kerja sama</a
-      >
-    </div>
-    <div class="site-footer__bottom">
-      <div class="site-footer__brand">
-        <span class="logo-slot">LOGO</span>
-        <div>
-          <strong>UKM Coding Cyber University</strong>
-          <span class="site-footer__tag"
-            >{settings.tagline || settings.deskripsiSingkat}</span
-          >
-        </div>
-      </div>
-      <div class="site-footer__links">
-        <div class="link-group">
-          <span class="label">Platform</span>
-          {
-            settings.instagramUrl && (
-              <a class="tlink" href={settings.instagramUrl}>
-                Instagram
-              </a>
-            )
-          }
-          {
-            settings.githubUrl && (
-              <a class="tlink" href={settings.githubUrl}>
-                GitHub
-              </a>
-            )
-          }
-          {
-            settings.github && !settings.githubUrl && (
-              <a class="tlink" href={`https://${settings.github}`}>
-                GitHub
-              </a>
-            )
-          }
-          {
-            settings.linkedinUrl && (
-              <a class="tlink" href={settings.linkedinUrl}>
-                LinkedIn
-              </a>
-            )
-          }
-        </div>
-        <div class="link-group">
-          <span class="label">Kontak</span>
-          <a class="tlink" data-mailto="" href={`mailto:${settings.email}`}
-            ><span>{settings.email}</span></a
-          >
-        </div>
-      </div>
-    </div>
+
+  <div class="container site-footer__bottom">
+    <span>© 2026 UKM Coding Cyber University</span>
+    <span>Belajar · Membangun · Berbagi</span>
   </div>
 </footer>

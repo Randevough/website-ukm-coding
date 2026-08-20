@@ -8,12 +8,15 @@ import { siteSettingsQuery, allProjectsQuery } from "../../lib/sanity/queries";
 let settings = UKM_FIXTURE.settings;
 let projects = UKM_FIXTURE.projects;
 
-const sanitySettings = await fetchSanity<any>(siteSettingsQuery);
+const [sanitySettings, sanityProjects] = await Promise.all([
+  fetchSanity<any>(siteSettingsQuery),
+  fetchSanity<any[]>(allProjectsQuery),
+]);
+
 if (sanitySettings) {
   settings = { ...settings, ...sanitySettings };
 }
 
-const sanityProjects = await fetchSanity<any[]>(allProjectsQuery);
 if (sanityProjects && sanityProjects.length > 0) {
   projects = sanityProjects;
 }

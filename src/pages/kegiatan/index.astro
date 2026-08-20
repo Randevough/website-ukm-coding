@@ -12,12 +12,15 @@ import {
 let settings = UKM_FIXTURE.settings;
 let posts = UKM_FIXTURE.posts;
 
-const sanitySettings = await fetchSanity<any>(siteSettingsQuery);
+const [sanitySettings, sanityPosts] = await Promise.all([
+  fetchSanity<any>(siteSettingsQuery),
+  fetchSanity<any[]>(allEditorialsQuery),
+]);
+
 if (sanitySettings) {
   settings = { ...settings, ...sanitySettings };
 }
 
-const sanityPosts = await fetchSanity<any[]>(allEditorialsQuery);
 if (sanityPosts && sanityPosts.length > 0) {
   posts = sanityPosts;
 }
