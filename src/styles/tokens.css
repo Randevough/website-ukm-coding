@@ -1,0 +1,153 @@
+/* =========================================================
+   TOKENS — UKM Coding
+   Arah visual: "Spec Sheet" — kertas hangat, garis hairline,
+   label monospace, display type sangat besar, warna sebagai
+   tanda tunggal (bukan tebaran).
+   ========================================================= */
+
+:root {
+  /* ---------- KERTAS & TINTA ----------
+	   Basis hangat, bukan putih murni dan bukan abu kebiruan.
+	   Warna hangat inilah yang bikin halaman terasa "kertas",
+	   bukan "dashboard". */
+  --paper: #f6f5f2;
+  --paper-2: #f0eee9;
+  --paper-3: #e9e6df;
+  --paper-raised: #fdfdfc;
+  --ink-deep: #0c0e11;
+  --ink: #16181c;
+  --ink-2: #575c64;
+  --ink-3: #8b9098;
+  --ink-4: #b4b8be;
+
+  /* ---------- GARIS ----------
+	   Tiga tingkat: struktur, pemisah, dan bayangan garis.
+	   Hampir semua batas di situs ini hairline, bukan kotak. */
+  --line: rgba(22, 24, 28, 0.14);
+  --line-mid: rgba(22, 24, 28, 0.09);
+  --line-soft: rgba(22, 24, 28, 0.055);
+  --line-ink: rgba(22, 24, 28, 0.28);
+
+  /* ---------- AKSEN ----------
+	   Biru = tanda utama. Oranye = tanda tunggal per halaman.
+	   Keduanya dipakai sedikit, dalam ukuran besar, bukan
+	   ditebar jadi pil kecil di mana-mana. */
+  --blue: #2340d8;
+  --blue-deep: #1a32a6;
+  --blue-soft: #e9ecfd;
+  --blue-wash: rgba(35, 64, 216, 0.08);
+  --blue-line: rgba(35, 64, 216, 0.28);
+
+  --orange: #dc5a12;
+  --orange-deep: #b0450b;
+  --orange-soft: #fdeee4;
+  --orange-wash: rgba(220, 90, 18, 0.09);
+
+  /* ---------- TIPOGRAFI ---------- */
+  --sans:
+    "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  --serif: "Instrument Serif", "Iowan Old Style", Georgia, serif;
+  --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Skala display berani. Kontras besar antara judul dan body
+	   adalah satu-satunya alasan halaman terasa mahal. */
+  --d0: clamp(3.4rem, 12.5vw, 11rem);
+  --d1: clamp(2.8rem, 7.4vw, 6.5rem);
+  --d2: clamp(2.1rem, 4.6vw, 3.9rem);
+  --d3: clamp(1.6rem, 2.9vw, 2.5rem);
+  --h4: 1.3125rem;
+  --h5: 1.0625rem;
+  --body: 1.0625rem;
+  --body-lg: 1.1875rem;
+  --sm: 0.9375rem;
+  --xs: 0.8125rem;
+  --xxs: 0.6875rem;
+
+  --lh-display: 0.94;
+  --lh-tight: 1.16;
+  --lh-body: 1.62;
+  --lh-loose: 1.75;
+
+  /* Tracking: display selalu rapat, label mono selalu lebar. */
+  --track-display: -0.032em;
+  --track-tight: -0.018em;
+  --track-label: 0.16em;
+  --track-label-wide: 0.24em;
+
+  /* ---------- RUANG ---------- */
+  --s1: 4px;
+  --s2: 8px;
+  --s3: 12px;
+  --s4: 16px;
+  --s5: 24px;
+  --s6: 32px;
+  --s7: 48px;
+  --s8: 64px;
+  --s9: 88px;
+  --s10: 120px;
+  --s11: 168px;
+  --section-y: clamp(72px, 9vw, 148px);
+
+  /* ---------- LAYOUT ---------- */
+  --wide: 1440px;
+  --container: 1240px;
+  --text: 680px;
+  --gutter: clamp(20px, 4vw, 56px);
+
+  /* ---------- RADIUS ----------
+	   Sengaja kecil. Sudut tumpul besar adalah salah satu penanda
+	   paling cepat terbaca sebagai template. */
+  --r1: 2px;
+  --r2: 4px;
+  --r3: 10px;
+  --r-full: 999px;
+
+  /* ---------- BAYANGAN ----------
+	   Satu bayangan halus untuk lapisan mengapung, satu untuk
+	   kartu yang diangkat saat hover. Tidak ada lagi. */
+  --shadow-1:
+    0 1px 2px rgba(16, 18, 22, 0.04), 0 8px 24px -12px rgba(16, 18, 22, 0.12);
+  --shadow-2:
+    0 2px 4px rgba(16, 18, 22, 0.05), 0 28px 60px -24px rgba(16, 18, 22, 0.22);
+  --shadow-cursor: 0 6px 20px -6px rgba(12, 14, 17, 0.45);
+
+  /* ---------- GERAK ----------
+	   Satu kurva untuk semuanya supaya seluruh situs terasa
+	   digerakkan oleh tangan yang sama. */
+  --ease: cubic-bezier(0.22, 0.61, 0.24, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --t-fast: 180ms;
+  --t: 320ms;
+  --t-slow: 620ms;
+  --t-page: 480ms;
+
+  /* ---------- TEKSTUR ---------- */
+  --grain-opacity: 0.042;
+  --graph-size: 34px;
+
+  --header-h: 68px;
+  --z-header: 60;
+  --z-drawer: 80;
+  --z-modal: 90;
+  --z-cursor: 95;
+  --z-grain: 100;
+}
+
+/* Aksen oranye hanya boleh muncul sekali per halaman sebagai
+   tanda. Kelas ini dipakai untuk menukar tanda halaman. */
+[data-mark="orange"] {
+  --mark: var(--orange);
+  --mark-deep: var(--orange-deep);
+  --mark-soft: var(--orange-soft);
+  --mark-wash: var(--orange-wash);
+}
+
+[data-mark="blue"],
+:root {
+  --mark: var(--blue);
+  --mark-deep: var(--blue-deep);
+  --mark-soft: var(--blue-soft);
+  --mark-wash: var(--blue-wash);
+}

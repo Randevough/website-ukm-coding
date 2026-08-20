@@ -1,0 +1,56 @@
+---
+import type { Post } from "@/types/content";
+import Art from "../global/Art.astro";
+import SanityImage from "../sanity/SanityImage.astro";
+
+export interface Props {
+  post: any;
+}
+const { post: p } = Astro.props;
+
+const BULAN = [
+  "Januari",
+  "Februari",
+  "Maret",
+  "April",
+  "Mei",
+  "Juni",
+  "Juli",
+  "Agustus",
+  "September",
+  "Oktober",
+  "November",
+  "Desember",
+];
+function tanggalPendek(iso: string) {
+  if (!iso) return "";
+  const d = new Date(iso + (iso.includes("T") ? "" : "T00:00:00"));
+  if (isNaN(d.getTime())) return iso;
+  return (
+    d.getDate() + " " + BULAN[d.getMonth()].slice(0, 3) + " " + d.getFullYear()
+  );
+}
+
+const title = p.judul || p.title;
+const kategori = p.tipe || p.kategori;
+const date = p.tanggalPublikasi || p.tanggal;
+---
+
+<a class="ncard" href={`/kegiatan/${p.slug}`} data-reveal>
+  <div class="ncard__art">
+    {
+      p.cover ? (
+        <SanityImage
+          node={p.cover}
+          variantFallback={p.variant}
+          glyphFallback={kategori}
+        />
+      ) : (
+        <Art variant={p.variant || "neutral"} glyph={kategori} />
+      )
+    }
+  </div>
+  <span class="label label--mark">{kategori}</span>
+  <h3 class="ncard__title">{title}</h3>
+  <span class="ncard__date">{tanggalPendek(date)}</span>
+</a>

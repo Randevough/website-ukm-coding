@@ -1,0 +1,162 @@
+---
+import { UKM_FIXTURE } from "@/lib/content/fixture";
+const projects = UKM_FIXTURE.projects.map((p) => ({
+  slug: p.slug,
+  title: p.title,
+  kategori: p.kategori,
+  tahun: p.tahun,
+  oneLiner: p.oneLiner,
+  stack: p.stack.slice(0, 3).join(" / "),
+  variant: p.variant,
+}));
+---
+
+<div aria-hidden="true" class="modal" id="projectModal">
+  <div class="modal__backdrop" data-modal-close=""></div>
+  <div
+    aria-label="Detail project"
+    aria-modal="true"
+    class="modal__panel"
+    role="dialog"
+  >
+    <div class="modal__top">
+      <span class="label">Lihat Cepat</span>
+      <button
+        aria-label="Tutup modal"
+        class="modal__close"
+        data-modal-close=""
+        type="button">×</button
+      >
+    </div>
+    <div class="modal__content" id="modalContent"></div>
+    <div class="modal__foot">
+      <a class="btn btn--primary btn--block" id="modalLink" href="/projects"
+        >Lihat Studi Kasus</a
+      >
+    </div>
+  </div>
+</div>
+
+<script is:inline define:vars={{ projects }}>
+  const VAR_MAP = { blue: "1", mix: "2", orange: "3", neutral: "4" };
+
+  function glyphOf(text) {
+    return String(text || "?")
+      .replace(/[^A-Za-z0-9 ]/g, "")
+      .split(" ")
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((w) => w[0].toUpperCase())
+      .join("");
+  }
+
+  function getArtHtml(variant, glyph) {
+    const v = VAR_MAP[variant] || "2";
+    const g = glyph
+      ? `<div class="art__glyph">${glyph.replace(/</g, "&lt;")}</div>`
+      : "";
+    return `<div class="art" data-v="${v}" aria-hidden="true">
+      <div class="art__wash"></div><div class="art__mesh"></div><div class="art__ring"></div>${g}
+    </div>`;
+  }
+
+  function initModal() {
+    const modal = document.querySelector("#projectModal");
+    if (!modal) return;
+    const content = document.querySelector("#modalContent");
+    const link = document.querySelector("#modalLink");
+    const closers = modal.querySelectorAll("[data-modal-close]");
+    let isOpen = false;
+
+    let lastTrigger = null;
+
+    // Attach listener globally to handle dynamically injected content or view transitions
+    document.addEventListener("click", (e) => {
+      const target = e.target.closest(".pcard");
+      if (!target) return;
+      const slug = target.getAttribute("data-project");
+      if (slug) {
+        e.preventDefault();
+        lastTrigger = target;
+        openModal(slug);
+      }
+    });
+
+    function handleTabKey(e) {
+      if (!isOpen) return;
+      if (e.key === 'Tab') {
+        const focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+        const focusables = Array.from(modal.querySelectorAll<HTMLElement>(focusableElements)).filter(el => el.tabIndex >= 0);
+        if (focusables.length === 0) return;
+        const firstFocusableElement = focusables[0];
+        const lastFocusableElement = focusables[focusables.length - 1];
+
+        if (e.shiftKey) {
+          if (document.activeElement === firstFocusableElement || document.activeElement === modal) {
+            lastFocusableElement.focus();
+            e.preventDefault();
+          }
+        } else {
+          if (document.activeElement === lastFocusableElement) {
+            firstFocusableElement.focus();
+            e.preventDefault();
+          }
+        }
+      }
+    }
+
+    function openModal(slug) {
+      const p = projects.find((x) => x.slug === slug);
+      if (!p) return;
+
+      if (content) {
+        content.innerHTML =
+          '<div class="modal__art">' +
+          getArtHtml(p.variant, glyphOf(p.title)) +
+          "</div>" +
+          '<h3 class="modal__title">' +
+          p.title.replace(/</g, "&lt;") +
+          "</h3>" +
+          '<div class="modal__meta"><span>' +
+          p.kategori +
+          "</span><span>" +
+          p.tahun +
+          "</span></div>" +
+          '<p class="modal__desc">' +
+          p.oneLiner.replace(/</g, "&lt;") +
+          "</p>" +
+          '<div class="modal__tech"><span class="label">Teknologi Utama</span><span class="mono">' +
+          p.stack +
+          "</span></div>";
+      }
+      if (link) {
+        link.setAttribute("href", `/projects/${slug}`);
+      }
+
+      isOpen = true;
+      modal.setAttribute("aria-hidden", "false");
+      document.body.classList.add("is-locked");
+      modal.setAttribute("tabindex", "-1");
+      modal.focus();
+      document.addEventListener('keydown', handleTabKey);
+    }
+
+    function closeModal() {
+      isOpen = false;
+      modal.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("is-locked");
+      document.removeEventListener('keydown', handleTabKey);
+      if (lastTrigger) {
+        lastTrigger.focus();
+        lastTrigger = null;
+      }
+    }
+
+    closers.forEach((el) => el.addEventListener("click", closeModal));
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && isOpen) closeModal();
+    });
+  }
+
+  document.addEventListener("astro:page-load", initModal);
+</script>

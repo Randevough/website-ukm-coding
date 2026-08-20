@@ -1,0 +1,33 @@
+---
+export interface Props {
+  title: string;
+  lead?: string;
+  linkText?: string;
+  linkHref?: string;
+}
+const { title, lead, linkText, linkHref } = Astro.props;
+---
+
+<div class="section__head">
+  <div class="section__headLeft">
+    <h2 class="section__title lineMask" data-reveal>
+      <span set:html={title} />
+    </h2>
+    {
+      lead && (
+        <p class="section__lead" data-reveal style="--reveal-delay: 100ms">
+          {lead}
+        </p>
+      )
+    }
+  </div>
+  {
+    linkText && linkHref && (
+      <div class="section__headRight" data-reveal style="--reveal-delay: 150ms">
+        <a class="btn" href={linkHref}>
+          {linkText} <span class="arrow">→</span>
+        </a>
+      </div>
+    )
+  }
+</div>

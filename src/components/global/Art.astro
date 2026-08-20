@@ -1,0 +1,35 @@
+---
+export interface Props {
+  variant?: string;
+  glyph?: string;
+}
+const { variant = "2", glyph } = Astro.props;
+
+const VAR_MAP: Record<string, string> = {
+  blue: "1",
+  mix: "2",
+  orange: "3",
+  neutral: "4",
+};
+const v = VAR_MAP[variant] || "2";
+
+function glyphOf(text: string) {
+  if (!text) return null;
+  return String(text)
+    .replace(/[^A-Za-z0-9 ]/g, "")
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((w) => w[0].toUpperCase())
+    .join("");
+}
+
+const finalGlyph = glyph ? glyphOf(glyph) : null;
+---
+
+<div class="art" data-v={v} aria-hidden="true">
+  <div class="art__wash"></div>
+  <div class="art__mesh"></div>
+  <div class="art__ring"></div>
+  {finalGlyph && <div class="art__glyph">{finalGlyph}</div>}
+</div>

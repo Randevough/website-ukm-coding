@@ -1,0 +1,46 @@
+{
+  "name": "ukm-coding",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "lint": "eslint . --ignore-pattern \"dist/\" --ignore-pattern \"docs/\" --ignore-pattern \"ai-prompts/\" --ignore-pattern \".astro/\"",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@astrojs/react": "^6.0.4",
+    "@astrojs/sitemap": "^3.7.3",
+    "@portabletext/types": "^4.0.2",
+    "@sanity/astro": "^3.5.0",
+    "@sanity/client": "^8.2.0",
+    "@sanity/image-url": "^2.1.1",
+    "@typescript-eslint/eslint-plugin": "^8.67.0",
+    "@typescript-eslint/parser": "^8.67.0",
+    "astro": "^7.2.4",
+    "astro-portabletext": "^0.13.0",
+    "eslint": "^9.0.0",
+    "eslint-plugin-astro": "^3.1.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "prettier": "^3.9.6",
+    "prettier-plugin-astro": "^0.14.1",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "sanity": "^6.10.1",
+    "styled-components": "^6.5.3",
+    "vitest": "^4.1.11"
+  },
+  "devDependencies": {
+    "@types/node": "^26.2.0",
+    "dotenv": "^17.4.2",
+    "tsx": "^4.23.12",
+    "typescript": "^5.6.3",
+    "typescript-eslint": "^8.67.0"
+  }
+}

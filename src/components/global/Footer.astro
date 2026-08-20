@@ -1,0 +1,98 @@
+---
+import { UKM_FIXTURE } from "@/lib/content/fixture";
+import { fetchSanity } from "@/lib/sanity/client";
+import { siteSettingsQuery, partnersQuery } from "@/lib/sanity/queries";
+import SanityImage from "@/components/sanity/SanityImage.astro";
+
+let settings: any = UKM_FIXTURE.settings;
+let partners: any = UKM_FIXTURE.partners;
+
+const sanitySettings = await fetchSanity<any>(siteSettingsQuery);
+if (sanitySettings) {
+  settings = { ...settings, ...sanitySettings };
+}
+
+const sanityPartners = await fetchSanity<any[]>(partnersQuery);
+if (sanityPartners && sanityPartners.length > 0) {
+  partners = sanityPartners;
+}
+---
+
+<footer class="site-footer">
+  <div class="ticker">
+    <div class="ticker__track" aria-hidden="true">
+      {
+        partners.map((p: any) => (
+          <div class="ticker__item">
+            {p.logo && p.izinTampilLogo ? (
+              <div style="height: 32px; width: 64px; position: relative;">
+                <SanityImage node={p.logo} className="logo-slot" />
+              </div>
+            ) : (
+              <span class="logo-slot">LOGO</span>
+            )}
+            <span>{p.nama}</span>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+  <div class="container site-footer__inner">
+    <div class="site-footer__main">
+      <h2 class="site-footer__title">Mari berkarya<br />bersama.</h2>
+      <a class="btn btn--primary btn--lg" href="/#kerjasama"
+        >Ajukan kerja sama</a
+      >
+    </div>
+    <div class="site-footer__bottom">
+      <div class="site-footer__brand">
+        <span class="logo-slot">LOGO</span>
+        <div>
+          <strong>UKM Coding Cyber University</strong>
+          <span class="site-footer__tag"
+            >{settings.tagline || settings.deskripsiSingkat}</span
+          >
+        </div>
+      </div>
+      <div class="site-footer__links">
+        <div class="link-group">
+          <span class="label">Platform</span>
+          {
+            settings.instagramUrl && (
+              <a class="tlink" href={settings.instagramUrl}>
+                Instagram
+              </a>
+            )
+          }
+          {
+            settings.githubUrl && (
+              <a class="tlink" href={settings.githubUrl}>
+                GitHub
+              </a>
+            )
+          }
+          {
+            settings.github && !settings.githubUrl && (
+              <a class="tlink" href={`https://${settings.github}`}>
+                GitHub
+              </a>
+            )
+          }
+          {
+            settings.linkedinUrl && (
+              <a class="tlink" href={settings.linkedinUrl}>
+                LinkedIn
+              </a>
+            )
+          }
+        </div>
+        <div class="link-group">
+          <span class="label">Kontak</span>
+          <a class="tlink" data-mailto="" href={`mailto:${settings.email}`}
+            ><span>{settings.email}</span></a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dashboard · Panel pengurus UKM Coding</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/tokens.css" />
+    <link rel="stylesheet" href="../assets/css/base.css" />
+    <link rel="stylesheet" href="../assets/css/components.css" />
+    <link rel="stylesheet" href="../assets/css/pages.css" />
+    <link rel="stylesheet" href="../assets/css/admin.css" />
+  </head>
+  <body data-page="admin" data-mark="blue">
+    <div id="page" class="shell">
+      <aside class="shell__side">
+        <a class="site-header__brand" href="index.html">
+          <span class="logo-slot">LOGO</span>
+          <span class="site-header__name"
+            >UKM Coding<small>Panel pengurus</small></span
+          >
+        </a>
+
+        <nav class="sidenav">
+          <div class="sidenav__group">
+            <span class="label">Konten</span>
+            <a class="sidenav__link is-active" href="index.html">Dashboard</a>
+            <a class="sidenav__link" href="editor.html"
+              >Berita <span class="idx">14</span></a
+            >
+            <a class="sidenav__link" href="editor.html"
+              >Project <span class="idx">12</span></a
+            >
+            <a class="sidenav__link" href="editor.html"
+              >Media partner <span class="idx">10</span></a
+            >
+          </div>
+          <div class="sidenav__group">
+            <span class="label">Berkas</span>
+            <a class="sidenav__link" href="editor.html">Media</a>
+            <a class="sidenav__link" href="editor.html">Deck sponsorship</a>
+          </div>
+          <div class="sidenav__group">
+            <span class="label">Pengaturan</span>
+            <a class="sidenav__link" href="editor.html">Angka halaman depan</a>
+            <a class="sidenav__link" href="editor.html">Pengguna</a>
+          </div>
+        </nav>
+
+        <div class="userchip">
+          <span class="avatar">MD</span>
+          <div style="min-width: 0">
+            <strong style="display: block; font-size: var(--sm)"
+              >Media Design</strong
+            >
+            <span class="table__sub">editor@cyber-univ.ac.id</span>
+          </div>
+        </div>
+      </aside>
+
+      <div class="shell__content">
+        <div class="topbar">
+          <div class="stack" style="gap: 4px">
+            <span class="label">Dashboard</span>
+            <strong>Ringkasan konten situs</strong>
+          </div>
+          <div class="row">
+            <a class="btn" href="../index.html">Lihat situs</a>
+            <a class="btn btn--primary" href="editor.html">Tulis berita baru</a>
+          </div>
+        </div>
+
+        <main class="admin-main">
+          <div class="statgrid" id="adminStats"></div>
+
+          <div class="panel">
+            <div class="panel__head">
+              <div class="stack" style="gap: 2px">
+                <strong>Berita terbaru</strong>
+                <span class="table__sub">Delapan catatan terakhir</span>
+              </div>
+              <div class="row">
+                <input
+                  class="search"
+                  type="search"
+                  placeholder="Cari judul…"
+                  aria-label="Cari"
+                />
+                <select
+                  class="select"
+                  aria-label="Status"
+                  style="max-width: 160px"
+                >
+                  <option>Semua status</option>
+                  <option>Terbit</option>
+                  <option>Review</option>
+                  <option>Draf</option>
+                </select>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Judul</th>
+                    <th>Kategori</th>
+                    <th>Status</th>
+                    <th>Tanggal</th>
+                  </tr>
+                </thead>
+                <tbody id="adminPosts"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="grid grid--2">
+            <div class="panel">
+              <div class="panel__head"><strong>Aktivitas</strong></div>
+              <div class="panel__body">
+                <div class="flow" id="adminActivity"></div>
+              </div>
+            </div>
+            <div class="panel">
+              <div class="panel__head"><strong>Catatan</strong></div>
+              <div class="panel__body stack" style="gap: 16px">
+                <p class="callout">
+                  Panel ini hanya mockup tampilan. Saat dibangun sungguhan,
+                  halaman admin datang dari CMS Payload di alamat /admin, jadi
+                  tidak perlu dibuat ulang.
+                </p>
+                <div class="spec">
+                  <div class="spec__row">
+                    <span class="spec__k">Masuk</span>
+                    <span class="spec__v">Surel UKM + kata sandi</span>
+                  </div>
+                  <div class="spec__row">
+                    <span class="spec__k">Peran</span>
+                    <span class="spec__v">Editor, Administrator</span>
+                  </div>
+                  <div class="spec__row">
+                    <span class="spec__k">Alur terbit</span>
+                    <span class="spec__v">Draf → Review → Terbit</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script src="../assets/js/data.js"></script>
+    <script src="../assets/js/ui.js"></script>
+    <script src="../assets/js/motion.js"></script>
+    <script src="../assets/js/render.js"></script>
+    <script>
+      window.App.boot();
+    </script>
+  </body>
+</html>

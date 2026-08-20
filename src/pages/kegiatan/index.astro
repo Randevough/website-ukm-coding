@@ -1,0 +1,117 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import MagazineCard from "../../components/ui/MagazineCard.astro";
+import PostCard from "../../components/ui/PostCard.astro";
+import { UKM_FIXTURE } from "../../lib/content/fixture";
+import { fetchSanity } from "../../lib/sanity/client";
+import {
+  siteSettingsQuery,
+  allEditorialsQuery,
+} from "../../lib/sanity/queries";
+
+let settings = UKM_FIXTURE.settings;
+let posts = UKM_FIXTURE.posts;
+
+const sanitySettings = await fetchSanity<any>(siteSettingsQuery);
+if (sanitySettings) {
+  settings = { ...settings, ...sanitySettings };
+}
+
+const sanityPosts = await fetchSanity<any[]>(allEditorialsQuery);
+if (sanityPosts && sanityPosts.length > 0) {
+  posts = sanityPosts;
+}
+
+const featured = posts[0];
+const maj = posts.slice(1, 4);
+const min = posts.slice(4, 8);
+---
+
+<Layout title={`Updates | ${settings.nama}`}>
+  <!-- ================= KEPALA HALAMAN ================= -->
+  <section class="pagehead">
+    <div class="pagehead__grid" aria-hidden="true"></div>
+    <div class="container pagehead__inner">
+      <div class="breadcrumb">
+        <a href="/">Beranda</a><span>/</span><span>Updates</span>
+      </div>
+      <h1 class="pagehead__title">
+        <span class="lineMask"><span>Arsip kegiatan</span></span>
+        <span class="lineMask"
+          ><span class="thin">&amp; liputan media.</span></span
+        >
+      </h1>
+      <div class="pagehead__foot">
+        <p class="lead" data-reveal style="--reveal-delay: 360ms">
+          Setiap kegiatan dicatat lengkap: tanggal, format, jumlah peserta, dan
+          kolaborator. Dipakai media, calon partner, dan pengurus berikutnya.
+        </p>
+        <span class="idx">14 CATATAN · 5 KATEGORI</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= HERO MAJALAH ================= -->
+  <section class="section section--tight section--hairline">
+    <div class="container">
+      <div class="shead__top" style="margin-bottom: 40px">
+        <span class="label">Sorotan</span>
+        <span class="idx">PALING BARU</span>
+      </div>
+      <div class="magazine" id="magazine">
+        {featured && <MagazineCard post={featured} />}
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= DAFTAR ================= -->
+  <section class="section">
+    <div class="container">
+      <div class="filterbar">
+        <div class="chips" id="postChips" data-chips>
+          <button class="chip is-active" type="button" disabled>Semua</button>
+          <button class="chip" type="button" disabled>Berita</button>
+          <button class="chip" type="button" disabled>Kegiatan</button>
+          <button class="chip" type="button" disabled>Pengumuman</button>
+          <button class="chip" type="button" disabled>Prestasi</button>
+        </div>
+        <input
+          class="search"
+          type="search"
+          placeholder="Cari judul kegiatan…"
+          aria-label="Cari berita"
+          disabled
+        />
+      </div>
+
+      <div class="asym" style="margin-top: var(--s7)">
+        <div class="asym__major" id="postMajor" data-stagger="80">
+          {maj.map((p) => <PostCard post={p} />)}
+        </div>
+        <div class="asym__minor" id="postMinor" data-stagger="60">
+          {min.map((p) => <PostCard post={p} />)}
+        </div>
+      </div>
+
+      <div class="pagination" data-pagination>
+        <!-- Injected via JS -->
+      </div>
+    </div>
+  </section>
+
+  <template id="all-posts-template">
+    {
+      posts.map((p: any) => (
+        <div
+          data-post-item
+          data-kategori={p.tipe || p.kategori}
+          data-title={(p.judul || p.title).toLowerCase()}
+        >
+          <PostCard post={p} />
+        </div>
+      ))
+    }
+  </template>
+
+  <script src="../../scripts/filter.ts"></script>
+</Layout>

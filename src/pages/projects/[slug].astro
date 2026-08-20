@@ -1,0 +1,169 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Art from "../../components/global/Art.astro";
+import SanityImage from "../../components/sanity/SanityImage.astro";
+import PortableTextComponent from "../../components/sanity/PortableTextComponent.astro";
+import { UKM_FIXTURE } from "../../lib/content/fixture";
+import { fetchSanity } from "../../lib/sanity/client";
+import { siteSettingsQuery, allProjectsQuery } from "../../lib/sanity/queries";
+
+export async function getStaticPaths() {
+  let projects = UKM_FIXTURE.projects;
+  const sanityProjects = await fetchSanity<any[]>(allProjectsQuery);
+  if (sanityProjects && sanityProjects.length > 0) {
+    projects = sanityProjects;
+  }
+
+  projects.sort((a, b) => {
+    const da = new Date((a as any).tahun || (a as any).tanggal || 0).getTime();
+    const db = new Date((b as any).tahun || (b as any).tanggal || 0).getTime();
+    return db - da;
+  });
+
+  return projects.map((project: any, index: number) => {
+    return {
+      params: { slug: project.slug },
+      props: {
+        project,
+        prev: index > 0 ? projects[index - 1] : null,
+        next: index < projects.length - 1 ? projects[index + 1] : null,
+      },
+    };
+  });
+}
+
+const { project: p, prev, next } = Astro.props as any;
+let settings = UKM_FIXTURE.settings;
+const sanitySettings = await fetchSanity<any>(siteSettingsQuery);
+if (sanitySettings) {
+  settings = { ...settings, ...sanitySettings };
+}
+
+const title = p.nama || p.title;
+const oneLiner = p.ringkasan || p.oneLiner;
+const stack = p.techStack || p.stack || [];
+
+const isSanityBlocks = (content: any) => Array.isArray(content);
+---
+
+<Layout title={`${title} | ${settings.nama}`}>
+  <section class="section section--tight">
+    <div class="container" id="case">
+      <header class="case__head">
+        <a class="btn" href="/projects">← Kembali</a>
+        <div class="case__titleBlock">
+          <h1 class="case__title">{title}</h1>
+          <p class="case__lead">{oneLiner}</p>
+        </div>
+        <div class="case__meta">
+          <div class="case__metaCol">
+            <span>Kategori</span><strong>{p.kategori}</strong>
+          </div>
+          <div class="case__metaCol">
+            <span>Tahun</span><strong>{p.tahun}</strong>
+          </div>
+          <div class="case__metaCol">
+            <span>Stack Utama</span><strong class="mono"
+              >{stack.join(", ")}</strong
+            >
+          </div>
+          <div
+            class="case__metaCol"
+            style="margin-left: auto; justify-content: center;"
+          >
+            <button class="btn btn--sm" data-share type="button">Bagikan</button
+            >
+          </div>
+        </div>
+      </header>
+      <div class="case__art" style="overflow: hidden; position: relative;">
+        {
+          p.cover ? (
+            <SanityImage
+              node={p.cover}
+              variantFallback={p.variant}
+              glyphFallback={title}
+            />
+          ) : (
+            <Art variant={p.variant || "mix"} glyph={title} />
+          )
+        }
+      </div>
+      <div class="case__content">
+        <h3 class="label label--mark">Masalah</h3>
+        {
+          isSanityBlocks(p.masalah) ? (
+            <PortableTextComponent value={p.masalah} />
+          ) : (
+            <p set:html={p.masalah} />
+          )
+        }
+
+        <h3 class="label label--mark">Pendekatan</h3>
+        {
+          isSanityBlocks(p.pendekatan) ? (
+            <PortableTextComponent value={p.pendekatan} />
+          ) : (
+            <p set:html={p.pendekatan} />
+          )
+        }
+
+        <h3 class="label label--mark">Hasil</h3>
+        {
+          isSanityBlocks(p.hasil) ? (
+            <PortableTextComponent value={p.hasil} />
+          ) : (
+            <p set:html={p.hasil} />
+          )
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tight section--hairline">
+    <div class="container">
+      <div class="pagenav" id="caseNav">
+        {
+          prev ? (
+            <a class="pagenav__prev" href={`/projects/${prev.slug}`}>
+              <span class="label">← Sebelumnya</span>
+              <span>{prev.nama || prev.title}</span>
+            </a>
+          ) : (
+            <div />
+          )
+        }
+        {
+          next ? (
+            <a class="pagenav__next" href={`/projects/${next.slug}`}>
+              <span class="label">Selanjutnya →</span>
+              <span>{next.nama || next.title}</span>
+            </a>
+          ) : (
+            <div />
+          )
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section cta graph" data-mark="orange">
+    <div class="container cta__inner">
+      <div class="stack" data-stagger="80">
+        <span class="label label--mark">Kerja sama</span>
+        <h2 class="cta__title" data-reveal>
+          Butuh tim mahasiswa yang <em>bisa membangun</em> ini untuk Anda?
+        </h2>
+      </div>
+      <div class="stack" data-reveal>
+        <a
+          class="btn btn--mark btn--lg btn--block"
+          data-mailto
+          href={`mailto:${settings.email}`}>Diskusi project</a
+        >
+        <a class="btn btn--lg btn--block" href="/projects">Lihat project lain</a
+        >
+      </div>
+    </div>
+  </section>
+</Layout>

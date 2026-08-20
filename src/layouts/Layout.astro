@@ -1,0 +1,115 @@
+---
+import { ClientRouter } from "astro:transitions";
+import "../styles/tokens.css";
+import "../styles/global.css";
+import "../styles/components/components.css";
+import "../styles/components/pages.css";
+
+import SkipLink from "../components/global/SkipLink.astro";
+import Rails from "../components/global/Rails.astro";
+import Header from "../components/global/Header.astro";
+import Drawer from "../components/global/Drawer.astro";
+import Footer from "../components/global/Footer.astro";
+import Modal from "../components/global/Modal.astro";
+import SEO from "../components/global/SEO.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  canonical?: string;
+  noindex?: boolean;
+  type?: "website" | "article";
+  articleData?: {
+    headline: string;
+    datePublished: string;
+    authorName: string;
+  };
+  eventData?: {
+    name: string;
+    startDate: string;
+    endDate?: string;
+    location?: string;
+  };
+  breadcrumb?: Array<{ name: string; item: string }>;
+}
+const {
+  title,
+  description,
+  image,
+  canonical,
+  noindex,
+  type,
+  articleData,
+  eventData,
+  breadcrumb,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <SEO
+      title={title}
+      description={description}
+      image={image}
+      type={type}
+      canonical={canonical}
+      noindex={noindex || import.meta.env.PUBLIC_NOINDEX === "true"}
+      articleData={articleData}
+      eventData={eventData}
+      breadcrumb={breadcrumb}
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <ClientRouter />
+  </head>
+  <body data-mark="blue" data-page="home">
+    <SkipLink />
+    <Rails />
+    <Header />
+    <Drawer />
+
+    <main id="page">
+      <slot />
+    </main>
+
+    <Footer />
+    <Modal />
+
+    <script src="../scripts/motion.ts"></script>
+    <script>
+      function initShare() {
+        const buttons = document.querySelectorAll('[data-share]');
+        buttons.forEach(btn => {
+          btn.addEventListener('click', async () => {
+            try {
+              if (navigator.share) {
+                await navigator.share({
+                  title: document.title,
+                  url: window.location.href
+                });
+              } else {
+                await navigator.clipboard.writeText(window.location.href);
+                const originalText = btn.textContent;
+                btn.textContent = 'Tersalin!';
+                setTimeout(() => {
+                  btn.textContent = originalText;
+                }, 2000);
+              }
+            } catch (err) {
+              console.error('Error sharing:', err);
+            }
+          });
+        });
+      }
+      document.addEventListener('astro:page-load', initShare);
+    </script>
+  </body>
+</html>

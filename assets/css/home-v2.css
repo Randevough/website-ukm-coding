@@ -1,0 +1,1399 @@
+/* =========================================================
+   HOME V2 — revisi beranda
+   Dimuat paling akhir: berhak menimpa berkas CSS lain.
+   1. Palet aksen (Klein blue)
+   2. Tombol
+   3. Hero (tekstur grain + wash biru/oranye, margin atas)
+   4. Tentang UKM (sticky heading + teks bergulir)
+   5. Projects (kartu mengembang di tempat)
+   6. Updates (baris editorial + hover thumbnail)
+   7. Galeri (mosaic asimetris 7 frame)
+   8. Kerja sama (krem hangat, terpusat)
+   9. Footer partner (5 slot)
+   10. Responsif
+   ========================================================= */
+
+/* ---------------- 1. Palet aksen ---------------- */
+:root {
+  --blue: #2340d8;
+  --blue-deep: #1a32a6;
+  --blue-soft: #e9ecfd;
+  --blue-wash: rgba(35, 64, 216, 0.08);
+  --blue-line: rgba(35, 64, 216, 0.26);
+  --cream: #f4ecdf;
+  --cream-2: #efe3d2;
+  --cream-ink: #1d1913;
+  --cream-ink-2: #5d5346;
+  --cream-line: rgba(29, 25, 19, 0.16);
+}
+
+/* Kursor kustom dimatikan sepenuhnya. */
+.cursor {
+  display: none !important;
+}
+
+/* ---------------- 2. Tombol ---------------- */
+/* Sebelumnya hitam lalu berubah biru saat hover — sekarang biru konsisten. */
+.btn--primary,
+.btn--primary:link,
+.btn--primary:visited {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: #fff;
+}
+
+.btn--primary:hover,
+.btn--primary:focus-visible {
+  background: var(--blue-deep);
+  border-color: var(--blue-deep);
+  color: #fff;
+}
+
+.btn--primary .arrow {
+  transition: transform 260ms var(--ease, ease);
+}
+
+.btn--primary:hover .arrow {
+  transform: translateX(4px);
+}
+
+/* ---------------- 3. Hero ---------------- */
+.hero {
+  padding-top: clamp(32px, 4.4vh, 56px);
+  padding-bottom: clamp(28px, 4vw, 48px);
+  background: var(--paper);
+}
+
+.hero__wash {
+  inset: 0;
+  height: 100%;
+  filter: none;
+  opacity: 1;
+  background:
+		/* Kisi blueprint tipis — kesan ruang teknik, tanpa warna. */
+    repeating-linear-gradient(
+      90deg,
+      rgba(22, 24, 28, 0.055) 0 1px,
+      transparent 1px 108px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      rgba(22, 24, 28, 0.035) 0 1px,
+      transparent 1px 108px
+    ),
+    /* Spotlight terang di kiri atas, bayangan halus di kanan bawah. */
+    radial-gradient(
+        120% 96% at 8% -6%,
+        rgba(255, 255, 255, 0.95),
+        rgba(255, 255, 255, 0) 62%
+      ),
+    radial-gradient(
+      86% 78% at 96% 104%,
+      rgba(22, 24, 28, 0.07),
+      rgba(22, 24, 28, 0) 66%
+    );
+  -webkit-mask-image: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 1) 52%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  mask-image: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 1) 52%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+/* Grain halus di atas wash. */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.42;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23g)' opacity='0.5'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  -webkit-mask-image: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 1) 58%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  mask-image: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 1) 58%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+.hero__grid {
+  opacity: 0.55;
+}
+
+.hero__top {
+  padding-bottom: clamp(12px, 1.5vw, 20px);
+}
+
+.hero__display {
+  font-size: clamp(2.7rem, 8.4vw, 6.4rem);
+  padding-block: clamp(14px, 2.2vw, 30px);
+}
+
+/* Descender huruf j/g sebelumnya terpotong oleh mask reveal. */
+.hero__display .lineMask {
+  padding-bottom: 0.12em;
+  margin-bottom: -0.06em;
+}
+
+.hero__foot {
+  grid-template-columns: minmax(0, 1fr);
+  padding-top: clamp(16px, 2vw, 26px);
+  gap: clamp(16px, 2vw, 28px);
+}
+
+.hero__foot .lead {
+  max-width: 60ch;
+}
+
+.hero__actions {
+  padding-top: clamp(12px, 1.6vw, 20px);
+}
+
+/* ---------------- 4. Tentang UKM ---------------- */
+#tentang {
+  background: var(--paper-2);
+}
+
+.about2 {
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+  gap: clamp(28px, 5vw, 80px);
+  align-items: start;
+}
+
+.about2__side {
+  position: sticky;
+  top: calc(var(--header-h, 72px) + 32px);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding-right: clamp(0px, 2vw, 24px);
+  border-right: 1px solid var(--line);
+}
+
+.about2__h {
+  font-size: clamp(1.9rem, 3.4vw, 3.1rem);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  font-weight: 800;
+}
+
+.about2__h em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--blue);
+  letter-spacing: -0.02em;
+}
+
+.about2__rule {
+  height: 1px;
+  width: 64px;
+  background: var(--blue);
+}
+
+.about2__flow {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(24px, 3.4vw, 44px);
+}
+
+.about2__lead {
+  font-size: clamp(1.06rem, 1.5vw, 1.34rem);
+  line-height: 1.55;
+  color: var(--ink);
+  max-width: 62ch;
+}
+
+.about2__lead em {
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--blue);
+}
+
+.about2__blocks {
+  display: grid;
+  gap: 1px;
+  background: var(--line);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.about2__block {
+  background: var(--paper-2);
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  gap: clamp(14px, 2vw, 28px);
+  padding-block: clamp(18px, 2.4vw, 26px);
+  transition:
+    background 260ms ease,
+    padding-left 260ms ease;
+  padding-left: 0;
+}
+
+.about2__block:hover {
+  background: var(--paper-raised);
+  padding-left: 10px;
+}
+
+.about2__num {
+  font-family: var(--mono, monospace);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  color: var(--blue);
+  padding-top: 6px;
+}
+
+.about2__block h3 {
+  font-size: clamp(1.02rem, 1.3vw, 1.2rem);
+  margin-bottom: 6px;
+  letter-spacing: -0.015em;
+}
+
+.about2__block p {
+  font-size: var(--sm);
+  color: var(--ink-2);
+  line-height: 1.6;
+  max-width: 54ch;
+}
+
+.about2__quote {
+  position: relative;
+  padding: clamp(20px, 2.6vw, 30px) clamp(20px, 2.6vw, 34px);
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--orange);
+}
+
+.about2__quote p {
+  font-family: var(--serif);
+  font-size: clamp(1.06rem, 1.6vw, 1.4rem);
+  line-height: 1.45;
+  color: var(--ink);
+}
+
+.about2__quote .label {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--ink-3);
+}
+
+/* ---------------- 5. Projects: kartu mengembang ---------------- */
+#featuredProjects {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+#featuredProjects > .pcard {
+  grid-column: auto;
+}
+
+.pcard--v2 {
+  min-height: 340px;
+  transition:
+    background 260ms ease,
+    box-shadow 260ms ease;
+}
+
+.pcard__cue {
+  font-family: var(--mono, monospace);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mark, var(--blue));
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.pcard__detail {
+  display: none;
+}
+
+/* Override aturan lama !important agar kartu terbuka melebar penuh. */
+#projects .bento > .pcard--v2.is-open {
+  grid-column: 1 / -1 !important;
+  grid-row: auto !important;
+}
+
+#projects .bento > .pcard--v2.is-open .pcard__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+}
+
+.pcard--v2.is-open .pcard__actions .btn {
+  white-space: nowrap;
+}
+
+.pcard--v2.is-open .pcard__pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-content: flex-start;
+}
+
+.pcard--v2.is-open {
+  grid-column: 1 / -1;
+  background: var(--paper-raised);
+  box-shadow: var(--shadow-2);
+  z-index: 3;
+  min-height: 0;
+}
+
+.pcard--v2.is-open .pcard__art {
+  min-height: 150px;
+  max-height: 190px;
+  flex: 0 0 auto;
+}
+
+.pcard--v2.is-open .pcard__one {
+  -webkit-line-clamp: unset;
+  display: block;
+}
+
+.pcard--v2.is-open .pcard__detail {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+  gap: clamp(20px, 3vw, 44px);
+  padding-top: clamp(18px, 2.2vw, 26px);
+  border-top: 1px solid var(--line);
+  animation: pcardOpen 320ms var(--ease, ease) both;
+}
+
+@keyframes pcardOpen {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.pcard__detail .spec__row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding-block: 10px;
+  border-bottom: 1px solid var(--line);
+  font-size: var(--sm);
+}
+
+.pcard__detail .spec__k {
+  color: var(--ink-3);
+}
+
+.pcard__detail .spec__v {
+  color: var(--ink);
+  text-align: right;
+}
+
+.pcard__aside {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pcard__pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pcard__pill {
+  font-family: var(--mono, monospace);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  padding: 6px 10px;
+  border: 1px solid var(--blue-line);
+  color: var(--blue-deep);
+  background: var(--blue-soft);
+}
+
+.pcard__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: auto;
+}
+
+/* ---------------- 6. Updates: baris editorial ---------------- */
+.urows {
+  border-top: 1px solid var(--line-mid, var(--line));
+}
+
+.urow {
+  position: relative;
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr) 150px 120px 34px;
+  align-items: center;
+  gap: clamp(12px, 2vw, 28px);
+  padding-block: clamp(18px, 2.2vw, 26px);
+  border-bottom: 1px solid var(--line-mid, var(--line));
+  text-decoration: none;
+  color: inherit;
+  transition: background 260ms ease;
+}
+
+.urow:hover {
+  background: var(--paper-2);
+}
+
+.urow__idx {
+  font-family: var(--mono, monospace);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  color: var(--ink-4);
+}
+
+.urow:hover .urow__idx {
+  color: var(--blue);
+}
+
+.urow__title {
+  font-size: clamp(1.06rem, 1.7vw, 1.5rem);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+  max-width: 34ch;
+}
+
+.urow__kat {
+  font-family: var(--mono, monospace);
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  display: block;
+  margin-bottom: 8px;
+}
+
+.urow__meta,
+.urow__date {
+  font-family: var(--mono, monospace);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--ink-3);
+}
+
+.urow__arrow {
+  justify-self: end;
+  font-size: 1.1rem;
+  color: var(--ink-4);
+  transition:
+    transform 260ms ease,
+    color 260ms ease;
+}
+
+.urow:hover .urow__arrow {
+  color: var(--blue);
+  transform: translateX(5px);
+}
+
+.urow__thumb {
+  position: absolute;
+  right: 190px;
+  top: 50%;
+  width: 196px;
+  height: 122px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-50%) scale(0.9) rotate(-2deg);
+  transition:
+    opacity 260ms ease,
+    transform 320ms var(--ease, ease);
+  z-index: 2;
+}
+
+.urow:hover .urow__thumb {
+  opacity: 1;
+  transform: translateY(-50%) scale(1) rotate(-2deg);
+}
+
+@media (hover: none) {
+  .urow__thumb {
+    display: none;
+  }
+}
+
+/* ---------------- 7. Galeri: mosaic asimetris ---------------- */
+#ig.iggrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-rows: clamp(96px, 11vw, 152px);
+  grid-template-areas:
+    "a a b c"
+    "a a d d"
+    "e e f f";
+  gap: 10px;
+  background: none;
+  border: 0;
+}
+
+#ig .igtile {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--paper-2);
+  /* Tinggi diatur oleh baris mosaic, bukan rasio persegi bawaan. */
+  aspect-ratio: auto;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+/* Aturan lama menyembunyikan frame ke-6 dan memaksa tinggi baris — dinonaktifkan. */
+#galeri .igtile:nth-child(n + 4),
+#galeri .igtile:nth-child(n + 6) {
+  display: block;
+}
+
+#galeri .igtile:first-child {
+  grid-row: auto;
+}
+
+#ig .igtile:nth-child(1) {
+  grid-area: a;
+}
+#ig .igtile:nth-child(2) {
+  grid-area: b;
+}
+#ig .igtile:nth-child(3) {
+  grid-area: c;
+}
+#ig .igtile:nth-child(4) {
+  grid-area: d;
+}
+#ig .igtile:nth-child(5) {
+  grid-area: e;
+}
+#ig .igtile:nth-child(6) {
+  grid-area: f;
+}
+#ig .igtile .art {
+  height: 100%;
+  transition: transform 520ms var(--ease, ease);
+}
+
+#ig .igtile:hover .art {
+  transform: scale(1.05);
+}
+
+#ig .igtile__overlay {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 12px 14px;
+  font-size: 0.78rem;
+  line-height: 1.35;
+  color: #fff;
+  background: linear-gradient(
+    to top,
+    rgba(12, 14, 17, 0.82),
+    rgba(12, 14, 17, 0)
+  );
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 260ms ease,
+    transform 260ms ease;
+}
+
+#ig .igtile:hover .igtile__overlay,
+#ig .igtile:focus-visible .igtile__overlay {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------------- 8. Kerja sama: krem hangat, terpusat ---------------- */
+.pcta {
+  position: relative;
+  background: var(--paper);
+  color: var(--ink);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  overflow: clip;
+}
+
+.pcta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(22, 24, 28, 0.045) 0 1px,
+    transparent 1px 108px
+  );
+  -webkit-mask-image: radial-gradient(
+    70% 70% at 50% 50%,
+    rgba(0, 0, 0, 0.9),
+    rgba(0, 0, 0, 0) 78%
+  );
+  mask-image: radial-gradient(
+    70% 70% at 50% 50%,
+    rgba(0, 0, 0, 0.9),
+    rgba(0, 0, 0, 0) 78%
+  );
+}
+
+.pcta__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+  margin-inline: auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(16px, 2.2vw, 24px);
+}
+
+.pcta__label {
+  font-family: var(--mono, monospace);
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--blue-deep);
+}
+
+.pcta__title {
+  font-size: clamp(1.9rem, 4.4vw, 3.5rem);
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  font-weight: 800;
+  color: var(--cream-ink);
+}
+
+.pcta__title em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--blue);
+  letter-spacing: -0.02em;
+}
+
+.pcta__dek {
+  font-size: clamp(0.98rem, 1.3vw, 1.14rem);
+  line-height: 1.6;
+  color: var(--cream-ink-2);
+  max-width: 56ch;
+}
+
+.pcta__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 32px;
+  background: var(--cream-ink);
+  color: var(--cream);
+  border: 1px solid var(--cream-ink);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  transition:
+    background 260ms ease,
+    transform 260ms ease;
+}
+
+.pcta__cta:hover {
+  background: var(--blue);
+  border-color: var(--blue);
+  transform: translateY(-2px);
+}
+
+.pcta__cta .arrow {
+  transition: transform 260ms ease;
+}
+
+.pcta__cta:hover .arrow {
+  transform: translateX(4px);
+}
+
+.pcta__alt {
+  font-size: var(--sm);
+  color: var(--cream-ink-2);
+}
+
+.pcta__alt a {
+  color: var(--blue-deep);
+  text-underline-offset: 3px;
+}
+
+.pcta__tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: clamp(8px, 1.4vw, 16px);
+}
+
+.pcta__tag {
+  font-family: var(--mono, monospace);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 8px 14px;
+  border: 1px solid var(--cream-line);
+  color: var(--cream-ink-2);
+  background: rgba(255, 255, 255, 0.42);
+}
+
+/* ---------------- 9. Footer partner ---------------- */
+.partners__grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+/* ---------------- 10. Responsif ---------------- */
+@media (max-width: 1080px) {
+  .urow {
+    grid-template-columns: 44px minmax(0, 1fr) 130px 30px;
+  }
+  .urow__meta {
+    display: none;
+  }
+  .urow__thumb {
+    right: 150px;
+    width: 150px;
+    height: 96px;
+  }
+}
+
+@media (max-width: 900px) {
+  .about2 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .about2__side {
+    position: static;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 20px;
+  }
+  #featuredProjects {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .pcard--v2.is-open .pcard__detail {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  #galeri .igtile:nth-child(n + 4),
+  #galeri .igtile:nth-child(n + 6) {
+    display: block;
+  }
+  #ig.iggrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: clamp(120px, 30vw, 170px);
+    grid-template-areas:
+      "a a"
+      "b c"
+      "d d"
+      "e f";
+  }
+  .partners__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .hero {
+    padding-top: 24px;
+  }
+  .hero__display {
+    font-size: clamp(2.3rem, 12vw, 3.4rem);
+  }
+  #featuredProjects {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .urow {
+    grid-template-columns: 34px minmax(0, 1fr) 26px;
+  }
+  .urow__date {
+    display: none;
+  }
+  .about2__block {
+    grid-template-columns: 40px minmax(0, 1fr);
+  }
+  .pcta__cta {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* =========================================================
+   11. Pembatasan tipografi — serif italik hanya di hero
+   Di luar hero, penekanan pakai sans tebal berwarna biru.
+   ========================================================= */
+.about2__h em,
+.about2__lead em,
+.about2__quote,
+.about2__quote em,
+.pcta__title em,
+.urow__title em {
+  font-family: var(--sans);
+  font-style: normal;
+}
+
+.about2__h em,
+.about2__lead em,
+.pcta__title em {
+  font-weight: 700;
+  color: var(--blue);
+  letter-spacing: -0.015em;
+}
+
+.about2__quote {
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+/* Kerja sama kini beralas paper: kembalikan warna teks ke token ink. */
+.pcta__title,
+.pcta__dek,
+.pcta__alt,
+.pcta__tag {
+  color: inherit;
+}
+
+.pcta__dek {
+  color: var(--ink-2);
+}
+
+.pcta__alt {
+  color: var(--ink-3);
+}
+
+.pcta__tag {
+  border-color: var(--line);
+  color: var(--ink-3);
+  background: var(--paper-raised);
+}
+
+.pcta__cta {
+  background: var(--blue);
+  color: #fff;
+  border-color: var(--blue);
+}
+
+.pcta__cta:hover {
+  background: var(--blue-deep);
+  border-color: var(--blue-deep);
+}
+
+/* Modal lihat cepat — pastikan selalu utuh di viewport. */
+#projectModal .modal__panel {
+  width: min(94vw, 980px);
+  max-height: min(86vh, 820px);
+}
+
+#projectModal .modal__art {
+  min-height: 0;
+}
+
+@media (max-width: 900px) {
+  #projectModal .modal__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  #projectModal .modal__art {
+    min-height: 180px;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+}
+
+/* Modal project: paksa fixed + center sejati (ancestor beranimasi bisa
+   membuat position:fixed jadi relatif, itu penyebab modal jatuh ke bawah). */
+#projectModal {
+  position: fixed;
+  inset: 0;
+}
+
+#projectModal .modal__backdrop {
+  position: fixed;
+  inset: 0;
+}
+
+#projectModal .modal__panel {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0.97) !important;
+  max-height: 86vh;
+  overflow: auto;
+}
+
+#projectModal.is-open .modal__panel {
+  transform: translate(-50%, -50%) scale(1) !important;
+}
+
+/* =========================================================
+   12. HERO V2 — editorial asimetris, full viewport
+   ========================================================= */
+.hero--v2 {
+  min-height: calc(100svh - var(--header-h, 72px));
+  display: flex;
+  flex-direction: column;
+  padding-top: clamp(28px, 4vh, 48px);
+  padding-bottom: clamp(20px, 3vh, 36px);
+  background: var(--paper);
+}
+
+.hero--v2 .hero__inner {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: clamp(24px, 3.5vh, 44px);
+}
+
+.hero__split {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+  gap: clamp(28px, 4.5vw, 72px);
+  align-items: center;
+}
+
+.hero__left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: clamp(16px, 2.2vh, 26px);
+}
+
+.hero--v2 .hero__display {
+  font-size: clamp(2.5rem, 5.4vw, 4.7rem);
+  line-height: 1.03;
+  letter-spacing: -0.04em;
+  padding-block: 0;
+}
+
+.hero__lead {
+  font-size: clamp(1rem, 1.2vw, 1.13rem);
+  line-height: 1.65;
+  color: var(--ink-2);
+  max-width: 46ch;
+}
+
+.hero--v2 .hero__actions {
+  padding-top: clamp(2px, 0.6vh, 8px);
+}
+
+/* --- Kartu komposisi abstrak di kolom kanan --- */
+.hero__visual {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.hero__card {
+  position: relative;
+  width: min(100%, 480px);
+  aspect-ratio: 4 / 5;
+  max-height: min(62vh, 560px);
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-1);
+  overflow: hidden;
+}
+
+.hero__cardTag {
+  position: absolute;
+  top: 16px;
+  left: 18px;
+  z-index: 3;
+  color: var(--ink-3);
+}
+
+/* Dot field halus — tekstur pengganti grid. */
+.hero__cardHalftone {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+    circle,
+    rgba(22, 24, 28, 0.17) 1px,
+    transparent 1.6px
+  );
+  background-size: 15px 15px;
+  -webkit-mask-image: linear-gradient(
+    215deg,
+    rgba(0, 0, 0, 0.95) 0%,
+    rgba(0, 0, 0, 0.55) 42%,
+    rgba(0, 0, 0, 0) 74%
+  );
+  mask-image: linear-gradient(
+    215deg,
+    rgba(0, 0, 0, 0.95) 0%,
+    rgba(0, 0, 0, 0.55) 42%,
+    rgba(0, 0, 0, 0) 74%
+  );
+}
+
+/* Aksen dot biru di sudut kanan atas. */
+.hero__cardHalftone::after {
+  content: "";
+  position: absolute;
+  top: -8%;
+  right: -10%;
+  width: 56%;
+  aspect-ratio: 1;
+  background-image: radial-gradient(
+    circle,
+    rgba(35, 64, 216, 0.55) 1.3px,
+    transparent 1.9px
+  );
+  background-size: 15px 15px;
+  -webkit-mask-image: radial-gradient(
+    closest-side,
+    rgba(0, 0, 0, 0.9),
+    rgba(0, 0, 0, 0)
+  );
+  mask-image: radial-gradient(
+    closest-side,
+    rgba(0, 0, 0, 0.9),
+    rgba(0, 0, 0, 0)
+  );
+}
+
+/* Dua cincin tipis di kanan bawah. */
+.hero__cardRings {
+  position: absolute;
+  right: -14%;
+  bottom: -16%;
+  width: 62%;
+  aspect-ratio: 1;
+  border: 1px solid rgba(22, 24, 28, 0.18);
+  border-radius: 50%;
+}
+
+.hero__cardRings::after {
+  content: "";
+  position: absolute;
+  inset: 18%;
+  border: 1px solid rgba(35, 64, 216, 0.3);
+  border-radius: 50%;
+}
+
+.hero__cardWord {
+  position: absolute;
+  left: 18px;
+  bottom: 74px;
+  z-index: 3;
+  font-size: clamp(1.9rem, 2.7vw, 2.7rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+}
+
+.hero__cardWord em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--blue);
+  padding-inline: 0.08em;
+}
+
+.hero__cardFoot {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 3;
+  display: flex;
+  justify-content: space-between;
+  padding: 13px 18px;
+  border-top: 1px solid var(--line);
+  font-family: var(--mono, monospace);
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+/* Strip meta di dasar hero — jembatan ke section berikutnya. */
+.hero__meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  font-family: var(--mono, monospace);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.hero__metaMark {
+  color: var(--blue);
+}
+
+/* =========================================================
+   13. TEKSTUR GLOBAL — grid dibuang, diganti dot field
+   ========================================================= */
+/* Artwork kartu project/galeri: mesh kotak -> dot field. */
+.art__mesh {
+  background-image: radial-gradient(
+    circle,
+    rgba(22, 24, 28, 0.09) 1px,
+    transparent 1.5px
+  );
+  background-size: 17px 17px;
+}
+
+/* Kerja sama: tidak ada lagi pola apa pun — paper bersih. */
+.pcta::before {
+  display: none;
+}
+
+/* =========================================================
+   14. TENTANG — hover tanpa geser layout
+   ========================================================= */
+.about2__block {
+  padding-block: clamp(22px, 2.8vw, 32px);
+  padding-inline: 6px;
+  transition:
+    background 260ms ease,
+    box-shadow 260ms ease;
+}
+
+.about2__block:hover {
+  background: var(--paper-raised);
+  box-shadow: inset 2px 0 0 var(--blue);
+  padding-left: 6px;
+}
+
+.about2__block h3 {
+  margin-bottom: 8px;
+}
+
+/* =========================================================
+   15. KERJA SAMA — editorial kiri, sejajar section lain
+   ========================================================= */
+.pcta__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+  gap: clamp(30px, 5vw, 76px);
+  align-items: start;
+  padding-top: clamp(22px, 3vw, 34px);
+}
+
+.pcta__main {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: clamp(22px, 3vw, 34px);
+}
+
+.pcta__title {
+  font-size: clamp(2rem, 3.9vw, 3.5rem);
+  line-height: 1.03;
+  letter-spacing: -0.04em;
+  font-weight: 800;
+  max-width: 16ch;
+}
+
+.pcta__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.pcta__alt {
+  font-size: var(--sm);
+  color: var(--ink-3);
+}
+
+.pcta__side {
+  border-left: 1px solid var(--line);
+  padding-left: clamp(22px, 2.6vw, 36px);
+}
+
+.pcta__dek {
+  font-size: clamp(1rem, 1.15vw, 1.12rem);
+  line-height: 1.65;
+  color: var(--ink-2);
+  max-width: 44ch;
+}
+
+.pcta__rows {
+  margin-top: clamp(22px, 2.6vw, 32px);
+  display: grid;
+  border-top: 1px solid var(--line);
+}
+
+.pcta__row {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding-block: 13px;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  transition:
+    background 240ms ease,
+    box-shadow 240ms ease;
+  padding-inline: 6px;
+}
+
+.pcta__row:hover {
+  background: var(--paper-raised);
+  box-shadow: inset 2px 0 0 var(--blue);
+}
+
+.pcta__row .idx {
+  color: var(--blue);
+}
+
+/* =========================================================
+   16. FOOTER — hover tombol tidak lagi putih menyala
+   ========================================================= */
+.btn--onink::before {
+  background: rgba(35, 64, 216, 0.16);
+}
+
+.btn--onink:hover {
+  color: #aebaff;
+  border-color: var(--blue);
+}
+
+/* =========================================================
+   17. Responsif hero v2 + kerja sama
+   ========================================================= */
+@media (max-width: 1080px) {
+  .hero__split {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .hero--v2 {
+    min-height: 0;
+  }
+  .hero__split {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+  .hero__visual {
+    justify-content: flex-start;
+  }
+  .hero__card {
+    aspect-ratio: 4 / 3;
+    max-height: none;
+    width: min(100%, 560px);
+  }
+  .hero__meta {
+    flex-wrap: wrap;
+    row-gap: 8px;
+  }
+  .pcta__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .pcta__side {
+    border-left: 0;
+    padding-left: 0;
+    border-top: 1px solid var(--line);
+    padding-top: clamp(22px, 5vw, 30px);
+  }
+}
+
+/* =========================================================
+   18. Polish hero v2 — proporsi kolom & ritme
+   ========================================================= */
+.hero__split {
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  gap: clamp(36px, 5vw, 88px);
+}
+
+.hero--v2 .hero__display {
+  font-size: clamp(2.4rem, 4.5vw, 3.9rem);
+}
+
+.hero__left {
+  gap: clamp(20px, 2.6vh, 30px);
+}
+
+.hero__card {
+  max-height: min(60vh, 540px);
+  width: min(100%, 500px);
+}
+
+/* Selaraskan aksen italic: heading Tentang memakai serif italic biru seperti hero. */
+.about2__h em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--blue);
+  letter-spacing: -0.02em;
+}
+
+/* Kecualikan kutipan/penekanan inline — tetap sans tebal. */
+.about2__lead em,
+.pcta__title em,
+.urow__title em {
+  font-family: var(--sans);
+  font-style: normal;
+  font-weight: 700;
+  color: var(--blue);
+  letter-spacing: -0.015em;
+}
+
+/* =========================================================
+   19. FINAL — override responsif (harus paling akhir agar
+   menang cascade di atas blok polish).
+   ========================================================= */
+@media (max-width: 900px) {
+  .hero--v2 {
+    min-height: 0;
+  }
+  .hero__split {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: clamp(30px, 7vw, 44px);
+  }
+  .hero__visual {
+    justify-content: flex-start;
+    width: 100%;
+  }
+  .hero__card {
+    aspect-ratio: 4 / 3;
+    max-height: none;
+    width: min(100%, 560px);
+  }
+  .hero__cardWord {
+    bottom: 66px;
+  }
+  .hero__meta {
+    flex-wrap: wrap;
+    row-gap: 8px;
+  }
+  .pcta__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .pcta__side {
+    border-left: 0;
+    padding-left: 0;
+    border-top: 1px solid var(--line);
+    padding-top: clamp(22px, 5vw, 30px);
+  }
+}

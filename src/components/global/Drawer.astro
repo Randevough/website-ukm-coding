@@ -1,0 +1,106 @@
+---
+import { UKM_FIXTURE } from "@/lib/content/fixture";
+const { settings } = UKM_FIXTURE;
+---
+
+<div aria-hidden="true" class="drawer" id="drawer">
+  <div class="drawer__backdrop" data-drawer-close=""></div>
+  <div aria-label="Menu" class="drawer__panel" role="dialog">
+    <div class="drawer__top">
+      <span class="label">Menu</span>
+      <button
+        aria-label="Tutup menu"
+        class="drawer__close"
+        data-drawer-close=""
+        type="button">×</button
+      >
+    </div>
+    <nav class="drawer__nav">
+      <a class="drawer__link" data-drawer-close="" href="/"
+        >Beranda <span>01</span></a
+      >
+      <a class="drawer__link" data-drawer-close="" href="/kegiatan"
+        >Updates <span>02</span></a
+      >
+      <a class="drawer__link" data-drawer-close="" href="/projects"
+        >Projects <span>03</span></a
+      >
+    </nav>
+    <div class="drawer__foot">
+      <span class="label">Kontak</span>
+      <a class="tlink" data-mailto="" href={`mailto:${settings.email}`}
+        ><span>{settings.email}</span></a
+      >
+      <a
+        class="btn btn--primary btn--block"
+        data-drawer-close=""
+        href="/#kerjasama">Ajukan kerja sama</a
+      >
+    </div>
+  </div>
+</div>
+<script>
+  function initDrawer() {
+    const drawer = document.querySelector("#drawer") as HTMLElement | null;
+    const burger = document.querySelector("#burger") as HTMLElement | null;
+    if (!drawer || !burger) return;
+
+    const closers = drawer.querySelectorAll("[data-drawer-close]");
+    let isOpen = false;
+
+    function handleTabKey(e: KeyboardEvent) {
+      if (!isOpen) return;
+      if (e.key === 'Tab') {
+        const focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+        const focusables = Array.from(drawer!.querySelectorAll<HTMLElement>(focusableElements)).filter(el => el.tabIndex >= 0);
+        if (focusables.length === 0) return;
+        const firstFocusableElement = focusables[0];
+        const lastFocusableElement = focusables[focusables.length - 1];
+
+        if (e.shiftKey) {
+          if (document.activeElement === firstFocusableElement || document.activeElement === drawer) {
+            lastFocusableElement.focus();
+            e.preventDefault();
+          }
+        } else {
+          if (document.activeElement === lastFocusableElement) {
+            firstFocusableElement.focus();
+            e.preventDefault();
+          }
+        }
+      }
+    }
+
+    function openDrawer() {
+      isOpen = true;
+      drawer!.setAttribute("aria-hidden", "false");
+      burger!.setAttribute("aria-expanded", "true");
+      document.body.classList.add("is-locked");
+      drawer!.setAttribute("tabindex", "-1");
+      drawer!.focus();
+      document.addEventListener('keydown', handleTabKey);
+    }
+
+    function closeDrawer() {
+      isOpen = false;
+      drawer!.setAttribute("aria-hidden", "true");
+      burger!.setAttribute("aria-expanded", "false");
+      document.body.classList.remove("is-locked");
+      document.removeEventListener('keydown', handleTabKey);
+      burger!.focus();
+    }
+
+    burger.addEventListener("click", () => {
+      isOpen ? closeDrawer() : openDrawer();
+    });
+
+    closers.forEach((el) => {
+      el.addEventListener("click", closeDrawer);
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && isOpen) closeDrawer();
+    });
+  }
+  document.addEventListener("astro:page-load", initDrawer);
+</script>

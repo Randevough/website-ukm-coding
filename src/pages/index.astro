@@ -1,0 +1,284 @@
+---
+import Layout from "../layouts/Layout.astro";
+import ProjectCard from "../components/ui/ProjectCard.astro";
+import PostCard from "../components/ui/PostCard.astro";
+import Art from "../components/global/Art.astro";
+import SanityImage from "../components/sanity/SanityImage.astro";
+import { UKM_FIXTURE } from "../lib/content/fixture";
+import { fetchSanity } from "../lib/sanity/client";
+import {
+  siteSettingsQuery,
+  allProjectsQuery,
+  allEditorialsQuery,
+  galleryQuery,
+} from "../lib/sanity/queries";
+
+let settings = UKM_FIXTURE.settings;
+let featuredProjects = UKM_FIXTURE.projects.slice(0, 3);
+let latestPosts = UKM_FIXTURE.posts.slice(0, 4);
+let galleryItems = [0, 1, 2, 3, 4, 5].map((i) => ({ _type: "placeholder", i }));
+
+const sanitySettings = await fetchSanity<any>(siteSettingsQuery);
+if (sanitySettings) {
+  settings = { ...settings, ...sanitySettings };
+}
+
+const sanityProjects = await fetchSanity<any[]>(allProjectsQuery);
+if (sanityProjects && sanityProjects.length > 0) {
+  featuredProjects = sanityProjects.filter((p) => p.featured).slice(0, 3);
+  if (featuredProjects.length === 0) {
+    featuredProjects = sanityProjects.slice(0, 3);
+  }
+}
+
+const sanityPosts = await fetchSanity<any[]>(allEditorialsQuery);
+if (sanityPosts && sanityPosts.length > 0) {
+  latestPosts = sanityPosts.slice(0, 4);
+}
+
+const sanityGallery = await fetchSanity<any[]>(galleryQuery);
+if (sanityGallery && sanityGallery.length > 0) {
+  galleryItems = sanityGallery.slice(0, 6);
+}
+---
+
+<Layout title={`Beranda | ${settings.nama}`}>
+  <!-- ============================= HERO ============================= -->
+  <section class="section hero hero--v2">
+    <div class="container hero__inner">
+      <div class="hero__split">
+        <div class="hero__left">
+          <span class="label label--mark"
+            >Unit Kegiatan Mahasiswa · Cyber University</span
+          >
+          <h1 class="hero__display">
+            <span class="lineMask" data-parallax="0.02"
+              ><span>Belajar bersama.</span></span
+            ><span class="lineMask" data-parallax="0.05"
+              ><span class="thin">Membangun <em>yang berguna.</em></span></span
+            >
+          </h1>
+          <p class="hero__lead" data-reveal="" style="--reveal-delay: 320ms">
+            UKM Coding Cyber University adalah ruang kolaborasi mahasiswa untuk
+            mempelajari teknologi, membangun project, dan membagikan pengetahuan
+            yang bermanfaat.
+          </p>
+          <div
+            class="hero__actions"
+            data-reveal=""
+            style="--reveal-delay: 420ms"
+          >
+            <a class="btn btn--primary btn--lg" href="#projects"
+              >Lihat Projects <span class="arrow">→</span></a
+            >
+            <a class="btn btn--lg" href="#kerjasama">Kerja sama</a>
+          </div>
+        </div>
+        <div
+          class="hero__visual"
+          data-reveal="fade"
+          style="--reveal-delay: 200ms"
+          aria-hidden="true"
+        >
+          <div class="hero__card">
+            <span class="hero__cardTag idx">FIG.01 — RUANG BELAJAR</span>
+            <div class="hero__cardHalftone"></div>
+            <div class="hero__cardRings"></div>
+            <div class="hero__cardWord">kode <em>→</em> karya</div>
+            <div class="hero__cardFoot">
+              <span>3 program aktif</span><span>2026</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="hero__meta">
+        <span>Jakarta · Indonesia</span>
+        <span>Komunitas teknologi kampus</span>
+        <span class="hero__metaMark">Belajar · Membangun · Berbagi</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================== MANIFESTO =========================== -->
+  <section class="section section--paper2" id="tentang">
+    <div class="container about2">
+      <div class="about2__side">
+        <span class="label">Tentang UKM</span>
+        <h2 class="about2__h">Ruang belajar yang <em>dibangun bersama.</em></h2>
+        <span class="about2__rule"></span>
+        <span class="idx">01</span>
+      </div>
+      <div class="about2__flow">
+        <p class="about2__lead" data-reveal="">
+          UKM Coding Cyber University adalah tempat mahasiswa bertemu, belajar,
+          dan bertumbuh melalui teknologi. Kami percaya kemampuan tidak berhenti
+          di ruang kelas—ia berkembang ketika pengetahuan <em
+            >diuji, dibangun, lalu dibagikan.</em
+          >
+        </p>
+        <div class="about2__blocks">
+          <article class="about2__block" data-reveal="">
+            <span class="about2__num">01</span>
+            <div>
+              <h3>Belajar bersama</h3>
+              <p>
+                Kelas internal, sesi latihan, dan diskusi terbuka untuk semua
+                tingkat kemampuan—dari yang baru mengenal kode sampai yang sudah
+                membangun produk.
+              </p>
+            </div>
+          </article>
+          <article class="about2__block" data-reveal="">
+            <span class="about2__num">02</span>
+            <div>
+              <h3>Membangun karya nyata</h3>
+              <p>
+                Setiap pembelajaran diarahkan menjadi project yang dapat dilihat
+                dan dinilai publik, bukan berhenti sebagai catatan materi.
+              </p>
+            </div>
+          </article>
+          <article class="about2__block" data-reveal="">
+            <span class="about2__num">03</span>
+            <div>
+              <h3>Berbagi ke luar</h3>
+              <p>
+                Hasil belajar dibagikan lewat kegiatan, dokumentasi, dan
+                kolaborasi dengan pihak di luar kampus.
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================== SHOWCASE =========================== -->
+  <section class="section section--hairline" data-mark="orange" id="projects">
+    <div class="container">
+      <div class="shead">
+        <div class="shead__top">
+          <span class="label label--mark">Projects pilihan</span>
+          <span class="idx">02</span>
+        </div>
+        <div class="shead__body">
+          <h2 data-reveal="">Karya yang lahir dari proses belajar.</h2>
+          <p class="dek" data-reveal="">
+            Tiga project pilihan dari anggota UKM. Klik salah satu kartu untuk
+            membuka ringkasannya langsung di tempat—tanpa berpindah halaman.
+          </p>
+        </div>
+      </div>
+
+      <div class="bento" data-stagger="80" id="featuredProjects">
+        {
+          featuredProjects.map((p, i) => {
+            const size = i === 0 ? "tall" : i === 1 ? "wide" : "normal";
+            return <ProjectCard project={p} size={size} index={i} />;
+          })
+        }
+      </div>
+
+      <div
+        class="row"
+        style="margin-top: var(--s7); justify-content: space-between"
+      >
+        <a class="tlink" href="/projects">Lihat semua Projects</a>
+        <span class="idx">CURATED BY UKM CODING</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ BERITA ============================ -->
+  <section class="section section--hairline" id="updates">
+    <div class="container">
+      <div class="shead">
+        <div class="shead__top">
+          <span class="label">Updates terbaru</span>
+          <span class="idx">03</span>
+        </div>
+        <div class="shead__body">
+          <h2 data-reveal="">Catatan dari setiap proses.</h2>
+          <p class="dek" data-reveal="">
+            Kegiatan, kolaborasi, dan pembelajaran terbaru dari UKM Coding Cyber
+            University—dirangkum agar mudah diikuti publik.
+          </p>
+        </div>
+      </div>
+
+      <div class="asym" data-stagger="70" id="latestPosts">
+        {latestPosts.map((p) => <PostCard post={p} />)}
+      </div>
+
+      <div class="row" style="margin-top: var(--s7)">
+        <a class="tlink" href="/kegiatan">Lihat semua Updates</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================== INSTAGRAM ========================== -->
+  <section class="section section--tight section--hairline" id="galeri">
+    <div class="container">
+      <div class="shead">
+        <div class="shead__top">
+          <span class="label">Galeri kegiatan</span>
+          <span class="idx">04</span>
+        </div>
+        <div class="shead__body">
+          <h2 data-reveal="">Proses yang layak direkam.</h2>
+          <p class="dek" data-reveal="">
+            Cuplikan workshop, kolaborasi, dan kegiatan UKM.
+          </p>
+        </div>
+      </div>
+      <div class="iggrid" data-stagger="60" id="ig">
+        {
+          galleryItems.map((item: any, i: number) => (
+            <div class="igcard" data-reveal>
+              <div class="igcard__art">
+                {item._type === "placeholder" ? (
+                  <Art variant={i % 2 === 0 ? "mix" : "neutral"} />
+                ) : (
+                  <SanityImage node={item.gambar} />
+                )}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================== KERJA SAMA ========================== -->
+  <section class="section section--hairline pcta" id="kerjasama">
+    <div class="container">
+      <div class="shead">
+        <div class="shead__top">
+          <span class="label">Kerja sama</span>
+          <span class="idx">05</span>
+        </div>
+        <div class="shead__body">
+          <h2 data-reveal="">Mulai percakapan dengan kami.</h2>
+          <p class="dek" data-reveal="">
+            Baik untuk kolaborasi event, program edukasi, atau project
+            teknologi—kami terbuka untuk diskusi.
+          </p>
+        </div>
+      </div>
+      <div class="pcta__boxes">
+        <div class="pcta__box" data-reveal="">
+          <span class="label">Kontak Resmi</span>
+          <a class="pcta__h" data-mailto="" href={`mailto:${settings.email}`}
+            ><span>{settings.email}</span></a
+          >
+          <span class="idx">SUREL</span>
+        </div>
+        <div class="pcta__box" data-reveal="" style="--reveal-delay: 100ms">
+          <span class="label">Ikuti Proses Kami</span>
+          <a class="pcta__h" href={settings.instagramUrl}>@ukmcoding</a>
+          <span class="idx">INSTAGRAM</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

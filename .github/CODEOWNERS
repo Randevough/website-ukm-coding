@@ -1,0 +1,10 @@
+# CODEOWNERS
+# Replace @maintainer-username with the actual GitHub handle of the project owner(s)
+
+*       @maintainer-username
+
+# More specific rules
+/docs/                  @maintainer-username
+/src/                   @maintainer-username
+/sanity/                @maintainer-username
+/.github/workflows/     @maintainer-username

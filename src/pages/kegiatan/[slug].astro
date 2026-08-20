@@ -1,0 +1,205 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Art from "../../components/global/Art.astro";
+import SanityImage from "../../components/sanity/SanityImage.astro";
+import PortableTextComponent from "../../components/sanity/PortableTextComponent.astro";
+import { UKM_FIXTURE } from "../../lib/content/fixture";
+import { fetchSanity } from "../../lib/sanity/client";
+import {
+  siteSettingsQuery,
+  allEditorialsQuery,
+} from "../../lib/sanity/queries";
+
+export async function getStaticPaths() {
+  let posts = UKM_FIXTURE.posts;
+  const sanityPosts = await fetchSanity<any[]>(allEditorialsQuery);
+  if (sanityPosts && sanityPosts.length > 0) {
+    posts = sanityPosts;
+  }
+
+  posts.sort((a, b) => {
+    const da = new Date((a as any).tanggalPublikasi || (a as any).tanggal || 0).getTime();
+    const db = new Date((b as any).tanggalPublikasi || (b as any).tanggal || 0).getTime();
+    return db - da;
+  });
+
+  return posts.map((post: any, index: number) => {
+    return {
+      params: { slug: post.slug },
+      props: {
+        post,
+        prev: index > 0 ? posts[index - 1] : null,
+        next: index < posts.length - 1 ? posts[index + 1] : null,
+      },
+    };
+  });
+}
+
+const { post: p, prev, next } = Astro.props as any;
+let settings = UKM_FIXTURE.settings;
+const sanitySettings = await fetchSanity<any>(siteSettingsQuery);
+if (sanitySettings) {
+  settings = { ...settings, ...sanitySettings };
+}
+
+const BULAN = [
+  "Januari",
+  "Februari",
+  "Maret",
+  "April",
+  "Mei",
+  "Juni",
+  "Juli",
+  "Agustus",
+  "September",
+  "Oktober",
+  "November",
+  "Desember",
+];
+function tanggalPanjang(iso: string) {
+  if (!iso) return "";
+  const d = new Date(iso + (iso.includes("T") ? "" : "T00:00:00"));
+  if (isNaN(d.getTime())) return iso;
+  return d.getDate() + " " + BULAN[d.getMonth()] + " " + d.getFullYear();
+}
+
+const title = p.judul || p.title;
+const kategori = p.tipe || p.kategori;
+const date = p.tanggalPublikasi || p.tanggal;
+const penulis = p.penulis || "Tim Redaksi";
+const baca = p.baca || 3;
+
+const isSanityBlocks = (content: any) => Array.isArray(content);
+
+const articleData = {
+  headline: title,
+  datePublished: date,
+  authorName: penulis,
+};
+const isEvent = kategori.toLowerCase() === "kegiatan" || kategori.toLowerCase() === "event";
+const eventData = isEvent ? {
+  name: title,
+  startDate: p.tanggalMulai || date,
+  endDate: p.tanggalSelesai,
+  location: typeof p.lokasi === 'string' ? p.lokasi : undefined,
+} : undefined;
+const breadcrumb = [
+  { name: "Beranda", item: new URL("/", Astro.site || Astro.url.origin).href },
+  {
+    name: "Updates",
+    item: new URL("/kegiatan", Astro.site || Astro.url.origin).href,
+  },
+  {
+    name: title,
+    item: new URL(Astro.url.pathname, Astro.site || Astro.url.origin).href,
+  },
+];
+---
+
+<Layout
+  title={`${title} | ${settings.nama}`}
+  type="article"
+  description={p.excerpt}
+  articleData={articleData}
+  eventData={eventData}
+  breadcrumb={breadcrumb}
+>
+  <section class="section section--tight">
+    <div class="container container--text">
+      <div class="breadcrumb" style="margin-bottom: var(--s5)">
+        <a href="/">Beranda</a><span>/</span><a href="/kegiatan">Updates</a
+        ><span>/</span><span>Detail</span>
+      </div>
+      <article id="article">
+        <header class="article__head">
+          <span class="label label--mark">{kategori}</span>
+          <h1 class="article__title">{title}</h1>
+          <div class="article__meta">
+            <span>{tanggalPanjang(date)}</span>
+            <span>{baca} menit baca</span>
+            <span>{penulis}</span>
+            <button
+              class="btn btn--sm"
+              data-share
+              type="button"
+              style="margin-left: auto; padding: 0.25rem 0.75rem; font-size: 0.75rem"
+              >Bagikan</button
+            >
+          </div>
+        </header>
+        <div
+          class="article__art"
+          style="overflow: hidden; max-height: 520px; position: relative;"
+        >
+          {
+            p.cover ? (
+              <SanityImage
+                node={p.cover}
+                variantFallback={p.variant}
+                glyphFallback={kategori}
+                className="article__artImg"
+              />
+            ) : (
+              <Art variant={p.variant || "neutral"} glyph={kategori} />
+            )
+          }
+        </div>
+        <div class="article__body">
+          {
+            isSanityBlocks(p.isi) ? (
+              <PortableTextComponent value={p.isi} />
+            ) : (
+              <div set:html={p.body || p.excerpt} />
+            )
+          }
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section section--tight section--hairline">
+    <div class="container container--text">
+      <div class="pagenav" id="postNav">
+        {
+          prev ? (
+            <a class="pagenav__prev" href={`/kegiatan/${prev.slug}`}>
+              <span class="label">← Sebelumnya</span>
+              <span>{prev.judul || prev.title}</span>
+            </a>
+          ) : (
+            <div />
+          )
+        }
+        {
+          next ? (
+            <a class="pagenav__next" href={`/kegiatan/${next.slug}`}>
+              <span class="label">Selanjutnya →</span>
+              <span>{next.judul || next.title}</span>
+            </a>
+          ) : (
+            <div />
+          )
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section cta graph" data-mark="orange">
+    <div class="container cta__inner">
+      <div class="stack" data-stagger="80">
+        <span class="label label--mark">Kerja sama</span>
+        <h2 class="cta__title" data-reveal>
+          Mau <em>meliput</em> atau mendukung kegiatan berikutnya?
+        </h2>
+      </div>
+      <div class="stack" data-reveal>
+        <a
+          class="btn btn--mark btn--lg btn--block"
+          data-mailto
+          href={`mailto:${settings.email}`}>Hubungi tim media</a
+        >
+        <a class="btn btn--lg btn--block" href="/kegiatan">Kembali ke arsip</a>
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ukmcoding.cyber-univ.ac.id/sitemap-index.xml

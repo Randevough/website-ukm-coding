@@ -1,0 +1,114 @@
+name: CI & Cloudflare Pages Deploy
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  repository_dispatch:
+    types: [sanity-publish]
+
+jobs:
+  build-and-test:
+    name: Build & Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Format Check
+        run: npm run format:check
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Unit Tests
+        run: npm run test -- --run
+
+      - name: Build
+        run: npm run build
+        env:
+          PUBLIC_SANITY_PROJECT_ID: ${{ secrets.PUBLIC_SANITY_PROJECT_ID || 'demo' }}
+          PUBLIC_SANITY_DATASET: ${{ secrets.PUBLIC_SANITY_DATASET || 'production' }}
+          PUBLIC_NOINDEX: ${{ github.ref != 'refs/heads/main' && 'true' || 'false' }}
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
+          retention-days: 1
+
+  link-check:
+    name: Internal Link Check
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Build Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+      - name: Lychee Link Check
+        uses: lycheeverse/lychee-action@v1.9.3
+        with:
+          args: --offline --no-progress './dist/**/*.html'
+          fail: true
+
+  lighthouse:
+    name: Lighthouse CI
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Download Build Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+      - name: Run Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v11
+        with:
+          staticDistDir: './dist'
+          budgetPath: './lighthouserc.json' # Needs to be created if using budget, or rely on action defaults
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+
+  deploy:
+    name: Deploy to Cloudflare Pages
+    needs: [build-and-test, link-check, lighthouse]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Download Build Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: ukm-coding
+          directory: dist
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref == 'refs/heads/main' && 'main' || github.event.pull_request.head.ref }}

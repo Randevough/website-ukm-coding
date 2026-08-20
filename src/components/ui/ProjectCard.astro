@@ -1,0 +1,57 @@
+---
+import type { Project } from "@/types/content";
+import Art from "../global/Art.astro";
+import SanityImage from "../sanity/SanityImage.astro";
+
+export interface Props {
+  project: any;
+  size?: "normal" | "tall" | "wide";
+  index?: number;
+}
+const { project: p, size = "normal", index } = Astro.props;
+
+const mod =
+  size === "tall" ? " pcard--tall" : size === "wide" ? " pcard--wide" : "";
+const labelPrefix =
+  index != null ? String(index + 1).padStart(2, "0") + " · " : "";
+
+const title = p.nama || p.title;
+const oneLiner = p.ringkasan || p.oneLiner;
+const stack = p.techStack || p.stack || [];
+---
+
+<article
+  class={`pcard${mod}`}
+  data-project={p.slug}
+  data-tilt
+  data-reveal
+  tabindex="0"
+  role="button"
+  aria-label={`Lihat cepat ${title}`}
+>
+  <div class="pcard__art">
+    {
+      p.cover ? (
+        <SanityImage
+          node={p.cover}
+          variantFallback={p.variant}
+          glyphFallback={title}
+        />
+      ) : (
+        <Art variant={p.variant || "mix"} glyph={title} />
+      )
+    }
+  </div>
+  <div class="pcard__top">
+    <span class="label">{labelPrefix}{p.kategori}</span>
+    <span class="idx">{p.tahun}</span>
+  </div>
+  <div class="pcard__body">
+    <h3 class="pcard__title">{title}</h3>
+    <p class="pcard__one">{oneLiner}</p>
+  </div>
+  <div class="pcard__foot">
+    <span class="mono">{stack.slice(0, 3).join(" / ")}</span>
+    <span class="arrow">→</span>
+  </div>
+</article>

@@ -1,0 +1,37 @@
+---
+import { urlFor } from "../../lib/sanity/urlFor";
+import Art from "../global/Art.astro";
+
+interface Props {
+  node: any;
+  variantFallback?: string;
+  glyphFallback?: string;
+  className?: string;
+  loading?: "lazy" | "eager";
+}
+
+const {
+  node,
+  variantFallback = "neutral",
+  glyphFallback,
+  className,
+  loading = "lazy",
+} = Astro.props;
+const src = node ? urlFor(node)?.width(1200).url() : null;
+const alt = node?.alt || "";
+---
+
+{
+  src ? (
+    <img
+      src={src}
+      alt={alt}
+      class={className}
+      style="width: 100%; height: 100%; object-fit: cover;"
+      loading={loading}
+      decoding="async"
+    />
+  ) : (
+    <Art variant={variantFallback} glyph={glyphFallback} />
+  )
+}

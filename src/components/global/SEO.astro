@@ -1,0 +1,148 @@
+---
+export interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  canonical?: string;
+  noindex?: boolean;
+  type?: "website" | "article";
+  articleData?: {
+    headline: string;
+    datePublished: string;
+    authorName: string;
+  };
+  eventData?: {
+    name: string;
+    startDate: string;
+    endDate?: string;
+    location?: string;
+  };
+  breadcrumb?: Array<{ name: string; item: string }>;
+}
+
+const {
+  title,
+  description,
+  image,
+  canonical,
+  noindex = false,
+  type = "website",
+  articleData,
+  eventData,
+  breadcrumb,
+} = Astro.props;
+
+const siteName = "UKM Coding Cyber University";
+const finalTitle = title ? title : siteName;
+const finalDescription =
+  description || "Unit kegiatan mahasiswa bidang teknologi di Cyber University";
+const canonicalUrl =
+  canonical || new URL(Astro.url.pathname, Astro.site || Astro.url.origin).href;
+const finalImage =
+  image || new URL("/og-default.jpg", Astro.site || Astro.url.origin).href;
+---
+
+<title>{finalTitle}</title>
+<meta name="description" content={finalDescription} />
+<link rel="canonical" href={canonicalUrl} />
+
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+
+<meta property="og:title" content={finalTitle} />
+<meta property="og:description" content={finalDescription} />
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:image" content={finalImage} />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={finalTitle} />
+<meta name="twitter:description" content={finalDescription} />
+<meta name="twitter:image" content={finalImage} />
+
+<script
+  is:inline
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: siteName,
+    url: Astro.site || Astro.url.origin,
+    logo: finalImage,
+  })}
+/>
+
+{
+  articleData && (
+    <script
+      is:inline
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Article",
+        headline: articleData.headline,
+        datePublished: articleData.datePublished,
+        author: {
+          "@type": "Person",
+          name: articleData.authorName,
+        },
+        publisher: {
+          "@type": "Organization",
+          name: siteName,
+          logo: {
+            "@type": "ImageObject",
+            url: finalImage,
+          },
+        },
+      })}
+    />
+  )
+}
+
+{
+  breadcrumb && breadcrumb.length > 0 && (
+    <script
+      is:inline
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: breadcrumb.map((crumb, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          name: crumb.name,
+          item: crumb.item,
+        })),
+      })}
+    />
+  )
+}
+
+{
+  eventData && (
+    <script
+      is:inline
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Event",
+        name: eventData.name,
+        startDate: eventData.startDate,
+        ...(eventData.endDate && { endDate: eventData.endDate }),
+        location: {
+          "@type": "Place",
+          name: eventData.location || "Cyber University",
+          address: {
+            "@type": "PostalAddress",
+            addressLocality: "Jakarta",
+            addressCountry: "ID",
+          },
+        },
+        organizer: {
+          "@type": "Organization",
+          name: siteName,
+          url: Astro.site || Astro.url.origin,
+        },
+      })}
+    />
+  )
+}

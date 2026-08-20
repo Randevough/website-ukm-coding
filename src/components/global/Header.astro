@@ -1,0 +1,50 @@
+---
+const currentPath = Astro.url.pathname;
+const isHome = currentPath === "/";
+const isKegiatan = currentPath.startsWith("/kegiatan");
+const isProjects = currentPath.startsWith("/projects");
+---
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="site-header__brand" href="/">
+      <span class="logo-slot">LOGO</span>
+      <span class="site-header__name"
+        >UKM Coding<small>Cyber University</small></span
+      >
+    </a>
+    <nav aria-label="Navigasi utama" class="nav hide-sm">
+      <a class={`nav__link ${isHome ? "is-active" : ""}`} href="/">Beranda</a>
+      <a class={`nav__link ${isKegiatan ? "is-active" : ""}`} href="/kegiatan"
+        >Updates</a
+      >
+      <a class={`nav__link ${isProjects ? "is-active" : ""}`} href="/projects"
+        >Projects</a
+      >
+    </nav>
+    <div class="site-header__actions">
+      <a class="btn hide-sm" href="/#kerjasama">Kerja sama</a>
+      <button
+        aria-expanded="false"
+        aria-label="Buka menu"
+        class="burger"
+        id="burger"
+        type="button"
+      >
+        <span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+<script>
+  function initHeader() {
+    const header = document.querySelector(".site-header");
+    if (!header) return;
+    const onScroll = () => {
+      header.classList.toggle("is-stuck", window.scrollY > 8);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+  }
+  document.addEventListener("astro:page-load", initHeader);
+</script>
