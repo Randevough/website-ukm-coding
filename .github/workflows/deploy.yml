@@ -109,7 +109,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: ukm-coding
+          projectName: ${{ vars.CLOUDFLARE_PROJECT_NAME || 'ukm-coding-website' }}
           directory: dist
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref == 'refs/heads/main' && 'main' || github.event.pull_request.head.ref }}
