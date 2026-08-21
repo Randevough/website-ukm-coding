@@ -1,252 +1,585 @@
-/* Final homepage direction — UKM Coding Cyber University */
+/* =========================================================
+   FINAL HOMEPAGE REFINEMENT — UKM Coding Cyber University
+   Consolidated styles for Hero v2, Manifesto (About),
+   Featured Projects, Updates (Featured + List), Gallery Mosaic,
+   and Partnership Section.
+   ========================================================= */
 
-.site-header {
-  top: 0;
-}
-.hero {
-  min-height: 94vh;
-  padding-top: clamp(64px, 8vw, 112px);
-}
-.hero__grid {
-  opacity: 0.46;
-}
-.rails {
-  opacity: 0.58;
-}
-.hero__display {
-  max-width: 12ch;
-}
-.hero__display em {
-  color: var(--blue);
-}
-.hero__display .thin {
-  color: var(--ink-3);
-}
-.hero__foot {
-  margin-top: clamp(42px, 7vw, 88px);
-}
-.hero__aside {
-  align-self: end;
-}
-
-/* A quieter editorial grid than the prototype. */
-.graph::before {
-  opacity: 0.52;
-}
-.section {
+/* ---------------- 1. Hero Refinement ---------------- */
+.hero--v2 {
+  position: relative;
+  min-height: calc(100vh - var(--header-h, 68px));
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-top: clamp(32px, 4vw, 56px);
+  padding-bottom: clamp(24px, 3vw, 40px);
   overflow: clip;
 }
-.section .shead__top {
-  border-color: color-mix(in srgb, var(--line) 72%, transparent);
-}
 
-/* The manifesto stays bold without becoming an excessively tall text column. */
-#tentang .manifesto {
-  grid-template-columns: minmax(0, 1.08fr) minmax(280px, 0.72fr);
-  gap: clamp(48px, 8vw, 128px);
-}
-#tentang .manifesto__text {
-  max-width: 29ch;
-}
-#tentang .manifesto__note {
-  max-width: 42ch;
-  justify-self: end;
-}
-
-/* Three selected projects: equal importance and comfortable editorial rhythm. */
-#projects .bento {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  grid-auto-rows: minmax(520px, auto);
-}
-#projects .bento > * {
-  grid-column: span 1 !important;
-  grid-row: span 1 !important;
-}
-#projects .pcard {
-  min-height: 100%;
-}
-#projects .pcard__one {
-  -webkit-line-clamp: 3;
-}
-
-/* The compact update list uses a two-column rhythm inside its narrow rail. */
-#updates .asym__minor .irow {
-  grid-template-columns: 1fr;
-  gap: 8px;
-  align-items: start;
-  padding: 20px 0;
-}
-#updates .asym__minor .irow > * {
-  grid-column: 1;
-}
-#updates .asym__minor .irow__meta {
+.hero__inner {
   display: flex;
-  flex-wrap: wrap;
-  gap: 6px 14px;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+  gap: clamp(28px, 4vw, 56px);
+}
+
+.hero__split {
+  display: grid;
+  grid-template-columns: minmax(0, 1.28fr) minmax(320px, 0.82fr);
+  gap: clamp(32px, 5vw, 72px);
+  align-items: stretch;
+}
+
+.hero__left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--s4);
+}
+
+.hero__display {
+  font-size: clamp(2.6rem, 5.2vw, 4.8rem);
+  line-height: 1.04;
+  letter-spacing: -0.04em;
+  font-weight: 800;
+  color: var(--ink-deep);
+  max-width: 16ch;
+}
+
+.hero__display .lineMask {
+  overflow: hidden;
+  display: block;
+}
+
+.hero__display .thin {
+  font-weight: 400;
   color: var(--ink-3);
-  font-size: 0.75rem;
-}
-#updates .asym__minor .irow__excerpt {
-  display: none;
-}
-#updates .asym__minor .irow__title {
-  font-size: 1rem;
-  line-height: 1.35;
-  max-width: 34ch;
-}
-#updates .asym__minor .label {
-  color: var(--mark);
 }
 
-/* Gallery becomes a five-frame editorial mosaic. */
-#galeri .iggrid {
-  grid-template-columns: 1.35fr 0.85fr 0.85fr;
-  grid-template-rows: repeat(2, minmax(210px, 1fr));
-}
-#galeri .igtile:first-child {
-  grid-row: 1 / span 2;
-}
-#galeri .igtile:nth-child(n + 6) {
-  display: none;
+.hero__display em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--blue);
 }
 
-/* Strong dark partnership close. */
-.partnership-final {
-  background: var(--ink-deep);
-  color: var(--paper);
-  border-top: 0;
+.hero__lead {
+  font-size: clamp(1.05rem, 1.3vw, 1.2rem);
+  line-height: 1.65;
+  color: var(--ink-2);
+  max-width: 50ch;
 }
-.partnership-final::before {
-  opacity: 0.09;
-  filter: invert(1);
+
+.hero__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  flex-wrap: wrap;
+  padding-top: var(--s2);
 }
-.partnership-final .cta__title,
-.partnership-final h2 {
-  color: var(--paper);
+
+.hero__visual {
+  display: flex;
+  align-items: stretch;
 }
-.partnership-final .dek {
-  color: rgba(246, 245, 242, 0.68);
+
+.hero__card {
+  position: relative;
+  width: 100%;
+  min-height: 380px;
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--r2);
+  padding: var(--s5);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: var(--shadow-1);
+  overflow: hidden;
+  transition: transform 360ms var(--ease), box-shadow 360ms var(--ease);
 }
-.partnership-final .label--mark {
-  color: #f29a55;
+
+.hero__card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-2);
 }
-.partnership-final .btn:not(.btn--mark) {
-  border-color: rgba(246, 245, 242, 0.35);
-  color: var(--paper);
+
+.hero__cardHalftone {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(
+    circle at center,
+    rgba(35, 64, 216, 0.16) 1.2px,
+    transparent 1.2px
+  );
+  background-size: 14px 14px;
+  opacity: 0.7;
 }
-.partnership-final .btn:not(.btn--mark):hover {
-  background: var(--paper);
+
+.hero__cardRings {
+  position: absolute;
+  right: -20%;
+  bottom: -20%;
+  width: 75%;
+  aspect-ratio: 1;
+  border: 1px solid rgba(35, 64, 216, 0.22);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.hero__cardRings::after {
+  content: "";
+  position: absolute;
+  inset: 22%;
+  border: 1px solid rgba(220, 90, 18, 0.2);
+  border-radius: 50%;
+}
+
+.hero__cardWord {
+  position: relative;
+  font-family: var(--mono);
+  font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: var(--ink-deep);
+  z-index: 1;
+}
+
+.hero__cardWord em {
+  color: var(--blue);
+  font-style: normal;
+}
+
+.hero__cardTag,
+.hero__cardFoot {
+  position: relative;
+  z-index: 1;
+  font-family: var(--mono);
+  font-size: var(--xxs);
+  letter-spacing: var(--track-label);
+  color: var(--ink-3);
+  text-transform: uppercase;
+}
+
+.hero__cardFoot {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid var(--line-soft);
+  padding-top: var(--s3);
+}
+
+.hero__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s4);
+  flex-wrap: wrap;
+  padding-top: var(--s4);
+  border-top: 1px solid var(--line);
+  font-family: var(--mono);
+  font-size: var(--xxs);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.hero__metaMark {
+  color: var(--blue);
+  font-weight: 600;
+}
+
+/* ---------------- 2. Manifesto / Tentang UKM ---------------- */
+#tentang {
+  background: var(--paper-2);
+}
+
+.about2 {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: clamp(32px, 6vw, 84px);
+  align-items: start;
+}
+
+.about2__side {
+  position: sticky;
+  top: calc(var(--header-h, 68px) + 28px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s4);
+  padding-right: clamp(0px, 2vw, 24px);
+  border-right: 1px solid var(--line);
+}
+
+.about2__h {
+  font-size: clamp(1.8rem, 3.2vw, 2.8rem);
+  line-height: 1.06;
+  letter-spacing: -0.035em;
+  font-weight: 800;
   color: var(--ink-deep);
 }
 
-/* Partner area: static, calmer logo row rather than a second moving ticker. */
-.partners__ticker {
-  display: none;
-}
-.partners__grid {
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-}
-
-/* Remove any prototype/admin cues from the final public homepage. */
-.site-footer__bottom {
-  color: rgba(246, 245, 242, 0.45);
+.about2__h em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--blue);
 }
 
-@media (max-width: 980px) {
-  #projects .bento {
-    grid-template-columns: 1fr;
-    grid-auto-rows: auto;
-  }
-  #projects .pcard {
-    min-height: 520px;
-  }
-  #galeri .iggrid {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: repeat(3, 240px);
-  }
-  #galeri .igtile:first-child {
-    grid-column: 1 / -1;
-    grid-row: auto;
-  }
-  .partners__grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
+.about2__rule {
+  height: 1px;
+  width: 54px;
+  background: var(--blue);
 }
 
-@media (max-width: 700px) {
-  .section {
-    padding-block: 72px;
-  }
-  #tentang .manifesto {
+.about2__flow {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(24px, 3.6vw, 40px);
+}
+
+.about2__lead {
+  font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+  line-height: 1.62;
+  color: var(--ink);
+  max-width: 60ch;
+}
+
+.about2__lead em {
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--blue);
+}
+
+.about2__blocks {
+  display: grid;
+  gap: 1px;
+  background: var(--line);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.about2__block {
+  background: var(--paper-2);
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  gap: clamp(12px, 2vw, 24px);
+  padding: clamp(16px, 2.2vw, 24px) 0;
+  transition: background 260ms ease, padding-left 260ms ease;
+}
+
+.about2__block:hover {
+  background: var(--paper-raised);
+  padding-left: 12px;
+}
+
+.about2__num {
+  font-family: var(--mono);
+  font-size: var(--xs);
+  letter-spacing: 0.1em;
+  color: var(--blue);
+  font-weight: 600;
+  padding-top: 2px;
+}
+
+.about2__block h3 {
+  font-size: var(--h5);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  margin-bottom: 6px;
+  color: var(--ink-deep);
+}
+
+.about2__block p {
+  font-size: var(--sm);
+  color: var(--ink-2);
+  line-height: 1.6;
+  max-width: 52ch;
+}
+
+/* ---------------- 3. Featured Projects Grid ---------------- */
+#featuredProjects.bento {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s5);
+  background: none;
+  border: 0;
+}
+
+#featuredProjects .pcard {
+  min-height: 420px;
+  grid-column: span 1 !important;
+  grid-row: span 1 !important;
+}
+
+/* ---------------- 4. Updates Section (Featured + Editorial List) ---------------- */
+.updates-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: clamp(24px, 4vw, 56px);
+  align-items: start;
+}
+
+.updates-layout__featured .ncard {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.updates-layout__featured .ncard__art {
+  aspect-ratio: 16 / 10;
+}
+
+.updates-layout__list {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--line);
+}
+
+/* ---------------- 5. Gallery Editorial Mosaic ---------------- */
+.iggrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: clamp(160px, 16vw, 220px);
+  gap: var(--s4);
+}
+
+.igcard {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--r1);
+  background: var(--paper-2);
+}
+
+.igcard__art {
+  position: absolute;
+  inset: 0;
+}
+
+.igcard--1 {
+  grid-column: 1 / 3;
+  grid-row: 1 / 3;
+}
+
+.igcard--2 {
+  grid-column: 3 / 4;
+  grid-row: 1 / 2;
+}
+
+.igcard--3 {
+  grid-column: 3 / 4;
+  grid-row: 2 / 3;
+}
+
+.igcard--4 {
+  grid-column: 1 / 2;
+  grid-row: 3 / 4;
+}
+
+.igcard--5 {
+  grid-column: 2 / 3;
+  grid-row: 3 / 4;
+}
+
+.igcard--6 {
+  grid-column: 3 / 4;
+  grid-row: 3 / 4;
+}
+
+.igcard:hover .art__wash {
+  transform: scale(1.06);
+}
+
+/* ---------------- 6. Kerja Sama (Partnership CTA) ---------------- */
+.pcta {
+  background: var(--paper);
+}
+
+.pcta__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  gap: clamp(32px, 5vw, 64px);
+  align-items: center;
+}
+
+.pcta__title {
+  font-size: clamp(2rem, 4.4vw, 3.4rem);
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  font-weight: 800;
+  color: var(--ink-deep);
+}
+
+.pcta__title em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--blue);
+}
+
+.pcta__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s3);
+  margin-top: var(--s5);
+}
+
+.pcta__actions .btn {
+  align-self: flex-start;
+}
+
+.pcta__alt {
+  font-size: var(--sm);
+  color: var(--ink-2);
+}
+
+.pcta__alt a {
+  color: var(--blue);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.pcta__side {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s5);
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  padding: clamp(20px, 3vw, 32px);
+  border-radius: var(--r2);
+}
+
+.pcta__dek {
+  font-size: var(--sm);
+  line-height: 1.65;
+  color: var(--ink-2);
+}
+
+.pcta__rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-top: 1px solid var(--line-soft);
+}
+
+.pcta__row {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line-soft);
+  font-size: var(--sm);
+  font-weight: 600;
+  color: var(--ink-deep);
+}
+
+.pcta__row .idx {
+  color: var(--blue);
+}
+
+/* ---------------- 7. Responsive Breakpoints ---------------- */
+@media (max-width: 1023px) and (min-width: 768px) {
+  .hero__split {
     grid-template-columns: 1fr;
-    gap: 32px;
+    gap: var(--s6);
   }
-  #tentang .manifesto__text {
-    max-width: 100%;
-    font-size: 1.55rem;
+  .hero__card {
+    min-height: 280px;
   }
-  #tentang .manifesto__note {
-    max-width: 100%;
-    justify-self: stretch;
-  }
-  .hero {
-    min-height: auto;
-    padding-top: 44px;
-    padding-bottom: 0;
-  }
-  .hero__display {
-    font-size: 52px;
-    max-width: 100%;
-    letter-spacing: -0.055em;
-  }
-  .hero__display .lineMask {
-    line-height: 1;
-    width: 100%;
-  }
-  .hero__display .lineMask > span {
-    max-width: 100%;
-  }
-  .hero__display em {
-    white-space: nowrap;
-  }
-  .hero__foot {
-    margin-top: 40px;
-  }
-  .hero__aside {
-    margin-top: 12px;
-  }
-  .hero__ticker {
-    display: none;
-  }
-  #projects .pcard {
-    min-height: 440px;
-  }
-  #galeri .iggrid {
+  .about2 {
     grid-template-columns: 1fr;
-    grid-template-rows: repeat(3, 260px);
+    gap: var(--s5);
   }
-  #galeri .igtile:first-child {
-    grid-column: auto;
+  .about2__side {
+    position: static;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: var(--s4);
   }
-  #galeri .igtile:nth-child(n + 4) {
-    display: none;
-  }
-  .partnership-final {
-    padding-block: 88px;
-  }
-  .partners__grid {
+  #featuredProjects.bento {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  .site-footer__main {
-    gap: 36px;
+  .updates-layout {
+    grid-template-columns: 1fr;
+    gap: var(--s6);
   }
-  [data-cursor] {
-    cursor: auto;
+  .iggrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: clamp(160px, 20vw, 220px);
+  }
+  .igcard {
+    grid-column: auto !important;
+    grid-row: auto !important;
+  }
+  .pcta__grid {
+    grid-template-columns: 1fr;
+    gap: var(--s6);
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .hero__wash {
-    display: none;
+@media (max-width: 767px) {
+  .hero--v2 {
+    min-height: auto;
+    padding-top: var(--s5);
+    padding-bottom: var(--s5);
+  }
+  .hero__split {
+    grid-template-columns: 1fr;
+    gap: var(--s5);
+  }
+  .hero__display {
+    font-size: clamp(2.1rem, 8.5vw, 3.2rem);
+    max-width: 100%;
+  }
+  .hero__actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  .hero__actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .hero__card {
+    min-height: 220px;
+  }
+  .hero__meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .about2 {
+    grid-template-columns: 1fr;
+    gap: var(--s5);
+  }
+  .about2__side {
+    position: static;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: var(--s4);
+  }
+  #featuredProjects.bento {
+    grid-template-columns: 1fr;
+  }
+  .updates-layout {
+    grid-template-columns: 1fr;
+    gap: var(--s5);
+  }
+  .iggrid {
+    grid-template-columns: 1fr;
+    grid-auto-rows: clamp(180px, 52vw, 240px);
+  }
+  .igcard {
+    grid-column: auto !important;
+    grid-row: auto !important;
+  }
+  .pcta__grid {
+    grid-template-columns: 1fr;
+    gap: var(--s5);
+  }
+  .pcta__actions .btn {
+    width: 100%;
+    justify-content: center;
   }
 }

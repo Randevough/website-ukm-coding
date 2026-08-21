@@ -44,6 +44,32 @@ if (sanityPosts && sanityPosts.length > 0) {
 if (sanityGallery && sanityGallery.length > 0) {
   galleryItems = sanityGallery.slice(0, 6);
 }
+
+const featuredStory = latestPosts[0];
+const listStories = latestPosts.slice(1, 4);
+
+const BULAN = [
+  "Januari",
+  "Februari",
+  "Maret",
+  "April",
+  "Mei",
+  "Juni",
+  "Juli",
+  "Agustus",
+  "September",
+  "Oktober",
+  "November",
+  "Desember",
+];
+function tanggalPendek(iso: string) {
+  if (!iso) return "";
+  const d = new Date(iso + (iso.includes("T") ? "" : "T00:00:00"));
+  if (isNaN(d.getTime())) return iso;
+  return (
+    d.getDate() + " " + BULAN[d.getMonth()].slice(0, 3) + " " + d.getFullYear()
+  );
+}
 ---
 
 <Layout title={`Beranda | ${settings.nama}`}>
@@ -177,8 +203,7 @@ if (sanityGallery && sanityGallery.length > 0) {
       <div class="bento" data-stagger="80" id="featuredProjects">
         {
           featuredProjects.map((p, i) => {
-            const size = i === 0 ? "tall" : i === 1 ? "wide" : "normal";
-            return <ProjectCard project={p} size={size} index={i} />;
+            return <ProjectCard project={p} size="normal" index={i} />;
           })
         }
       </div>
@@ -210,8 +235,36 @@ if (sanityGallery && sanityGallery.length > 0) {
         </div>
       </div>
 
-      <div class="asym" data-stagger="70" id="latestPosts">
-        {latestPosts.map((p) => <PostCard post={p} />)}
+      <div class="updates-layout" data-stagger="70" id="latestPosts">
+        {
+          featuredStory && (
+            <div class="updates-layout__featured" data-reveal>
+              <PostCard post={featuredStory} />
+            </div>
+          )
+        }
+        <div class="updates-layout__list">
+          {
+            listStories.map((p: any, idx) => {
+              const kategori = p.tipe || p.kategori;
+              const date = p.tanggalPublikasi || p.tanggal;
+              const title = p.judul || p.title;
+              return (
+                <a class="editorial-row" href={`/kegiatan/${p.slug}`} data-reveal>
+                  <div class="editorial-row__head">
+                    <span class="label label--mark">{kategori}</span>
+                    <span class="idx">{String(idx + 2).padStart(2, "0")}</span>
+                  </div>
+                  <h3 class="editorial-row__title">{title}</h3>
+                  <div class="editorial-row__foot">
+                    <span class="editorial-row__date">{tanggalPendek(date)}</span>
+                    <span class="editorial-row__arrow">→</span>
+                  </div>
+                </a>
+              );
+            })
+          }
+        </div>
       </div>
 
       <div class="row" style="margin-top: var(--s7)">
@@ -238,7 +291,7 @@ if (sanityGallery && sanityGallery.length > 0) {
       <div class="iggrid" data-stagger="60" id="ig">
         {
           galleryItems.map((item: any, i: number) => (
-            <div class="igcard" data-reveal>
+            <div class={`igcard igcard--${i + 1}`} data-reveal>
               <div class="igcard__art">
                 {item._type === "placeholder" ? (
                   <Art variant={i % 2 === 0 ? "mix" : "neutral"} />

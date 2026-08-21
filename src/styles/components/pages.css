@@ -580,17 +580,8 @@
    BERITA — hero majalah + kolom asimetris
    --------------------------------------------------------- */
 .magazine {
-  display: grid;
-  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
-  gap: 1px;
-  background: var(--line-mid);
-  border: 1px solid var(--line-mid);
-}
-
-@media (max-width: 960px) {
-  .magazine {
-    grid-template-columns: 1fr;
-  }
+  display: block;
+  width: 100%;
 }
 
 .magazine__lead {
@@ -685,121 +676,193 @@
 }
 
 /* ---------------------------------------------------------
-   ARTIKEL
+   ARTIKEL DETAIL (/kegiatan/[slug])
    --------------------------------------------------------- */
 .article__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s4);
   padding-bottom: var(--s6);
   border-bottom: 1px solid var(--line);
 }
 
 .article__title {
-  font-size: clamp(2.2rem, 5vw, 4rem);
-  line-height: 1.02;
-  letter-spacing: -0.036em;
-  padding-block: var(--s4);
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  font-weight: 800;
+  color: var(--ink-deep);
 }
 
 .article__meta {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--s5);
+  gap: var(--s4);
   align-items: center;
+  font-family: var(--mono);
+  font-size: var(--xs);
+  color: var(--ink-3);
 }
 
-.article__cover {
+.article__art {
   position: relative;
+  width: 100%;
   aspect-ratio: 21 / 9;
+  min-height: 280px;
+  max-height: 520px;
   overflow: hidden;
   border: 1px solid var(--line);
+  border-radius: var(--r1);
   margin-block: var(--s7);
+  background: var(--paper-2);
 }
 
-.prose {
+.article__artImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.article__body {
   display: flex;
   flex-direction: column;
   gap: var(--s5);
+  max-width: 72ch;
+  margin-inline: auto;
   font-size: var(--body-lg);
-  line-height: var(--lh-loose);
+  line-height: 1.78;
   color: var(--ink);
 }
 
-.prose h2 {
+.article__body h2 {
   font-size: var(--d3);
   letter-spacing: var(--track-tight);
   margin-top: var(--s6);
+  color: var(--ink-deep);
 }
 
-.prose h3 {
+.article__body h3 {
   font-size: var(--h4);
   margin-top: var(--s5);
+  color: var(--ink-deep);
 }
 
-.prose ul,
-.prose ol {
+.article__body blockquote {
+  font-family: var(--serif);
+  font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+  line-height: 1.35;
+  font-style: italic;
+  padding: var(--s4) 0 var(--s4) var(--s5);
+  border-left: 2px solid var(--mark);
+  margin-block: var(--s5);
+  color: var(--ink-deep);
+}
+
+.article__body ul,
+.article__body ol {
+  padding-left: 1.4em;
   display: flex;
   flex-direction: column;
   gap: var(--s2);
   color: var(--ink-2);
 }
 
-/* Kutipan tarik — satu-satunya tempat serif dipakai besar */
-.pull {
-  font-family: var(--serif);
-  font-size: clamp(1.5rem, 3vw, 2.2rem);
-  line-height: 1.3;
-  letter-spacing: -0.014em;
-  color: var(--ink-deep);
-  padding: var(--s5) 0 var(--s5) var(--s5);
-  border-left: 2px solid var(--mark);
-  margin-block: var(--s5);
-}
-
-.factsheet {
-  border: 1px solid var(--line);
-  background: var(--paper-raised);
-  margin-block: var(--s7);
-}
-
-.factsheet__head {
+/* ---------------------------------------------------------
+   STUDI KASUS DETAIL (/projects/[slug])
+   --------------------------------------------------------- */
+.case__head {
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--s4);
-  padding: var(--s4) var(--s5);
+  flex-direction: column;
+  gap: var(--s5);
+  padding-bottom: var(--s6);
   border-bottom: 1px solid var(--line);
 }
 
-.factsheet__grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1px;
-  background: var(--line-soft);
-}
-
-@media (max-width: 640px) {
-  .factsheet__grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-.factsheet__cell {
-  background: var(--paper-raised);
-  padding: var(--s4) var(--s5);
+.case__titleBlock {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: var(--s3);
 }
 
-.share {
+.case__title {
+  font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+  line-height: 1.02;
+  letter-spacing: -0.038em;
+  font-weight: 800;
+  color: var(--ink-deep);
+}
+
+.case__lead {
+  font-size: var(--body-lg);
+  line-height: 1.65;
+  color: var(--ink-2);
+  max-width: 65ch;
+}
+
+.case__meta {
   display: flex;
-  align-items: center;
-  gap: var(--s4);
   flex-wrap: wrap;
-  padding-top: var(--s6);
-  margin-top: var(--s7);
-  border-top: 1px solid var(--line);
+  gap: var(--s5);
+  align-items: center;
+  padding-top: var(--s4);
+  border-top: 1px solid var(--line-soft);
 }
 
+.case__metaCol {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.case__metaCol span {
+  font-family: var(--mono);
+  font-size: var(--xxs);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.case__metaCol strong {
+  font-size: var(--sm);
+  color: var(--ink-deep);
+}
+
+.case__art {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 21 / 9;
+  min-height: 280px;
+  max-height: 520px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--r1);
+  margin-block: var(--s7);
+  background: var(--paper-2);
+}
+
+.case__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s6);
+  max-width: 780px;
+  margin-inline: auto;
+}
+
+.case__content .label {
+  font-size: var(--xs);
+  color: var(--mark);
+  margin-bottom: -8px;
+}
+
+.case__content p {
+  font-size: var(--body-lg);
+  line-height: 1.75;
+  color: var(--ink);
+}
+
+/* ---------------------------------------------------------
+   PAGINASI NAVIGASI HALAMAN (Previous / Next)
+   --------------------------------------------------------- */
 .pagenav {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -808,13 +871,48 @@
   border: 1px solid var(--line-mid);
 }
 
+.pagenav > a,
+.pagenav__prev,
+.pagenav__next {
+  background: var(--paper);
+  padding: var(--s6) var(--s5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s2);
+  text-decoration: none;
+  color: inherit;
+  transition: background var(--t) var(--ease);
+}
+
+.pagenav > a:hover,
+.pagenav__prev:hover,
+.pagenav__next:hover {
+  background: var(--paper-raised);
+}
+
+.pagenav__next {
+  text-align: right;
+  align-items: flex-end;
+}
+
 @media (max-width: 700px) {
   .pagenav {
     grid-template-columns: 1fr;
   }
 }
 
-.pagenav__item {
+/* ---------------------------------------------------------
+   PILARES — 4 Tahap Cara Kerja (/projects)
+   --------------------------------------------------------- */
+.pillars {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--line-mid);
+  border: 1px solid var(--line-mid);
+}
+
+.pillar {
   background: var(--paper);
   padding: var(--s6) var(--s5);
   display: flex;
@@ -823,130 +921,71 @@
   transition: background var(--t) var(--ease);
 }
 
-.pagenav__item:hover {
+.pillar:hover {
   background: var(--paper-raised);
 }
 
-.pagenav__item--next {
-  text-align: right;
-  align-items: flex-end;
+.pillar__num {
+  font-family: var(--mono);
+  font-size: var(--xs);
+  letter-spacing: 0.1em;
+  color: var(--mark);
+  font-weight: 600;
+}
+
+.pillar__title {
+  font-size: var(--h5);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--ink-deep);
+}
+
+.pillar__text {
+  font-size: var(--sm);
+  color: var(--ink-2);
+  line-height: 1.6;
+}
+
+@media (max-width: 1023px) and (min-width: 700px) {
+  .pillars {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 699px) {
+  .pillars {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ---------------------------------------------------------
-   STUDI KASUS — aside sticky + scroll panjang
+   BENTO / KISI PROJECTS (/projects)
    --------------------------------------------------------- */
-.case-hero {
-  position: relative;
-  overflow: clip;
-  padding-top: clamp(var(--s6), 5vw, var(--s8));
-}
-
-.case-hero__art {
-  position: relative;
-  aspect-ratio: 21 / 8;
-  overflow: hidden;
-  border: 1px solid var(--line);
-  margin-top: var(--s6);
-}
-
-.case__layout {
+#projectGrid.bento,
+.bento {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 320px);
-  gap: clamp(var(--s6), 5vw, var(--s9));
-  align-items: start;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s5);
+  background: none;
+  border: 0;
 }
 
-@media (max-width: 1000px) {
-  .case__layout {
+#projectGrid .pcard {
+  min-height: 420px;
+  grid-column: span 1 !important;
+  grid-row: span 1 !important;
+}
+
+@media (max-width: 1023px) and (min-width: 700px) {
+  #projectGrid.bento,
+  .bento {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 699px) {
+  #projectGrid.bento,
+  .bento {
     grid-template-columns: 1fr;
   }
-}
-
-.case__aside {
-  position: sticky;
-  top: calc(var(--header-h) + 32px);
-  display: flex;
-  flex-direction: column;
-  gap: var(--s5);
-  border: 1px solid var(--line);
-  background: var(--paper-raised);
-  padding: var(--s5);
-}
-
-@media (max-width: 1000px) {
-  .case__aside {
-    position: static;
-  }
-}
-
-.case__prose {
-  display: flex;
-  flex-direction: column;
-  gap: var(--s6);
-}
-
-/* Langkah bernomor dengan garis penghubung */
-.steps {
-  display: flex;
-  flex-direction: column;
-}
-
-.step {
-  position: relative;
-  display: grid;
-  grid-template-columns: 56px minmax(0, 1fr);
-  gap: var(--s5);
-  padding-bottom: var(--s6);
-}
-
-.step::before {
-  content: "";
-  position: absolute;
-  left: 11px;
-  top: 22px;
-  bottom: 0;
-  width: 1px;
-  background: var(--line);
-}
-
-.step:last-child::before {
-  display: none;
-}
-
-.step__dot {
-  width: 23px;
-  height: 23px;
-  border: 1px solid var(--line-ink);
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  font-family: var(--mono);
-  font-size: 9px;
-  color: var(--ink-2);
-  background: var(--paper);
-  flex: none;
-}
-
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--s4);
-}
-
-@media (max-width: 700px) {
-  .gallery {
-    grid-template-columns: 1fr;
-  }
-}
-
-.gallery__cell {
-  position: relative;
-  aspect-ratio: 4 / 3;
-  overflow: hidden;
-  border: 1px solid var(--line-soft);
-}
-
-.gallery__cell--wide {
-  grid-column: 1 / -1;
-  aspect-ratio: 21 / 9;
 }

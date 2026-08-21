@@ -2,6 +2,7 @@
   "name": "ukm-coding",
   "type": "module",
   "version": "0.0.1",
+  "license": "MIT",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -21,6 +22,7 @@
     "@sanity/astro": "^3.5.0",
     "@sanity/client": "^7.26.2",
     "@sanity/image-url": "^2.1.1",
+    "@sanity/ui": "^4.0.4",
     "@typescript-eslint/eslint-plugin": "^8.67.0",
     "@typescript-eslint/parser": "^8.67.0",
     "astro": "^7.2.4",
@@ -33,7 +35,6 @@
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "sanity": "^6.10.1",
-    "@sanity/ui": "^4.0.4",
     "styled-components": "^6.5.3",
     "vitest": "^4.1.11"
   },
@@ -43,6 +44,7 @@
   "devDependencies": {
     "@types/node": "^26.2.0",
     "dotenv": "^17.4.2",
+    "puppeteer": "^25.8.0",
     "tsx": "^4.23.12",
     "typescript": "^5.6.3",
     "typescript-eslint": "^8.67.0"

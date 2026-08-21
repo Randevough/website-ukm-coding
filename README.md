@@ -42,3 +42,12 @@ npx tsx scripts/seed.ts
 ## Menulis Konten
 
 Akses `http://localhost:4321/admin` untuk membuka Sanity Studio. Login dengan akun Anda untuk mulai mengelola pengaturan, proyek, arsip kegiatan, dan galeri.
+
+## Lisensi / License
+
+Proyek ini menggunakan skema lisensi terpisah (split licensing):
+
+- **Kode Sumber (Source Code)**: Dilisensikan di bawah [MIT License](LICENSE). Anda bebas mempelajari, memodifikasi, dan menggunakan kembali kode ini sesuai ketentuan lisensi MIT.
+- **Aset Merek, Media & Konten**: Hak Cipta dilindungi undang-undang (All Rights Reserved) oleh **UKM Coding Cyber University**. Logo, identitas visual, foto kegiatan, dan materi editorial tidak termasuk dalam lisensi MIT dan tidak boleh disalahgunakan atau digunakan secara komersial tanpa izin tertulis.
+
+Copyright (c) 2026 UKM Coding Cyber University.

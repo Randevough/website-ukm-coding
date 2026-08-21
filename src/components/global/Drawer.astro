@@ -79,6 +79,7 @@ const { settings } = UKM_FIXTURE;
 
     function openDrawer() {
       isOpen = true;
+      drawer!.classList.add("is-open");
       drawer!.setAttribute("aria-hidden", "false");
       burger!.setAttribute("aria-expanded", "true");
       document.body.classList.add("is-locked");
@@ -89,6 +90,7 @@ const { settings } = UKM_FIXTURE;
 
     function closeDrawer() {
       isOpen = false;
+      drawer!.classList.remove("is-open");
       drawer!.setAttribute("aria-hidden", "true");
       burger!.setAttribute("aria-expanded", "false");
       document.body.classList.remove("is-locked");
@@ -107,6 +109,12 @@ const { settings } = UKM_FIXTURE;
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && isOpen) closeDrawer();
     });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initDrawer);
+  } else {
+    initDrawer();
   }
   document.addEventListener("astro:page-load", initDrawer);
 </script>

@@ -90,6 +90,7 @@ Setelah perubahan:
 - Panduan deploy, retry, rollback, dan export.
 - Daftar domain/subdomain dan kontak DNS.
 - Daftar dependency/service free tier serta tanggal terakhir diverifikasi.
+- Dokumentasi lisensi (`LICENSE`: MIT untuk kode, All Rights Reserved untuk merek/media).
 - Known issues dan backlog.
 - Sesi demo untuk editor dan maintainer.
 - Konfirmasi akses penerima sebelum akses pemberi dicabut.

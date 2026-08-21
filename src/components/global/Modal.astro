@@ -1,13 +1,22 @@
 ---
 import { UKM_FIXTURE } from "@/lib/content/fixture";
-const projects = UKM_FIXTURE.projects.map((p) => ({
-  slug: p.slug,
-  title: p.title,
-  kategori: p.kategori,
-  tahun: p.tahun,
-  oneLiner: p.oneLiner,
-  stack: p.stack.slice(0, 3).join(" / "),
-  variant: p.variant,
+import { fetchSanity } from "@/lib/sanity/client";
+import { allProjectsQuery } from "@/lib/sanity/queries";
+
+let rawProjects: any[] = UKM_FIXTURE.projects;
+const sanityProjects = await fetchSanity<any[]>(allProjectsQuery);
+if (sanityProjects && sanityProjects.length > 0) {
+  rawProjects = sanityProjects;
+}
+
+const projects = rawProjects.map((p) => ({
+  slug: typeof p.slug === "string" ? p.slug : p.slug?.current || "",
+  title: p.nama || p.title || "",
+  kategori: p.kategori || "",
+  tahun: p.tahun || "",
+  oneLiner: p.ringkasan || p.oneLiner || "",
+  stack: (p.techStack || p.stack || []).slice(0, 3).join(" / "),
+  variant: p.variant || "mix",
 }));
 ---
 
@@ -82,13 +91,27 @@ const projects = UKM_FIXTURE.projects.map((p) => ({
       }
     });
 
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        const target = e.target && e.target.closest ? e.target.closest(".pcard") : null;
+        if (target && !isOpen) {
+          const slug = target.getAttribute("data-project");
+          if (slug) {
+            e.preventDefault();
+            lastTrigger = target;
+            openModal(slug);
+          }
+        }
+      }
+    });
+
     function handleTabKey(e) {
       if (!isOpen) return;
       if (e.key === "Tab") {
         const focusableElements =
           'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
         const focusables = Array.from(
-          modal.querySelectorAll<HTMLElement>(focusableElements),
+          modal.querySelectorAll(focusableElements),
         ).filter((el) => el.tabIndex >= 0);
         if (focusables.length === 0) return;
         const firstFocusableElement = focusables[0];
@@ -140,6 +163,7 @@ const projects = UKM_FIXTURE.projects.map((p) => ({
       }
 
       isOpen = true;
+      modal.classList.add("is-open");
       modal.setAttribute("aria-hidden", "false");
       document.body.classList.add("is-locked");
       modal.setAttribute("tabindex", "-1");
@@ -149,6 +173,7 @@ const projects = UKM_FIXTURE.projects.map((p) => ({
 
     function closeModal() {
       isOpen = false;
+      modal.classList.remove("is-open");
       modal.setAttribute("aria-hidden", "true");
       document.body.classList.remove("is-locked");
       document.removeEventListener("keydown", handleTabKey);
@@ -164,5 +189,10 @@ const projects = UKM_FIXTURE.projects.map((p) => ({
     });
   }
 
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initModal);
+  } else {
+    initModal();
+  }
   document.addEventListener("astro:page-load", initModal);
 </script>
