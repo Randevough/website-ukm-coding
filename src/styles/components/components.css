@@ -700,9 +700,17 @@
   position: relative;
   flex: 1;
   min-height: 120px;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   border: 1px solid var(--line-soft);
   transform: translateZ(20px);
+}
+
+.pcard__art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
 .pcard__body {
