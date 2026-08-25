@@ -1,12 +1,16 @@
 ---
 import { PortableText } from "astro-portabletext";
 import SanityImage from "./SanityImage.astro";
+import PortableTextLink from "./PortableTextLink.astro";
 
 const { value } = Astro.props;
 
 const components = {
   type: {
     image: SanityImage,
+  },
+  mark: {
+    link: PortableTextLink,
   },
 };
 ---

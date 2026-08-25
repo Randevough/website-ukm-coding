@@ -1,5 +1,5 @@
 export const siteSettingsQuery = `
-  *[_type == "siteSettings"][0] {
+  *[_type == "siteSettings" && !(_id in path("drafts.**"))][0] {
     "nama": namaSitus,
     "tagline": deskripsiSingkat,
     email,
@@ -12,7 +12,7 @@ export const siteSettingsQuery = `
 `;
 
 export const allEditorialsQuery = `
-  *[_type == "editorial"] | order(tanggalPublikasi desc) {
+  *[_type == "editorial" && !(_id in path("drafts.**"))] | order(tanggalPublikasi desc) {
     judul,
     "slug": slug.current,
     tipe,
@@ -32,7 +32,7 @@ export const allEditorialsQuery = `
 `;
 
 export const editorialBySlugQuery = `
-  *[_type == "editorial" && slug.current == $slug][0] {
+  *[_type == "editorial" && slug.current == $slug && !(_id in path("drafts.**"))][0] {
     judul,
     "slug": slug.current,
     tipe,
@@ -53,7 +53,7 @@ export const editorialBySlugQuery = `
 `;
 
 export const allProjectsQuery = `
-  *[_type == "project"] | order(tahun desc, _createdAt desc) {
+  *[_type == "project" && !(_id in path("drafts.**"))] | order(tahun desc, _createdAt desc) {
     nama,
     "slug": slug.current,
     ringkasan,
@@ -73,7 +73,7 @@ export const allProjectsQuery = `
 `;
 
 export const projectBySlugQuery = `
-  *[_type == "project" && slug.current == $slug][0] {
+  *[_type == "project" && slug.current == $slug && !(_id in path("drafts.**"))][0] {
     nama,
     "slug": slug.current,
     ringkasan,
@@ -93,7 +93,7 @@ export const projectBySlugQuery = `
 `;
 
 export const partnersQuery = `
-  *[_type == "partner" && aktif == true] | order(urutan asc) {
+  *[_type == "partner" && aktif == true && !(_id in path("drafts.**"))] | order(urutan asc) {
     nama,
     tipe,
     logo,
@@ -103,7 +103,7 @@ export const partnersQuery = `
 `;
 
 export const galleryQuery = `
-  *[_type == "galleryItem" && tampilDiBeranda == true] | order(urutan asc) {
+  *[_type == "galleryItem" && tampilDiBeranda == true && !(_id in path("drafts.**"))] | order(urutan asc) {
     gambar,
     alt
   }

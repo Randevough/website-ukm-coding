@@ -141,7 +141,7 @@ const breadcrumb = [
             isSanityBlocks(p.isi) ? (
               <PortableTextComponent value={p.isi} />
             ) : (
-              <div set:html={p.body || p.excerpt} />
+              <div set:text={p.body || p.excerpt} />
             )
           }
         </div>

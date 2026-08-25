@@ -9,6 +9,8 @@
 | Konten Placeholder       | **FAIL**             | Masih ada fixture statis dan angka karangan.                                 |
 | Keamanan & Dependensi    | **PASS**             | 0 vulnerabilities pada `npm audit`.                                          |
 | Aksesibilitas (A11y)     | **PASS**             | Telah lulus audit (skip-link, navigasi keyboard, touch targets, state & motion). |
+| Security & Headers       | **PASS**             | Diterapkan `_headers` CSP dasar (mengecualikan `/admin`), tanpa kebocoran token. |
+| Residual Security Risks  | **EXTERNAL VERIFICATION** | Membutuhkan tinjauan pengaturan CORS, MFA Sanity, dan Role Admin pada level Dashboard. |
 | Lighthouse & SEO         | **UNKNOWN**          | Menunggu hasil CI / staging environment.                                     |
 | Akses Editor & CMS       | **EXTERNAL BLOCKER** | Setup akun final belum didokumentasikan sepenuhnya oleh klien.               |
 
