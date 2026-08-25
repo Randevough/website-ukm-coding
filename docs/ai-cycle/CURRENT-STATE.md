@@ -27,10 +27,12 @@ Astro telah terstruktur di dalam `src/`. Komponen telah diisolasi dan CMS telah 
 - Fitur pencarian, filter, dan pagination.
 - Penggunaan dan parsing Sanity Portable Text bebas cacat.
 
-## Known Issues Awal
+## Known Issues (Awal & UX Audit)
 
-- Konflik file access (`EPERM`) memblokir proses instalasi yang menyebabkan toolchain development lumpuh (Astro, ESLint, Prettier, Vitest, Puppeteer).
-- Keamanan dependency memerlukan intervensi `npm audit fix --force`, namun ini bisa menyebabkan breaking changes yang dilarang pada Fase 0.
+- Konten CMS masih berupa fixture lokal (placeholder). Belum tersambung ke Sanity production.
+- Izin resmi untuk penggunaan logo partner / media di homepage masih menunggu verifikasi (`EXTERNAL BLOCKER`).
+- Halaman belum memiliki komponen *Empty State* ketika tidak ada data atau pencarian gagal.
+- **Fase 1 (Design Audit) Selesai:** Terdapat beberapa kendala visual yang telah dipetakan, antara lain proporsi hero image di artikel terpotong di mobile (`min-height: 280px` menabrak `aspect-ratio: 21/9`), teks overlap IG terlalu kecil (10px, tidak lolos WCAG), dan tinggi kartu pada grid bento terlalu longgar (`420px`). Status: Menunggu persetujuan implementasi perbaikan pada Fase 2.
 
 ## Blocker Eksternal
 
