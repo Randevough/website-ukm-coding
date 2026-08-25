@@ -26,5 +26,6 @@
 | 13  | Reliability (Fase 4)   | **PASS**    | Build akan _fail_ jika fetch Sanity gagal di mode PROD, mencegah pengambilalihan fakta oleh fixture.             |
 | 14  | SEO & Metadata (Fase 5)| **PASS**    | Canonical URL absolut, open graph, noindex preview 404, dan Structured Data (JSON-LD) valid terpasang.             |
 | 15  | Performance (Fase 5)   | **PASS**    | LCP images di set ke eager load & fetchpriority high. Gambar Sanity dimuat menggunakan format otomatis (WebP/AVIF). Dimensi diset explicit (mengurangi CLS).   |
+| 16  | Copywriting & Content Integrity (Fase 6)| **PASS**    | Fakta karangan (angka, URL '#', dsb) dibersihkan dari *fixture data*. Schema Sanity di-*upgrade* dengan *fieldsets* dan validasi. UX Editor lebih rapi. |
 
 _(Sesuai aturan Fase 0, kegagalan ini tidak diperbaiki saat ini dan dicatat sebagai blocker untuk diselesaikan pada fase implementasi teknis)_

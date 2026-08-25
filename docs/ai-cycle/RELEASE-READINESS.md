@@ -12,6 +12,7 @@
 | Security & Headers       | **PASS**             | Diterapkan `_headers` CSP dasar (mengecualikan `/admin`), tanpa kebocoran token. |
 | Residual Security Risks  | **EXTERNAL VERIFICATION** | Membutuhkan tinjauan pengaturan CORS, MFA Sanity, dan Role Admin pada level Dashboard. |
 | Lighthouse & SEO         | **PASS (Delegated)** | Framework secara semantik mendukung skor mendekati 100. Audit akhir menunggu CI Cloudflare Pages. |
+| Editor UX & Content Integrity | **PASS**             | Skema diperkaya validasi dan instruksi. Mock data dibersihkan dari fakta fiktif. |
 | Akses Editor & CMS       | **EXTERNAL BLOCKER** | Setup akun final belum didokumentasikan sepenuhnya oleh klien.               |
 
 _(Checklist ini akan terus diperbarui seiring berjalannya fase berikutnya)_
