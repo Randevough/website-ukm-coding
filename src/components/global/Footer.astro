@@ -49,7 +49,11 @@ function glyphOf(name: string): string {
               class="plogo"
               href={p.url && p.url !== "#" ? p.url : "/#kerjasama"}
               target={p.url && p.url.startsWith("http") ? "_blank" : undefined}
-              rel={p.url && p.url.startsWith("http") ? "noopener" : undefined}
+              rel={
+                p.url && p.url.startsWith("http")
+                  ? "noopener noreferrer"
+                  : undefined
+              }
             >
               <span class="plogo__slot">
                 {p.logo && p.izinTampilLogo ? (
@@ -103,7 +107,7 @@ function glyphOf(name: string): string {
         href={settings.instagramUrl ||
           "https://www.instagram.com/coding.cyberuniversity/"}
         target="_blank"
-        rel="noopener"
+        rel="noopener noreferrer"
       >
         <span>{settings.instagram || "@coding.cyberuniversity"}</span>
       </a>
@@ -111,7 +115,7 @@ function glyphOf(name: string): string {
         href={settings.githubUrl ||
           `https://${settings.github || "github.com/ukmcoding"}`}
         target="_blank"
-        rel="noopener"
+        rel="noopener noreferrer"
       >
         <span>{settings.github || "github.com/ukmcoding"}</span>
       </a>
@@ -123,7 +127,7 @@ function glyphOf(name: string): string {
         href={settings.instagramUrl ||
           "https://www.instagram.com/coding.cyberuniversity/"}
         target="_blank"
-        rel="noopener"
+        rel="noopener noreferrer"
       >
         Instagram
       </a>
@@ -131,14 +135,14 @@ function glyphOf(name: string): string {
         href={settings.linkedinUrl ||
           "https://id.linkedin.com/in/ukm-coding-cyber-university-541459379"}
         target="_blank"
-        rel="noopener"
+        rel="noopener noreferrer"
       >
         LinkedIn
       </a>
       <a
         href={settings.githubUrl || "https://github.com/RandDevs"}
         target="_blank"
-        rel="noopener"
+        rel="noopener noreferrer"
       >
         GitHub
       </a>

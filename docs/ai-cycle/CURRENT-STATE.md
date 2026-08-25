@@ -31,8 +31,7 @@ Astro telah terstruktur di dalam `src/`. Komponen telah diisolasi dan CMS telah 
 
 - Konten CMS masih berupa fixture lokal (placeholder). Belum tersambung ke Sanity production.
 - Izin resmi untuk penggunaan logo partner / media di homepage masih menunggu verifikasi (`EXTERNAL BLOCKER`).
-- Halaman belum memiliki komponen *Empty State* ketika tidak ada data atau pencarian gagal.
-- **Fase 1 (Design Audit) Selesai:** Terdapat beberapa kendala visual yang telah dipetakan, antara lain proporsi hero image di artikel terpotong di mobile (`min-height: 280px` menabrak `aspect-ratio: 21/9`), teks overlap IG terlalu kecil (10px, tidak lolos WCAG), dan tinggi kartu pada grid bento terlalu longgar (`420px`). Status: Menunggu persetujuan implementasi perbaikan pada Fase 2.
+- **Fase 2 (Visual UI Implementasi) Selesai:** Seluruh temuan desain dari Fase 1 telah diimplementasikan (perbaikan proporsi hero gambar di mobile, teks Instagram overlap menjadi sesuai standar aksesibilitas WCAG, pengurangan gap padding hero mobile, penyesuaian min-height bento box `ProjectCard`, serta penambahan komponen kustom fallback `EmptyState.astro` dan kondisional fallback `TBA` tech stack). Tidak ada regresi yang dilaporkan, seluruh quality gate (Build/Linter/Unit Test) lulus. Halaman kini lebih responsif, aksesibel, dan solid.
 
 ## Blocker Eksternal
 

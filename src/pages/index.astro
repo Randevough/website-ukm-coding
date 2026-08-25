@@ -99,7 +99,7 @@ function tanggalPendek(iso: string) {
             style="--reveal-delay: 420ms"
           >
             <a class="btn btn--primary btn--lg" href="#projects"
-              >Lihat Projects <span class="arrow">→</span></a
+              >Lihat Projects <span class="arrow" aria-hidden="true">→</span></a
             >
             <a class="btn btn--lg" href="#kerjasama">Kerja sama</a>
           </div>
@@ -110,10 +110,15 @@ function tanggalPendek(iso: string) {
           style="--reveal-delay: 200ms"
           aria-hidden="true"
         >
-          <div class="hero__card">
+          <div class="hero__card hero__card--editorial">
             <span class="hero__cardTag idx">FIG.01 — RUANG BELAJAR</span>
-            <div class="hero__cardHalftone"></div>
-            <div class="hero__cardRings"></div>
+            <div class="hero__cardImageWrap">
+              <img
+                src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=crop"
+                alt=""
+                class="hero__cardImg"
+              />
+            </div>
             <div class="hero__cardWord">kode <em>→</em> karya</div>
             <div class="hero__cardFoot">
               <span>3 program aktif</span><span>2026</span>
@@ -130,11 +135,17 @@ function tanggalPendek(iso: string) {
   </section>
 
   <!-- =========================== MANIFESTO =========================== -->
-  <section class="section section--paper2" id="tentang">
+  <section
+    class="section section--paper2"
+    id="tentang"
+    aria-labelledby="tentang-title"
+  >
     <div class="container about2">
       <div class="about2__side">
         <span class="label">Tentang UKM</span>
-        <h2 class="about2__h">Ruang belajar yang <em>dibangun bersama.</em></h2>
+        <h2 class="about2__h" id="tentang-title">
+          Ruang belajar yang <em>dibangun bersama.</em>
+        </h2>
         <span class="about2__rule"></span>
         <span class="idx">01</span>
       </div>
@@ -184,7 +195,12 @@ function tanggalPendek(iso: string) {
   </section>
 
   <!-- =========================== SHOWCASE =========================== -->
-  <section class="section section--hairline" data-mark="orange" id="projects">
+  <section
+    class="section section--hairline"
+    data-mark="orange"
+    id="projects"
+    aria-labelledby="projects-title"
+  >
     <div class="container">
       <div class="shead">
         <div class="shead__top">
@@ -192,7 +208,9 @@ function tanggalPendek(iso: string) {
           <span class="idx">02</span>
         </div>
         <div class="shead__body">
-          <h2 data-reveal="">Karya yang lahir dari proses belajar.</h2>
+          <h2 data-reveal="" id="projects-title">
+            Karya yang lahir dari proses belajar.
+          </h2>
           <p class="dek" data-reveal="">
             Tiga project pilihan dari anggota UKM. Klik salah satu kartu untuk
             membuka ringkasannya langsung di tempat—tanpa berpindah halaman.
@@ -219,7 +237,11 @@ function tanggalPendek(iso: string) {
   </section>
 
   <!-- ============================ BERITA ============================ -->
-  <section class="section section--hairline" id="updates">
+  <section
+    class="section section--hairline"
+    id="updates"
+    aria-labelledby="updates-title"
+  >
     <div class="container">
       <div class="shead">
         <div class="shead__top">
@@ -227,7 +249,7 @@ function tanggalPendek(iso: string) {
           <span class="idx">03</span>
         </div>
         <div class="shead__body">
-          <h2 data-reveal="">Catatan dari setiap proses.</h2>
+          <h2 data-reveal="" id="updates-title">Catatan dari setiap proses.</h2>
           <p class="dek" data-reveal="">
             Kegiatan, kolaborasi, dan pembelajaran terbaru dari UKM Coding Cyber
             University—dirangkum agar mudah diikuti publik.
@@ -250,15 +272,23 @@ function tanggalPendek(iso: string) {
               const date = p.tanggalPublikasi || p.tanggal;
               const title = p.judul || p.title;
               return (
-                <a class="editorial-row" href={`/kegiatan/${p.slug}`} data-reveal>
+                <a
+                  class="editorial-row"
+                  href={`/kegiatan/${p.slug}`}
+                  data-reveal
+                >
                   <div class="editorial-row__head">
                     <span class="label label--mark">{kategori}</span>
                     <span class="idx">{String(idx + 2).padStart(2, "0")}</span>
                   </div>
                   <h3 class="editorial-row__title">{title}</h3>
                   <div class="editorial-row__foot">
-                    <span class="editorial-row__date">{tanggalPendek(date)}</span>
-                    <span class="editorial-row__arrow">→</span>
+                    <time class="editorial-row__date" datetime={date}>
+                      {tanggalPendek(date)}
+                    </time>
+                    <span class="editorial-row__arrow" aria-hidden="true">
+                      →
+                    </span>
                   </div>
                 </a>
               );
@@ -274,7 +304,11 @@ function tanggalPendek(iso: string) {
   </section>
 
   <!-- ========================== INSTAGRAM ========================== -->
-  <section class="section section--tight section--hairline" id="galeri">
+  <section
+    class="section section--tight section--hairline"
+    id="galeri"
+    aria-labelledby="galeri-title"
+  >
     <div class="container">
       <div class="shead">
         <div class="shead__top">
@@ -282,7 +316,7 @@ function tanggalPendek(iso: string) {
           <span class="idx">04</span>
         </div>
         <div class="shead__body">
-          <h2 data-reveal="">Proses yang layak direkam.</h2>
+          <h2 data-reveal="" id="galeri-title">Proses yang layak direkam.</h2>
           <p class="dek" data-reveal="">
             Cuplikan workshop, kolaborasi, dan kegiatan UKM.
           </p>
@@ -307,7 +341,11 @@ function tanggalPendek(iso: string) {
   </section>
 
   <!-- ========================== KERJA SAMA ========================== -->
-  <section class="section section--hairline pcta" id="kerjasama">
+  <section
+    class="section section--hairline pcta"
+    id="kerjasama"
+    aria-labelledby="kerjasama-title"
+  >
     <div class="container">
       <div class="shead">
         <div class="shead__top">
@@ -317,7 +355,7 @@ function tanggalPendek(iso: string) {
       </div>
       <div class="pcta__grid">
         <div class="pcta__main">
-          <h2 class="pcta__title" data-reveal="">
+          <h2 class="pcta__title" data-reveal="" id="kerjasama-title">
             Mari membangun <em>sesuatu yang berarti</em> bersama.
           </h2>
           <div
@@ -329,7 +367,8 @@ function tanggalPendek(iso: string) {
               class="btn btn--primary btn--lg"
               data-mailto=""
               href={`mailto:${settings.email}`}
-              >Ajukan kerja sama <span class="arrow">→</span></a
+              >Ajukan kerja sama <span class="arrow" aria-hidden="true">→</span
+              ></a
             >
             <p class="pcta__alt">
               Atau kenali kami lebih dulu lewat <a href="#tentang">profil UKM</a

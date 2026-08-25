@@ -20,6 +20,6 @@
 | 7   | Internal link check    | **UNKNOWN** | Tidak dapat dieksekusi secara lokal karena absennya script di `package.json`, dijalankan pada CI (`deploy.yml`). |
 | 8   | Dev Server (Lokal)     | **PASS**    | Berhasil merespons dengan HTTP 200 pada halaman yang diminta.                                                    |
 | 9   | Lighthouse             | **UNKNOWN** | Dijalankan pada CI (Cloudflare Pages).                                                                           |
-| 10  | Visual Evidence        | **PASS**    | Screenshot baseline berhasil diambil untuk desktop & mobile menggunakan Puppeteer.                               |
+| 10  | Visual Evidence        | **PASS**    | (Fase 1 & Fase 2) Screenshot berhasil diambil untuk desktop & mobile dan tersimpan rapi di direktori evidence.   |
 
 _(Sesuai aturan Fase 0, kegagalan ini tidak diperbaiki saat ini dan dicatat sebagai blocker untuk diselesaikan pada fase implementasi teknis)_

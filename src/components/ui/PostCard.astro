@@ -52,5 +52,5 @@ const date = p.tanggalPublikasi || p.tanggal;
   </div>
   <span class="label label--mark">{kategori}</span>
   <h3 class="ncard__title">{title}</h3>
-  <span class="ncard__date">{tanggalPendek(date)}</span>
+  <time class="ncard__date" datetime={date}>{tanggalPendek(date)}</time>
 </a>

@@ -1,7 +1,15 @@
 // filter.ts
+import {
+  filterByCategory,
+  filterBySearch,
+  sortItems,
+  paginateItems,
+} from "../lib/content/queryEngine";
 
 // KEGIATAN PAGE LOGIC
 export function initKegiatanFilter() {
+  if (typeof document === "undefined") return;
+
   const filterChips = document.querySelectorAll("#postChips .chip");
   const searchInput = document.querySelector(".search") as HTMLInputElement;
   const majorContainer = document.getElementById("postMajor");
@@ -24,6 +32,7 @@ export function initKegiatanFilter() {
   const allItems = Array.from(template.content.children) as HTMLElement[];
 
   function updateURL() {
+    if (typeof window === "undefined") return;
     const url = new URL(window.location.href);
     if (currentCategory !== "Semua")
       url.searchParams.set("kategori", currentCategory);
@@ -39,6 +48,7 @@ export function initKegiatanFilter() {
   }
 
   function readURL() {
+    if (typeof window === "undefined") return;
     const url = new URL(window.location.href);
     currentCategory = url.searchParams.get("kategori") || "Semua";
     currentSearch = url.searchParams.get("q") || "";
@@ -46,39 +56,47 @@ export function initKegiatanFilter() {
   }
 
   function render() {
-    // 1. Filter
-    const filtered = allItems.filter((el) => {
-      const cat = el.getAttribute("data-kategori") || "";
-      const title = el.getAttribute("data-title") || "";
+    // 1. Filter by Category & Search using Pure Engine
+    const catFiltered = filterByCategory(
+      allItems,
+      currentCategory,
+      (el) => el.getAttribute("data-kategori") || "",
+    );
+    const searchFiltered = filterBySearch(
+      catFiltered,
+      currentSearch,
+      (el) => el.getAttribute("data-title") || "",
+    );
 
-      const matchCat =
-        currentCategory === "Semua" ||
-        cat.toLowerCase() === currentCategory.toLowerCase();
-      const matchSearch = title.includes(currentSearch.toLowerCase());
-
-      return matchCat && matchSearch;
-    });
-
-    // 2. Paginate
-    const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE) || 1;
-    if (currentPage > totalPages) currentPage = totalPages;
-    if (currentPage < 1) currentPage = 1;
-
-    const start = (currentPage - 1) * ITEMS_PER_PAGE;
-    const paginated = filtered.slice(start, start + ITEMS_PER_PAGE);
+    // 2. Paginate using Pure Engine
+    const {
+      paginated,
+      totalPages,
+      currentPage: clampedPage,
+    } = paginateItems(searchFiltered, currentPage, ITEMS_PER_PAGE);
+    currentPage = clampedPage;
 
     // 3. Render Items
     majorContainer!.innerHTML = "";
     minorContainer!.innerHTML = "";
 
-    paginated.forEach((el, index) => {
-      const clone = el.cloneNode(true) as HTMLElement;
-      if (index < 3) {
-        majorContainer!.appendChild(clone);
-      } else {
-        minorContainer!.appendChild(clone);
+    if (paginated.length === 0) {
+      const emptyTemplate = document.getElementById(
+        "empty-state-template",
+      ) as HTMLTemplateElement;
+      if (emptyTemplate) {
+        majorContainer!.appendChild(emptyTemplate.content.cloneNode(true));
       }
-    });
+    } else {
+      paginated.forEach((el, index) => {
+        const clone = el.cloneNode(true) as HTMLElement;
+        if (index < 3) {
+          majorContainer!.appendChild(clone);
+        } else {
+          minorContainer!.appendChild(clone);
+        }
+      });
+    }
 
     // 4. Update Chips UI
     filterChips.forEach((chip) => {
@@ -97,13 +115,15 @@ export function initKegiatanFilter() {
       currentPage = page;
       updateURL();
       render();
-      window.scrollTo({
-        top:
-          document.querySelector(".filterbar")!.getBoundingClientRect().top +
-          window.scrollY -
-          100,
-        behavior: "smooth",
-      });
+      if (typeof window !== "undefined") {
+        const filterbar = document.querySelector(".filterbar");
+        if (filterbar) {
+          window.scrollTo({
+            top: filterbar.getBoundingClientRect().top + window.scrollY - 100,
+            behavior: "smooth",
+          });
+        }
+      }
     });
   }
 
@@ -132,6 +152,8 @@ export function initKegiatanFilter() {
 
 // PROJECT PAGE LOGIC
 export function initProjectsFilter() {
+  if (typeof document === "undefined") return;
+
   const filterChips = document.querySelectorAll("#projectChips .chip");
   const sortSelect = document.querySelector(".select") as HTMLSelectElement;
   const gridContainer = document.getElementById("projectGrid");
@@ -152,6 +174,7 @@ export function initProjectsFilter() {
   const allItems = Array.from(template.content.children) as HTMLElement[];
 
   function updateURL() {
+    if (typeof window === "undefined") return;
     const url = new URL(window.location.href);
     if (currentCategory !== "Semua")
       url.searchParams.set("kategori", currentCategory);
@@ -167,6 +190,7 @@ export function initProjectsFilter() {
   }
 
   function readURL() {
+    if (typeof window === "undefined") return;
     const url = new URL(window.location.href);
     currentCategory = url.searchParams.get("kategori") || "Semua";
     currentSort = url.searchParams.get("sort") || "Terbaru";
@@ -174,57 +198,50 @@ export function initProjectsFilter() {
   }
 
   function render() {
-    // 1. Filter
-    const filtered = allItems.filter((el) => {
-      const cat = el.getAttribute("data-kategori") || "";
-      return (
-        currentCategory === "Semua" ||
-        cat.toLowerCase() === currentCategory.toLowerCase()
-      );
-    });
+    // 1. Filter using Pure Engine
+    const filtered = filterByCategory(
+      allItems,
+      currentCategory,
+      (el) => el.getAttribute("data-kategori") || "",
+    );
 
-    // 2. Sort
-    filtered.sort((a, b) => {
-      if (currentSort === "Nama A–Z") {
-        return (a.getAttribute("data-title") || "").localeCompare(
-          b.getAttribute("data-title") || "",
-        );
-      } else if (currentSort === "Terlama") {
-        return (
-          new Date(a.getAttribute("data-date") || 0).getTime() -
-          new Date(b.getAttribute("data-date") || 0).getTime()
-        );
-      } else {
-        // Terbaru (Default)
-        return (
-          new Date(b.getAttribute("data-date") || 0).getTime() -
-          new Date(a.getAttribute("data-date") || 0).getTime()
-        );
-      }
-    });
+    // 2. Sort using Pure Engine
+    const sorted = sortItems(filtered, currentSort, (el) => ({
+      title: el.getAttribute("data-title") || "",
+      date: el.getAttribute("data-date") || 0,
+    }));
 
-    // 3. Paginate
-    const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE) || 1;
-    if (currentPage > totalPages) currentPage = totalPages;
-    if (currentPage < 1) currentPage = 1;
-
-    const start = (currentPage - 1) * ITEMS_PER_PAGE;
-    const paginated = filtered.slice(start, start + ITEMS_PER_PAGE);
+    // 3. Paginate using Pure Engine
+    const {
+      paginated,
+      totalPages,
+      currentPage: clampedPage,
+    } = paginateItems(sorted, currentPage, ITEMS_PER_PAGE);
+    currentPage = clampedPage;
 
     // 4. Render Items
     gridContainer!.innerHTML = "";
-    paginated.forEach((el, i) => {
-      const clone = el.cloneNode(true) as HTMLElement;
-      // Strip old size classes
-      const card = clone.querySelector(".pcard");
-      if (card) {
-        card.classList.remove("pcard--tall", "pcard--wide");
-        const size = i % 5 === 0 ? "tall" : i % 5 === 4 ? "wide" : "normal";
-        if (size === "tall") card.classList.add("pcard--tall");
-        if (size === "wide") card.classList.add("pcard--wide");
+    if (paginated.length === 0) {
+      const emptyTemplate = document.getElementById(
+        "empty-state-template",
+      ) as HTMLTemplateElement;
+      if (emptyTemplate) {
+        gridContainer!.appendChild(emptyTemplate.content.cloneNode(true));
       }
-      gridContainer!.appendChild(clone);
-    });
+    } else {
+      paginated.forEach((el, i) => {
+        const clone = el.cloneNode(true) as HTMLElement;
+        // Strip old size classes
+        const card = clone.querySelector(".pcard");
+        if (card) {
+          card.classList.remove("pcard--tall", "pcard--wide");
+          const size = i % 5 === 0 ? "tall" : i % 5 === 4 ? "wide" : "normal";
+          if (size === "tall") card.classList.add("pcard--tall");
+          if (size === "wide") card.classList.add("pcard--wide");
+        }
+        gridContainer!.appendChild(clone);
+      });
+    }
 
     // 5. Update UI
     filterChips.forEach((chip) => {
@@ -240,13 +257,15 @@ export function initProjectsFilter() {
       currentPage = page;
       updateURL();
       render();
-      window.scrollTo({
-        top:
-          document.querySelector(".filterbar")!.getBoundingClientRect().top +
-          window.scrollY -
-          100,
-        behavior: "smooth",
-      });
+      if (typeof window !== "undefined") {
+        const filterbar = document.querySelector(".filterbar");
+        if (filterbar) {
+          window.scrollTo({
+            top: filterbar.getBoundingClientRect().top + window.scrollY - 100,
+            behavior: "smooth",
+          });
+        }
+      }
     });
   }
 
@@ -273,13 +292,13 @@ export function initProjectsFilter() {
   render();
 }
 
-function renderPagination(
+export function renderPagination(
   container: Element | null,
   current: number,
   total: number,
   onPage: (p: number) => void,
 ) {
-  if (!container) return;
+  if (!container || typeof document === "undefined") return;
   container.innerHTML = "";
 
   if (total <= 1) return;
@@ -312,7 +331,16 @@ function renderPagination(
 }
 
 // Auto-init
-document.addEventListener("DOMContentLoaded", () => {
+function bootFilters() {
   initKegiatanFilter();
   initProjectsFilter();
-});
+}
+
+if (typeof document !== "undefined") {
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", bootFilters);
+  } else {
+    bootFilters();
+  }
+  document.addEventListener("astro:page-load", bootFilters);
+}

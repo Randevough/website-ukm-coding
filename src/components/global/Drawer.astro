@@ -40,81 +40,90 @@ const { settings } = UKM_FIXTURE;
   </div>
 </div>
 <script>
-  function initDrawer() {
+  let isOpen = false;
+
+  function handleTabKey(e: KeyboardEvent) {
     const drawer = document.querySelector("#drawer") as HTMLElement | null;
-    const burger = document.querySelector("#burger") as HTMLElement | null;
-    if (!drawer || !burger) return;
+    if (!isOpen || !drawer) return;
+    if (e.key === "Tab") {
+      const focusableElements =
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+      const focusables = Array.from(
+        drawer.querySelectorAll<HTMLElement>(focusableElements),
+      ).filter((el) => el.tabIndex >= 0);
+      if (focusables.length === 0) return;
+      const firstFocusableElement = focusables[0];
+      const lastFocusableElement = focusables[focusables.length - 1];
 
-    const closers = drawer.querySelectorAll("[data-drawer-close]");
-    let isOpen = false;
-
-    function handleTabKey(e: KeyboardEvent) {
-      if (!isOpen) return;
-      if (e.key === "Tab") {
-        const focusableElements =
-          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
-        const focusables = Array.from(
-          drawer!.querySelectorAll<HTMLElement>(focusableElements),
-        ).filter((el) => el.tabIndex >= 0);
-        if (focusables.length === 0) return;
-        const firstFocusableElement = focusables[0];
-        const lastFocusableElement = focusables[focusables.length - 1];
-
-        if (e.shiftKey) {
-          if (
-            document.activeElement === firstFocusableElement ||
-            document.activeElement === drawer
-          ) {
-            lastFocusableElement.focus();
-            e.preventDefault();
-          }
-        } else {
-          if (document.activeElement === lastFocusableElement) {
-            firstFocusableElement.focus();
-            e.preventDefault();
-          }
+      if (e.shiftKey) {
+        if (
+          document.activeElement === firstFocusableElement ||
+          document.activeElement === drawer
+        ) {
+          lastFocusableElement.focus();
+          e.preventDefault();
+        }
+      } else {
+        if (document.activeElement === lastFocusableElement) {
+          firstFocusableElement.focus();
+          e.preventDefault();
         }
       }
     }
+  }
 
-    function openDrawer() {
-      isOpen = true;
-      drawer!.classList.add("is-open");
-      drawer!.setAttribute("aria-hidden", "false");
-      burger!.setAttribute("aria-expanded", "true");
-      document.body.classList.add("is-locked");
-      drawer!.setAttribute("tabindex", "-1");
-      drawer!.focus();
-      document.addEventListener("keydown", handleTabKey);
+  function openDrawer() {
+    const drawer = document.querySelector("#drawer") as HTMLElement | null;
+    const burger = document.querySelector("#burger") as HTMLElement | null;
+    if (!drawer || !burger) return;
+    isOpen = true;
+    drawer.classList.add("is-open");
+    drawer.setAttribute("aria-hidden", "false");
+    burger.setAttribute("aria-expanded", "true");
+    document.body.classList.add("is-locked");
+    drawer.setAttribute("tabindex", "-1");
+    drawer.focus();
+  }
+
+  function closeDrawer() {
+    const drawer = document.querySelector("#drawer") as HTMLElement | null;
+    const burger = document.querySelector("#burger") as HTMLElement | null;
+    if (!drawer || !isOpen) return;
+    isOpen = false;
+    drawer.classList.remove("is-open");
+    drawer.setAttribute("aria-hidden", "true");
+    if (burger) {
+      burger.setAttribute("aria-expanded", "false");
+      burger.focus();
     }
+    document.body.classList.remove("is-locked");
+  }
 
-    function closeDrawer() {
-      isOpen = false;
-      drawer!.classList.remove("is-open");
-      drawer!.setAttribute("aria-hidden", "true");
-      burger!.setAttribute("aria-expanded", "false");
-      document.body.classList.remove("is-locked");
-      document.removeEventListener("keydown", handleTabKey);
-      burger!.focus();
-    }
+  if (!(window as any).__drawerGlobalListenersBound) {
+    (window as any).__drawerGlobalListenersBound = true;
 
-    burger.addEventListener("click", () => {
-      isOpen ? closeDrawer() : openDrawer();
-    });
+    document.addEventListener("click", (e) => {
+      const target = e.target as HTMLElement | null;
+      if (!target) return;
 
-    closers.forEach((el) => {
-      el.addEventListener("click", closeDrawer);
+      if (target.closest("#burger")) {
+        isOpen ? closeDrawer() : openDrawer();
+        return;
+      }
+
+      if (target.closest("[data-drawer-close]")) {
+        closeDrawer();
+      }
     });
 
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && isOpen) closeDrawer();
+      if (e.key === "Escape" && isOpen) {
+        closeDrawer();
+        return;
+      }
+      if (e.key === "Tab" && isOpen) {
+        handleTabKey(e);
+      }
     });
   }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initDrawer);
-  } else {
-    initDrawer();
-  }
-  document.addEventListener("astro:page-load", initDrawer);
 </script>

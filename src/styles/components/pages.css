@@ -467,10 +467,10 @@
   align-items: flex-end;
   padding: var(--s3);
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: var(--xxs);
   letter-spacing: 0.06em;
   color: var(--paper);
-  background: linear-gradient(to top, rgba(12, 14, 17, 0.78), transparent 62%);
+  background: linear-gradient(to top, rgba(12, 14, 17, 0.85), transparent 70%);
   opacity: 0;
   transition: opacity var(--t) var(--ease);
 }
@@ -708,7 +708,6 @@
   position: relative;
   width: 100%;
   aspect-ratio: 21 / 9;
-  min-height: 280px;
   max-height: 520px;
   overflow: hidden;
   border: 1px solid var(--line);

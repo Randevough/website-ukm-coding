@@ -1,11 +1,23 @@
-const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-const qsa = (sel: string, root?: Element | Document) =>
-  Array.prototype.slice.call((root || document).querySelectorAll(sel));
+const isBrowser =
+  typeof window !== "undefined" && typeof document !== "undefined";
+
+const reduce =
+  isBrowser && typeof window.matchMedia === "function"
+    ? window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    : false;
+
+const qsa = (sel: string, root?: Element | Document): HTMLElement[] => {
+  if (!isBrowser && !root) return [];
+  const scope = root || (isBrowser ? document : null);
+  if (!scope || typeof scope.querySelectorAll !== "function") return [];
+  return Array.prototype.slice.call(scope.querySelectorAll(sel));
+};
 
 /* ---------------- 1 + 2. Reveal & lineMask ---------------- */
 let io: IntersectionObserver | null = null;
 
 export function initReveal(root?: Element | Document) {
+  if (!isBrowser && !root) return;
   const scope = root || document;
   const targets = qsa(
     "[data-reveal]:not(.is-in), [data-rule]:not(.is-in), .lineMask:not(.is-in)",
@@ -17,6 +29,8 @@ export function initReveal(root?: Element | Document) {
     targets.forEach((el) => el.classList.add("is-in"));
     return;
   }
+
+  if (typeof IntersectionObserver === "undefined") return;
 
   if (!io) {
     io = new IntersectionObserver(
@@ -47,6 +61,7 @@ export function initReveal(root?: Element | Document) {
 }
 
 export function playHero(root?: Element | Document) {
+  if (!isBrowser && !root) return;
   const scope = root || document;
   qsa(".lineMask", scope).forEach((el, i) => {
     if (!(el as HTMLElement).style.getPropertyValue("--reveal-delay")) {
@@ -56,12 +71,15 @@ export function playHero(root?: Element | Document) {
       );
     }
   });
-  requestAnimationFrame(() => {
-    qsa(
-      ".hero .lineMask, .hero [data-reveal], .hero [data-rule]",
-      scope,
-    ).forEach((el) => el.classList.add("is-in"));
-  });
+
+  if (typeof requestAnimationFrame === "function") {
+    requestAnimationFrame(() => {
+      qsa(
+        ".hero .lineMask, .hero [data-reveal], .hero [data-rule]",
+        scope,
+      ).forEach((el) => el.classList.add("is-in"));
+    });
+  }
 }
 
 /* ---------------- 3. Parallax ---------------- */
@@ -69,6 +87,7 @@ let pxItems: { el: HTMLElement; speed: number }[] = [];
 let pxTicking = false;
 
 function collectParallax(root?: Element | Document) {
+  if (!isBrowser && !root) return;
   pxItems = qsa("[data-parallax]", root || document).map((el: any) => ({
     el: el,
     speed: parseFloat(el.getAttribute("data-parallax") || "0.12"),
@@ -77,6 +96,7 @@ function collectParallax(root?: Element | Document) {
 }
 
 function applyParallax() {
+  if (!isBrowser) return;
   const vh = window.innerHeight;
   pxItems.forEach((item) => {
     const rect = item.el.getBoundingClientRect();
@@ -90,14 +110,16 @@ function applyParallax() {
 function onScrollParallax() {
   if (pxTicking) return;
   pxTicking = true;
-  requestAnimationFrame(() => {
-    applyParallax();
-    pxTicking = false;
-  });
+  if (typeof requestAnimationFrame === "function") {
+    requestAnimationFrame(() => {
+      applyParallax();
+      pxTicking = false;
+    });
+  }
 }
 
 export function initParallax(root?: Element | Document) {
-  if (reduce) return;
+  if (!isBrowser || reduce) return;
   collectParallax(root);
   window.removeEventListener("scroll", onScrollParallax);
   window.addEventListener("scroll", onScrollParallax, { passive: true });
@@ -106,10 +128,12 @@ export function initParallax(root?: Element | Document) {
 
 /* ---------------- 4. Counter ---------------- */
 function runCounter(el: HTMLElement) {
+  if (!isBrowser) return;
   const target = parseFloat(el.getAttribute("data-counter") || "0");
   const suffix = el.getAttribute("data-suffix") || "";
   const dur = 1500;
-  const start = performance.now();
+  const start =
+    typeof performance !== "undefined" ? performance.now() : Date.now();
 
   if (reduce) {
     el.innerHTML = target + (suffix ? "<sup>" + suffix + "</sup>" : "");
@@ -121,15 +145,22 @@ function runCounter(el: HTMLElement) {
     const e = t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
     const val = Math.round(target * e);
     el.innerHTML = val + (suffix ? "<sup>" + suffix + "</sup>" : "");
-    if (t < 1) requestAnimationFrame(frame);
+    if (t < 1 && typeof requestAnimationFrame === "function") {
+      requestAnimationFrame(frame);
+    }
   }
-  requestAnimationFrame(frame);
+
+  if (typeof requestAnimationFrame === "function") {
+    requestAnimationFrame(frame);
+  }
 }
 
 export function initCounters(root?: Element | Document) {
+  if (!isBrowser && !root) return;
   const scope = root || document;
   const items = qsa("[data-counter]:not(.is-counted)", scope);
-  if (!items.length) return;
+  if (!items.length || typeof IntersectionObserver === "undefined") return;
+
   const obs = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -146,7 +177,13 @@ export function initCounters(root?: Element | Document) {
 
 /* ---------------- 5. Tilt ---------------- */
 export function initTilt(root?: Element | Document) {
-  if (reduce || window.matchMedia("(hover: none)").matches) return;
+  if (
+    !isBrowser ||
+    reduce ||
+    (typeof window !== "undefined" &&
+      window.matchMedia("(hover: none)").matches)
+  )
+    return;
   const scope = root || document;
   qsa("[data-tilt]", scope).forEach((card: any) => {
     let raf: number | null = null;
@@ -154,18 +191,22 @@ export function initTilt(root?: Element | Document) {
       const r = card.getBoundingClientRect();
       const px = (e.clientX - r.left) / r.width - 0.5;
       const py = (e.clientY - r.top) / r.height - 0.5;
-      if (raf) cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        card.style.transform =
-          "perspective(900px) rotateX(" +
-          (-py * 4.2).toFixed(2) +
-          "deg) rotateY(" +
-          (px * 5.4).toFixed(2) +
-          "deg) translateZ(0)";
-      });
+      if (raf && typeof cancelAnimationFrame === "function")
+        cancelAnimationFrame(raf);
+      if (typeof requestAnimationFrame === "function") {
+        raf = requestAnimationFrame(() => {
+          card.style.transform =
+            "perspective(900px) rotateX(" +
+            (-py * 4.2).toFixed(2) +
+            "deg) rotateY(" +
+            (px * 5.4).toFixed(2) +
+            "deg) translateZ(0)";
+        });
+      }
     };
     const leave = () => {
-      if (raf) cancelAnimationFrame(raf);
+      if (raf && typeof cancelAnimationFrame === "function")
+        cancelAnimationFrame(raf);
       card.style.transform = "";
     };
     card.addEventListener("pointermove", move);
@@ -177,7 +218,12 @@ export function initTilt(root?: Element | Document) {
 let cursorEl: HTMLElement | null = null;
 
 export function initCursor(root?: Element | Document) {
-  if (window.matchMedia("(hover: none)").matches) return;
+  if (
+    !isBrowser ||
+    (typeof window !== "undefined" &&
+      window.matchMedia("(hover: none)").matches)
+  )
+    return;
   const scope = root || document;
   const zones = qsa("[data-cursor]", scope);
   if (!zones.length) return;
@@ -199,25 +245,36 @@ export function initCursor(root?: Element | Document) {
   function loop() {
     cx += (x - cx) * 0.22;
     cy += (y - cy) * 0.22;
-    cursorEl!.style.transform =
-      "translate3d(" +
-      cx.toFixed(1) +
-      "px," +
-      cy.toFixed(1) +
-      "px,0) translate(-50%,-50%)";
-    if (on) raf = requestAnimationFrame(loop);
-    else raf = null;
+    if (cursorEl) {
+      cursorEl.style.transform =
+        "translate3d(" +
+        cx.toFixed(1) +
+        "px," +
+        cy.toFixed(1) +
+        "px,0) translate(-50%,-50%)";
+    }
+    if (on && typeof requestAnimationFrame === "function") {
+      raf = requestAnimationFrame(loop);
+    } else {
+      raf = null;
+    }
   }
 
   zones.forEach((zone: any) => {
     zone.addEventListener("pointerenter", () => {
-      cursorEl!.textContent = zone.getAttribute("data-cursor") || "Lihat";
-      cursorEl!.classList.add("is-on");
+      if (cursorEl) {
+        cursorEl.textContent = zone.getAttribute("data-cursor") || "Lihat";
+        cursorEl.classList.add("is-on");
+      }
       on = true;
-      if (!raf) raf = requestAnimationFrame(loop);
+      if (!raf && typeof requestAnimationFrame === "function") {
+        raf = requestAnimationFrame(loop);
+      }
     });
     zone.addEventListener("pointerleave", () => {
-      cursorEl!.classList.remove("is-on");
+      if (cursorEl) {
+        cursorEl.classList.remove("is-on");
+      }
       on = false;
     });
     zone.addEventListener("pointermove", (e: PointerEvent) => {
@@ -233,6 +290,7 @@ export function initCursor(root?: Element | Document) {
 
 /* ---------------- 7. Ticker ---------------- */
 export function initTicker(root?: Element | Document) {
+  if (!isBrowser && !root) return;
   const scope = root || document;
   qsa(".ticker:not(.is-ready)", scope).forEach((ticker: any) => {
     const track = ticker.querySelector(".ticker__track");
@@ -246,6 +304,7 @@ export function initTicker(root?: Element | Document) {
 
 /* ---------------- 8. Hero Wash ---------------- */
 export function initHeroWash(root?: Element | Document) {
+  if (!isBrowser && !root) return;
   const scope = root || document;
   const wash = scope.querySelector(".hero__wash") as HTMLElement;
   if (!wash || reduce) return;
@@ -257,16 +316,20 @@ export function initHeroWash(root?: Element | Document) {
     const r = hero.getBoundingClientRect();
     const mx = ((e.clientX - r.left) / r.width) * 100;
     const my = ((e.clientY - r.top) / r.height) * 100;
-    if (raf) cancelAnimationFrame(raf);
-    raf = requestAnimationFrame(() => {
-      wash.style.setProperty("--mx", mx.toFixed(1) + "%");
-      wash.style.setProperty("--my", my.toFixed(1) + "%");
-    });
+    if (raf && typeof cancelAnimationFrame === "function")
+      cancelAnimationFrame(raf);
+    if (typeof requestAnimationFrame === "function") {
+      raf = requestAnimationFrame(() => {
+        wash.style.setProperty("--mx", mx.toFixed(1) + "%");
+        wash.style.setProperty("--my", my.toFixed(1) + "%");
+      });
+    }
   });
 }
 
 /* ---------------- 9. Share Handler ---------------- */
 export function initShare(root?: Element | Document) {
+  if (!isBrowser && !root) return;
   const scope = root || document;
   qsa("[data-share]", scope).forEach((btn: any) => {
     btn.addEventListener("click", async () => {
@@ -277,7 +340,7 @@ export function initShare(root?: Element | Document) {
         } catch (err) {
           console.error("Error sharing", err);
         }
-      } else {
+      } else if (navigator.clipboard) {
         try {
           await navigator.clipboard.writeText(url);
           const originalText = btn.textContent;
@@ -295,6 +358,7 @@ export function initShare(root?: Element | Document) {
 
 /* ---------------- Boot ---------------- */
 export function initMotion() {
+  if (!isBrowser) return;
   const scope = document;
   initReveal(scope);
   playHero(scope);
@@ -307,4 +371,6 @@ export function initMotion() {
   initShare(scope);
 }
 
-document.addEventListener("astro:page-load", initMotion);
+if (typeof document !== "undefined") {
+  document.addEventListener("astro:page-load", initMotion);
+}

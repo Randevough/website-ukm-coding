@@ -12,6 +12,10 @@ if (!useFixture) {
 }
 
 export function urlFor(source: any) {
-  if (useFixture) return null;
-  return builder.image(source);
+  if (!source || useFixture || !builder) return null;
+  try {
+    return builder.image(source);
+  } catch {
+    return null;
+  }
 }

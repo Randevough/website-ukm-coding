@@ -2,6 +2,7 @@
 import Layout from "../../layouts/Layout.astro";
 import MagazineCard from "../../components/ui/MagazineCard.astro";
 import PostCard from "../../components/ui/PostCard.astro";
+import EmptyState from "../../components/ui/EmptyState.astro";
 import { UKM_FIXTURE } from "../../lib/content/fixture";
 import { fetchSanity } from "../../lib/sanity/client";
 import {
@@ -114,6 +115,10 @@ const min = posts.slice(4, 8);
         </div>
       ))
     }
+  </template>
+
+  <template id="empty-state-template">
+    <EmptyState />
   </template>
 
   <script src="../../scripts/filter.ts"></script>

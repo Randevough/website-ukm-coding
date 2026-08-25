@@ -304,6 +304,13 @@
   font-weight: 500;
 }
 
+.site-header__logo {
+  height: 38px;
+  width: auto;
+  object-fit: contain;
+  flex: none;
+}
+
 .logo-slot {
   display: grid;
   place-items: center;

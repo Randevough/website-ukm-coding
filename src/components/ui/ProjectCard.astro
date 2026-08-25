@@ -51,7 +51,9 @@ const stack = p.techStack || p.stack || [];
     <p class="pcard__one">{oneLiner}</p>
   </div>
   <div class="pcard__foot">
-    <span class="mono">{stack.slice(0, 3).join(" / ")}</span>
-    <span class="arrow">→</span>
+    <span class="mono"
+      >{stack.length > 0 ? stack.slice(0, 3).join(" / ") : "TBA"}</span
+    >
+    <span class="arrow" aria-hidden="true">→</span>
   </div>
 </article>

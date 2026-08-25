@@ -8,7 +8,11 @@ const isProjects = currentPath.startsWith("/projects");
 <header class="site-header">
   <div class="container site-header__inner">
     <a class="site-header__brand" href="/">
-      <span class="logo-slot">LOGO</span>
+      <img
+        src="/Logo UKM Coding Transparent.png"
+        alt="Logo UKM Coding"
+        class="site-header__logo"
+      />
       <span class="site-header__name"
         >UKM Coding<small>Cyber University</small></span
       >
@@ -37,14 +41,15 @@ const isProjects = currentPath.startsWith("/projects");
   </div>
 </header>
 <script>
-  function initHeader() {
+  function onScroll() {
     const header = document.querySelector(".site-header");
     if (!header) return;
-    const onScroll = () => {
-      header.classList.toggle("is-stuck", window.scrollY > 8);
-    };
-    onScroll();
+    header.classList.toggle("is-stuck", window.scrollY > 8);
+  }
+
+  if (!(window as any).__headerScrollBound) {
+    (window as any).__headerScrollBound = true;
     window.addEventListener("scroll", onScroll, { passive: true });
   }
-  document.addEventListener("astro:page-load", initHeader);
+  document.addEventListener("astro:page-load", onScroll);
 </script>

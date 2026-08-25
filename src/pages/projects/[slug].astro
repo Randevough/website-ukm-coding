@@ -43,7 +43,16 @@ const title = p.nama || p.title;
 const oneLiner = p.ringkasan || p.oneLiner;
 const stack = p.techStack || p.stack || [];
 
-const isSanityBlocks = (content: any) => Array.isArray(content);
+const isSanityBlocks = (content: any) =>
+  Array.isArray(content) &&
+  content.length > 0 &&
+  typeof content[0] === "object" &&
+  Boolean(content[0]?._type);
+
+const isStringArray = (content: any) =>
+  Array.isArray(content) &&
+  content.length > 0 &&
+  typeof content[0] === "string";
 ---
 
 <Layout title={`${title} | ${settings.nama}`}>
@@ -94,8 +103,14 @@ const isSanityBlocks = (content: any) => Array.isArray(content);
         {
           isSanityBlocks(p.masalah) ? (
             <PortableTextComponent value={p.masalah} />
+          ) : isStringArray(p.masalah) ? (
+            <ul>
+              {p.masalah.map((item: string) => (
+                <li>{item}</li>
+              ))}
+            </ul>
           ) : (
-            <p set:html={p.masalah} />
+            <p>{p.masalah}</p>
           )
         }
 
@@ -103,8 +118,14 @@ const isSanityBlocks = (content: any) => Array.isArray(content);
         {
           isSanityBlocks(p.pendekatan) ? (
             <PortableTextComponent value={p.pendekatan} />
+          ) : isStringArray(p.pendekatan) ? (
+            <ul>
+              {p.pendekatan.map((item: string) => (
+                <li>{item}</li>
+              ))}
+            </ul>
           ) : (
-            <p set:html={p.pendekatan} />
+            <p>{p.pendekatan}</p>
           )
         }
 
@@ -112,8 +133,14 @@ const isSanityBlocks = (content: any) => Array.isArray(content);
         {
           isSanityBlocks(p.hasil) ? (
             <PortableTextComponent value={p.hasil} />
+          ) : isStringArray(p.hasil) ? (
+            <ul>
+              {p.hasil.map((item: string) => (
+                <li>{item}</li>
+              ))}
+            </ul>
           ) : (
-            <p set:html={p.hasil} />
+            <p>{p.hasil}</p>
           )
         }
       </div>

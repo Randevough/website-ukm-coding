@@ -1,6 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import ProjectCard from "../../components/ui/ProjectCard.astro";
+import EmptyState from "../../components/ui/EmptyState.astro";
 import { UKM_FIXTURE } from "../../lib/content/fixture";
 import { fetchSanity } from "../../lib/sanity/client";
 import { siteSettingsQuery, allProjectsQuery } from "../../lib/sanity/queries";
@@ -104,6 +105,10 @@ if (sanityProjects && sanityProjects.length > 0) {
         </div>
       ))
     }
+  </template>
+
+  <template id="empty-state-template">
+    <EmptyState />
   </template>
 
   <script src="../../scripts/filter.ts"></script>

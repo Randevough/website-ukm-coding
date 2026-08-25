@@ -1,4 +1,13 @@
 ---
+import {
+  generateOrganizationSchema,
+  generateArticleSchema,
+  generateBreadcrumbSchema,
+  generateEventSchema,
+  type BreadcrumbItem,
+} from "../../lib/seo/schema";
+import { buildMetaTags, DEFAULT_SITE_NAME } from "../../lib/seo/meta";
+
 export interface Props {
   title?: string;
   description?: string;
@@ -17,7 +26,7 @@ export interface Props {
     endDate?: string;
     location?: string;
   };
-  breadcrumb?: Array<{ name: string; item: string }>;
+  breadcrumb?: BreadcrumbItem[];
 }
 
 const {
@@ -32,117 +41,102 @@ const {
   breadcrumb,
 } = Astro.props;
 
-const siteName = "UKM Coding Cyber University";
-const finalTitle = title ? title : siteName;
-const finalDescription =
-  description || "Unit kegiatan mahasiswa bidang teknologi di Cyber University";
-const canonicalUrl =
-  canonical || new URL(Astro.url.pathname, Astro.site || Astro.url.origin).href;
-const finalImage =
-  image || new URL("/og-default.jpg", Astro.site || Astro.url.origin).href;
+const siteName = DEFAULT_SITE_NAME;
+const siteUrl = Astro.site ? Astro.site.toString() : Astro.url.origin;
+
+const meta = buildMetaTags({
+  title,
+  description,
+  image,
+  canonical,
+  noindex,
+  pathname: Astro.url.pathname,
+  site: Astro.site,
+  origin: Astro.url.origin,
+});
+
+const orgSchema = generateOrganizationSchema({
+  siteName,
+  url: siteUrl,
+  logo: meta.ogImage,
+});
+
+const articleSchema = articleData
+  ? generateArticleSchema({
+      headline: articleData.headline,
+      datePublished: articleData.datePublished,
+      authorName: articleData.authorName,
+      siteName,
+      logo: meta.ogImage,
+    })
+  : null;
+
+const breadcrumbSchema =
+  breadcrumb && breadcrumb.length > 0
+    ? generateBreadcrumbSchema(breadcrumb)
+    : null;
+
+const eventSchema = eventData
+  ? generateEventSchema({
+      name: eventData.name,
+      startDate: eventData.startDate,
+      endDate: eventData.endDate,
+      location: eventData.location,
+      siteName,
+      siteUrl,
+    })
+  : null;
+
+function safeJsonLd(obj: any): string {
+  return JSON.stringify(obj).replace(/</g, "\\u003c");
+}
 ---
 
-<title>{finalTitle}</title>
-<meta name="description" content={finalDescription} />
-<link rel="canonical" href={canonicalUrl} />
+<title>{meta.title}</title>
+<meta name="description" content={meta.description} />
+<link rel="canonical" href={meta.canonicalUrl} />
 
-{noindex && <meta name="robots" content="noindex, nofollow" />}
+{meta.noindex && <meta name="robots" content="noindex, nofollow" />}
 
-<meta property="og:title" content={finalTitle} />
-<meta property="og:description" content={finalDescription} />
+<meta property="og:title" content={meta.title} />
+<meta property="og:description" content={meta.description} />
 <meta property="og:type" content={type} />
-<meta property="og:url" content={canonicalUrl} />
-<meta property="og:image" content={finalImage} />
+<meta property="og:url" content={meta.canonicalUrl} />
+<meta property="og:image" content={meta.ogImage} />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content={finalTitle} />
-<meta name="twitter:description" content={finalDescription} />
-<meta name="twitter:image" content={finalImage} />
+<meta name="twitter:title" content={meta.title} />
+<meta name="twitter:description" content={meta.description} />
+<meta name="twitter:image" content={meta.ogImage} />
 
-<script
-  is:inline
-  type="application/ld+json"
-  set:html={JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    name: siteName,
-    url: Astro.site || Astro.url.origin,
-    logo: finalImage,
-  })}
-/>
+<script is:inline type="application/ld+json" set:html={safeJsonLd(orgSchema)} />
 
 {
-  articleData && (
+  articleSchema && (
     <script
       is:inline
       type="application/ld+json"
-      set:html={JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "Article",
-        headline: articleData.headline,
-        datePublished: articleData.datePublished,
-        author: {
-          "@type": "Person",
-          name: articleData.authorName,
-        },
-        publisher: {
-          "@type": "Organization",
-          name: siteName,
-          logo: {
-            "@type": "ImageObject",
-            url: finalImage,
-          },
-        },
-      })}
+      set:html={safeJsonLd(articleSchema)}
     />
   )
 }
 
 {
-  breadcrumb && breadcrumb.length > 0 && (
+  breadcrumbSchema && (
     <script
       is:inline
       type="application/ld+json"
-      set:html={JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        itemListElement: breadcrumb.map((crumb, index) => ({
-          "@type": "ListItem",
-          position: index + 1,
-          name: crumb.name,
-          item: crumb.item,
-        })),
-      })}
+      set:html={safeJsonLd(breadcrumbSchema)}
     />
   )
 }
 
 {
-  eventData && (
+  eventSchema && (
     <script
       is:inline
       type="application/ld+json"
-      set:html={JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "Event",
-        name: eventData.name,
-        startDate: eventData.startDate,
-        ...(eventData.endDate && { endDate: eventData.endDate }),
-        location: {
-          "@type": "Place",
-          name: eventData.location || "Cyber University",
-          address: {
-            "@type": "PostalAddress",
-            addressLocality: "Jakarta",
-            addressCountry: "ID",
-          },
-        },
-        organizer: {
-          "@type": "Organization",
-          name: siteName,
-          url: Astro.site || Astro.url.origin,
-        },
-      })}
+      set:html={safeJsonLd(eventSchema)}
     />
   )
 }

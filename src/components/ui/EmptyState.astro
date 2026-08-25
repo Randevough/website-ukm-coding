@@ -1,0 +1,49 @@
+---
+export interface Props {
+  title?: string;
+  message?: string;
+}
+const {
+  title = "Tidak Ditemukan",
+  message = "Data yang Anda cari belum tersedia atau sedang disiapkan.",
+} = Astro.props;
+---
+
+<div class="empty-state">
+  <div class="empty-state__inner">
+    <span class="label label--ink">EMPTY_STATE</span>
+    <h3 class="empty-state__title">{title}</h3>
+    <p class="empty-state__message">{message}</p>
+  </div>
+</div>
+
+<style>
+  .empty-state {
+    padding: var(--s7) var(--s5);
+    border: 1px dashed var(--line-ink);
+    border-radius: var(--r2);
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    background: var(--paper-2);
+    margin-block: var(--s5);
+  }
+  .empty-state__inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s3);
+    max-width: 400px;
+    align-items: center;
+  }
+  .empty-state__title {
+    font-size: var(--d3);
+    color: var(--ink-deep);
+    letter-spacing: var(--track-tight);
+    font-weight: 700;
+  }
+  .empty-state__message {
+    font-size: var(--sm);
+    color: var(--ink-2);
+    line-height: 1.6;
+  }
+</style>
