@@ -231,14 +231,7 @@ export function initProjectsFilter() {
     } else {
       paginated.forEach((el, i) => {
         const clone = el.cloneNode(true) as HTMLElement;
-        // Strip old size classes
-        const card = clone.querySelector(".pcard");
-        if (card) {
-          card.classList.remove("pcard--tall", "pcard--wide");
-          const size = i % 5 === 0 ? "tall" : i % 5 === 4 ? "wide" : "normal";
-          if (size === "tall") card.classList.add("pcard--tall");
-          if (size === "wide") card.classList.add("pcard--wide");
-        }
+        // Clean clone injection without specific sizes
         gridContainer!.appendChild(clone);
       });
     }

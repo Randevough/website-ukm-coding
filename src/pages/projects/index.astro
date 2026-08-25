@@ -78,10 +78,8 @@ if (sanityProjects && sanityProjects.length > 0) {
         data-cursor="Lihat cepat"
       >
         {
-          projects.map((p, i) => {
-            // Pola grid bento
-            const size = i % 5 === 0 ? "tall" : i % 5 === 4 ? "wide" : "normal";
-            return <ProjectCard project={p} size={size} />;
+          projects.map((p) => {
+            return <ProjectCard project={p} />;
           })
         }
       </div>
@@ -101,7 +99,7 @@ if (sanityProjects && sanityProjects.length > 0) {
           data-title={(p.nama || p.title).toLowerCase()}
           data-date={p.tahun || p.tanggal || ""}
         >
-          <ProjectCard project={p} size="normal" />
+          <ProjectCard project={p} />
         </div>
       ))
     }

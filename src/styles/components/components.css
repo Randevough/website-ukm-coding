@@ -681,13 +681,7 @@
   z-index: 2;
 }
 
-.pcard--tall {
-  min-height: 460px;
-}
 
-.pcard--wide {
-  min-height: 380px;
-}
 
 .pcard__top {
   display: flex;
@@ -727,10 +721,7 @@
   line-height: 1.22;
 }
 
-.pcard--tall .pcard__title,
-.pcard--wide .pcard__title {
-  font-size: var(--d3);
-}
+
 
 .pcard__one {
   font-size: var(--sm);
@@ -748,6 +739,7 @@
   justify-content: space-between;
   gap: var(--s4);
   padding-top: var(--s3);
+  margin-top: auto;
   border-top: 1px solid var(--line-soft);
   transform: translateZ(20px);
 }
