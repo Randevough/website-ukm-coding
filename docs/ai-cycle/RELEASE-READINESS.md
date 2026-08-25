@@ -1,0 +1,14 @@
+# Release Readiness Checklist
+
+| Kategori                 | Status               | Catatan                                                                      |
+| ------------------------ | -------------------- | ---------------------------------------------------------------------------- |
+| Domain & Subdomain       | **EXTERNAL BLOCKER** | Menunggu konfirmasi kampus.                                                  |
+| Production Build         | **PASS**             | Berhasil mem-build 31 halaman static tanpa error.                            |
+| Baseline Tests           | **PASS**             | Format, lint, typecheck, dan unit test semuanya lulus (100% pass).           |
+| Visual Regression (Awal) | **PASS**             | Screenshot baseline lengkap tersimpan di `docs/ai-cycle/evidence/baseline/`. |
+| Konten Placeholder       | **FAIL**             | Masih ada fixture statis dan angka karangan.                                 |
+| Keamanan & Dependensi    | **PASS**             | 0 vulnerabilities pada `npm audit`.                                          |
+| Lighthouse & SEO         | **UNKNOWN**          | Menunggu hasil CI / staging environment.                                     |
+| Akses Editor & CMS       | **EXTERNAL BLOCKER** | Setup akun final belum didokumentasikan sepenuhnya oleh klien.               |
+
+_(Checklist ini akan terus diperbarui seiring berjalannya fase berikutnya)_

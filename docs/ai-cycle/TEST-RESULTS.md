@@ -1,0 +1,25 @@
+# Test Results
+
+## Environment
+
+- OS: Windows (x64)
+- Current Branch: `main`
+- Commit Hash: `83cfd5b5e4204433e2eeadd2f2aee651b9fe20e6`
+- Tanggal Eksekusi: 25 Agustus 2026
+
+## Ringkasan Eksekusi Baseline
+
+| No  | Check / Command        | Hasil       | Keterangan / Kegagalan                                                                                           |
+| :-- | :--------------------- | :---------- | :--------------------------------------------------------------------------------------------------------------- |
+| 1   | `npm ci` / `install`   | **PASS**    | Dependensi terinstal dengan benar tanpa error (setelah pembersihan folder node_modules sebelumnya).              |
+| 2   | `npm run format:check` | **PASS**    | Seluruh file kode dan markdown (termasuk docs/ai-cycle) telah diformat sesuai standar.                           |
+| 3   | `npm run lint`         | **PASS**    | `eslint` selesai tanpa error (0 errors, 4 minor unused var warnings).                                            |
+| 4   | `npm run build`        | **PASS**    | `astro check && astro build` berhasil merender 31 halaman static tanpa error tipe.                               |
+| 5   | `npm run test`         | **PASS**    | Vitest melaporkan 80 tests passing (100% success rate).                                                          |
+| 6   | `npm audit`            | **PASS**    | 0 vulnerabilities (kerentanan sebelumnya telah ditangani menggunakan `overrides` di `package.json`).             |
+| 7   | Internal link check    | **UNKNOWN** | Tidak dapat dieksekusi secara lokal karena absennya script di `package.json`, dijalankan pada CI (`deploy.yml`). |
+| 8   | Dev Server (Lokal)     | **PASS**    | Berhasil merespons dengan HTTP 200 pada halaman yang diminta.                                                    |
+| 9   | Lighthouse             | **UNKNOWN** | Dijalankan pada CI (Cloudflare Pages).                                                                           |
+| 10  | Visual Evidence        | **PASS**    | Screenshot baseline berhasil diambil untuk desktop & mobile menggunakan Puppeteer.                               |
+
+_(Sesuai aturan Fase 0, kegagalan ini tidak diperbaiki saat ini dan dicatat sebagai blocker untuk diselesaikan pada fase implementasi teknis)_
