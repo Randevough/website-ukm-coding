@@ -53,9 +53,20 @@ const isStringArray = (content: any) =>
   Array.isArray(content) &&
   content.length > 0 &&
   typeof content[0] === "string";
+const breadcrumb = [
+  { name: "Beranda", item: new URL("/", Astro.site || Astro.url.origin).href },
+  {
+    name: "Projects",
+    item: new URL("/projects", Astro.site || Astro.url.origin).href,
+  },
+  {
+    name: title,
+    item: new URL(Astro.url.pathname, Astro.site || Astro.url.origin).href,
+  },
+];
 ---
 
-<Layout title={`${title} | ${settings.nama}`}>
+<Layout title={`${title} | ${settings.nama}`} description={oneLiner} breadcrumb={breadcrumb}>
   <section class="section section--tight">
     <div class="container" id="case">
       <header class="case__head">
@@ -92,6 +103,7 @@ const isStringArray = (content: any) =>
               node={p.cover}
               variantFallback={p.variant}
               glyphFallback={title}
+              loading="eager"
             />
           ) : (
             <Art variant={p.variant || "mix"} glyph={title} />

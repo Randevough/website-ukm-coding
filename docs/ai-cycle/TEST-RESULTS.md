@@ -24,5 +24,7 @@
 | 11  | Accessibility (Fase 3) | **PASS**    | Evaluasi perbaikan A11y telah dilakukan. Skip-link, inert dialog/drawer, aria-current, touch target terverifikasi. |
 | 12  | Security (Fase 4)      | **PASS**    | Tidak ada kebocoran draft, `set:html` dibersihkan, external links memakai `noopener noreferrer`. Security Headers / CSP ada. |
 | 13  | Reliability (Fase 4)   | **PASS**    | Build akan _fail_ jika fetch Sanity gagal di mode PROD, mencegah pengambilalihan fakta oleh fixture.             |
+| 14  | SEO & Metadata (Fase 5)| **PASS**    | Canonical URL absolut, open graph, noindex preview 404, dan Structured Data (JSON-LD) valid terpasang.             |
+| 15  | Performance (Fase 5)   | **PASS**    | LCP images di set ke eager load & fetchpriority high. Gambar Sanity dimuat menggunakan format otomatis (WebP/AVIF). Dimensi diset explicit (mengurangi CLS).   |
 
 _(Sesuai aturan Fase 0, kegagalan ini tidak diperbaiki saat ini dan dicatat sebagai blocker untuk diselesaikan pada fase implementasi teknis)_

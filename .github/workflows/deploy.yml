@@ -92,6 +92,7 @@ jobs:
 
   deploy:
     name: Deploy to Cloudflare Pages
+    if: github.ref == 'refs/heads/main' || github.event_name == 'repository_dispatch'
     needs: [build-and-test, link-check, lighthouse]
     runs-on: ubuntu-latest
     permissions:

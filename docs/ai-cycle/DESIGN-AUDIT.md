@@ -31,4 +31,5 @@ _(Disusun pada Fase 1: Audit UI/UX dan Proposal Refinement)_
 - **A-07: Motion Tweak.** Menurunkan skala transisi pada hover kartu dari `scale(1.06)` menjadi `scale(1.03)` agar tidak terlihat berlebihan.
 
 ---
+
 **Status Audit:** Semua proposal di atas telah di-**APPROVE** secara eksplisit dan telah di-**IMPLEMENTASI** pada Fase 2 tanpa regresi visual yang diamati.

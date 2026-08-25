@@ -21,9 +21,18 @@ if (sanitySettings) {
 if (sanityProjects && sanityProjects.length > 0) {
   projects = sanityProjects;
 }
+
+const breadcrumb = [
+  { name: "Beranda", item: new URL("/", Astro.site || Astro.url.origin).href },
+  { name: "Projects", item: new URL("/projects", Astro.site || Astro.url.origin).href },
+];
 ---
 
-<Layout title={`Showcase | ${settings.nama}`}>
+<Layout
+  title={`Projects | ${settings.nama}`}
+  description="Karya inovatif mahasiswa Cyber University yang berawal dari hobi dan eksperimen teknologi."
+  breadcrumb={breadcrumb}
+>
   <!-- ================= KEPALA HALAMAN ================= -->
   <section class="pagehead" data-mark="orange">
     <div class="pagehead__grid" aria-hidden="true"></div>

@@ -11,3 +11,4 @@
 | 07  | 2026-08-20 | Preview Deployment (Noindex)                   | Review PR harus melalui instance tersendiri di Pages yang tidak terindeks search engine. | Terkunci |
 | 08  | 2026-08-25 | Focus Trap via `inert` attribute               | Memanfaatkan atribut HTML5 native `inert` daripada library kustom untuk aksesibilitas modal/drawer. | Terkunci |
 | 09  | 2026-08-25 | Throw error on Sanity empty/fail in PROD       | Menggagalkan build saat Sanity error (daripada render fixture) guna menjaga `previous production` Cloudflare. | Terkunci |
+| 10  | 2026-08-25 | Native HTML Image LCP Eager Load               | LCP Images (hero home, hero case study) tidak di lazy-load. Disematkan `fetchpriority="high"`.       | Terkunci |

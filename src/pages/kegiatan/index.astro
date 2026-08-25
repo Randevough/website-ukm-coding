@@ -26,12 +26,20 @@ if (sanityPosts && sanityPosts.length > 0) {
   posts = sanityPosts;
 }
 
+const breadcrumb = [
+  { name: "Beranda", item: new URL("/", Astro.site || Astro.url.origin).href },
+  { name: "Updates", item: new URL("/kegiatan", Astro.site || Astro.url.origin).href },
+];
+
 const featured = posts[0];
 const maj = posts.slice(1, 4);
 const min = posts.slice(4, 8);
 ---
 
-<Layout title={`Updates | ${settings.nama}`}>
+<Layout
+  title={`Updates | ${settings.nama}`}
+  breadcrumb={breadcrumb}
+>
   <!-- ================= KEPALA HALAMAN ================= -->
   <section class="pagehead">
     <div class="pagehead__grid" aria-hidden="true"></div>

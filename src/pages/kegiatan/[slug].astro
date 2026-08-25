@@ -130,6 +130,7 @@ const breadcrumb = [
                 variantFallback={p.variant}
                 glyphFallback={kategori}
                 className="article__artImg"
+                loading="eager"
               />
             ) : (
               <Art variant={p.variant || "neutral"} glyph={kategori} />

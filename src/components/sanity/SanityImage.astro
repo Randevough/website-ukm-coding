@@ -17,7 +17,7 @@ const {
   className,
   loading = "lazy",
 } = Astro.props;
-const src = node ? urlFor(node)?.width(1200).url() : null;
+const src = node ? urlFor(node)?.width(1200).auto("format").url() : null;
 const alt = node?.alt || "";
 ---
 
