@@ -338,7 +338,11 @@ export function initShare(root?: Element | Document) {
         try {
           await navigator.share({ url });
         } catch (err) {
-          console.error("Error sharing", err);
+          if ((err as Error).name !== "AbortError") {
+            const originalText = btn.textContent;
+            btn.textContent = "Gagal membagikan";
+            setTimeout(() => (btn.textContent = originalText), 2000);
+          }
         }
       } else if (navigator.clipboard) {
         try {
@@ -349,7 +353,9 @@ export function initShare(root?: Element | Document) {
             btn.textContent = originalText;
           }, 2000);
         } catch (err) {
-          console.error("Failed to copy", err);
+          const originalText = btn.textContent;
+          btn.textContent = "Gagal menyalin";
+          setTimeout(() => (btn.textContent = originalText), 2000);
         }
       }
     });

@@ -145,6 +145,8 @@ const projects = rawProjects.map((p) => ({
     modal.classList.add("is-open");
     modal.setAttribute("aria-hidden", "false");
     document.body.classList.add("is-locked");
+    const main = document.querySelector("main");
+    if (main) main.inert = true;
     modal.setAttribute("tabindex", "-1");
     modal.focus();
   }
@@ -156,6 +158,8 @@ const projects = rawProjects.map((p) => ({
     modal.classList.remove("is-open");
     modal.setAttribute("aria-hidden", "true");
     document.body.classList.remove("is-locked");
+    const main = document.querySelector("main");
+    if (main) main.inert = false;
     if (lastTrigger) {
       lastTrigger.focus();
       lastTrigger = null;

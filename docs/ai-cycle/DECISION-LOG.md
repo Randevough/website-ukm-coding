@@ -9,3 +9,4 @@
 | 05  | 2026-08-20 | Editor direct publish, tanpa approval berlapis | Untuk kecepatan publikasi dengan asumsi tim admin sangat kecil (1-2 orang).              | Terkunci |
 | 06  | 2026-08-20 | Bahasa Indonesia Only                          | Sesuai target audiens primer yaitu mahasiswa Cyber University dan publik lokal.          | Terkunci |
 | 07  | 2026-08-20 | Preview Deployment (Noindex)                   | Review PR harus melalui instance tersendiri di Pages yang tidak terindeks search engine. | Terkunci |
+| 08  | 2026-08-25 | Focus Trap via `inert` attribute               | Memanfaatkan atribut HTML5 native `inert` daripada library kustom untuk aksesibilitas modal/drawer. | Terkunci |

@@ -18,12 +18,20 @@ const isProjects = currentPath.startsWith("/projects");
       >
     </a>
     <nav aria-label="Navigasi utama" class="nav hide-sm">
-      <a class={`nav__link ${isHome ? "is-active" : ""}`} href="/">Beranda</a>
-      <a class={`nav__link ${isKegiatan ? "is-active" : ""}`} href="/kegiatan"
-        >Updates</a
+      <a
+        class={`nav__link ${isHome ? "is-active" : ""}`}
+        href="/"
+        aria-current={isHome ? "page" : undefined}>Beranda</a
       >
-      <a class={`nav__link ${isProjects ? "is-active" : ""}`} href="/projects"
-        >Projects</a
+      <a
+        class={`nav__link ${isKegiatan ? "is-active" : ""}`}
+        href="/kegiatan"
+        aria-current={isKegiatan ? "page" : undefined}>Updates</a
+      >
+      <a
+        class={`nav__link ${isProjects ? "is-active" : ""}`}
+        href="/projects"
+        aria-current={isProjects ? "page" : undefined}>Projects</a
       >
     </nav>
     <div class="site-header__actions">

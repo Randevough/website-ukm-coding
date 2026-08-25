@@ -21,5 +21,6 @@
 | 8   | Dev Server (Lokal)     | **PASS**    | Berhasil merespons dengan HTTP 200 pada halaman yang diminta.                                                    |
 | 9   | Lighthouse             | **UNKNOWN** | Dijalankan pada CI (Cloudflare Pages).                                                                           |
 | 10  | Visual Evidence        | **PASS**    | (Fase 1 & Fase 2) Screenshot berhasil diambil untuk desktop & mobile dan tersimpan rapi di direktori evidence.   |
+| 11  | Accessibility (Fase 3) | **PASS**    | Evaluasi perbaikan A11y telah dilakukan. Skip-link, inert dialog/drawer, aria-current, touch target terverifikasi. |
 
 _(Sesuai aturan Fase 0, kegagalan ini tidak diperbaiki saat ini dan dicatat sebagai blocker untuk diselesaikan pada fase implementasi teknis)_

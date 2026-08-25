@@ -381,8 +381,8 @@
 }
 
 .burger {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border: 1px solid var(--line);
   border-radius: var(--r1);
   display: none;
@@ -681,8 +681,6 @@
   z-index: 2;
 }
 
-
-
 .pcard__top {
   display: flex;
   align-items: baseline;
@@ -720,8 +718,6 @@
   letter-spacing: var(--track-tight);
   line-height: 1.22;
 }
-
-
 
 .pcard__one {
   font-size: var(--sm);

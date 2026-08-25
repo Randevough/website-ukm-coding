@@ -5,7 +5,7 @@ const { settings } = UKM_FIXTURE;
 
 <div aria-hidden="true" class="drawer" id="drawer">
   <div class="drawer__backdrop" data-drawer-close=""></div>
-  <div aria-label="Menu" class="drawer__panel" role="dialog">
+  <div aria-label="Menu" class="drawer__panel" role="dialog" aria-modal="true">
     <div class="drawer__top">
       <span class="label">Menu</span>
       <button
@@ -82,6 +82,8 @@ const { settings } = UKM_FIXTURE;
     burger.setAttribute("aria-expanded", "true");
     document.body.classList.add("is-locked");
     drawer.setAttribute("tabindex", "-1");
+    const main = document.querySelector("main");
+    if (main) main.inert = true;
     drawer.focus();
   }
 
@@ -97,6 +99,8 @@ const { settings } = UKM_FIXTURE;
       burger.focus();
     }
     document.body.classList.remove("is-locked");
+    const main = document.querySelector("main");
+    if (main) main.inert = false;
   }
 
   if (!(window as any).__drawerGlobalListenersBound) {

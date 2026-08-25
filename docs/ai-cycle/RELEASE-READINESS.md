@@ -8,6 +8,7 @@
 | Visual Regression (Awal) | **PASS**             | Screenshot baseline lengkap tersimpan di `docs/ai-cycle/evidence/baseline/`. |
 | Konten Placeholder       | **FAIL**             | Masih ada fixture statis dan angka karangan.                                 |
 | Keamanan & Dependensi    | **PASS**             | 0 vulnerabilities pada `npm audit`.                                          |
+| Aksesibilitas (A11y)     | **PASS**             | Telah lulus audit (skip-link, navigasi keyboard, touch targets, state & motion). |
 | Lighthouse & SEO         | **UNKNOWN**          | Menunggu hasil CI / staging environment.                                     |
 | Akses Editor & CMS       | **EXTERNAL BLOCKER** | Setup akun final belum didokumentasikan sepenuhnya oleh klien.               |
 

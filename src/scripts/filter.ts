@@ -229,7 +229,7 @@ export function initProjectsFilter() {
         gridContainer!.appendChild(emptyTemplate.content.cloneNode(true));
       }
     } else {
-      paginated.forEach((el, i) => {
+      paginated.forEach((el) => {
         const clone = el.cloneNode(true) as HTMLElement;
         // Clean clone injection without specific sizes
         gridContainer!.appendChild(clone);
