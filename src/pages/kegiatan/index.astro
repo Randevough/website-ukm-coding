@@ -128,7 +128,7 @@ const catCounts = {
         <div
           data-post-item
           data-kategori={p.tipe || p.kategori}
-          data-title={(p.judul || p.title).toLowerCase()}
+          data-title={(p.judul || p.title || "").toLowerCase()}
         >
           <PostCard post={p} />
         </div>
@@ -140,5 +140,5 @@ const catCounts = {
     <EmptyState />
   </template>
 
-  <script src="../../scripts/filter.ts" data-astro-rerun></script>
+  <script src="../../scripts/filter.ts" ></script>
 </Layout>

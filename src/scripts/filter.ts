@@ -325,10 +325,5 @@ function bootFilters() {
 }
 
 if (typeof document !== "undefined") {
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", bootFilters);
-  } else {
-    bootFilters();
-  }
   document.addEventListener("astro:page-load", bootFilters);
 }

@@ -105,7 +105,7 @@ const breadcrumb = [
         <div
           data-project-item
           data-kategori={p.kategori}
-          data-title={(p.nama || p.title).toLowerCase()}
+          data-title={(p.nama || p.title || "").toLowerCase()}
           data-date={p.tahun || p.tanggal || ""}
         >
           <ProjectCard project={p} />
