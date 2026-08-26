@@ -536,6 +536,10 @@
   mask-image: linear-gradient(to bottom, #000, transparent 88%);
 }
 
+.pagehead__grid--horizontal {
+  background-image: linear-gradient(to bottom, var(--line-soft) 1px, transparent 1px) !important;
+}
+
 .pagehead__inner {
   position: relative;
   z-index: 1;
@@ -648,31 +652,20 @@
   color: var(--mark-deep);
 }
 
-/* Kolom asimetris untuk sisa berita:
-   satu kolom lebar, satu kolom sempit yang lebih rapat. */
-.asym {
+/* Kolom grid untuk berita: 
+   menggunakan grid auto-fill yang rapi untuk mencegah kotak kosong. */
+.updates-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
-  gap: clamp(var(--s6), 4vw, var(--s8));
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--s7) var(--s6);
   align-items: start;
 }
 
-@media (max-width: 900px) {
-  .asym {
+@media (max-width: 768px) {
+  .updates-grid {
     grid-template-columns: 1fr;
+    gap: var(--s6);
   }
-}
-
-.asym__major {
-  display: flex;
-  flex-direction: column;
-  gap: var(--s7);
-}
-
-.asym__minor {
-  display: flex;
-  flex-direction: column;
-  gap: var(--s5);
 }
 
 /* ---------------------------------------------------------

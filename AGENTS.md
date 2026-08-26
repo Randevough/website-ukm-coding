@@ -4,7 +4,7 @@ You are porting the UKM Coding Cyber University prototype to production.
 
 ## Read first
 
-Before editing code, read every file in `docs/` and the relevant file in `ai-prompts/`. Treat those files as the product and technical source of truth.
+Before editing code, read every file in `docs/` and the relevant file in `ai-prompts/`. Treat those files as the product and technical source of truth. Note that `docs/COPYWRITING-GUARDRAILS.md` contains strict guidelines to prevent AI slop.
 
 ## Non-negotiable rules
 

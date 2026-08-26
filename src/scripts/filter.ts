@@ -12,11 +12,10 @@ export function initKegiatanFilter() {
 
   const filterChips = document.querySelectorAll("#postChips .chip");
   const searchInput = document.querySelector(".search") as HTMLInputElement;
-  const majorContainer = document.getElementById("postMajor");
-  const minorContainer = document.getElementById("postMinor");
+  const gridContainer = document.getElementById("postGrid");
   const paginationContainer = document.querySelector("[data-pagination]");
 
-  if (!majorContainer || !minorContainer || !filterChips.length) return;
+  if (!gridContainer || !filterChips.length) return;
 
   const ITEMS_PER_PAGE = 7; // 3 major, 4 minor
   let currentPage = 1;
@@ -77,30 +76,26 @@ export function initKegiatanFilter() {
     currentPage = clampedPage;
 
     // 3. Render Items
-    majorContainer!.innerHTML = "";
-    minorContainer!.innerHTML = "";
+    gridContainer!.innerHTML = "";
 
     if (paginated.length === 0) {
       const emptyTemplate = document.getElementById(
         "empty-state-template",
       ) as HTMLTemplateElement;
       if (emptyTemplate) {
-        majorContainer!.appendChild(emptyTemplate.content.cloneNode(true));
+        gridContainer!.appendChild(emptyTemplate.content.cloneNode(true));
       }
     } else {
-      paginated.forEach((el, index) => {
+      paginated.forEach((el) => {
         const clone = el.cloneNode(true) as HTMLElement;
-        if (index < 3) {
-          majorContainer!.appendChild(clone);
-        } else {
-          minorContainer!.appendChild(clone);
-        }
+        gridContainer!.appendChild(clone);
       });
     }
 
     // 4. Update Chips UI
     filterChips.forEach((chip) => {
-      chip.classList.toggle("is-active", chip.textContent === currentCategory);
+      const cat = chip.getAttribute("data-category");
+      chip.classList.toggle("is-active", cat === currentCategory);
       chip.removeAttribute("disabled");
     });
 
@@ -130,7 +125,7 @@ export function initKegiatanFilter() {
   // Events
   filterChips.forEach((chip) => {
     chip.addEventListener("click", () => {
-      currentCategory = chip.textContent || "Semua";
+      currentCategory = chip.getAttribute("data-category") || "Semua";
       currentPage = 1;
       updateURL();
       render();

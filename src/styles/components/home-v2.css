@@ -20,27 +20,50 @@
   display: none !important;
 }
 
-/* Tombol konsisten dengan aksen Klein blue */
+/* Tombol konsisten dengan aksen Klein blue — transisi menyapu dari bawah identik dengan tombol kerja sama */
 .btn--primary,
 .btn--primary:link,
 .btn--primary:visited {
   background: var(--blue);
   border-color: var(--blue);
   color: #fff;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    border-color var(--t, 260ms) var(--ease, ease),
+    color var(--t, 260ms) var(--ease, ease);
+}
+
+.btn--primary::before {
+  content: "";
+  display: block !important;
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--blue-deep);
+  transform: translate3d(0, 101%, 0);
+  transition: transform var(--t, 260ms) var(--ease, ease);
+}
+
+.btn--primary:hover::before,
+.btn--primary:focus-visible::before {
+  transform: none;
 }
 
 .btn--primary:hover,
 .btn--primary:focus-visible {
-  background: var(--blue-deep);
-  border-color: var(--blue-deep);
   color: #fff;
+  border-color: var(--blue-deep);
 }
 
 .btn--primary .arrow {
-  transition: transform 260ms var(--ease, ease);
+  display: inline-block;
+  transition: transform var(--t, 260ms) var(--ease, ease);
 }
 
-.btn--primary:hover .arrow {
+.btn--primary:hover .arrow,
+.btn--primary:focus-visible .arrow {
   transform: translateX(4px);
 }
 
