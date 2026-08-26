@@ -54,7 +54,9 @@ export function initKegiatanFilter() {
     currentPage = parseInt(url.searchParams.get("page") || "1", 10);
   }
 
-  function render() {
+  let renderTimeout: ReturnType<typeof setTimeout> | null = null;
+
+  function render(skipSkeleton = false) {
     // 1. Filter by Category & Search using Pure Engine
     const catFiltered = filterByCategory(
       allItems,
@@ -75,22 +77,44 @@ export function initKegiatanFilter() {
     } = paginateItems(searchFiltered, currentPage, ITEMS_PER_PAGE);
     currentPage = clampedPage;
 
-    // 3. Render Items
-    gridContainer!.innerHTML = "";
+    // 3. Render Skeletons (if not skipped)
+    if (renderTimeout) clearTimeout(renderTimeout);
 
-    if (paginated.length === 0) {
-      const emptyTemplate = document.getElementById(
-        "empty-state-template",
-      ) as HTMLTemplateElement;
-      if (emptyTemplate) {
-        gridContainer!.appendChild(emptyTemplate.content.cloneNode(true));
+    const skeletonTemplate = document.getElementById(
+      "skeleton-posts-template"
+    ) as HTMLTemplateElement;
+
+    if (!skipSkeleton && skeletonTemplate) {
+      gridContainer!.innerHTML = "";
+      const skeletonCount = Math.min(ITEMS_PER_PAGE, searchFiltered.length || ITEMS_PER_PAGE);
+      for (let i = 0; i < (skeletonCount === 0 ? 3 : skeletonCount); i++) {
+        gridContainer!.appendChild(skeletonTemplate.content.cloneNode(true));
       }
-    } else {
-      paginated.forEach((el) => {
-        const clone = el.cloneNode(true) as HTMLElement;
-        gridContainer!.appendChild(clone);
-      });
     }
+
+    const delay = skipSkeleton ? 0 : 2500;
+
+    renderTimeout = setTimeout(() => {
+      // 4. Render Actual Items
+      gridContainer!.innerHTML = "";
+
+      if (paginated.length === 0) {
+        const emptyTemplate = document.getElementById(
+          "empty-state-template",
+        ) as HTMLTemplateElement;
+        if (emptyTemplate) {
+          gridContainer!.appendChild(emptyTemplate.content.cloneNode(true));
+        }
+      } else {
+        paginated.forEach((el) => {
+          const clone = el.cloneNode(true) as HTMLElement;
+          // Remove reveal requirement so it shows instantly
+          clone.classList.add("is-revealed");
+          clone.removeAttribute("data-reveal");
+          gridContainer!.appendChild(clone);
+        });
+      }
+    }, delay);
 
     // 4. Update Chips UI
     filterChips.forEach((chip) => {
@@ -142,7 +166,7 @@ export function initKegiatanFilter() {
   }
 
   readURL();
-  render();
+  render(true);
 }
 
 // PROJECT PAGE LOGIC
@@ -192,7 +216,9 @@ export function initProjectsFilter() {
     currentPage = parseInt(url.searchParams.get("page") || "1", 10);
   }
 
-  function render() {
+  let renderTimeout: ReturnType<typeof setTimeout> | null = null;
+
+  function render(skipSkeleton = false) {
     // 1. Filter using Pure Engine
     const filtered = filterByCategory(
       allItems,
@@ -214,22 +240,43 @@ export function initProjectsFilter() {
     } = paginateItems(sorted, currentPage, ITEMS_PER_PAGE);
     currentPage = clampedPage;
 
-    // 4. Render Items
-    gridContainer!.innerHTML = "";
-    if (paginated.length === 0) {
-      const emptyTemplate = document.getElementById(
-        "empty-state-template",
-      ) as HTMLTemplateElement;
-      if (emptyTemplate) {
-        gridContainer!.appendChild(emptyTemplate.content.cloneNode(true));
+    // 4. Render Skeletons (if not skipped)
+    if (renderTimeout) clearTimeout(renderTimeout);
+
+    const skeletonTemplate = document.getElementById(
+      "skeleton-projects-template"
+    ) as HTMLTemplateElement;
+
+    if (!skipSkeleton && skeletonTemplate) {
+      gridContainer!.innerHTML = "";
+      const skeletonCount = Math.min(ITEMS_PER_PAGE, sorted.length || ITEMS_PER_PAGE);
+      for (let i = 0; i < (skeletonCount === 0 ? 3 : skeletonCount); i++) {
+        gridContainer!.appendChild(skeletonTemplate.content.cloneNode(true));
       }
-    } else {
-      paginated.forEach((el) => {
-        const clone = el.cloneNode(true) as HTMLElement;
-        // Clean clone injection without specific sizes
-        gridContainer!.appendChild(clone);
-      });
     }
+
+    const delay = skipSkeleton ? 0 : 2500;
+
+    renderTimeout = setTimeout(() => {
+      // 5. Render Actual Items
+      gridContainer!.innerHTML = "";
+      if (paginated.length === 0) {
+        const emptyTemplate = document.getElementById(
+          "empty-state-template",
+        ) as HTMLTemplateElement;
+        if (emptyTemplate) {
+          gridContainer!.appendChild(emptyTemplate.content.cloneNode(true));
+        }
+      } else {
+        paginated.forEach((el) => {
+          const clone = el.cloneNode(true) as HTMLElement;
+          // Clean clone injection without specific sizes
+          clone.classList.add("is-revealed");
+          clone.removeAttribute("data-reveal");
+          gridContainer!.appendChild(clone);
+        });
+      }
+    }, delay);
 
     // 5. Update UI
     filterChips.forEach((chip) => {
@@ -277,7 +324,7 @@ export function initProjectsFilter() {
   }
 
   readURL();
-  render();
+  render(true);
 }
 
 export function renderPagination(

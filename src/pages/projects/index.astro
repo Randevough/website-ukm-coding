@@ -118,6 +118,17 @@ const breadcrumb = [
     <EmptyState />
   </template>
 
+  <template id="skeleton-projects-template">
+    <div class="pcard skeleton-card" style="pointer-events:none;">
+      <div class="skeleton skeleton-img"></div>
+      <div class="pcard__body" style="padding: 0;">
+        <div class="skeleton skeleton-title"></div>
+        <div class="skeleton skeleton-text long"></div>
+        <div class="skeleton skeleton-text medium"></div>
+      </div>
+    </div>
+  </template>
+
   <script src="../../scripts/filter.ts"></script>
 
   <!-- ================= CARA KERJA ================= -->
