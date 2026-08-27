@@ -559,8 +559,13 @@
 
 .pagehead__title {
   font-size: var(--d1);
-  line-height: 0.94;
+  line-height: 1.04;
   letter-spacing: -0.04em;
+}
+
+.pagehead__title .lineMask {
+  padding-bottom: 0.18em;
+  margin-bottom: -0.18em;
 }
 
 .pagehead__foot {

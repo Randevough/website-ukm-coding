@@ -499,6 +499,8 @@ main {
 .lineMask {
   display: block;
   overflow: hidden;
+  padding-bottom: 0.15em;
+  margin-bottom: -0.15em;
 }
 
 .lineMask > span {
