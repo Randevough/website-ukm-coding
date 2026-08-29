@@ -76,7 +76,14 @@ function tanggalPendek(iso: string) {
   <!-- ============================= HERO ============================= -->
   <section class="section hero hero--v2">
     <div class="hero__paper-wash" aria-hidden="true"></div>
-    <grid-reveal class="hero__grid" aria-hidden="true"></grid-reveal>
+    <div class="grid-fx" aria-hidden="true">
+      <div class="grid-fx__spot grid-fx__spot--a">
+        <div class="grid-fx__pattern"></div>
+      </div>
+      <div class="grid-fx__spot grid-fx__spot--b">
+        <div class="grid-fx__pattern"></div>
+      </div>
+    </div>
     <div class="container hero__inner">
       <div class="hero__split">
         <div class="hero__left">
@@ -128,7 +135,6 @@ function tanggalPendek(iso: string) {
                 height="800"
                 loading="eager"
                 fetchpriority="high"
-                decoding="sync"
               />
             </div>
             <div class="hero__cardWord">kode <em>→</em> karya</div>

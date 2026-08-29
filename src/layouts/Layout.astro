@@ -106,5 +106,15 @@ const {
 
     <script src="../scripts/motion.ts"></script>
     <script src="../scripts/hero-effects.ts"></script>
+
+    <!--
+      Bundled script hanya dieksekusi SEKALI per sesi. Astro tidak
+      menjalankannya ulang setelah ViewTransition, jadi tanpa bootstrap
+      ini tidak ada yang menginisialisasi ulang efek pada DOM baru.
+      `data-astro-rerun` memaksa blok ini jalan di setiap navigasi.
+    -->
+    <script is:inline data-astro-rerun>
+      window.__gridReveal?.reinstall();
+    </script>
   </body>
 </html>

@@ -33,27 +33,6 @@
   transition: background 900ms linear;
 }
 
-.hero__grid {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background-image:
-    linear-gradient(to right, var(--line-soft) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--line-soft) 1px, transparent 1px);
-  background-size: var(--graph-size) var(--graph-size);
-  -webkit-mask-image: radial-gradient(
-    ellipse 70% 60% at 50% 30%,
-    #000 10%,
-    transparent 76%
-  );
-  mask-image: radial-gradient(
-    ellipse 70% 60% at 50% 30%,
-    #000 10%,
-    transparent 76%
-  );
-}
-
 .hero__inner {
   position: relative;
   z-index: 1;
@@ -313,7 +292,6 @@
       rgba(220, 90, 18, 0.24),
       transparent 72%
     );
-  will-change: transform;
 }
 
 .spotlight__mesh {
@@ -521,27 +499,6 @@
   padding-top: clamp(var(--s6), 5vw, var(--s9));
   padding-bottom: clamp(var(--s5), 4vw, var(--s7));
   overflow: clip;
-}
-
-.pagehead__grid {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background-image:
-    linear-gradient(to right, var(--line-soft) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--line-soft) 1px, transparent 1px);
-  background-size: var(--graph-size) var(--graph-size);
-  -webkit-mask-image: linear-gradient(to bottom, #000, transparent 88%);
-  mask-image: linear-gradient(to bottom, #000, transparent 88%);
-}
-
-.pagehead__grid--horizontal {
-  background-image: linear-gradient(
-    to bottom,
-    var(--line-soft) 1px,
-    transparent 1px
-  ) !important;
 }
 
 .pagehead__inner {

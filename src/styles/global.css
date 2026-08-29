@@ -39,21 +39,17 @@ body.is-locked {
 }
 
 /* ---------------------------------------------------------
-   LAPISAN TEKSTUR 1 — GRAIN
-   Butiran halus di atas seluruh halaman. Inilah yang bikin
-   bidang kosong terasa seperti kertas, bukan seperti div.
+   LAPISAN TEKSTUR 1 — GRAIN (DIHAPUS)
+
+   Dulu di sini ada `body::after` fullscreen dengan
+   `position: fixed` + `mix-blend-mode: multiply`, dan di
+   hero-effects.css ia dianimasikan 0.85s infinite.
+
+   Blend mode fullscreen memaksa SELURUH halaman masuk satu
+   blend group, sehingga setiap scroll dan setiap animasi
+   memicu blending ulang seluruh viewport. Ini penyumbang lag
+   terbesar di situs ini, jadi lapisannya dihapus total.
    --------------------------------------------------------- */
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: var(--z-grain);
-  pointer-events: none;
-  opacity: var(--grain-opacity);
-  mix-blend-mode: multiply;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size: 180px 180px;
-}
 
 /* ---------------------------------------------------------
    LAPISAN TEKSTUR 2 — KERTAS GRAFIK
@@ -455,7 +451,6 @@ main {
     opacity var(--t-slow) var(--ease-out),
     transform var(--t-slow) var(--ease-out);
   transition-delay: var(--reveal-delay, 0ms);
-  will-change: opacity, transform;
 }
 
 [data-reveal="fade"] {
@@ -525,9 +520,16 @@ main {
   }
 }
 
-/* Transisi halaman — fade + geser halus. */
+/* Transisi halaman — fade + geser halus.
+   Hanya untuk load pertama. Begitu ClientRouter mengambil alih
+   (class .is-swapped dipasang oleh scripts/hero-effects.ts),
+   animasi ini dimatikan agar halaman tidak dianimasikan dua kali. */
 #page {
   animation: pageIn var(--t-page) var(--ease-out) both;
+}
+
+html.is-swapped #page {
+  animation: none;
 }
 
 @keyframes pageIn {

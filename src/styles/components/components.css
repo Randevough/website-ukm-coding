@@ -261,8 +261,8 @@
   top: 0;
   z-index: var(--z-header);
   background: color-mix(in srgb, var(--paper) 86%, transparent);
-  -webkit-backdrop-filter: blur(14px) saturate(1.4);
-  backdrop-filter: blur(14px) saturate(1.4);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
   border-bottom: 1px solid transparent;
   transition:
     border-color var(--t) var(--ease),
@@ -671,9 +671,7 @@
   transform-style: preserve-3d;
   transition:
     background var(--t) var(--ease),
-    box-shadow var(--t) var(--ease),
     transform 220ms var(--ease);
-  will-change: transform;
 }
 
 .pcard:hover {
@@ -964,9 +962,7 @@
   border-radius: var(--r1);
   border-top: 3px solid var(--blue);
   box-shadow: var(--shadow-1);
-  transition:
-    transform var(--t) var(--ease),
-    box-shadow var(--t) var(--ease);
+  transition: transform var(--t) var(--ease);
 }
 
 .ncard:hover {
@@ -1046,18 +1042,9 @@
 }
 
 @keyframes line-slide {
-  0% {
-    width: 0;
-    left: 0;
-  }
-  50% {
-    width: 100%;
-    left: 0;
-  }
-  100% {
-    width: 0;
-    left: 100%;
-  }
+  0% { width: 0; left: 0; }
+  50% { width: 100%; left: 0; }
+  100% { width: 0; left: 100%; }
 }
 
 .badge-new {
@@ -1077,19 +1064,9 @@
 }
 
 @keyframes arrow-bounce {
-  0%,
-  20%,
-  50%,
-  80%,
-  100% {
-    transform: translateY(0);
-  }
-  40% {
-    transform: translateY(-3px);
-  }
-  60% {
-    transform: translateY(-1.5px);
-  }
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-3px); }
+  60% { transform: translateY(-1.5px); }
 }
 
 /* ---------------------------------------------------------
@@ -1105,11 +1082,8 @@
   overflow: hidden;
   text-decoration: none;
   color: #fff;
-  box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.15);
-  transition:
-    transform 1.2s var(--ease-out),
-    box-shadow 1.2s var(--ease-out);
-  will-change: transform, box-shadow;
+  box-shadow: 0 24px 48px -12px rgba(0,0,0,0.15);
+  transition: transform 1.2s var(--ease-out);
 }
 
 @media (max-width: 900px) {
@@ -1120,7 +1094,7 @@
 
 .mcard:hover {
   transform: scale(0.995);
-  box-shadow: 0 32px 64px -16px rgba(0, 0, 0, 0.3); /* Shadow Intensification */
+  box-shadow: 0 32px 64px -16px rgba(0,0,0,0.3); /* Shadow Intensification */
 }
 
 /* Base Gradient (Hardware accelerated) */
@@ -1129,12 +1103,7 @@
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.95) 0%,
-    rgba(0, 0, 0, 0.4) 60%,
-    rgba(0, 0, 0, 0.05) 100%
-  );
+  background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0.05) 100%);
   transition: opacity 1.2s var(--ease-out);
   pointer-events: none;
 }
@@ -1145,12 +1114,7 @@
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.95) 0%,
-    rgba(0, 0, 0, 0.6) 60%,
-    rgba(0, 0, 0, 0.1) 100%
-  );
+  background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 60%, rgba(0,0,0,0.1) 100%);
   opacity: 0;
   transition: opacity 1.2s var(--ease-out);
   pointer-events: none;
@@ -1168,15 +1132,12 @@
   z-index: 0;
   background: var(--ink-deep);
   transition: transform 1.2s var(--ease-out); /* Cinematic Zoom transition */
-  will-change: transform;
 }
-.mcard__bg :global(img),
-.mcard__bg :global(svg) {
+.mcard__bg :global(img), .mcard__bg :global(svg) {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 1.2s var(--ease-out);
-  will-change: transform;
 }
 
 .mcard__overlay {
@@ -1199,11 +1160,10 @@
   font-weight: 800;
   color: #fff !important;
   transition: transform 0.8s var(--ease-out); /* Text Lift transition */
-  will-change: transform;
 }
 
 .mcard__excerpt {
-  color: rgba(255, 255, 255, 0.9) !important;
+  color: rgba(255,255,255,0.9) !important;
   font-size: var(--body);
   max-width: 65ch;
   display: -webkit-box;
@@ -1219,14 +1179,13 @@
   font-family: var(--mono);
   font-size: var(--xxs);
   letter-spacing: 0.06em;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255,255,255,0.6);
   text-transform: uppercase;
 }
 
 /* REVEAL & HOVER ANIMATIONS */
 /* Elements start hidden/scaled if not in viewport */
-.mcard:not(.is-in) .mcard__bg :global(img),
-.mcard:not(.is-in) .mcard__bg :global(svg) {
+.mcard:not(.is-in) .mcard__bg :global(img), .mcard:not(.is-in) .mcard__bg :global(svg) {
   /* Slow Image Scale-In: Starts at 105% */
   transform: scale(1.05);
 }
@@ -1239,8 +1198,7 @@
 }
 
 /* Entering viewport (staggered) */
-.mcard.is-in .mcard__bg :global(img),
-.mcard.is-in .mcard__bg :global(svg) {
+.mcard.is-in .mcard__bg :global(img), .mcard.is-in .mcard__bg :global(svg) {
   /* Scales to 100% over 1.5s */
   transform: scale(1);
   transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
@@ -1248,31 +1206,21 @@
 .mcard.is-in .mcard__title {
   transform: translateY(0);
   opacity: 1;
-  transition:
-    transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s,
-    opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
-  will-change: transform, opacity;
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s, opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
 }
 .mcard.is-in .mcard__excerpt {
   transform: translateY(0);
   opacity: 1;
-  transition:
-    transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s,
-    opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
-  will-change: transform, opacity;
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s, opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
 }
 .mcard.is-in .mcard__meta {
   transform: translateY(0);
   opacity: 1;
-  transition:
-    transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.4s,
-    opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.4s;
-  will-change: transform, opacity;
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.4s, opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.4s;
 }
 
 /* Hover lift on elements */
-.mcard:hover .mcard__bg :global(img),
-.mcard:hover .mcard__bg :global(svg) {
+.mcard:hover .mcard__bg :global(img), .mcard:hover .mcard__bg :global(svg) {
   /* Cinematic Zoom */
   transform: scale(1.04);
 }
@@ -1883,7 +1831,7 @@
   color: rgba(246, 245, 242, 0.4);
 }
 
-/* ---------------------------------------------------------
+ /* ---------------------------------------------------------
    SKELETON LOADERS (Warm Paper "Spec Sheet" Shimmer)
    --------------------------------------------------------- */
 @keyframes skeleton-shimmer {
@@ -1977,9 +1925,7 @@
   gap: var(--s4);
   padding-top: var(--s4);
   border-top: 1px solid var(--line);
-  transition:
-    transform var(--t) var(--ease),
-    border-color var(--t) var(--ease);
+  transition: transform var(--t) var(--ease), border-color var(--t) var(--ease);
 }
 
 .ncard__art {

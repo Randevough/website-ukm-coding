@@ -1,141 +1,259 @@
 /* =========================================================
-   HERO EFFECTS
+   HERO EFFECTS — versi teroptimasi
+
+   Prinsip desain file ini:
+   1. NOL repaint per frame. Yang dianimasikan hanya `transform`.
+   2. Layer kecil. Ukuran setiap layer dihitung presisi, bukan 200vw/200vh.
+   3. TANPA mix-blend-mode di dalam hero. Blend mode memaksa compositor
+      membaca ulang backdrop setiap frame dan membatalkan seluruh
+      keuntungan layer promotion.
+   4. Semua animasi bisa di-pause lewat satu class (`is-anim-paused`)
+      yang dikendalikan oleh src/scripts/hero-effects.ts.
    ========================================================= */
 
-/* Ensure the hero establishes a stacking context and boundaries */
 .hero--v2,
 .pagehead {
   position: relative;
   isolation: isolate;
-  /* Provide an opaque background inside the isolated group so blend modes don't blend with transparent */
   background-color: var(--paper);
 }
 
 /* ---------------------------------------------------------
-   Effect 1: Paper Wash
+   Efek 1: Paper Wash
+
+   Dulu: 2 pseudo-element dengan mix-blend-mode screen + multiply.
+   Sekarang: 1 elemen, 2 background gradient rgba biasa.
+   Hasil visual nyaris identik di atas --paper yang opaque, tapi
+   hero tidak lagi jadi blend group yang harus di-composite ulang
+   setiap kali ada animasi di dalamnya.
    --------------------------------------------------------- */
 .hero__paper-wash,
 .pagehead__paper-wash {
   position: absolute;
   inset: -15%;
-  pointer-events: none;
   z-index: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(
+      circle at 16% 10%,
+      rgba(255, 253, 246, 0.85) 0%,
+      rgba(255, 253, 246, 0) 72%
+    ),
+    radial-gradient(
+      circle at 86% 82%,
+      rgba(196, 188, 169, 0.42) 0%,
+      rgba(196, 188, 169, 0) 72%
+    );
 }
 
-.hero__paper-wash::before,
-.hero__paper-wash::after,
-.pagehead__paper-wash::before,
-.pagehead__paper-wash::after {
-  content: "";
+/* ---------------------------------------------------------
+   Efek 2: Drafting-table Grid
+
+   Cara kerja: dua "spotlight" bergerak sendiri memakai transform.
+   Di dalam setiap spotlight ada satu layer pola grid yang bergerak
+   berlawanan arah dengan nilai persis kebalikannya, sehingga pola
+   grid terlihat DIAM sementara jendela reveal-nya yang bergerak.
+
+   Kunci performanya ada di ukuran layer:
+     ukuran pola = ukuran spotlight + (2 x amplitudo gerak)
+   Tidak lebih besar dari itu. Sepiksel pun tidak terbuang.
+   --------------------------------------------------------- */
+.grid-fx {
   position: absolute;
   inset: 0;
-}
-
-/* Highlight layer: top-left */
-.hero__paper-wash::before,
-.pagehead__paper-wash::before {
-  background: radial-gradient(circle at 16% 10%, #fffdf6 0%, transparent 75%);
-  mix-blend-mode: screen;
-  opacity: 1;
-}
-
-/* Shade layer: bottom-right */
-.hero__paper-wash::after,
-.pagehead__paper-wash::after {
-  background: radial-gradient(circle at 86% 82%, #e4dfd3 0%, transparent 75%);
-  mix-blend-mode: multiply;
-  opacity: 0.65;
-}
-
-/* ---------------------------------------------------------
-   Effect 2: Breathing Grain
-   --------------------------------------------------------- */
-body::after {
-  inset: -8%;
-  will-change: transform;
-  animation: grain-breathe 0.85s infinite;
-  /* Override global opacity to make the grain more pronounced */
-  opacity: 0.085;
-}
-
-@keyframes grain-breathe {
-  0%,
-  19.99% {
-    transform: translate3d(0%, 0%, 0);
-  }
-  20%,
-  39.99% {
-    transform: translate3d(2%, -1.5%, 0);
-  }
-  40%,
-  59.99% {
-    transform: translate3d(-1.5%, 2%, 0);
-  }
-  60%,
-  79.99% {
-    transform: translate3d(2.5%, 1%, 0);
-  }
-  80%,
-  99.99% {
-    transform: translate3d(-1%, -2.5%, 0);
-  }
-  100% {
-    transform: translate3d(0%, 0%, 0);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  body::after {
-    animation: none;
-    inset: 0; /* Reset inset back if no motion */
-    opacity: var(--grain-opacity); /* Revert to default subtle grain */
-  }
-}
-
-/* ---------------------------------------------------------
-   Effect 4: Drafting-table Grid
-   --------------------------------------------------------- */
-.hero__grid,
-.pagehead__grid {
-  display: block;
-  position: absolute;
-  inset: -15%;
   z-index: 0;
   pointer-events: none;
+  /* Menggantikan `overflow: hidden`. Selain memotong, `contain: paint`
+     juga mengurung invalidasi paint supaya tidak menjalar ke section. */
+  contain: paint;
+}
+
+.grid-fx__spot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--spot);
+  height: var(--spot);
+  margin-top: calc(var(--spot) / -2);
+  margin-left: calc(var(--spot) / -2);
+
+  /* Fade-nya ditaruh di alpha mask, BUKAN di property `opacity`.
+     Mask alpha sudah mengalikan alpha konten, jadi ini menghemat
+     satu render surface per spotlight. Ubah dua nilai di bawah
+     kalau mau grid lebih tegas atau lebih samar. */
+  --fx-a1: 0.2;
+  --fx-a2: 0.11;
+
+  -webkit-mask-image: radial-gradient(
+    closest-side,
+    rgba(0, 0, 0, var(--fx-a1)) 0%,
+    rgba(0, 0, 0, var(--fx-a2)) 46%,
+    rgba(0, 0, 0, 0) 78%
+  );
+  mask-image: radial-gradient(
+    closest-side,
+    rgba(0, 0, 0, var(--fx-a1)) 0%,
+    rgba(0, 0, 0, var(--fx-a2)) 46%,
+    rgba(0, 0, 0, 0) 78%
+  );
+}
+
+.grid-fx__pattern {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(var(--spot) + var(--amp) * 2);
+  height: calc(var(--spot) + var(--amp) * 2);
+  margin-top: calc((var(--spot) + var(--amp) * 2) / -2);
+  margin-left: calc((var(--spot) + var(--amp) * 2) / -2);
+
   background-image:
     linear-gradient(to right, var(--ink) 1px, transparent 1px),
     linear-gradient(to bottom, var(--ink) 1px, transparent 1px);
   background-size: var(--graph-size) var(--graph-size);
-  opacity: 0;
-  transition: opacity var(--t) var(--ease);
-
-  -webkit-mask-image: radial-gradient(
-    240px circle at var(--hero-mx, -1000px) var(--hero-my, -1000px),
-    #000 0%,
-    transparent 100%
-  ) !important;
-  mask-image: radial-gradient(
-    240px circle at var(--hero-mx, -1000px) var(--hero-my, -1000px),
-    #000 0%,
-    transparent 100%
-  ) !important;
+  /* Tiling di-anchor dari titik tengah supaya fase grid kedua
+     spotlight identik dan garisnya tidak dobel saat saling tumpang. */
+  background-position: 50% 50%;
 }
 
-.hero__grid[data-grid-active],
-.pagehead__grid[data-grid-active] {
-  opacity: 0.18;
+/* -------- Spotlight 1 -------- */
+.grid-fx__spot--a {
+  --spot: 560px;
+  --amp: 150px;
+  animation: gridFxDriftA 25s ease-in-out infinite alternate;
 }
 
-/* Content remains above the paper wash and grid without negative z-index. */
+.grid-fx__spot--a > .grid-fx__pattern {
+  animation: gridFxCounterA 25s ease-in-out infinite alternate;
+}
+
+/* -------- Spotlight 2 -------- */
+.grid-fx__spot--b {
+  --spot: 420px;
+  --amp: 120px;
+  animation: gridFxDriftB 19s ease-in-out infinite alternate;
+}
+
+.grid-fx__spot--b > .grid-fx__pattern {
+  animation: gridFxCounterB 19s ease-in-out infinite alternate;
+}
+
+/* Pagehead lebih pendek dari hero, jadi layernya dikecilkan lagi. */
+.pagehead .grid-fx__spot--a {
+  --spot: 460px;
+  --amp: 130px;
+}
+
+.pagehead .grid-fx__spot--b {
+  --spot: 340px;
+  --amp: 100px;
+}
+
+/* ---------------------------------------------------------
+   Keyframes
+
+   PENTING: pasangan drift dan counter WAJIB punya durasi,
+   timing function, dan arah yang sama persis, dan nilainya harus
+   kebalikan eksak. Kalau salah satu diubah tanpa mengubah
+   pasangannya, pola grid akan ikut bergeser.
+
+   Semua nilai adalah kelipatan var(--amp) dalam rentang -1..1,
+   sehingga pergeseran tidak pernah melebihi amplitudo yang sudah
+   dihitung di ukuran layer pola.
+   --------------------------------------------------------- */
+@keyframes gridFxDriftA {
+  0% {
+    transform: translate3d(
+      calc(var(--amp) * -1),
+      calc(var(--amp) * -0.55),
+      0
+    );
+  }
+  33% {
+    transform: translate3d(calc(var(--amp) * 0.75), calc(var(--amp) * -1), 0);
+  }
+  66% {
+    transform: translate3d(calc(var(--amp) * 1), calc(var(--amp) * 0.6), 0);
+  }
+  100% {
+    transform: translate3d(calc(var(--amp) * -0.6), calc(var(--amp) * 1), 0);
+  }
+}
+
+@keyframes gridFxCounterA {
+  0% {
+    transform: translate3d(calc(var(--amp) * 1), calc(var(--amp) * 0.55), 0);
+  }
+  33% {
+    transform: translate3d(calc(var(--amp) * -0.75), calc(var(--amp) * 1), 0);
+  }
+  66% {
+    transform: translate3d(calc(var(--amp) * -1), calc(var(--amp) * -0.6), 0);
+  }
+  100% {
+    transform: translate3d(calc(var(--amp) * 0.6), calc(var(--amp) * -1), 0);
+  }
+}
+
+@keyframes gridFxDriftB {
+  0% {
+    transform: translate3d(calc(var(--amp) * 0.9), calc(var(--amp) * 0.85), 0);
+  }
+  30% {
+    transform: translate3d(calc(var(--amp) * -0.6), calc(var(--amp) * 1), 0);
+  }
+  60% {
+    transform: translate3d(calc(var(--amp) * -1), calc(var(--amp) * -0.5), 0);
+  }
+  100% {
+    transform: translate3d(calc(var(--amp) * 0.7), calc(var(--amp) * -0.95), 0);
+  }
+}
+
+@keyframes gridFxCounterB {
+  0% {
+    transform: translate3d(
+      calc(var(--amp) * -0.9),
+      calc(var(--amp) * -0.85),
+      0
+    );
+  }
+  30% {
+    transform: translate3d(calc(var(--amp) * 0.6), calc(var(--amp) * -1), 0);
+  }
+  60% {
+    transform: translate3d(calc(var(--amp) * 1), calc(var(--amp) * 0.5), 0);
+  }
+  100% {
+    transform: translate3d(calc(var(--amp) * -0.7), calc(var(--amp) * 0.95), 0);
+  }
+}
+
+/* ---------------------------------------------------------
+   Kontrol pause terpusat
+
+   Class ini dipasang oleh src/scripts/hero-effects.ts pada:
+   - elemen .grid-fx dan .ticker yang keluar viewport
+   - <html> saat tab tidak aktif
+   - <html> selama ViewTransition berlangsung
+   Animasi yang di-pause tidak memakai GPU maupun baterai sama sekali.
+   --------------------------------------------------------- */
+.is-anim-paused,
+.is-anim-paused * {
+  animation-play-state: paused !important;
+}
+
+/* Konten hero tetap di atas paper wash dan grid tanpa z-index negatif. */
 .hero--v2 > .hero__inner,
 .pagehead > .pagehead__inner {
   position: relative;
   z-index: 1;
 }
 
+/* Di perangkat sentuh dan mode hemat gerak, efeknya dimatikan total
+   supaya tidak ada satu layer pun yang dibuat. */
 @media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
-  .hero__grid,
-  .pagehead__grid {
+  .grid-fx {
     display: none;
   }
 }

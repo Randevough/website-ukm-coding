@@ -25,9 +25,7 @@ export async function fetchSanity<T>(
 ): Promise<T | null> {
   if (useFixture) {
     if (import.meta.env.PROD) {
-      throw new Error(
-        "Sanity is not configured in PROD. Failing build to prevent fixture leakage.",
-      );
+      throw new Error("Sanity is not configured in PROD. Failing build to prevent fixture leakage.");
     }
     console.warn(
       "⚠️ Sanity is not configured or in demo mode. Falling back to fixture data.",
@@ -59,9 +57,7 @@ export async function fetchSanity<T>(
     } catch (err) {
       console.error("❌ Sanity Fetch Error:", err);
       if (import.meta.env.PROD) {
-        throw new Error(
-          "Sanity fetch failed in PROD. Failing build to prevent stale/fixture leakage.",
-        );
+        throw new Error("Sanity fetch failed in PROD. Failing build to prevent stale/fixture leakage.");
       }
       return null;
     } finally {

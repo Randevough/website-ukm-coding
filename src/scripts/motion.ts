@@ -98,13 +98,23 @@ function collectParallax(root?: Element | Document) {
 function applyParallax() {
   if (!isBrowser) return;
   const vh = window.innerHeight;
-  pxItems.forEach((item) => {
+
+  /* Baca SEMUA geometri dulu, tulis SEMUA transform setelahnya.
+     Membaca getBoundingClientRect() sesudah menulis style memaksa
+     forced synchronous layout di setiap iterasi. */
+  const writes: { el: HTMLElement; shift: number }[] = [];
+  for (let i = 0; i < pxItems.length; i += 1) {
+    const item = pxItems[i];
     const rect = item.el.getBoundingClientRect();
-    if (rect.bottom < -200 || rect.top > vh + 200) return;
+    if (rect.bottom < -200 || rect.top > vh + 200) continue;
     const offset = rect.top + rect.height / 2 - vh / 2;
-    const shift = -offset * item.speed;
-    item.el.style.transform = "translate3d(0," + shift.toFixed(2) + "px,0)";
-  });
+    writes.push({ el: item.el, shift: -offset * item.speed });
+  }
+
+  for (let i = 0; i < writes.length; i += 1) {
+    writes[i].el.style.transform =
+      "translate3d(0," + writes[i].shift.toFixed(2) + "px,0)";
+  }
 }
 
 function onScrollParallax() {
@@ -121,9 +131,12 @@ function onScrollParallax() {
 export function initParallax(root?: Element | Document) {
   if (!isBrowser || reduce) return;
   collectParallax(root);
+  /* initMotion() dipanggil di setiap navigasi, jadi listener lama WAJIB
+     dilepas dulu. Sebelumnya listener resize menumpuk satu per navigasi. */
   window.removeEventListener("scroll", onScrollParallax);
+  window.removeEventListener("resize", onScrollParallax);
   window.addEventListener("scroll", onScrollParallax, { passive: true });
-  window.addEventListener("resize", onScrollParallax);
+  window.addEventListener("resize", onScrollParallax, { passive: true });
 }
 
 /* ---------------- 4. Counter ---------------- */
@@ -209,7 +222,7 @@ export function initTilt(root?: Element | Document) {
         cancelAnimationFrame(raf);
       card.style.transform = "";
     };
-    card.addEventListener("pointermove", move);
+    card.addEventListener("pointermove", move, { passive: true });
     card.addEventListener("pointerleave", leave);
   });
 }
@@ -232,6 +245,11 @@ export function initCursor(root?: Element | Document) {
     cursorEl = document.createElement("div");
     cursorEl.className = "cursor";
     cursorEl.setAttribute("aria-hidden", "true");
+  }
+
+  /* <body> diganti total oleh ViewTransitions, jadi elemen kursor perlu
+     ditempelkan ulang, tanpa pernah membuat duplikat. */
+  if (!cursorEl.isConnected) {
     document.body.appendChild(cursorEl);
   }
 
@@ -373,7 +391,9 @@ export function initMotion() {
   initTilt(scope);
   initCursor(scope);
   initTicker(scope);
-  initHeroWash(scope);
+  /* initHeroWash() tidak dipanggil lagi: elemen .hero__wash sudah tidak
+     ada di markup, dan transisi `background`-nya memicu repaint penuh
+     di setiap pointermove. Fungsinya dibiarkan ada untuk kompatibilitas. */
   initShare(scope);
 }
 

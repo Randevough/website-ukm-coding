@@ -1,166 +1,156 @@
 /**
- * Cursor-aligned grid reveal.
+ * Grid FX controller.
  *
- * A single delegated controller is intentionally used instead of per-page or
- * per-element listeners. It survives Astro ClientRouter DOM swaps and always
- * measures the grid that is currently in the live document.
+ * Tugasnya cuma satu: mem-pause animasi yang tidak sedang dilihat.
+ * Tidak ada perhitungan per frame di sini, tidak ada requestAnimationFrame,
+ * dan tidak ada listener pointer. Seluruh gerakan dikerjakan oleh compositor
+ * lewat CSS di styles/components/hero-effects.css.
+ *
+ * Yang di-pause:
+ * - .grid-fx dan .ticker yang keluar viewport (IntersectionObserver)
+ * - seluruh halaman saat tab tidak aktif (visibilitychange)
+ * - seluruh halaman selama ViewTransition (astro:before-swap)
+ *
+ * Script ini aman terhadap Astro ViewTransitions. Bundled script hanya
+ * dieksekusi SEKALI per sesi, jadi state-nya disimpan di window.__gridReveal
+ * dan DOM di-scan ulang setiap kali ditukar.
  */
 
-const SECTION_SELECTOR = ".hero--v2, .pagehead";
-const GRID_SELECTOR = "grid-reveal.hero__grid, grid-reveal.pagehead__grid";
-const CONTROLLER_KEY = Symbol.for("ukm-coding.grid-reveal-controller");
+const PAUSE_CLASS = "is-anim-paused";
+const SWAPPED_CLASS = "is-swapped";
+const TARGET_SELECTOR = ".grid-fx, .ticker, [data-anim-pause]";
+const OBSERVED_ATTR = "data-anim-observed";
 
-type GridRevealController = { destroy: () => void };
-type WindowWithGridController = Window & {
-  [CONTROLLER_KEY]?: GridRevealController;
+export type GridFxApi = {
+  /** Scan ulang DOM dan sinkronkan status pause. */
+  reinstall: () => void;
+  /** Lepas semua observer dan listener. */
+  destroy: () => void;
 };
 
-function installGridReveal(): GridRevealController {
-  const abortController = new AbortController();
-  const { signal } = abortController;
+type Teardown = () => void;
 
-  let pointerX = 0;
-  let pointerY = 0;
-  let hasPointer = false;
-  let activeGrid: HTMLElement | null = null;
-  let frameId = 0;
-  let pageLoadFrame1 = 0;
-  let pageLoadFrame2 = 0;
+function install(): GridFxApi {
+  const doc = document;
+  const root = doc.documentElement;
+  const teardowns: Teardown[] = [];
 
-  const hideActiveGrid = () => {
-    activeGrid?.removeAttribute("data-grid-active");
-    activeGrid = null;
-  };
+  let io: IntersectionObserver | null = null;
 
-  const sectionAtPointer = (): HTMLElement | null => {
-    if (!hasPointer) return null;
+  function listen(
+    target: Document | Window,
+    type: string,
+    handler: EventListener,
+  ): void {
+    target.addEventListener(type, handler);
+    teardowns.push(() => target.removeEventListener(type, handler));
+  }
 
-    const hit = document.elementFromPoint(pointerX, pointerY);
-    return hit?.closest<HTMLElement>(SECTION_SELECTOR) ?? null;
-  };
+  function onIntersect(entries: IntersectionObserverEntry[]): void {
+    for (let i = 0; i < entries.length; i += 1) {
+      const entry = entries[i];
+      const el = entry.target as HTMLElement;
+      if (entry.isIntersecting) {
+        el.classList.remove(PAUSE_CLASS);
+      } else {
+        el.classList.add(PAUSE_CLASS);
+      }
+    }
+  }
 
-  const render = () => {
-    frameId = 0;
+  /**
+   * Daftarkan elemen animasi yang belum terdaftar. Elemen baru dimulai dalam
+   * kondisi paused, lalu IntersectionObserver yang membukanya. Jadi tidak ada
+   * satu frame pun yang teranimasi di luar layar.
+   */
+  function scan(): void {
+    if (typeof IntersectionObserver !== "function") return;
 
-    const section = sectionAtPointer();
-    const grid = section?.querySelector<HTMLElement>(GRID_SELECTOR) ?? null;
-
-    if (!grid || !grid.isConnected) {
-      hideActiveGrid();
-      return;
+    if (!io) {
+      io = new IntersectionObserver(onIntersect, { rootMargin: "120px" });
     }
 
-    /*
-     * The radial-gradient coordinates belong to the grid's own border box,
-     * not to the section. Measuring the grid therefore includes inset: -15%
-     * automatically. The scale correction also keeps coordinates accurate if
-     * an ancestor is temporarily transformed/scaled.
-     */
-    const rect = grid.getBoundingClientRect();
-    if (rect.width <= 0 || rect.height <= 0) {
-      hideActiveGrid();
-      return;
+    const nodes = doc.querySelectorAll(TARGET_SELECTOR);
+    for (let i = 0; i < nodes.length; i += 1) {
+      const el = nodes[i] as HTMLElement;
+      if (el.getAttribute(OBSERVED_ATTR) === "1") continue;
+      el.setAttribute(OBSERVED_ATTR, "1");
+      el.classList.add(PAUSE_CLASS);
+      io.observe(el);
     }
+  }
 
-    const scaleX = grid.offsetWidth > 0 ? rect.width / grid.offsetWidth : 1;
-    const scaleY = grid.offsetHeight > 0 ? rect.height / grid.offsetHeight : 1;
-    const localX = (pointerX - rect.left) / scaleX;
-    const localY = (pointerY - rect.top) / scaleY;
-
-    grid.style.setProperty("--hero-mx", `${localX.toFixed(2)}px`);
-    grid.style.setProperty("--hero-my", `${localY.toFixed(2)}px`);
-
-    if (activeGrid !== grid) {
-      hideActiveGrid();
-      activeGrid = grid;
+  function syncDocumentState(): void {
+    if (doc.hidden) {
+      root.classList.add(PAUSE_CLASS);
+    } else {
+      root.classList.remove(PAUSE_CLASS);
     }
+  }
 
-    // Set coordinates before revealing to prevent a one-frame flash.
-    grid.setAttribute("data-grid-active", "");
-  };
+  function refresh(): void {
+    scan();
+    syncDocumentState();
+  }
 
-  const scheduleRender = () => {
-    if (frameId === 0) frameId = requestAnimationFrame(render);
-  };
+  /**
+   * Sebelum DOM ditukar: pause semuanya supaya browser tidak perlu
+   * meng-composite layer yang sedang bergerak saat mengambil snapshot view
+   * transition, dan lepas observer supaya elemen lama tidak ditahan di memori.
+   */
+  function onBeforeSwap(): void {
+    root.classList.add(PAUSE_CLASS);
+    /* Setelah navigasi pertama, ViewTransitions yang memegang animasi halaman,
+       jadi animasi #page milik situs dimatikan agar tidak dobel. */
+    root.classList.add(SWAPPED_CLASS);
+    if (io) {
+      io.disconnect();
+      io = null;
+    }
+  }
 
-  const onPointerMove = (event: PointerEvent) => {
-    // The effect is mouse/trackpad-only; ignore touch and pen input.
-    if (event.pointerType && event.pointerType !== "mouse") return;
+  listen(doc, "visibilitychange", syncDocumentState as EventListener);
+  listen(doc, "astro:before-swap", onBeforeSwap as EventListener);
+  listen(doc, "astro:after-swap", refresh as EventListener);
+  listen(doc, "astro:page-load", refresh as EventListener);
+  listen(window, "pageshow", refresh as EventListener);
 
-    pointerX = event.clientX;
-    pointerY = event.clientY;
-    hasPointer = true;
-    scheduleRender();
-  };
-
-  const onPointerLeavesDocument = (event: MouseEvent) => {
-    if (event.relatedTarget !== null) return;
-    hasPointer = false;
-    hideActiveGrid();
-  };
-
-  const onGeometryChange = () => {
-    // Re-measure after scrolling/resizing even when the pointer is stationary.
-    scheduleRender();
-  };
-
-  const onBeforeSwap = () => {
-    hideActiveGrid();
-    if (frameId !== 0) cancelAnimationFrame(frameId);
-    frameId = 0;
-  };
-
-  const onPageLoad = () => {
-    /*
-     * Astro has inserted the new DOM at this point. Two frames let layout and
-     * transition styles settle, then the last known viewport pointer position
-     * is resolved against the new page—even if the mouse did not move.
-     */
-    cancelAnimationFrame(pageLoadFrame1);
-    cancelAnimationFrame(pageLoadFrame2);
-    pageLoadFrame1 = requestAnimationFrame(() => {
-      pageLoadFrame2 = requestAnimationFrame(scheduleRender);
+  /* Jaring pengaman: kalau event Astro tidak sampai karena alasan apa pun,
+     pergantian <body> tetap terdeteksi. documentElement tidak pernah diganti,
+     dan childList tanpa subtree biayanya nyaris nol. */
+  if (typeof MutationObserver === "function") {
+    const mo = new MutationObserver(() => {
+      refresh();
     });
-  };
+    mo.observe(root, { childList: true });
+    teardowns.push(() => mo.disconnect());
+  }
 
-  document.addEventListener("pointermove", onPointerMove, {
-    passive: true,
-    capture: true,
-    signal,
-  });
-  document.addEventListener("mouseout", onPointerLeavesDocument, { signal });
-  document.addEventListener("scroll", onGeometryChange, {
-    passive: true,
-    capture: true,
-    signal,
-  });
-  window.addEventListener("resize", onGeometryChange, {
-    passive: true,
-    signal,
-  });
-  window.addEventListener("blur", hideActiveGrid, { signal });
-  document.addEventListener("astro:before-swap", onBeforeSwap, { signal });
-  document.addEventListener("astro:page-load", onPageLoad, { signal });
+  refresh();
 
-  // Handles the initial non-SPA page load.
-  onPageLoad();
+  function destroy(): void {
+    for (let i = 0; i < teardowns.length; i += 1) teardowns[i]();
+    teardowns.length = 0;
+    if (io) {
+      io.disconnect();
+      io = null;
+    }
+  }
 
-  return {
-    destroy() {
-      abortController.abort();
-      cancelAnimationFrame(frameId);
-      cancelAnimationFrame(pageLoadFrame1);
-      cancelAnimationFrame(pageLoadFrame2);
-      hideActiveGrid();
-    },
-  };
+  return { reinstall: refresh, destroy: destroy };
+}
+
+declare global {
+  interface Window {
+    __gridReveal?: GridFxApi;
+  }
 }
 
 if (typeof window !== "undefined" && typeof document !== "undefined") {
-  const runtimeWindow = window as WindowWithGridController;
-
-  // Astro may execute this module again after a routed navigation. Replacing
-  // the old controller makes initialization idempotent and prevents duplicates.
-  runtimeWindow[CONTROLLER_KEY]?.destroy();
-  runtimeWindow[CONTROLLER_KEY] = installGridReveal();
+  const existing = window.__gridReveal;
+  if (existing) {
+    existing.reinstall();
+  } else {
+    window.__gridReveal = install();
+  }
 }
