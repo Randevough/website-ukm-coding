@@ -39,6 +39,9 @@ export function initReveal(root?: Element | Document) {
           if (!entry.isIntersecting) return;
           entry.target.classList.add("is-in");
           io!.unobserve(entry.target);
+          setTimeout(() => {
+            (entry.target as HTMLElement).style.removeProperty('--reveal-delay');
+          }, 2000);
         });
       },
       { rootMargin: "0px 0px -8% 0px", threshold: 0.08 },
@@ -77,7 +80,12 @@ export function playHero(root?: Element | Document) {
       qsa(
         ".hero .lineMask, .hero [data-reveal], .hero [data-rule]",
         scope,
-      ).forEach((el) => el.classList.add("is-in"));
+      ).forEach((el) => {
+        el.classList.add("is-in");
+        setTimeout(() => {
+          (el as HTMLElement).style.removeProperty('--reveal-delay');
+        }, 2000);
+      });
     });
   }
 }
@@ -99,9 +107,6 @@ function applyParallax() {
   if (!isBrowser) return;
   const vh = window.innerHeight;
 
-  /* Baca SEMUA geometri dulu, tulis SEMUA transform setelahnya.
-     Membaca getBoundingClientRect() sesudah menulis style memaksa
-     forced synchronous layout di setiap iterasi. */
   const writes: { el: HTMLElement; shift: number }[] = [];
   for (let i = 0; i < pxItems.length; i += 1) {
     const item = pxItems[i];
