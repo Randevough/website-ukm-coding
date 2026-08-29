@@ -24,7 +24,10 @@ if (sanityProjects && sanityProjects.length > 0) {
 
 const breadcrumb = [
   { name: "Beranda", item: new URL("/", Astro.site || Astro.url.origin).href },
-  { name: "Projects", item: new URL("/projects", Astro.site || Astro.url.origin).href },
+  {
+    name: "Projects",
+    item: new URL("/projects", Astro.site || Astro.url.origin).href,
+  },
 ];
 ---
 
@@ -37,7 +40,7 @@ const breadcrumb = [
   <!-- ================= KEPALA HALAMAN ================= -->
   <section class="pagehead" data-mark="orange">
     <div class="pagehead__paper-wash" aria-hidden="true"></div>
-    <div class="pagehead__grid" aria-hidden="true"></div>
+    <grid-reveal class="pagehead__grid" aria-hidden="true"></grid-reveal>
     <div class="container pagehead__inner">
       <div class="breadcrumb">
         <a href="/">Beranda</a><span>/</span><span>Projects</span>
@@ -50,9 +53,10 @@ const breadcrumb = [
       </h1>
       <div class="pagehead__foot">
         <p class="lead" data-reveal style="--reveal-delay: 360ms">
-          Kami mendokumentasikan setiap karya yang dirancang dan dibangun, mulai dari bot Telegram
-          sederhana hingga sistem pendaftaran kampus. Tujuannya satu: agar kode-kode ini bisa
-          dibedah dan dipelajari bersama.
+          Kami mendokumentasikan setiap karya yang dirancang dan dibangun, mulai
+          dari bot Telegram sederhana hingga sistem pendaftaran kampus.
+          Tujuannya satu: agar kode-kode ini bisa dibedah dan dipelajari
+          bersama.
         </p>
         <span class="idx">12 PROJECT TERBUKA</span>
       </div>
@@ -144,8 +148,9 @@ const breadcrumb = [
         <div class="shead__body">
           <h2 data-reveal>Cara Kami Membangun</h2>
           <p class="dek" data-reveal>
-            Setiap project yang kami buat selalu melewati standar alur pengerjaan agar 
-            hasilnya terukur dan mudah dilanjutkan oleh pengurus generasi berikutnya.
+            Setiap project yang kami buat selalu melewati standar alur
+            pengerjaan agar hasilnya terukur dan mudah dilanjutkan oleh pengurus
+            generasi berikutnya.
           </p>
         </div>
       </div>
@@ -154,32 +159,36 @@ const breadcrumb = [
           <span class="pillar__num">01</span>
           <h3 class="pillar__title">Berawal dari masalah nyata</h3>
           <p class="pillar__text">
-            Setiap ide selalu lahir dari permasalahan di sekitar kita, seperti pendaftaran
-            yang masih manual, absensi berantakan, hingga lambatnya rekap nilai perlombaan.
+            Setiap ide selalu lahir dari permasalahan di sekitar kita, seperti
+            pendaftaran yang masih manual, absensi berantakan, hingga lambatnya
+            rekap nilai perlombaan.
           </p>
         </div>
         <div class="pillar" data-reveal>
           <span class="pillar__num">02</span>
           <h3 class="pillar__title">Tim kecil, peran jelas</h3>
           <p class="pillar__text">
-            Kami bekerja dalam tim kecil (2-4 orang) per project agar tetap fokus. 
-            Setiap tim memiliki satu penanggung jawab teknis dan satu pengelola kebutuhan.
+            Kami bekerja dalam tim kecil (2-4 orang) per project agar tetap
+            fokus. Setiap tim memiliki satu penanggung jawab teknis dan satu
+            pengelola kebutuhan.
           </p>
         </div>
         <div class="pillar" data-reveal>
           <span class="pillar__num">03</span>
           <h3 class="pillar__title">Stack yang kami kuasai</h3>
           <p class="pillar__text">
-            Kami tidak memaksakan diri mengikuti tren. Kami memilih alat yang tepat sasaran, 
-            entah itu React, Tailwind, Express, atau bahkan Vanilla PHP selama efektif.
+            Kami tidak memaksakan diri mengikuti tren. Kami memilih alat yang
+            tepat sasaran, entah itu React, Tailwind, Express, atau bahkan
+            Vanilla PHP selama efektif.
           </p>
         </div>
         <div class="pillar" data-reveal>
           <span class="pillar__num">04</span>
           <h3 class="pillar__title">Dokumentasikan semuanya</h3>
           <p class="pillar__text">
-            Kode yang berfungsi tapi sulit dipelajari orang lain kami anggap belum rampung. 
-            Oleh karena itu, setiap repository utama kami lengkapi dengan panduan yang jelas.
+            Kode yang berfungsi tapi sulit dipelajari orang lain kami anggap
+            belum rampung. Oleh karena itu, setiap repository utama kami
+            lengkapi dengan panduan yang jelas.
           </p>
         </div>
       </div>

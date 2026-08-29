@@ -81,12 +81,15 @@ export function initKegiatanFilter() {
     if (renderTimeout) clearTimeout(renderTimeout);
 
     const skeletonTemplate = document.getElementById(
-      "skeleton-posts-template"
+      "skeleton-posts-template",
     ) as HTMLTemplateElement;
 
     if (!skipSkeleton && skeletonTemplate) {
       gridContainer!.innerHTML = "";
-      const skeletonCount = Math.min(ITEMS_PER_PAGE, searchFiltered.length || ITEMS_PER_PAGE);
+      const skeletonCount = Math.min(
+        ITEMS_PER_PAGE,
+        searchFiltered.length || ITEMS_PER_PAGE,
+      );
       for (let i = 0; i < (skeletonCount === 0 ? 3 : skeletonCount); i++) {
         gridContainer!.appendChild(skeletonTemplate.content.cloneNode(true));
       }
@@ -244,12 +247,15 @@ export function initProjectsFilter() {
     if (renderTimeout) clearTimeout(renderTimeout);
 
     const skeletonTemplate = document.getElementById(
-      "skeleton-projects-template"
+      "skeleton-projects-template",
     ) as HTMLTemplateElement;
 
     if (!skipSkeleton && skeletonTemplate) {
       gridContainer!.innerHTML = "";
-      const skeletonCount = Math.min(ITEMS_PER_PAGE, sorted.length || ITEMS_PER_PAGE);
+      const skeletonCount = Math.min(
+        ITEMS_PER_PAGE,
+        sorted.length || ITEMS_PER_PAGE,
+      );
       for (let i = 0; i < (skeletonCount === 0 ? 3 : skeletonCount); i++) {
         gridContainer!.appendChild(skeletonTemplate.content.cloneNode(true));
       }

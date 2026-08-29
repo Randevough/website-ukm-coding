@@ -1,105 +1,166 @@
 /**
- * Hero motion effects (Grid reveal by pointer)
- * Avoids any layout reads inside the animation loop.
+ * Cursor-aligned grid reveal.
+ *
+ * A single delegated controller is intentionally used instead of per-page or
+ * per-element listeners. It survives Astro ClientRouter DOM swaps and always
+ * measures the grid that is currently in the live document.
  */
 
-const isBrowser = typeof window !== "undefined" && typeof document !== "undefined";
+const SECTION_SELECTOR = ".hero--v2, .pagehead";
+const GRID_SELECTOR = "grid-reveal.hero__grid, grid-reveal.pagehead__grid";
+const CONTROLLER_KEY = Symbol.for("ukm-coding.grid-reveal-controller");
 
-const reduce =
-  isBrowser && typeof window.matchMedia === "function"
-    ? window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    : false;
+type GridRevealController = { destroy: () => void };
+type WindowWithGridController = Window & {
+  [CONTROLLER_KEY]?: GridRevealController;
+};
 
-export function initHeroGrid() {
-  if (!isBrowser || reduce) return;
+function installGridReveal(): GridRevealController {
+  const abortController = new AbortController();
+  const { signal } = abortController;
 
-  const hero = document.querySelector(".hero--v2") as HTMLElement;
-  const grid = document.querySelector(".hero__grid") as HTMLElement;
-  
-  if (!hero || !grid) return;
+  let pointerX = 0;
+  let pointerY = 0;
+  let hasPointer = false;
+  let activeGrid: HTMLElement | null = null;
+  let frameId = 0;
+  let pageLoadFrame1 = 0;
+  let pageLoadFrame2 = 0;
 
-  let raf: number | null = null;
-  let targetX = 0, targetY = 0;
-  let currentX = 0, currentY = 0;
-  let rectX = 0, rectY = 0;
-  let isHovering = false;
-  let hasMoved = false;
-
-  // We read the layout once per resize to avoid forced synchronous layout in pointermove
-  const updateGridRect = () => {
-    const r = grid.getBoundingClientRect();
-    rectX = r.left;
-    rectY = r.top;
+  const hideActiveGrid = () => {
+    activeGrid?.removeAttribute("data-grid-active");
+    activeGrid = null;
   };
 
-  const loop = () => {
-    // Settle loop when destination is reached and pointer is outside
-    if (!isHovering && Math.abs(targetX - currentX) < 0.5 && Math.abs(targetY - currentY) < 0.5) {
-      raf = null;
+  const sectionAtPointer = (): HTMLElement | null => {
+    if (!hasPointer) return null;
+
+    const hit = document.elementFromPoint(pointerX, pointerY);
+    return hit?.closest<HTMLElement>(SECTION_SELECTOR) ?? null;
+  };
+
+  const render = () => {
+    frameId = 0;
+
+    const section = sectionAtPointer();
+    const grid = section?.querySelector<HTMLElement>(GRID_SELECTOR) ?? null;
+
+    if (!grid || !grid.isConnected) {
+      hideActiveGrid();
       return;
     }
-    
-    // Lerp towards target with a slight drag for physical weight
-    currentX += (targetX - currentX) * 0.12;
-    currentY += (targetY - currentY) * 0.12;
-    
-    grid.style.setProperty("--hero-mx", `${currentX.toFixed(1)}px`);
-    grid.style.setProperty("--hero-my", `${currentY.toFixed(1)}px`);
-    
-    raf = requestAnimationFrame(loop);
-  };
 
-  const handlePointerEnter = () => {
-    isHovering = true;
-    grid.style.opacity = "0.18"; // Fade in using existing transition
-  };
-
-  const handlePointerLeave = () => {
-    isHovering = false;
-    grid.style.opacity = "0"; // Fade out
-    if (!raf) {
-      raf = requestAnimationFrame(loop);
-    }
-  };
-
-  const handlePointerMove = (e: PointerEvent) => {
-    targetX = e.clientX - rectX;
-    targetY = e.clientY - rectY;
-    
-    if (!hasMoved) {
-      // First event: instantly snap to avoid flying from (0,0)
-      currentX = targetX;
-      currentY = targetY;
-      grid.style.setProperty("--hero-mx", `${currentX.toFixed(1)}px`);
-      grid.style.setProperty("--hero-my", `${currentY.toFixed(1)}px`);
-      hasMoved = true;
+    /*
+     * The radial-gradient coordinates belong to the grid's own border box,
+     * not to the section. Measuring the grid therefore includes inset: -15%
+     * automatically. The scale correction also keeps coordinates accurate if
+     * an ancestor is temporarily transformed/scaled.
+     */
+    const rect = grid.getBoundingClientRect();
+    if (rect.width <= 0 || rect.height <= 0) {
+      hideActiveGrid();
+      return;
     }
 
-    if (!raf) {
-      raf = requestAnimationFrame(loop);
+    const scaleX = grid.offsetWidth > 0 ? rect.width / grid.offsetWidth : 1;
+    const scaleY = grid.offsetHeight > 0 ? rect.height / grid.offsetHeight : 1;
+    const localX = (pointerX - rect.left) / scaleX;
+    const localY = (pointerY - rect.top) / scaleY;
+
+    grid.style.setProperty("--hero-mx", `${localX.toFixed(2)}px`);
+    grid.style.setProperty("--hero-my", `${localY.toFixed(2)}px`);
+
+    if (activeGrid !== grid) {
+      hideActiveGrid();
+      activeGrid = grid;
     }
+
+    // Set coordinates before revealing to prevent a one-frame flash.
+    grid.setAttribute("data-grid-active", "");
   };
 
-  updateGridRect();
-  window.addEventListener("resize", updateGridRect, { passive: true });
-
-  hero.addEventListener("pointerenter", handlePointerEnter, { passive: true });
-  hero.addEventListener("pointerleave", handlePointerLeave, { passive: true });
-  hero.addEventListener("pointermove", handlePointerMove, { passive: true });
-
-  // Astro page swap cleanup to prevent event listener leaks
-  const cleanup = () => {
-    hero.removeEventListener("pointerenter", handlePointerEnter);
-    hero.removeEventListener("pointerleave", handlePointerLeave);
-    hero.removeEventListener("pointermove", handlePointerMove);
-    window.removeEventListener("resize", updateGridRect);
-    if (raf) cancelAnimationFrame(raf);
-    document.removeEventListener("astro:before-swap", cleanup);
+  const scheduleRender = () => {
+    if (frameId === 0) frameId = requestAnimationFrame(render);
   };
-  
-  document.addEventListener("astro:before-swap", cleanup);
+
+  const onPointerMove = (event: PointerEvent) => {
+    // The effect is mouse/trackpad-only; ignore touch and pen input.
+    if (event.pointerType && event.pointerType !== "mouse") return;
+
+    pointerX = event.clientX;
+    pointerY = event.clientY;
+    hasPointer = true;
+    scheduleRender();
+  };
+
+  const onPointerLeavesDocument = (event: MouseEvent) => {
+    if (event.relatedTarget !== null) return;
+    hasPointer = false;
+    hideActiveGrid();
+  };
+
+  const onGeometryChange = () => {
+    // Re-measure after scrolling/resizing even when the pointer is stationary.
+    scheduleRender();
+  };
+
+  const onBeforeSwap = () => {
+    hideActiveGrid();
+    if (frameId !== 0) cancelAnimationFrame(frameId);
+    frameId = 0;
+  };
+
+  const onPageLoad = () => {
+    /*
+     * Astro has inserted the new DOM at this point. Two frames let layout and
+     * transition styles settle, then the last known viewport pointer position
+     * is resolved against the new page—even if the mouse did not move.
+     */
+    cancelAnimationFrame(pageLoadFrame1);
+    cancelAnimationFrame(pageLoadFrame2);
+    pageLoadFrame1 = requestAnimationFrame(() => {
+      pageLoadFrame2 = requestAnimationFrame(scheduleRender);
+    });
+  };
+
+  document.addEventListener("pointermove", onPointerMove, {
+    passive: true,
+    capture: true,
+    signal,
+  });
+  document.addEventListener("mouseout", onPointerLeavesDocument, { signal });
+  document.addEventListener("scroll", onGeometryChange, {
+    passive: true,
+    capture: true,
+    signal,
+  });
+  window.addEventListener("resize", onGeometryChange, {
+    passive: true,
+    signal,
+  });
+  window.addEventListener("blur", hideActiveGrid, { signal });
+  document.addEventListener("astro:before-swap", onBeforeSwap, { signal });
+  document.addEventListener("astro:page-load", onPageLoad, { signal });
+
+  // Handles the initial non-SPA page load.
+  onPageLoad();
+
+  return {
+    destroy() {
+      abortController.abort();
+      cancelAnimationFrame(frameId);
+      cancelAnimationFrame(pageLoadFrame1);
+      cancelAnimationFrame(pageLoadFrame2);
+      hideActiveGrid();
+    },
+  };
 }
 
-if (typeof document !== "undefined") {
-  document.addEventListener("astro:page-load", initHeroGrid);
+if (typeof window !== "undefined" && typeof document !== "undefined") {
+  const runtimeWindow = window as WindowWithGridController;
+
+  // Astro may execute this module again after a routed navigation. Replacing
+  // the old controller makes initialization idempotent and prevents duplicates.
+  runtimeWindow[CONTROLLER_KEY]?.destroy();
+  runtimeWindow[CONTROLLER_KEY] = installGridReveal();
 }

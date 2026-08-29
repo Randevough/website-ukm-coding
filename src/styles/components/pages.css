@@ -537,7 +537,11 @@
 }
 
 .pagehead__grid--horizontal {
-  background-image: linear-gradient(to bottom, var(--line-soft) 1px, transparent 1px) !important;
+  background-image: linear-gradient(
+    to bottom,
+    var(--line-soft) 1px,
+    transparent 1px
+  ) !important;
 }
 
 .pagehead__inner {
