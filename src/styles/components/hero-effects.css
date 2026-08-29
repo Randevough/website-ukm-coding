@@ -3,7 +3,7 @@
    ========================================================= */
 
 /* Ensure the hero establishes a stacking context and boundaries */
-.hero--v2 {
+.hero--v2, .pagehead {
   position: relative;
   isolation: isolate;
   /* Provide an opaque background inside the isolated group so blend modes don't blend with transparent */
@@ -13,7 +13,7 @@
 /* ---------------------------------------------------------
    Effect 1: Paper Wash
    --------------------------------------------------------- */
-.hero__paper-wash {
+.hero__paper-wash, .pagehead__paper-wash {
   position: absolute;
   inset: -15%;
   pointer-events: none;
@@ -21,21 +21,25 @@
 }
 
 .hero__paper-wash::before,
-.hero__paper-wash::after {
+.hero__paper-wash::after,
+.pagehead__paper-wash::before,
+.pagehead__paper-wash::after {
   content: "";
   position: absolute;
   inset: 0;
 }
 
 /* Highlight layer: top-left */
-.hero__paper-wash::before {
+.hero__paper-wash::before,
+.pagehead__paper-wash::before {
   background: radial-gradient(circle at 16% 10%, #fffdf6 0%, transparent 60%);
   mix-blend-mode: screen;
   opacity: 0.9;
 }
 
 /* Shade layer: bottom-right */
-.hero__paper-wash::after {
+.hero__paper-wash::after,
+.pagehead__paper-wash::after {
   background: radial-gradient(circle at 86% 82%, #e4dfd3 0%, transparent 65%);
   mix-blend-mode: multiply;
   /* Opacity slightly tuned to 0.45 from 0.55 to ensure optimal text contrast */
