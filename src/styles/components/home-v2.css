@@ -67,29 +67,6 @@
   transform: translateX(4px);
 }
 
-/* Micro-interaction untuk link teks */
-.tlink {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-family: var(--mono);
-  font-size: var(--xs);
-  letter-spacing: var(--track-label);
-  text-transform: uppercase;
-  color: var(--ink-deep);
-  text-decoration: none;
-  border-bottom: 1px solid var(--line);
-  padding-bottom: 2px;
-  transition:
-    color var(--t) var(--ease),
-    border-color var(--t) var(--ease);
-}
-
-.tlink:hover {
-  color: var(--blue);
-  border-color: var(--blue);
-}
-
 /* Reduced motion accessibility */
 @media (prefers-reduced-motion: reduce) {
   *,

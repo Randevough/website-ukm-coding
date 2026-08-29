@@ -163,11 +163,7 @@
    --------------------------------------------------------- */
 @keyframes gridFxDriftA {
   0% {
-    transform: translate3d(
-      calc(var(--amp) * -1),
-      calc(var(--amp) * -0.55),
-      0
-    );
+    transform: translate3d(calc(var(--amp) * -1), calc(var(--amp) * -0.55), 0);
   }
   33% {
     transform: translate3d(calc(var(--amp) * 0.75), calc(var(--amp) * -1), 0);

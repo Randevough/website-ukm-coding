@@ -307,15 +307,15 @@ main {
 .shead {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--s5);
-  padding-bottom: var(--s7);
+  gap: var(--s4);
+  padding-bottom: var(--s5);
 }
 
 .shead__top {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  gap: var(--s5);
+  gap: var(--s4);
   border-bottom: 1px solid var(--line);
   padding-bottom: var(--s3);
 }
@@ -325,6 +325,12 @@ main {
   grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
   gap: clamp(var(--s5), 5vw, var(--s9));
   align-items: end;
+}
+
+.shead__body h2 {
+  font-size: clamp(1.8rem, 3.2vw, 2.8rem);
+  line-height: 1.06;
+  letter-spacing: -0.035em;
 }
 
 @media (max-width: 820px) {

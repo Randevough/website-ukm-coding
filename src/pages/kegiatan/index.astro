@@ -28,7 +28,10 @@ if (sanityPosts && sanityPosts.length > 0) {
 
 const breadcrumb = [
   { name: "Beranda", item: new URL("/", Astro.site || Astro.url.origin).href },
-  { name: "Updates", item: new URL("/kegiatan", Astro.site || Astro.url.origin).href },
+  {
+    name: "Updates",
+    item: new URL("/kegiatan", Astro.site || Astro.url.origin).href,
+  },
 ];
 
 const featured = posts[0];
@@ -36,10 +39,13 @@ const initialPosts = posts.slice(1, 8);
 
 const catCounts = {
   Semua: posts.length,
-  Berita: posts.filter((p: any) => (p.tipe || p.kategori) === 'Berita').length,
-  Kegiatan: posts.filter((p: any) => (p.tipe || p.kategori) === 'Kegiatan').length,
-  Pengumuman: posts.filter((p: any) => (p.tipe || p.kategori) === 'Pengumuman').length,
-  Prestasi: posts.filter((p: any) => (p.tipe || p.kategori) === 'Prestasi').length,
+  Berita: posts.filter((p: any) => (p.tipe || p.kategori) === "Berita").length,
+  Kegiatan: posts.filter((p: any) => (p.tipe || p.kategori) === "Kegiatan")
+    .length,
+  Pengumuman: posts.filter((p: any) => (p.tipe || p.kategori) === "Pengumuman")
+    .length,
+  Prestasi: posts.filter((p: any) => (p.tipe || p.kategori) === "Prestasi")
+    .length,
 };
 ---
 
@@ -69,13 +75,17 @@ const catCounts = {
           ><span class="thin">&amp; liputan media.</span></span
         >
       </h1>
-      <div style="display: flex; flex-direction: column; gap: var(--s4); margin-top: var(--s6); max-width: 60ch;">
+      <div
+        style="display: flex; flex-direction: column; gap: var(--s4); margin-top: var(--s6); max-width: 60ch;"
+      >
         <p class="lead" data-reveal style="--reveal-delay: 360ms">
-          Kami mendokumentasikan setiap event dan kolaborasi secara lengkap. 
-          Log aktivitas ini berfungsi sebagai referensi bagi media, calon partner, 
+          Kami mendokumentasikan setiap event dan kolaborasi secara lengkap. Log
+          aktivitas ini berfungsi sebagai referensi bagi media, calon partner,
           maupun kepengurusan berikutnya.
         </p>
-        <span class="idx" style="color: var(--blue)">14 CATATAN · 5 KATEGORI</span>
+        <span class="idx" style="color: var(--blue)"
+          >14 CATATAN · 5 KATEGORI</span
+        >
       </div>
     </div>
   </section>
@@ -83,13 +93,23 @@ const catCounts = {
   <!-- ================= HERO MAJALAH ================= -->
   <section class="section section--tight section--hairline">
     <div class="container">
-      <div class="shead__top" style="margin-bottom: var(--s6); display: flex; align-items: center; justify-content: space-between;">
-        <div class="badge-highlight">
-          Sorotan Utama
-        </div>
+      <div
+        class="shead__top"
+        style="margin-bottom: var(--s6); display: flex; align-items: center; justify-content: space-between;"
+      >
+        <div class="badge-highlight">Sorotan Utama</div>
         <div class="badge-new">
           <span>Paling Baru</span>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
             <path d="M12 5v14"></path>
             <path d="m19 12-7 7-7-7"></path>
           </svg>
@@ -106,11 +126,28 @@ const catCounts = {
     <div class="container">
       <div class="filterbar">
         <div class="chips" id="postChips" data-chips>
-          <button class="chip is-active" type="button" data-category="Semua" disabled>Semua <span class="chip__count">{catCounts.Semua}</span></button>
-          <button class="chip" type="button" data-category="Berita" disabled>Berita <span class="chip__count">{catCounts.Berita}</span></button>
-          <button class="chip" type="button" data-category="Kegiatan" disabled>Kegiatan <span class="chip__count">{catCounts.Kegiatan}</span></button>
-          <button class="chip" type="button" data-category="Pengumuman" disabled>Pengumuman <span class="chip__count">{catCounts.Pengumuman}</span></button>
-          <button class="chip" type="button" data-category="Prestasi" disabled>Prestasi <span class="chip__count">{catCounts.Prestasi}</span></button>
+          <button
+            class="chip is-active"
+            type="button"
+            data-category="Semua"
+            disabled
+            >Semua <span class="chip__count">{catCounts.Semua}</span></button
+          >
+          <button class="chip" type="button" data-category="Berita" disabled
+            >Berita <span class="chip__count">{catCounts.Berita}</span></button
+          >
+          <button class="chip" type="button" data-category="Kegiatan" disabled
+            >Kegiatan <span class="chip__count">{catCounts.Kegiatan}</span
+            ></button
+          >
+          <button class="chip" type="button" data-category="Pengumuman" disabled
+            >Pengumuman <span class="chip__count">{catCounts.Pengumuman}</span
+            ></button
+          >
+          <button class="chip" type="button" data-category="Prestasi" disabled
+            >Prestasi <span class="chip__count">{catCounts.Prestasi}</span
+            ></button
+          >
         </div>
         <input
           class="search"
@@ -121,7 +158,12 @@ const catCounts = {
         />
       </div>
 
-      <div class="updates-grid" id="postGrid" data-stagger="80" style="margin-top: var(--s6)">
+      <div
+        class="updates-grid"
+        id="postGrid"
+        data-stagger="80"
+        style="margin-top: var(--s6)"
+      >
         {initialPosts.map((p: any) => <PostCard post={p} />)}
       </div>
 
@@ -158,5 +200,5 @@ const catCounts = {
     </div>
   </template>
 
-  <script src="../../scripts/filter.ts" ></script>
+  <script src="../../scripts/filter.ts"></script>
 </Layout>

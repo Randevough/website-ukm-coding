@@ -40,7 +40,9 @@ export function initReveal(root?: Element | Document) {
           entry.target.classList.add("is-in");
           io!.unobserve(entry.target);
           setTimeout(() => {
-            (entry.target as HTMLElement).style.removeProperty('--reveal-delay');
+            (entry.target as HTMLElement).style.removeProperty(
+              "--reveal-delay",
+            );
           }, 2000);
         });
       },
@@ -83,7 +85,7 @@ export function playHero(root?: Element | Document) {
       ).forEach((el) => {
         el.classList.add("is-in");
         setTimeout(() => {
-          (el as HTMLElement).style.removeProperty('--reveal-delay');
+          (el as HTMLElement).style.removeProperty("--reveal-delay");
         }, 2000);
       });
     });

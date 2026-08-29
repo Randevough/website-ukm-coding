@@ -87,7 +87,7 @@
   --s9: 88px;
   --s10: 120px;
   --s11: 168px;
-  --section-y: clamp(72px, 9vw, 148px);
+  --section-y: clamp(40px, 4vw, 64px);
 
   /* ---------- LAYOUT ---------- */
   --wide: 1440px;

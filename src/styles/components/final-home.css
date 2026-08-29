@@ -20,7 +20,7 @@
 .hero__inner {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   flex: 1;
   gap: clamp(28px, 4vw, 56px);
 }
@@ -240,9 +240,9 @@
 }
 
 .about2__h em {
-  font-family: var(--serif);
-  font-style: italic;
-  font-weight: 400;
+  font-family: var(--sans);
+  font-style: normal;
+  font-weight: inherit;
   color: var(--blue);
 }
 
@@ -272,15 +272,14 @@
 }
 
 .about2__blocks {
-  display: grid;
-  gap: 1px;
-  background: var(--line);
+  display: flex;
+  flex-direction: column;
   border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
 }
 
 .about2__block {
   background: var(--paper-2);
+  border-bottom: 1px solid var(--line);
   display: grid;
   grid-template-columns: 52px minmax(0, 1fr);
   gap: clamp(12px, 2vw, 24px);
@@ -337,15 +336,12 @@
 /* ---------------- 4. Updates Section (Featured + Editorial List) ---------------- */
 .updates-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-  gap: clamp(24px, 4vw, 56px);
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: clamp(var(--s5), 5vw, var(--s9));
   align-items: start;
 }
 
-.updates-layout__featured .ncard {
-  border-top: 0;
-  padding-top: 0;
-}
+/* Featured card default spacing is now preserved to prevent hitting the top edge */
 
 .updates-layout__featured .ncard__art {
   aspect-ratio: 16 / 10;
@@ -360,8 +356,8 @@
 /* ---------------- 5. Gallery Editorial Mosaic ---------------- */
 .iggrid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  grid-auto-rows: clamp(160px, 16vw, 220px);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-rows: clamp(130px, 12vw, 180px);
   gap: var(--s4);
 }
 
@@ -389,22 +385,32 @@
 }
 
 .igcard--3 {
-  grid-column: 3 / 4;
-  grid-row: 2 / 3;
+  grid-column: 4 / 5;
+  grid-row: 1 / 2;
 }
 
 .igcard--4 {
+  grid-column: 3 / 5;
+  grid-row: 2 / 3;
+}
+
+.igcard--5 {
   grid-column: 1 / 2;
   grid-row: 3 / 4;
 }
 
-.igcard--5 {
+.igcard--6 {
   grid-column: 2 / 3;
   grid-row: 3 / 4;
 }
 
-.igcard--6 {
+.igcard--7 {
   grid-column: 3 / 4;
+  grid-row: 3 / 4;
+}
+
+.igcard--8 {
+  grid-column: 4 / 5;
   grid-row: 3 / 4;
 }
 
@@ -412,91 +418,153 @@
   transform: scale(1.03);
 }
 
-/* ---------------- 6. Kerja Sama (Partnership CTA) ---------------- */
-.pcta {
-  background: var(--paper);
+/* ---------------- 6. Kerja Sama (Partnership) ---------------- */
+.collab {
+  background: var(--paper-2);
 }
 
-.pcta__grid {
+.collab__container {
   display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
-  gap: clamp(32px, 5vw, 64px);
-  align-items: center;
+  grid-template-columns: minmax(0, 0.75fr) minmax(0, 1fr);
+  gap: clamp(var(--s6), 6vw, var(--s10));
+  grid-template-areas: "header list";
+  align-items: start;
 }
 
-.pcta__title {
-  font-size: clamp(2rem, 4.4vw, 3.4rem);
-  line-height: 1.05;
-  letter-spacing: -0.035em;
-  font-weight: 800;
-  color: var(--ink-deep);
+.collab__header {
+  grid-area: header;
 }
 
-.pcta__title em {
-  font-family: var(--serif);
-  font-style: italic;
-  font-weight: 400;
-  color: var(--blue);
+.collab__list {
+  grid-area: list;
 }
 
-.pcta__actions {
+.collab__actions {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
   gap: var(--s3);
   margin-top: var(--s5);
 }
 
-.pcta__actions .btn {
-  align-self: flex-start;
+.collab__title {
+  font-size: clamp(2.4rem, 4vw, 3.2rem);
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  font-weight: 800;
+  color: var(--ink-deep);
+  margin-top: var(--s3);
+  margin-bottom: var(--s4);
 }
 
-.pcta__alt {
-  font-size: var(--sm);
-  color: var(--ink-2);
-}
-
-.pcta__alt a {
+.collab__title em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: normal;
   color: var(--blue);
-  text-decoration: underline;
-  text-underline-offset: 3px;
 }
 
-.pcta__side {
-  display: flex;
-  flex-direction: column;
-  gap: var(--s5);
-  background: var(--paper-raised);
-  border: 1px solid var(--line);
-  padding: clamp(20px, 3vw, 32px);
-  border-radius: var(--r2);
-}
-
-.pcta__dek {
-  font-size: var(--sm);
-  line-height: 1.65;
+.collab__intro {
+  font-size: var(--body-lg);
+  line-height: var(--lh-loose);
   color: var(--ink-2);
 }
 
-.pcta__rows {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  border-top: 1px solid var(--line-soft);
+.collab__list-label {
+  font-family: var(--mono);
+  font-size: var(--xxs);
+  letter-spacing: var(--track-label);
+  color: var(--ink-3);
+  text-transform: uppercase;
+  margin-bottom: var(--s4);
 }
 
-.pcta__row {
-  display: flex;
-  align-items: center;
+.collab__rows {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-top: 1px solid var(--line);
+}
+
+.collab__row {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr) 24px;
   gap: var(--s3);
-  padding: 10px 0;
-  border-bottom: 1px solid var(--line-soft);
-  font-size: var(--sm);
-  font-weight: 600;
+  padding: var(--s4) var(--s3);
+  border-bottom: 1px solid var(--line);
+  background: transparent;
+  transition:
+    background var(--t) var(--ease),
+    box-shadow var(--t) var(--ease);
+  align-items: start;
+  min-height: 44px;
+}
+
+.collab__row-idx {
+  font-family: var(--mono);
+  font-size: var(--xs);
+  color: var(--ink-3);
+  transition: color var(--t) var(--ease);
+  padding-top: 2px;
+}
+
+.collab__row-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.collab__row-title {
+  font-size: var(--body-lg);
+  font-weight: 700;
   color: var(--ink-deep);
 }
 
-.pcta__row .idx {
-  color: var(--blue);
+.collab__row-desc {
+  font-size: var(--sm);
+  color: var(--ink-2);
+  line-height: 1.5;
+}
+
+.collab__row-arrow {
+  color: var(--ink-3);
+  font-family: var(--mono);
+  font-size: var(--sm);
+  transition:
+    transform var(--t) var(--ease),
+    color var(--t) var(--ease);
+  padding-top: 4px;
+  text-align: right;
+}
+
+@media (hover: hover) {
+  .collab__row:hover {
+    background: var(--paper-raised);
+  }
+
+  .collab__row:hover .collab__row-idx,
+  .collab__row:hover .collab__row-arrow {
+    color: var(--blue);
+  }
+
+  .collab__row:hover .collab__row-arrow {
+    transform: translateX(4px);
+  }
+}
+
+@media (min-width: 1024px) {
+  .collab__list {
+    position: relative;
+  }
+  .collab__list::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: calc((clamp(var(--s6), 6vw, var(--s10)) / -2) - 0.5px);
+    width: 1px;
+    background: var(--line);
+  }
 }
 
 /* ---------------- 7. Responsive Breakpoints ---------------- */
@@ -541,8 +609,11 @@
     grid-row: auto !important;
   }
 
-  .pcta__grid {
+  .collab__container {
     grid-template-columns: 1fr;
+    grid-template-areas:
+      "header"
+      "list";
     gap: var(--s6);
   }
 }
@@ -670,14 +741,11 @@
     grid-column: auto !important;
     grid-row: auto !important;
   }
+}
 
-  .pcta__grid {
-    grid-template-columns: 1fr;
-    gap: var(--s5);
-  }
-
-  .pcta__actions .btn {
-    width: 100%;
-    justify-content: center;
+/* Hide hero image on tablet and mobile */
+@media (max-width: 1024px) {
+  .hero__visual {
+    display: none !important;
   }
 }
