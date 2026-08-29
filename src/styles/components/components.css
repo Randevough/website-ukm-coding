@@ -853,7 +853,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  z-index: var(--z-cursor);
+  z-index: 9999;
   pointer-events: none;
   padding: 9px 14px;
   border-radius: var(--r-full);

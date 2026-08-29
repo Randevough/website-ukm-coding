@@ -98,16 +98,8 @@ body::after {
 }
 
 .rails__inner {
-  width: min(100% - var(--gutter) * 2, var(--container));
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-}
-
-.rails__inner > span {
+  width: min(100% - var(--gutter), calc(var(--container) + 160px));
   border-left: 1px solid var(--line-soft);
-}
-
-.rails__inner > span:last-child {
   border-right: 1px solid var(--line-soft);
 }
 

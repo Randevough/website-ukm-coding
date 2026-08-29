@@ -75,6 +75,8 @@ function tanggalPendek(iso: string) {
 <Layout title={`Beranda | ${settings.nama}`}>
   <!-- ============================= HERO ============================= -->
   <section class="section hero hero--v2">
+    <div class="hero__paper-wash" aria-hidden="true"></div>
+    <div class="hero__grid" aria-hidden="true"></div>
     <div class="container hero__inner">
       <div class="hero__split">
         <div class="hero__left">
@@ -98,7 +100,7 @@ function tanggalPendek(iso: string) {
             data-reveal=""
             style="--reveal-delay: 420ms"
           >
-            <a class="btn btn--primary btn--lg" href="#projects"
+            <a class="btn btn--primary btn--lg" href="#projects" data-cursor="Jelajahi"
               >Lihat Projects <span class="arrow" aria-hidden="true">→</span></a
             >
             <a class="btn btn--lg" href="#kerjasama">Kerja sama</a>
@@ -109,6 +111,7 @@ function tanggalPendek(iso: string) {
           data-reveal="fade"
           style="--reveal-delay: 200ms"
           aria-hidden="true"
+          data-cursor="Lihat"
         >
           <div class="hero__card hero__card--editorial">
             <span class="hero__cardTag idx">LIFE AT UKM CODING</span>
