@@ -38,7 +38,7 @@ const breadcrumb = [
   showRails={false}
 >
   <!-- ================= KEPALA HALAMAN ================= -->
-  <section class="pagehead" data-mark="orange" style="padding-top: clamp(var(--s7), 7vw, var(--s10)); padding-bottom: var(--s4);">
+  <section class="pagehead" data-mark="orange" style="padding-top: clamp(var(--s5), 5vw, var(--s8)); padding-bottom: clamp(var(--s5), 4vw, var(--s7));">
     <div class="pagehead__paper-wash" aria-hidden="true"></div>
     <div class="grid-fx" aria-hidden="true">
       <div class="grid-fx__spot grid-fx__spot--a">
@@ -71,7 +71,7 @@ const breadcrumb = [
   </section>
 
   <!-- ================= KISI ================= -->
-  <section class="section" style="padding-top: var(--s4); padding-bottom: var(--s4);">
+  <section class="section" style="padding-top: var(--s6); padding-bottom: var(--s6);">
     <div class="container">
       <div class="filterbar">
         <div class="chips" id="projectChips" data-chips>
@@ -80,16 +80,17 @@ const breadcrumb = [
           <button class="chip" type="button" disabled>Mobile</button>
           <button class="chip" type="button" disabled>IoT / Hardware</button>
         </div>
-        <select
-          class="select"
-          aria-label="Filter Waktu"
-          style="max-width: 220px"
-          disabled
-        >
-          <option>Semua Waktu</option>
-          <option>Tahun 2026</option>
-          <option>Tahun 2025</option>
-        </select>
+        <div class="cselect" id="timeframeDropdown" role="combobox" aria-haspopup="listbox" aria-expanded="false" aria-label="Filter Waktu" tabindex="0">
+          <span class="cselect__value" id="timeframeValue">Semua Waktu</span>
+          <svg class="cselect__arrow" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+            <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <ul class="cselect__list" role="listbox" aria-label="Filter Waktu">
+            <li class="cselect__opt is-selected" role="option" aria-selected="true" data-value="Semua Waktu">Semua Waktu</li>
+            <li class="cselect__opt" role="option" aria-selected="false" data-value="Tahun 2026">Tahun 2026</li>
+            <li class="cselect__opt" role="option" aria-selected="false" data-value="Tahun 2025">Tahun 2025</li>
+          </ul>
+        </div>
       </div>
 
       <div

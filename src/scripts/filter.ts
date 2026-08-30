@@ -180,7 +180,9 @@ export function initProjectsFilter() {
   if (typeof document === "undefined") return;
 
   const filterChips = document.querySelectorAll("#projectChips .chip");
-  const sortSelect = document.querySelector(".select") as HTMLSelectElement;
+  const cselect = document.getElementById("timeframeDropdown");
+  const cselectValue = document.getElementById("timeframeValue");
+  const cselectOpts = cselect?.querySelectorAll(".cselect__opt") as NodeListOf<HTMLElement> | undefined;
   const gridContainer = document.getElementById("projectGrid");
   const paginationContainer = document.querySelector("[data-pagination]");
 
@@ -190,6 +192,7 @@ export function initProjectsFilter() {
   let currentPage = 1;
   let currentCategory = "Semua";
   let currentSort = "Terbaru";
+  let currentYear = "Semua";
 
   const template = document.getElementById(
     "all-projects-template",
@@ -208,6 +211,9 @@ export function initProjectsFilter() {
     if (currentSort !== "Terbaru") url.searchParams.set("sort", currentSort);
     else url.searchParams.delete("sort");
 
+    if (currentYear !== "Semua") url.searchParams.set("tahun", currentYear);
+    else url.searchParams.delete("tahun");
+
     if (currentPage > 1) url.searchParams.set("page", currentPage.toString());
     else url.searchParams.delete("page");
 
@@ -219,6 +225,7 @@ export function initProjectsFilter() {
     const url = new URL(window.location.href);
     currentCategory = url.searchParams.get("kategori") || "Semua";
     currentSort = url.searchParams.get("sort") || "Terbaru";
+    currentYear = url.searchParams.get("tahun") || "Semua";
     currentPage = parseInt(url.searchParams.get("page") || "1", 10);
   }
 
@@ -232,8 +239,16 @@ export function initProjectsFilter() {
       (el) => el.getAttribute("data-kategori") || "",
     );
 
+    // 3. Filter by year (timeframe)
+    const yearFiltered = currentYear === "Semua"
+      ? filtered
+      : filtered.filter((el) => {
+          const yr = el.getAttribute("data-date") || "";
+          return yr === currentYear || yr === `Tahun ${currentYear}`;
+        });
+
     // 2. Sort using Pure Engine
-    const sorted = sortItems(filtered, currentSort, (el) => ({
+    const sorted = sortItems(yearFiltered, currentSort, (el) => ({
       title: el.getAttribute("data-title") || "",
       date: el.getAttribute("data-date") || 0,
     }));
@@ -295,9 +310,17 @@ export function initProjectsFilter() {
       chip.classList.toggle("is-active", chip.textContent === currentCategory);
       chip.removeAttribute("disabled");
     });
-    if (sortSelect) {
-      sortSelect.value = currentSort;
-      sortSelect.removeAttribute("disabled");
+    // Sync custom dropdown label
+    if (cselectValue) {
+      cselectValue.textContent = currentYear === "Semua" ? "Semua Waktu" : `Tahun ${currentYear}`;
+    }
+    if (cselectOpts) {
+      cselectOpts.forEach((opt) => {
+        const val = opt.getAttribute("data-value") || "";
+        const matches = val === "Semua Waktu" ? currentYear === "Semua" : val === `Tahun ${currentYear}`;
+        opt.classList.toggle("is-selected", matches);
+        opt.setAttribute("aria-selected", String(matches));
+      });
     }
 
     renderPagination(paginationContainer, currentPage, totalPages, (page) => {
@@ -326,14 +349,45 @@ export function initProjectsFilter() {
     });
   });
 
-  if (sortSelect) {
-    sortSelect.addEventListener("change", (e) => {
-      currentSort = (e.target as HTMLSelectElement).value;
-      currentPage = 1;
-      updateURL();
-      render();
+  // Custom dropdown interactions
+  if (cselect) {
+    // Toggle open
+    cselect.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const isOpen = cselect.classList.toggle("is-open");
+      cselect.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    // Keyboard: Escape closes
+    cselect.addEventListener("keydown", (e) => {
+      if ((e as KeyboardEvent).key === "Escape") {
+        cselect.classList.remove("is-open");
+        cselect.setAttribute("aria-expanded", "false");
+      }
+    });
+
+    // Option selection
+    cselectOpts?.forEach((opt) => {
+      opt.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const val = opt.getAttribute("data-value") || "Semua Waktu";
+        currentYear = val === "Semua Waktu" ? "Semua" : val.replace("Tahun ", "");
+        cselect.classList.remove("is-open");
+        cselect.setAttribute("aria-expanded", "false");
+        currentPage = 1;
+        updateURL();
+        render();
+      });
+    });
+
+    // Click outside to close
+    document.addEventListener("click", () => {
+      cselect.classList.remove("is-open");
+      cselect.setAttribute("aria-expanded", "false");
     });
   }
+
+
 
   readURL();
   render(true);

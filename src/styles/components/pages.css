@@ -668,7 +668,7 @@
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: var(--r1);
-  margin-block: var(--s7);
+  margin-block: var(--s5);
   background: var(--paper-2);
 }
 
@@ -791,7 +791,7 @@
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: var(--r1);
-  margin-block: var(--s7);
+  margin-block: var(--s5);
   background: var(--paper-2);
 }
 

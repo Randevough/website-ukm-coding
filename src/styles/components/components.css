@@ -1392,6 +1392,106 @@
   gap: var(--s2);
 }
 
+/* ── Custom Select Dropdown ─────────────────── */
+.cselect {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s2);
+  font-family: var(--mono);
+  font-size: var(--xxs);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--ink-2);
+  padding: 10px 16px;
+  border: 1px solid transparent;
+  border-radius: var(--r1);
+  cursor: pointer;
+  user-select: none;
+  transition:
+    color var(--t) var(--ease),
+    border-color var(--t) var(--ease),
+    background var(--t) var(--ease);
+  min-width: 150px;
+}
+
+.cselect:hover,
+.cselect:focus {
+  color: var(--ink-deep);
+  border-color: var(--line);
+  outline: none;
+}
+
+.cselect.is-open {
+  color: var(--paper);
+  background: var(--ink-deep);
+  border-color: var(--ink-deep);
+}
+
+.cselect__value {
+  flex: 1;
+}
+
+.cselect__arrow {
+  flex-shrink: 0;
+  transition: transform var(--t) var(--ease);
+}
+
+.cselect.is-open .cselect__arrow {
+  transform: rotate(180deg);
+}
+
+.cselect__list {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  min-width: 160px;
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--r1);
+  padding: var(--s1) 0;
+  margin: 0;
+  list-style: none;
+  z-index: 100;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.10);
+  opacity: 0;
+  transform: translateY(-4px);
+  pointer-events: none;
+  transition:
+    opacity var(--t) var(--ease),
+    transform var(--t) var(--ease);
+}
+
+.cselect.is-open .cselect__list {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.cselect__opt {
+  font-family: var(--mono);
+  font-size: var(--xxs);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--ink-2);
+  padding: 9px 16px;
+  cursor: pointer;
+  transition:
+    color var(--t) var(--ease),
+    background var(--t) var(--ease);
+}
+
+.cselect__opt:hover {
+  color: var(--ink-deep);
+  background: var(--paper-wash);
+}
+
+.cselect__opt.is-selected {
+  color: var(--ink-deep);
+  font-weight: 600;
+}
+/* ─────────────────────────────────────────── */
+
 .chip {
   position: relative;
   font-family: var(--mono);
@@ -1723,7 +1823,7 @@
 
 .site-footer a {
   color: rgba(246, 245, 242, 0.66);
-  transition: color var(--t) var(--ease);
+  transition: color var(--t) var(--ease), opacity var(--t) var(--ease);
 }
 
 .site-footer a:hover {
@@ -1760,14 +1860,14 @@
 .plogo {
   position: relative;
   background: var(--ink-deep);
-  min-height: 108px;
+  min-height: 96px;
   width: calc(20% - 1px);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: var(--s5) var(--s4);
+  gap: 6px;
+  padding: var(--s4) var(--s3);
   text-align: center;
   opacity: 1;
   transition:
@@ -1790,8 +1890,8 @@
 }
 
 .plogo__slot {
-  width: 96px;
-  height: 52px;
+  width: 72px;
+  height: 44px;
   border: none;
   border-radius: var(--r1);
   display: flex;
