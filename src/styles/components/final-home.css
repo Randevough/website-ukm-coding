@@ -750,6 +750,21 @@
       "list";
     gap: var(--s6);
   }
+
+  .collab__actions {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: 100%;
+    gap: 12px;
+  }
+
+  .collab__actions .btn {
+    flex: 1;
+    width: auto;
+    padding: 13px 12px;
+    font-size: 0.85rem;
+    justify-content: center;
+  }
 }
 
 /* Hide hero image on tablet and mobile */

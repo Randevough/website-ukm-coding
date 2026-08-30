@@ -4,14 +4,27 @@ export interface Props {
   message?: string;
 }
 const {
-  title = "Tidak Ditemukan",
-  message = "Data yang Anda cari belum tersedia atau sedang disiapkan.",
+  title = "Belum ada konten di sini",
+  message = "Konten untuk kategori ini belum tersedia. Coba pilih kategori lain atau hapus filter pencarian.",
 } = Astro.props;
 ---
 
 <div class="empty-state">
   <div class="empty-state__inner">
-    <span class="label label--ink">EMPTY_STATE</span>
+    <div class="empty-state__icon" aria-hidden="true">
+      <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- folder base -->
+        <rect x="6" y="18" width="44" height="30" rx="4" stroke="currentColor" stroke-width="2" fill="none" opacity="0.25"/>
+        <!-- folder tab -->
+        <path d="M6 22V14a4 4 0 0 1 4-4h10.34a4 4 0 0 1 2.83 1.17l2.83 2.83H46a4 4 0 0 1 4 4v4" stroke="currentColor" stroke-width="2" fill="none" opacity="0.25"/>
+        <!-- magnifying glass -->
+        <circle cx="28" cy="33" r="7" stroke="currentColor" stroke-width="2" fill="none" opacity="0.5"/>
+        <line x1="33" y1="38" x2="38" y2="43" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+        <!-- question mark inside magnifying glass -->
+        <path d="M26.5 31c0-1.1.9-2 2-2s2 .9 2 2c0 .7-.4 1.3-.9 1.6-.3.2-.6.5-.6.9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.5"/>
+        <circle cx="29" cy="36" r="0.7" fill="currentColor" opacity="0.5"/>
+      </svg>
+    </div>
     <h3 class="empty-state__title">{title}</h3>
     <p class="empty-state__message">{message}</p>
   </div>
@@ -19,31 +32,70 @@ const {
 
 <style>
   .empty-state {
-    padding: var(--s7) var(--s5);
-    border: 1px dashed var(--line-ink);
+    padding: clamp(40px, 5vw, 64px) var(--s5);
     border-radius: var(--r2);
     display: flex;
     justify-content: center;
     text-align: center;
-    background: var(--paper-2);
+    background:
+      linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--blue-wash) 40%, transparent) 0%,
+        var(--paper-2) 50%,
+        color-mix(in srgb, var(--orange-wash, rgba(220, 90, 18, 0.09)) 30%, transparent) 100%
+      );
     margin-block: var(--s5);
+    animation: emptyFadeIn 400ms ease both;
   }
+
+  @keyframes emptyFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
   .empty-state__inner {
     display: flex;
     flex-direction: column;
     gap: var(--s3);
-    max-width: 400px;
+    max-width: 380px;
     align-items: center;
   }
+
+  .empty-state__icon {
+    color: var(--ink-3);
+    margin-bottom: var(--s2, 8px);
+    animation: emptyIconFloat 3s ease-in-out infinite;
+  }
+
+  @keyframes emptyIconFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .empty-state,
+    .empty-state__icon {
+      animation: none;
+    }
+  }
+
   .empty-state__title {
-    font-size: var(--d3);
+    font-size: var(--h4);
     color: var(--ink-deep);
     letter-spacing: var(--track-tight);
     font-weight: 700;
+    line-height: 1.3;
   }
+
   .empty-state__message {
     font-size: var(--sm);
     color: var(--ink-2);
-    line-height: 1.6;
+    line-height: 1.65;
   }
 </style>
