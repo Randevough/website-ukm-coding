@@ -39,6 +39,14 @@ export const siteSettings = defineType({
       type: "url",
     }),
     defineField({
+      name: "proposalMediaPartner",
+      title: "File Proposal Media Partner (PDF)",
+      type: "file",
+      options: {
+        accept: "application/pdf",
+      },
+    }),
+    defineField({
       name: "lokasi",
       title: "Lokasi (Kota, Negara)",
       type: "string",

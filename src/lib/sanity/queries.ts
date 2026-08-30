@@ -7,7 +7,7 @@ export const siteSettingsQuery = `
     instagramUrl,
     linkedinUrl,
     github,
-    deckUrl
+    "mediaPartnerUrl": proposalMediaPartner.asset->url
   }
 `;
 

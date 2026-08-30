@@ -20,7 +20,7 @@ const settings = {
   linkedinUrl:
     "https://id.linkedin.com/in/ukm-coding-cyber-university-541459379",
   github: "github.com/ukmcoding",
-  deckUrl: "#", // nanti file PDF asli
+  mediaPartnerUrl: "/?dummy-media-partner", // ganti dengan # jika ingin disembunyikan
   tahunBerdiri: "", // BELUM DIKETAHUI — sengaja dikosongkan
 };
 

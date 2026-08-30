@@ -30,7 +30,11 @@ const [sanitySettings, sanityProjects, sanityPosts, sanityGallery] =
   ]);
 
 if (sanitySettings) {
-  settings = { ...settings, ...sanitySettings };
+  settings = {
+    ...settings,
+    ...sanitySettings,
+    mediaPartnerUrl: sanitySettings.mediaPartnerUrl || settings.mediaPartnerUrl,
+  };
 }
 
 if (sanityProjects && sanityProjects.length > 0) {
@@ -384,8 +388,8 @@ function tanggalPendek(iso: string) {
           <em>apa yang ingin dicapai.</em>
         </h2>
         <p class="collab__intro" data-reveal="" style="--reveal-delay: 100ms">
-          Ceritakan tujuan, audience, dan hasil yang ingin dicapai. Dari sana,
-          format, scope, dan pembagian peran bisa disusun bersama.
+          Ceritakan tujuan dan target yang ingin dicapai. Dari sana, kita
+          rancang format dan pembagian perannya bersama.
         </p>
 
         <div
@@ -395,20 +399,27 @@ function tanggalPendek(iso: string) {
         >
           <a
             class="btn btn--primary"
-            data-mailto=""
-            href={`mailto:${settings.email}?subject=Diskusi%20Kolaborasi`}
+            href={`https://mail.google.com/mail/?view=cm&fs=1&to=${settings.email}&su=Diskusi%20Kolaborasi`}
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            Hubungi via Email <span class="arrow" aria-hidden="true">→</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+            </svg>
+            Hubungi via Email
           </a>
           {
-            settings.deckUrl && settings.deckUrl !== "#" && (
+            settings.mediaPartnerUrl && settings.mediaPartnerUrl !== "#" && (
               <a
-                href={settings.deckUrl}
+                href={settings.mediaPartnerUrl}
                 class="btn btn--quiet"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Download template PDF
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                </svg>
+                Media Partner
               </a>
             )
           }
@@ -429,7 +440,7 @@ function tanggalPendek(iso: string) {
                 mempertemukan mahasiswa dengan praktisi dan community.
               </p>
             </div>
-            <span class="collab__row-arrow" aria-hidden="true">→</span>
+
           </li>
           <li class="collab__row" data-reveal="">
             <span class="collab__row-idx">02</span>
@@ -440,7 +451,7 @@ function tanggalPendek(iso: string) {
                 community yang tepat.
               </p>
             </div>
-            <span class="collab__row-arrow" aria-hidden="true">→</span>
+
           </li>
           <li class="collab__row" data-reveal="">
             <span class="collab__row-idx">03</span>
@@ -451,7 +462,7 @@ function tanggalPendek(iso: string) {
                 dengan scope dan target yang disepakati.
               </p>
             </div>
-            <span class="collab__row-arrow" aria-hidden="true">→</span>
+
           </li>
           <li class="collab__row" data-reveal="">
             <span class="collab__row-idx">04</span>
@@ -462,7 +473,7 @@ function tanggalPendek(iso: string) {
                 paling sesuai dari awal.
               </p>
             </div>
-            <span class="collab__row-arrow" aria-hidden="true">→</span>
+
           </li>
         </ul>
       </div>

@@ -458,9 +458,9 @@
 }
 
 .collab__title em {
-  font-family: var(--serif);
-  font-style: italic;
-  font-weight: normal;
+  font-family: var(--sans);
+  font-style: normal;
+  font-weight: inherit;
   color: var(--blue);
 }
 
@@ -504,7 +504,7 @@
   font-family: var(--mono);
   font-size: var(--xs);
   color: var(--ink-3);
-  transition: color var(--t) var(--ease);
+  transition: all var(--t) var(--ease);
   padding-top: 2px;
 }
 
@@ -512,6 +512,7 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
+  transition: transform var(--t) var(--ease);
 }
 
 .collab__row-title {
@@ -542,13 +543,13 @@
     background: var(--paper-raised);
   }
 
-  .collab__row:hover .collab__row-idx,
-  .collab__row:hover .collab__row-arrow {
+  .collab__row:hover .collab__row-idx {
     color: var(--blue);
   }
 
-  .collab__row:hover .collab__row-arrow {
-    transform: translateX(4px);
+  .collab__row:hover .collab__row-content,
+  .collab__row:hover .collab__row-idx {
+    transform: translateX(8px);
   }
 }
 
@@ -740,6 +741,14 @@
   .igcard {
     grid-column: auto !important;
     grid-row: auto !important;
+  }
+
+  .collab__container {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "header"
+      "list";
+    gap: var(--s6);
   }
 }
 
