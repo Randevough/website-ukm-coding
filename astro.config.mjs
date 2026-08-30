@@ -10,14 +10,16 @@ const env = loadEnv(process.env.NODE_ENV || "development", process.cwd(), "");
 
 // https://astro.build/config
 export default defineConfig({
-  site: env.PUBLIC_SITE_URL || "https://ukmcoding.cyber-univ.ac.id",
+  site: env.PUBLIC_SITE_URL || "https://ukmcoding.site",
   prefetch: {
     prefetchAll: true,
     defaultStrategy: "hover",
   },
   integrations: [
     react(),
-    sitemap(),
+    sitemap({
+      filter: (page) => !page.includes("/admin"),
+    }),
     sanity({
       projectId: env.PUBLIC_SANITY_PROJECT_ID || "n3mnxpum",
       dataset: env.PUBLIC_SANITY_DATASET || "production",

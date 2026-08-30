@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin
 Disallow: /admin/*
 
-Sitemap: https://ukmcoding.cyber-univ.ac.id/sitemap-index.xml
+Sitemap: https://ukmcoding.site/sitemap-index.xml

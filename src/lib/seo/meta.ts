@@ -26,7 +26,7 @@ export function resolveBaseUrl(site?: string | URL, origin?: string): string {
   if (origin) {
     return origin.endsWith("/") ? origin.slice(0, -1) : origin;
   }
-  return "https://ukmcoding.cyber-univ.ac.id";
+  return "https://ukmcoding.site";
 }
 
 export function resolveCanonicalUrl(

@@ -116,7 +116,7 @@ describe("SEO Utilities & Structured Data Generators", () => {
         "http://localhost:4321",
       );
       expect(resolveBaseUrl(undefined, undefined)).toBe(
-        "https://ukmcoding.cyber-univ.ac.id",
+        "https://ukmcoding.site",
       );
     });
 
