@@ -72,11 +72,15 @@ const breadcrumb = [
   breadcrumb={breadcrumb}
   showRails={false}
 >
-  <section class="section section--tight" style="padding-top: clamp(var(--s5), 4vw, var(--s7));">
+  <section
+    class="section section--tight"
+    style="padding-top: clamp(var(--s5), 4vw, var(--s7));"
+  >
     <div class="container" id="case">
       <header class="case__head">
         <div class="breadcrumb" style="margin-bottom: var(--s5)">
-          <a href="/">Beranda</a><span>/</span><a href="/projects">Projects</a><span>/</span><span>Detail</span>
+          <a href="/">Beranda</a><span>/</span><a href="/projects">Projects</a
+          ><span>/</span><span>Detail</span>
         </div>
         <div class="case__titleBlock">
           <h1 class="case__title">{title}</h1>
@@ -207,8 +211,7 @@ const breadcrumb = [
           data-mailto
           href={`mailto:${settings.email}`}>Diskusi project</a
         >
-        <a class="btn btn--lg" href="/projects">Lihat project lain</a
-        >
+        <a class="btn btn--lg" href="/projects">Lihat project lain</a>
       </div>
     </div>
   </section>

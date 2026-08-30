@@ -182,7 +182,8 @@ export function initProjectsFilter() {
   const filterChips = document.querySelectorAll("#projectChips .chip");
   const cselect = document.getElementById("timeframeDropdown");
   const cselectValue = document.getElementById("timeframeValue");
-  const cselectOpts = cselect?.querySelectorAll(".cselect__opt") as NodeListOf<HTMLElement> | undefined;
+  const cselectOpts = cselect?.querySelectorAll(".cselect__opt") as
+    NodeListOf<HTMLElement> | undefined;
   const gridContainer = document.getElementById("projectGrid");
   const paginationContainer = document.querySelector("[data-pagination]");
 
@@ -240,12 +241,13 @@ export function initProjectsFilter() {
     );
 
     // 3. Filter by year (timeframe)
-    const yearFiltered = currentYear === "Semua"
-      ? filtered
-      : filtered.filter((el) => {
-          const yr = el.getAttribute("data-date") || "";
-          return yr === currentYear || yr === `Tahun ${currentYear}`;
-        });
+    const yearFiltered =
+      currentYear === "Semua"
+        ? filtered
+        : filtered.filter((el) => {
+            const yr = el.getAttribute("data-date") || "";
+            return yr === currentYear || yr === `Tahun ${currentYear}`;
+          });
 
     // 2. Sort using Pure Engine
     const sorted = sortItems(yearFiltered, currentSort, (el) => ({
@@ -312,12 +314,16 @@ export function initProjectsFilter() {
     });
     // Sync custom dropdown label
     if (cselectValue) {
-      cselectValue.textContent = currentYear === "Semua" ? "Semua Waktu" : `Tahun ${currentYear}`;
+      cselectValue.textContent =
+        currentYear === "Semua" ? "Semua Waktu" : `Tahun ${currentYear}`;
     }
     if (cselectOpts) {
       cselectOpts.forEach((opt) => {
         const val = opt.getAttribute("data-value") || "";
-        const matches = val === "Semua Waktu" ? currentYear === "Semua" : val === `Tahun ${currentYear}`;
+        const matches =
+          val === "Semua Waktu"
+            ? currentYear === "Semua"
+            : val === `Tahun ${currentYear}`;
         opt.classList.toggle("is-selected", matches);
         opt.setAttribute("aria-selected", String(matches));
       });
@@ -371,7 +377,8 @@ export function initProjectsFilter() {
       opt.addEventListener("click", (e) => {
         e.stopPropagation();
         const val = opt.getAttribute("data-value") || "Semua Waktu";
-        currentYear = val === "Semua Waktu" ? "Semua" : val.replace("Tahun ", "");
+        currentYear =
+          val === "Semua Waktu" ? "Semua" : val.replace("Tahun ", "");
         cselect.classList.remove("is-open");
         cselect.setAttribute("aria-expanded", "false");
         currentPage = 1;
@@ -386,8 +393,6 @@ export function initProjectsFilter() {
       cselect.setAttribute("aria-expanded", "false");
     });
   }
-
-
 
   readURL();
   render(true);

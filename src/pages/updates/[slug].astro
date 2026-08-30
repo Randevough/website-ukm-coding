@@ -52,7 +52,6 @@ const title = p.judul || p.title;
 const kategori = p.tipe || p.kategori;
 const date = p.tanggalPublikasi || p.tanggal;
 const penulis = p.penulis || "Tim Redaksi";
-const baca = p.baca || 3;
 
 const isSanityBlocks = (content: any) =>
   Array.isArray(content) &&
@@ -97,11 +96,15 @@ const breadcrumb = [
   breadcrumb={breadcrumb}
   showRails={false}
 >
-  <section class="section section--tight" style="padding-top: clamp(var(--s5), 4vw, var(--s7));">
+  <section
+    class="section section--tight"
+    style="padding-top: clamp(var(--s5), 4vw, var(--s7));"
+  >
     <div class="container container--text">
       <div class="breadcrumb" style="margin-bottom: var(--s5)">
-        <a href="/">Beranda</a><span>/</span><a href="/updates">Updates</a
-        ><span>/</span><span>Detail</span>
+        <a href="/">Beranda</a><span>/</span><a href="/updates">Updates</a><span
+          >/</span
+        ><span>Detail</span>
       </div>
       <article id="article">
         <header class="article__head">
@@ -114,8 +117,7 @@ const breadcrumb = [
               class="btn btn--sm"
               data-share
               type="button"
-              style="margin-left: auto;"
-              >Bagikan</button
+              style="margin-left: auto;">Bagikan</button
             >
           </div>
         </header>

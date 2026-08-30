@@ -377,7 +377,7 @@ export function initShare(root?: Element | Document) {
           setTimeout(() => {
             btn.textContent = originalText;
           }, 2000);
-        } catch (err) {
+        } catch {
           const originalText = btn.textContent;
           btn.textContent = "Gagal menyalin";
           setTimeout(() => (btn.textContent = originalText), 2000);

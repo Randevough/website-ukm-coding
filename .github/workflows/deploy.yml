@@ -41,7 +41,7 @@ jobs:
         env:
           PUBLIC_SANITY_PROJECT_ID: ${{ secrets.PUBLIC_SANITY_PROJECT_ID || 'n3mnxpum' }}
           PUBLIC_SANITY_DATASET: ${{ secrets.PUBLIC_SANITY_DATASET || 'production' }}
-          PUBLIC_SITE_URL: ${{ secrets.PUBLIC_SITE_URL || vars.PUBLIC_SITE_URL || 'https://ukm-coding-website.pages.dev' }}
+          PUBLIC_SITE_URL: ${{ secrets.PUBLIC_SITE_URL || vars.PUBLIC_SITE_URL || 'https://ukmcoding.site' }}
           PUBLIC_NOINDEX: ${{ github.ref != 'refs/heads/main' && 'true' || 'false' }}
 
       - name: Upload Build Artifact
