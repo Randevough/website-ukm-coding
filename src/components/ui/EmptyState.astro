@@ -32,6 +32,8 @@ const {
 
 <style>
   .empty-state {
+    grid-column: 1 / -1;
+    width: 100%;
     padding: clamp(40px, 5vw, 64px) var(--s5);
     border-radius: var(--r2);
     display: flex;
@@ -63,7 +65,8 @@ const {
     display: flex;
     flex-direction: column;
     gap: var(--s3);
-    max-width: 380px;
+    width: 100%;
+    max-width: 100%;
     align-items: center;
   }
 

@@ -75,7 +75,9 @@ const breadcrumb = [
   <section class="section section--tight">
     <div class="container" id="case">
       <header class="case__head">
-        <a class="btn" href="/projects">← Kembali</a>
+        <div class="breadcrumb" style="margin-bottom: var(--s5)">
+          <a href="/">Beranda</a><span>/</span><a href="/projects">Projects</a><span>/</span><span>Detail</span>
+        </div>
         <div class="case__titleBlock">
           <h1 class="case__title">{title}</h1>
           <p class="case__lead">{oneLiner}</p>
@@ -191,7 +193,7 @@ const breadcrumb = [
     </div>
   </section>
 
-  <section class="section cta graph" data-mark="orange">
+  <section class="section cta graph" data-mark="blue">
     <div class="container cta__inner">
       <div class="stack" data-stagger="80">
         <span class="label label--mark">Kerja sama</span>
@@ -199,13 +201,13 @@ const breadcrumb = [
           Butuh tim mahasiswa yang <em>bisa membangun</em> ini untuk Anda?
         </h2>
       </div>
-      <div class="stack" data-reveal>
+      <div style="display: flex; gap: var(--s3); flex-wrap: wrap;" data-reveal>
         <a
-          class="btn btn--mark btn--lg btn--block"
+          class="btn btn--mark btn--lg"
           data-mailto
           href={`mailto:${settings.email}`}>Diskusi project</a
         >
-        <a class="btn btn--lg btn--block" href="/projects">Lihat project lain</a
+        <a class="btn btn--lg" href="/projects">Lihat project lain</a
         >
       </div>
     </div>

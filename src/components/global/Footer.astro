@@ -40,7 +40,6 @@ function glyphOf(name: string): string {
             Bertumbuh bersama para kolaborator.
           </h3>
         </div>
-        <a class="btn btn--onink" href="/#kerjasama">Jadi partner berikutnya</a>
       </div>
       <div class="partners__grid" id="partnerGrid">
         {
@@ -57,7 +56,7 @@ function glyphOf(name: string): string {
             >
               <span class="plogo__slot">
                 {p.logo ? (
-                  <SanityImage node={p.logo} />
+                  <SanityImage node={p.logo} objectFit="contain" />
                 ) : (
                   <span>{glyphOf(p.nama)}</span>
                 )}
@@ -95,7 +94,7 @@ function glyphOf(name: string): string {
     <div class="fcol">
       <h4>Halaman</h4>
       <a href="/">Beranda</a>
-      <a href="/kegiatan">Updates</a>
+      <a href="/updates">Updates</a>
       <a href="/projects">Projects</a>
     </div>
 

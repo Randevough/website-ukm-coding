@@ -299,7 +299,7 @@ function tanggalPendek(iso: string) {
               return (
                 <a
                   class="editorial-row"
-                  href={`/kegiatan/${p.slug}`}
+                  href={`/updates/${p.slug}`}
                   data-reveal
                 >
                   <div class="editorial-row__head">
@@ -322,7 +322,7 @@ function tanggalPendek(iso: string) {
             class="row"
             style="margin-top: var(--s5); justify-content: flex-end"
           >
-            <a class="tlink" href="/kegiatan">Lihat semua Updates</a>
+            <a class="tlink" href="/updates">Lihat semua Updates</a>
           </div>
         </div>
       </div>
@@ -412,7 +412,7 @@ function tanggalPendek(iso: string) {
             settings.mediaPartnerUrl && settings.mediaPartnerUrl !== "#" && (
               <a
                 href={settings.mediaPartnerUrl}
-                class="btn btn--quiet"
+                class="btn"
                 target="_blank"
                 rel="noopener noreferrer"
               >

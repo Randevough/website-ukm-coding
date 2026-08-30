@@ -1,7 +1,7 @@
 ---
 const currentPath = Astro.url.pathname;
 const isHome = currentPath === "/";
-const isKegiatan = currentPath.startsWith("/kegiatan");
+const isKegiatan = currentPath.startsWith("/updates");
 const isProjects = currentPath.startsWith("/projects");
 ---
 
@@ -29,7 +29,7 @@ const isProjects = currentPath.startsWith("/projects");
       >
       <a
         class={`nav__link ${isKegiatan ? "is-active" : ""}`}
-        href="/kegiatan"
+        href="/updates"
         aria-current={isKegiatan ? "page" : undefined}>Updates</a
       >
       <a

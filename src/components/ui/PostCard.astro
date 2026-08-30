@@ -36,7 +36,7 @@ const kategori = p.tipe || p.kategori;
 const date = p.tanggalPublikasi || p.tanggal;
 ---
 
-<a class="ncard" href={`/kegiatan/${p.slug}`} data-reveal>
+<a class="ncard" href={`/updates/${p.slug?.current || p.slug}`} data-reveal>
   <div class="ncard__art">
     {
       p.cover ? (

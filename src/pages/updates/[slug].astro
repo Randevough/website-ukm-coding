@@ -79,7 +79,7 @@ const breadcrumb = [
   { name: "Beranda", item: new URL("/", Astro.site || Astro.url.origin).href },
   {
     name: "Updates",
-    item: new URL("/kegiatan", Astro.site || Astro.url.origin).href,
+    item: new URL("/updates", Astro.site || Astro.url.origin).href,
   },
   {
     name: title,
@@ -100,7 +100,7 @@ const breadcrumb = [
   <section class="section section--tight">
     <div class="container container--text">
       <div class="breadcrumb" style="margin-bottom: var(--s5)">
-        <a href="/">Beranda</a><span>/</span><a href="/kegiatan">Updates</a
+        <a href="/">Beranda</a><span>/</span><a href="/updates">Updates</a
         ><span>/</span><span>Detail</span>
       </div>
       <article id="article">
@@ -109,7 +109,6 @@ const breadcrumb = [
           <h1 class="article__title">{title}</h1>
           <div class="article__meta">
             <span>{formatIndonesianDate(date)}</span>
-            <span>{baca} menit baca</span>
             <span>{penulis}</span>
             <button
               class="btn btn--sm"
@@ -156,7 +155,7 @@ const breadcrumb = [
       <div class="pagenav" id="postNav">
         {
           prev ? (
-            <a class="pagenav__prev" href={`/kegiatan/${prev.slug}`}>
+            <a class="pagenav__prev" href={`/updates/${prev.slug}`}>
               <span class="label">← Sebelumnya</span>
               <span>{prev.judul || prev.title}</span>
             </a>
@@ -166,7 +165,7 @@ const breadcrumb = [
         }
         {
           next ? (
-            <a class="pagenav__next" href={`/kegiatan/${next.slug}`}>
+            <a class="pagenav__next" href={`/updates/${next.slug}`}>
               <span class="label">Selanjutnya →</span>
               <span>{next.judul || next.title}</span>
             </a>
@@ -178,7 +177,7 @@ const breadcrumb = [
     </div>
   </section>
 
-  <section class="section cta graph" data-mark="orange">
+  <section class="section cta graph" data-mark="blue">
     <div class="container cta__inner">
       <div class="stack" data-stagger="80">
         <span class="label label--mark">Kerja sama</span>
@@ -186,13 +185,13 @@ const breadcrumb = [
           Mau <em>meliput</em> atau mendukung kegiatan berikutnya?
         </h2>
       </div>
-      <div class="stack" data-reveal>
+      <div style="display: flex; gap: var(--s3); flex-wrap: wrap;" data-reveal>
         <a
-          class="btn btn--mark btn--lg btn--block"
+          class="btn btn--mark btn--lg"
           data-mailto
           href={`mailto:${settings.email}`}>Hubungi tim media</a
         >
-        <a class="btn btn--lg btn--block" href="/kegiatan">Kembali ke arsip</a>
+        <a class="btn btn--lg" href="/updates">Kembali ke arsip</a>
       </div>
     </div>
   </section>

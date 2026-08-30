@@ -20,9 +20,9 @@ const oneLiner = p.ringkasan || p.oneLiner;
 const stack = p.techStack || p.stack || [];
 ---
 
-<article
+<a
   class={`pcard${mod}`}
-  data-project={p.slug}
+  href={`/projects/${p.slug?.current || p.slug}`}
   data-tilt
   data-reveal
   tabindex="0"
@@ -56,4 +56,4 @@ const stack = p.techStack || p.stack || [];
     >
     <span class="arrow" aria-hidden="true">→</span>
   </div>
-</article>
+</a>

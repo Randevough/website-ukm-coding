@@ -3,8 +3,16 @@ import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout title="404 | Halaman Tidak Ditemukan" noindex={true}>
-  <section class="pagehead" data-mark="red">
+  <section class="pagehead" data-mark="red" style="min-height: 100vh; display: flex; flex-direction: column; justify-content: center;">
     <div class="pagehead__paper-wash" aria-hidden="true"></div>
+    <div class="grid-fx" aria-hidden="true">
+      <div class="grid-fx__spot grid-fx__spot--a">
+        <div class="grid-fx__pattern"></div>
+      </div>
+      <div class="grid-fx__spot grid-fx__spot--b">
+        <div class="grid-fx__pattern"></div>
+      </div>
+    </div>
     <div class="container pagehead__inner">
       <h1 class="pagehead__title">
         <span class="lineMask"><span>404</span></span>

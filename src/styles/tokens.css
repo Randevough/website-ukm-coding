@@ -92,7 +92,7 @@
   /* ---------- LAYOUT ---------- */
   --wide: 1440px;
   --container: 1240px;
-  --text: 680px;
+  --text: 960px;
   --gutter: clamp(20px, 4vw, 56px);
 
   /* ---------- RADIUS ----------

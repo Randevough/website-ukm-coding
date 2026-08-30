@@ -30,7 +30,7 @@ const breadcrumb = [
   { name: "Beranda", item: new URL("/", Astro.site || Astro.url.origin).href },
   {
     name: "Updates",
-    item: new URL("/kegiatan", Astro.site || Astro.url.origin).href,
+    item: new URL("/updates", Astro.site || Astro.url.origin).href,
   },
 ];
 
@@ -55,7 +55,7 @@ const catCounts = {
   showRails={false}
 >
   <!-- ================= KEPALA HALAMAN ================= -->
-  <section class="pagehead" data-mark="green">
+  <section class="pagehead" data-mark="green" style="padding-top: clamp(var(--s7), 7vw, var(--s10)); padding-bottom: var(--s4);">
     <div class="pagehead__paper-wash" aria-hidden="true"></div>
     <div class="grid-fx" aria-hidden="true">
       <div class="grid-fx__spot grid-fx__spot--a">
@@ -91,7 +91,7 @@ const catCounts = {
   </section>
 
   <!-- ================= HERO MAJALAH ================= -->
-  <section class="section section--tight section--hairline">
+  <section class="section section--tight section--hairline" style="padding-top: var(--s4); padding-bottom: var(--s4);">
     <div class="container">
       <div
         class="shead__top"
@@ -122,7 +122,7 @@ const catCounts = {
   </section>
 
   <!-- ================= DAFTAR ================= -->
-  <section class="section" style="padding-top: var(--s4)">
+  <section class="section" style="padding-top: var(--s4); padding-bottom: var(--s4);">
     <div class="container">
       <div class="filterbar">
         <div class="chips" id="postChips" data-chips>

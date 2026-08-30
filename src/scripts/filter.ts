@@ -111,9 +111,12 @@ export function initKegiatanFilter() {
       } else {
         paginated.forEach((el) => {
           const clone = el.cloneNode(true) as HTMLElement;
-          // Remove reveal requirement so it shows instantly
           clone.classList.add("is-revealed");
           clone.removeAttribute("data-reveal");
+          clone.querySelectorAll("[data-reveal]").forEach((el) => {
+            el.classList.add("is-revealed");
+            el.removeAttribute("data-reveal");
+          });
           gridContainer!.appendChild(clone);
         });
       }
@@ -276,9 +279,12 @@ export function initProjectsFilter() {
       } else {
         paginated.forEach((el) => {
           const clone = el.cloneNode(true) as HTMLElement;
-          // Clean clone injection without specific sizes
           clone.classList.add("is-revealed");
           clone.removeAttribute("data-reveal");
+          clone.querySelectorAll("[data-reveal]").forEach((el) => {
+            el.classList.add("is-revealed");
+            el.removeAttribute("data-reveal");
+          });
           gridContainer!.appendChild(clone);
         });
       }

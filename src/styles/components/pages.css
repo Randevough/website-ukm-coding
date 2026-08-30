@@ -467,9 +467,8 @@
 
 .cta__inner {
   display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
-  gap: clamp(var(--s6), 5vw, var(--s9));
-  align-items: end;
+  grid-template-columns: 1fr;
+  gap: var(--s4);
 }
 
 @media (max-width: 900px) {
@@ -479,15 +478,13 @@
 }
 
 .cta__title {
-  font-size: var(--d1);
-  line-height: 0.96;
-  letter-spacing: -0.04em;
+  font-size: var(--d2);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
 }
 
 .cta__title em {
-  font-family: var(--serif);
-  font-style: italic;
-  font-weight: 400;
+  font-style: normal;
   color: var(--blue);
 }
 
@@ -623,7 +620,7 @@
 .updates-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: var(--s7) var(--s6);
+  gap: var(--s4);
   align-items: start;
 }
 
@@ -802,7 +799,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--s6);
-  max-width: 780px;
+  max-width: 1000px;
   margin-inline: auto;
 }
 

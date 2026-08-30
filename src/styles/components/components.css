@@ -1530,8 +1530,8 @@
   border: none;
   border-bottom: 1px solid var(--line-ink);
   border-radius: 0;
-  font-family: var(--mono);
-  font-size: var(--xs);
+  font-family: var(--sans);
+  font-size: var(--sm);
   color: var(--ink-deep);
   transition: border-color var(--t) var(--ease);
 }
@@ -1544,7 +1544,8 @@
 
 .search::placeholder {
   color: var(--ink-3);
-  letter-spacing: var(--track-label);
+  font-family: var(--sans);
+  letter-spacing: normal;
 }
 
 /* ---------------------------------------------------------
@@ -1748,8 +1749,6 @@
   display: flex;
   flex-wrap: wrap;
   gap: 1px;
-  background: rgba(246, 245, 242, 0.12);
-  border: 1px solid rgba(246, 245, 242, 0.12);
 }
 
 @media (max-width: 900px) {
@@ -1770,11 +1769,10 @@
   gap: 8px;
   padding: var(--s5) var(--s4);
   text-align: center;
-  filter: grayscale(1);
-  opacity: 0.55;
+  opacity: 1;
   transition:
     opacity var(--t) var(--ease),
-    filter var(--t) var(--ease),
+    transform var(--t) var(--ease),
     background var(--t) var(--ease);
 }
 
@@ -1786,14 +1784,15 @@
 
 .plogo:hover {
   opacity: 1;
-  filter: none;
   background: #15181d;
+  transform: scale(1.05);
+  z-index: 10;
 }
 
 .plogo__slot {
   width: 96px;
   height: 52px;
-  border: 1px dashed rgba(246, 245, 242, 0.28);
+  border: none;
   border-radius: var(--r1);
   display: flex;
   align-items: center;
@@ -1838,7 +1837,7 @@
 
 .site-footer__main {
   display: grid;
-  grid-template-columns: minmax(0, 1.5fr) repeat(3, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1.5fr) repeat(2, minmax(0, 1fr));
   gap: var(--s7);
   padding-block: var(--s8);
 }
