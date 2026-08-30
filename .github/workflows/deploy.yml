@@ -85,8 +85,7 @@ jobs:
       - name: Run Lighthouse CI
         uses: treosh/lighthouse-ci-action@v11
         with:
-          staticDistDir: "./dist"
-          budgetPath: "./lighthouserc.json" # Needs to be created if using budget, or rely on action defaults
+          configPath: "./lighthouserc.json"
           uploadArtifacts: true
           temporaryPublicStorage: true
 
