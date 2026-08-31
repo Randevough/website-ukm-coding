@@ -81,12 +81,73 @@ const breadcrumb = [
   >
     <div class="container">
       <div class="filterbar">
-        <div class="chips" id="projectChips" data-chips>
+        <div class="chips hide-sm" id="projectChips" data-chips>
           <button class="chip is-active" type="button" disabled>Semua</button>
           <button class="chip" type="button" disabled>Web App</button>
           <button class="chip" type="button" disabled>Mobile</button>
           <button class="chip" type="button" disabled>IoT / Hardware</button>
         </div>
+
+        <div
+          class="cselect only-sm"
+          id="mobileCatDropdown"
+          tabindex="0"
+          role="combobox"
+          aria-expanded="false"
+          style="width: 100%"
+        >
+          <span class="cselect__value" id="mobileCatDropdownValue"
+            >Kategori: Semua</span
+          >
+          <svg
+            class="cselect__arrow"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="m6 9 6 6 6-6"></path>
+          </svg>
+          <ul class="cselect__list" role="listbox" style="width: 100%">
+            <li
+              class="cselect__opt is-selected"
+              role="option"
+              aria-selected="true"
+              data-value="Semua"
+            >
+              Semua
+            </li>
+            <li
+              class="cselect__opt"
+              role="option"
+              aria-selected="false"
+              data-value="Web App"
+            >
+              Web App
+            </li>
+            <li
+              class="cselect__opt"
+              role="option"
+              aria-selected="false"
+              data-value="Mobile"
+            >
+              Mobile
+            </li>
+            <li
+              class="cselect__opt"
+              role="option"
+              aria-selected="false"
+              data-value="IoT / Hardware"
+            >
+              IoT / Hardware
+            </li>
+          </ul>
+        </div>
+
         <div
           class="cselect"
           id="timeframeDropdown"

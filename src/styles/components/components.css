@@ -433,7 +433,9 @@
   background: rgba(12, 14, 17, 0.4);
   opacity: 0;
   backdrop-filter: blur(0px);
-  transition: opacity 500ms var(--ease-out), backdrop-filter 500ms var(--ease-out);
+  transition:
+    opacity 500ms var(--ease-out),
+    backdrop-filter 500ms var(--ease-out);
 }
 
 .drawer__panel {
@@ -485,7 +487,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background var(--t) var(--ease), color var(--t) var(--ease);
+  transition:
+    background var(--t) var(--ease),
+    color var(--t) var(--ease);
 }
 
 .drawer__close svg {
@@ -518,7 +522,10 @@
   letter-spacing: var(--track-tight);
   opacity: 0;
   transform: translateY(12px);
-  transition: color var(--t) var(--ease), opacity 400ms var(--ease-out), transform 400ms var(--ease-out);
+  transition:
+    color var(--t) var(--ease),
+    opacity 400ms var(--ease-out),
+    transform 400ms var(--ease-out);
 }
 
 .drawer.is-open .drawer__link,
@@ -527,10 +534,18 @@
   transform: translateY(0);
 }
 
-.drawer__link:nth-child(1) { transition-delay: 0ms, 100ms, 100ms; }
-.drawer__link:nth-child(2) { transition-delay: 0ms, 150ms, 150ms; }
-.drawer__link:nth-child(3) { transition-delay: 0ms, 200ms, 200ms; }
-.drawer__link:nth-child(4) { transition-delay: 0ms, 250ms, 250ms; }
+.drawer__link:nth-child(1) {
+  transition-delay: 0ms, 100ms, 100ms;
+}
+.drawer__link:nth-child(2) {
+  transition-delay: 0ms, 150ms, 150ms;
+}
+.drawer__link:nth-child(3) {
+  transition-delay: 0ms, 200ms, 200ms;
+}
+.drawer__link:nth-child(4) {
+  transition-delay: 0ms, 250ms, 250ms;
+}
 
 .drawer__link span {
   font-family: var(--mono);
@@ -551,7 +566,9 @@
   gap: var(--s3);
   opacity: 0;
   transform: translateY(12px);
-  transition: opacity 400ms var(--ease-out), transform 400ms var(--ease-out);
+  transition:
+    opacity 400ms var(--ease-out),
+    transform 400ms var(--ease-out);
   transition-delay: 300ms;
 }
 
@@ -1259,6 +1276,10 @@
 @media (max-width: 700px) {
   .mcard__title {
     font-size: clamp(1.4rem, 6vw, 1.8rem);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 }
 
@@ -1471,7 +1492,10 @@
   border-radius: var(--r-full);
   padding: 8px 16px;
   cursor: pointer;
-  transition: background var(--t) var(--ease), color var(--t) var(--ease), border-color var(--t) var(--ease);
+  transition:
+    background var(--t) var(--ease),
+    color var(--t) var(--ease),
+    border-color var(--t) var(--ease);
 }
 
 .chip:hover {

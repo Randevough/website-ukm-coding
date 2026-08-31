@@ -13,7 +13,8 @@ export function initKegiatanFilter() {
   const filterChips = document.querySelectorAll("#postChips .chip");
   const cselect = document.getElementById("mobilePostDropdown");
   const cselectValue = document.getElementById("mobilePostDropdownValue");
-  const cselectOpts = cselect?.querySelectorAll(".cselect__opt") as NodeListOf<HTMLElement> | undefined;
+  const cselectOpts = cselect?.querySelectorAll(".cselect__opt") as
+    NodeListOf<HTMLElement> | undefined;
   const searchInput = document.querySelector(".search") as HTMLInputElement;
   const gridContainer = document.getElementById("postGrid");
   const paginationContainer = document.querySelector("[data-pagination]");
@@ -233,6 +234,10 @@ export function initProjectsFilter() {
   const cselectValue = document.getElementById("timeframeValue");
   const cselectOpts = cselect?.querySelectorAll(".cselect__opt") as
     NodeListOf<HTMLElement> | undefined;
+  const mobileCatSelect = document.getElementById("mobileCatDropdown");
+  const mobileCatValue = document.getElementById("mobileCatDropdownValue");
+  const mobileCatOpts = mobileCatSelect?.querySelectorAll(".cselect__opt") as
+    NodeListOf<HTMLElement> | undefined;
   const gridContainer = document.getElementById("projectGrid");
   const paginationContainer = document.querySelector("[data-pagination]");
 
@@ -361,6 +366,18 @@ export function initProjectsFilter() {
       chip.classList.toggle("is-active", chip.textContent === currentCategory);
       chip.removeAttribute("disabled");
     });
+    // Sync mobile category dropdown label
+    if (mobileCatValue) {
+      mobileCatValue.textContent = `Kategori: ${currentCategory}`;
+    }
+    if (mobileCatOpts) {
+      mobileCatOpts.forEach((opt) => {
+        const val = opt.getAttribute("data-value") || "";
+        const matches = val === currentCategory;
+        opt.classList.toggle("is-selected", matches);
+        opt.setAttribute("aria-selected", String(matches));
+      });
+    }
     // Sync custom dropdown label
     if (cselectValue) {
       cselectValue.textContent =
@@ -437,9 +454,46 @@ export function initProjectsFilter() {
     });
 
     // Click outside to close
-    document.addEventListener("click", () => {
-      cselect.classList.remove("is-open");
-      cselect.setAttribute("aria-expanded", "false");
+    document.addEventListener("click", (e) => {
+      if (!cselect.contains(e.target as Node)) {
+        cselect.classList.remove("is-open");
+        cselect.setAttribute("aria-expanded", "false");
+      }
+    });
+  }
+
+  // Mobile category dropdown
+  if (mobileCatSelect) {
+    mobileCatSelect.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const isOpen = mobileCatSelect.classList.toggle("is-open");
+      mobileCatSelect.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    mobileCatSelect.addEventListener("keydown", (e) => {
+      if ((e as KeyboardEvent).key === "Escape") {
+        mobileCatSelect.classList.remove("is-open");
+        mobileCatSelect.setAttribute("aria-expanded", "false");
+      }
+    });
+
+    mobileCatOpts?.forEach((opt) => {
+      opt.addEventListener("click", (e) => {
+        e.stopPropagation();
+        currentCategory = opt.getAttribute("data-value") || "Semua";
+        mobileCatSelect.classList.remove("is-open");
+        mobileCatSelect.setAttribute("aria-expanded", "false");
+        currentPage = 1;
+        updateURL();
+        render();
+      });
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!mobileCatSelect.contains(e.target as Node)) {
+        mobileCatSelect.classList.remove("is-open");
+        mobileCatSelect.setAttribute("aria-expanded", "false");
+      }
     });
   }
 

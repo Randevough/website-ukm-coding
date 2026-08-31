@@ -367,6 +367,12 @@ main {
   max-width: 56ch;
 }
 
+@media (max-width: 700px) {
+  .lead {
+    font-size: var(--body);
+  }
+}
+
 .dek {
   font-size: var(--sm);
   line-height: var(--lh-loose);
@@ -436,11 +442,11 @@ main {
 }
 
 .hide-sm {
-  display: inline-flex;
+  display: inline-flex !important;
 }
 
 .only-sm {
-  display: none;
+  display: none !important;
 }
 
 @media (max-width: 900px) {
