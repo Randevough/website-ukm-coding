@@ -321,6 +321,13 @@ main {
   letter-spacing: -0.035em;
 }
 
+.shead__body h2 em {
+  font-family: var(--sans);
+  font-style: normal;
+  font-weight: inherit;
+  color: var(--mark);
+}
+
 @media (max-width: 820px) {
   .shead__body {
     grid-template-columns: 1fr;

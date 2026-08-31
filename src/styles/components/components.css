@@ -51,12 +51,12 @@
 }
 
 .btn--primary::before {
-  background: var(--blue);
+  background: var(--mark);
 }
 
 .btn--primary:hover {
   color: #fff;
-  border-color: var(--blue);
+  border-color: var(--mark);
 }
 
 .btn--mark {
@@ -132,9 +132,9 @@
   font-family: var(--sans);
   font-size: var(--sm);
   font-weight: 600;
-  color: var(--blue);
+  color: var(--mark);
   padding-bottom: 4px;
-  border-bottom: 1px solid var(--blue);
+  border-bottom: 1px solid var(--mark);
   transition:
     border-color var(--t) var(--ease),
     color var(--t) var(--ease),
@@ -142,8 +142,8 @@
 }
 
 .tlink:hover {
-  color: var(--blue-deep);
-  border-color: var(--blue-deep);
+  color: var(--mark-deep);
+  border-color: var(--mark-deep);
   gap: var(--s3);
 }
 
@@ -1009,7 +1009,7 @@
 }
 
 .ncard:hover .ncard__title {
-  color: var(--mark-deep);
+  color: var(--ink-deep);
 }
 
 .ncard__excerpt {
@@ -1319,7 +1319,7 @@
 }
 
 .editorial-row:hover .editorial-row__title {
-  color: var(--mark-deep);
+  color: var(--ink-deep);
 }
 
 .editorial-row__foot {
@@ -2161,7 +2161,7 @@
 }
 
 .ncard:hover .ncard__title {
-  color: var(--mark-deep);
+  color: var(--ink-deep);
 }
 
 .ncard__date {
