@@ -25,11 +25,14 @@ describe("SEO Utilities & Structured Data Generators", () => {
       });
 
       expect(schema["@context"]).toBe("https://schema.org");
-      expect(schema["@type"]).toBe("Organization");
+      expect(schema["@type"]).toBe("EducationalOrganization");
       expect(schema.name).toBe("UKM Coding Cyber University");
       expect(schema.url).toBe("https://ukmcoding.cyber-univ.ac.id");
       expect(schema.logo).toBe(
         "https://ukmcoding.cyber-univ.ac.id/og-default.jpg",
+      );
+      expect(schema.description).toBe(
+        "Unit Kegiatan Mahasiswa bidang teknologi dan coding di Cyber University",
       );
     });
 
