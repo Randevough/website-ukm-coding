@@ -2138,6 +2138,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  height: 100%;
   gap: var(--s4);
   border-top: 1px solid var(--line);
   transition:
