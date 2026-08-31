@@ -432,7 +432,8 @@
   inset: 0;
   background: rgba(12, 14, 17, 0.4);
   opacity: 0;
-  transition: opacity var(--t) var(--ease);
+  backdrop-filter: blur(0px);
+  transition: opacity 500ms var(--ease-out), backdrop-filter 500ms var(--ease-out);
 }
 
 .drawer__panel {
@@ -444,9 +445,9 @@
   padding: var(--s5) var(--s6) var(--s6);
   display: flex;
   flex-direction: column;
-  gap: var(--s6);
+  gap: var(--s4);
   transform: translate3d(101%, 0, 0);
-  transition: transform 480ms var(--ease-out);
+  transition: transform 500ms var(--ease-out);
 }
 
 .drawer.is-open,
@@ -457,6 +458,7 @@
 .drawer.is-open .drawer__backdrop,
 .drawer[aria-hidden="false"] .drawer__backdrop {
   opacity: 1;
+  backdrop-filter: blur(6px);
 }
 
 .drawer.is-open .drawer__panel,
@@ -480,6 +482,23 @@
   font-size: 20px;
   line-height: 1;
   color: var(--ink-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--t) var(--ease), color var(--t) var(--ease);
+}
+
+.drawer__close svg {
+  transition: transform var(--t) var(--ease);
+}
+
+.drawer__close:hover {
+  background: var(--line-soft);
+  color: var(--ink-deep);
+}
+
+.drawer__close:hover svg {
+  transform: rotate(90deg);
 }
 
 .drawer__nav {
@@ -497,8 +516,21 @@
   font-size: var(--d3);
   font-weight: 700;
   letter-spacing: var(--track-tight);
-  transition: color var(--t) var(--ease);
+  opacity: 0;
+  transform: translateY(12px);
+  transition: color var(--t) var(--ease), opacity 400ms var(--ease-out), transform 400ms var(--ease-out);
 }
+
+.drawer.is-open .drawer__link,
+.drawer[aria-hidden="false"] .drawer__link {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.drawer__link:nth-child(1) { transition-delay: 0ms, 100ms, 100ms; }
+.drawer__link:nth-child(2) { transition-delay: 0ms, 150ms, 150ms; }
+.drawer__link:nth-child(3) { transition-delay: 0ms, 200ms, 200ms; }
+.drawer__link:nth-child(4) { transition-delay: 0ms, 250ms, 250ms; }
 
 .drawer__link span {
   font-family: var(--mono);
@@ -517,6 +549,16 @@
   display: flex;
   flex-direction: column;
   gap: var(--s3);
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 400ms var(--ease-out), transform 400ms var(--ease-out);
+  transition-delay: 300ms;
+}
+
+.drawer.is-open .drawer__foot,
+.drawer[aria-hidden="false"] .drawer__foot {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* ---------------------------------------------------------
@@ -675,6 +717,14 @@
     background var(--t) var(--ease),
     box-shadow var(--t) var(--ease),
     transform 220ms var(--ease);
+}
+
+@media (max-width: 700px) {
+  .pcard {
+    padding: var(--s3);
+    gap: var(--s3);
+    transform-style: flat;
+  }
 }
 
 .pcard:hover {
@@ -1036,7 +1086,7 @@
 .badge-highlight {
   position: relative;
   display: inline-block;
-  color: var(--blue);
+  color: currentColor;
   font-family: var(--mono);
   font-size: var(--xxs);
   font-weight: 700;
@@ -1051,7 +1101,7 @@
   bottom: 0;
   left: 0;
   height: 2px;
-  background: var(--blue);
+  background: currentColor;
   animation: line-slide 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
@@ -1204,6 +1254,12 @@
   font-weight: 800;
   color: #fff !important;
   transition: transform 0.8s var(--ease-out); /* Text Lift transition */
+}
+
+@media (max-width: 700px) {
+  .mcard__title {
+    font-size: clamp(1.4rem, 6vw, 1.8rem);
+  }
 }
 
 .mcard__excerpt {
@@ -1387,10 +1443,57 @@
   border-bottom: 1px solid var(--line);
 }
 
+@media (max-width: 860px) {
+  .search--full-sm {
+    flex: 1 1 100%;
+    width: 100%;
+  }
+}
+
 .chips {
   display: flex;
   flex-wrap: wrap;
   gap: var(--s2);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: var(--xxs);
+  font-weight: 600;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--ink-2);
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--r-full);
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background var(--t) var(--ease), color var(--t) var(--ease), border-color var(--t) var(--ease);
+}
+
+.chip:hover {
+  background: var(--line-soft);
+  color: var(--ink-deep);
+  border-color: var(--line-ink);
+}
+
+.chip.is-active {
+  background: var(--ink-deep);
+  color: var(--paper);
+  border-color: var(--ink-deep);
+}
+
+.chip:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.chip__count {
+  font-size: 9px;
+  opacity: 0.6;
 }
 
 /* ── Custom Select Dropdown ─────────────────── */
@@ -2171,6 +2274,6 @@
   font-size: var(--xxs);
   letter-spacing: var(--track-label);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--mark);
   margin-top: auto;
 }

@@ -12,8 +12,12 @@ const { settings } = UKM_FIXTURE;
         aria-label="Tutup menu"
         class="drawer__close"
         data-drawer-close=""
-        type="button">×</button
+        type="button"
       >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 6L6 18M6 6l12 12"/>
+        </svg>
+      </button>
     </div>
     <nav class="drawer__nav">
       <a class="drawer__link" data-drawer-close="" href="/"
@@ -96,7 +100,7 @@ const { settings } = UKM_FIXTURE;
     drawer.setAttribute("aria-hidden", "true");
     if (burger) {
       burger.setAttribute("aria-expanded", "false");
-      burger.focus();
+      burger.focus({ preventScroll: true });
     }
     document.body.classList.remove("is-locked");
     const main = document.querySelector("main");

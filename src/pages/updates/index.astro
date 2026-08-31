@@ -136,7 +136,7 @@ const catCounts = {
   >
     <div class="container">
       <div class="filterbar">
-        <div class="chips" id="postChips" data-chips>
+        <div class="chips hide-sm" id="postChips" data-chips>
           <button
             class="chip is-active"
             type="button"
@@ -160,8 +160,23 @@ const catCounts = {
             ></button
           >
         </div>
+
+        <div class="cselect only-sm" id="mobilePostDropdown" tabindex="0" role="combobox" aria-expanded="false" style="width: 100%">
+          <span class="cselect__value" id="mobilePostDropdownValue">Kategori: Semua</span>
+          <svg class="cselect__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m6 9 6 6 6-6"/>
+          </svg>
+          <ul class="cselect__list" role="listbox" style="width: 100%">
+            <li class="cselect__opt is-selected" role="option" aria-selected="true" data-value="Semua">Semua ({catCounts.Semua})</li>
+            <li class="cselect__opt" role="option" aria-selected="false" data-value="Berita">Berita ({catCounts.Berita})</li>
+            <li class="cselect__opt" role="option" aria-selected="false" data-value="Kegiatan">Kegiatan ({catCounts.Kegiatan})</li>
+            <li class="cselect__opt" role="option" aria-selected="false" data-value="Pengumuman">Pengumuman ({catCounts.Pengumuman})</li>
+            <li class="cselect__opt" role="option" aria-selected="false" data-value="Prestasi">Prestasi ({catCounts.Prestasi})</li>
+          </ul>
+        </div>
+
         <input
-          class="search"
+          class="search search--full-sm"
           type="search"
           placeholder="Cari judul kegiatan…"
           aria-label="Cari berita"

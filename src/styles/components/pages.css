@@ -621,7 +621,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: var(--s4);
-  align-items: start;
+  align-items: stretch;
 }
 
 @media (max-width: 768px) {

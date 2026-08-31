@@ -11,6 +11,9 @@ export function initKegiatanFilter() {
   if (typeof document === "undefined") return;
 
   const filterChips = document.querySelectorAll("#postChips .chip");
+  const cselect = document.getElementById("mobilePostDropdown");
+  const cselectValue = document.getElementById("mobilePostDropdownValue");
+  const cselectOpts = cselect?.querySelectorAll(".cselect__opt") as NodeListOf<HTMLElement> | undefined;
   const searchInput = document.querySelector(".search") as HTMLInputElement;
   const gridContainer = document.getElementById("postGrid");
   const paginationContainer = document.querySelector("[data-pagination]");
@@ -129,6 +132,18 @@ export function initKegiatanFilter() {
       chip.removeAttribute("disabled");
     });
 
+    if (cselectValue) {
+      cselectValue.textContent = `Kategori: ${currentCategory}`;
+    }
+    if (cselectOpts) {
+      cselectOpts.forEach((opt) => {
+        const val = opt.getAttribute("data-value") || "";
+        const matches = val === currentCategory;
+        opt.classList.toggle("is-selected", matches);
+        opt.setAttribute("aria-selected", String(matches));
+      });
+    }
+
     // 5. Update Search UI
     if (searchInput) {
       searchInput.value = currentSearch;
@@ -161,6 +176,40 @@ export function initKegiatanFilter() {
       render();
     });
   });
+
+  if (cselect) {
+    cselect.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const isOpen = cselect.classList.toggle("is-open");
+      cselect.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    cselect.addEventListener("keydown", (e) => {
+      if ((e as KeyboardEvent).key === "Escape") {
+        cselect.classList.remove("is-open");
+        cselect.setAttribute("aria-expanded", "false");
+      }
+    });
+
+    cselectOpts?.forEach((opt) => {
+      opt.addEventListener("click", (e) => {
+        e.stopPropagation();
+        currentCategory = opt.getAttribute("data-value") || "Semua";
+        cselect.classList.remove("is-open");
+        cselect.setAttribute("aria-expanded", "false");
+        currentPage = 1;
+        updateURL();
+        render();
+      });
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!cselect.contains(e.target as Node)) {
+        cselect.classList.remove("is-open");
+        cselect.setAttribute("aria-expanded", "false");
+      }
+    });
+  }
 
   if (searchInput) {
     searchInput.addEventListener("input", (e) => {
