@@ -15,7 +15,7 @@ export interface MetaOptions {
 
 export const DEFAULT_SITE_NAME = "UKM Coding Cyber University";
 export const DEFAULT_DESCRIPTION =
-  "Unit kegiatan mahasiswa bidang teknologi di Cyber University";
+  "UKM Coding Cyber University adalah ruang kolaborasi mahasiswa teknologi. Berfokus pada pembelajaran coding, pengembangan project inovatif, dan program event seputar dunia tech.";
 export const DEFAULT_OG_IMAGE = "/og-default.jpg";
 
 export function resolveBaseUrl(site?: string | URL, origin?: string): string {

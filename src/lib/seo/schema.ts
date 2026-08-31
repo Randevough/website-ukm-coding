@@ -33,10 +33,12 @@ export interface EventSchemaOptions {
 export function generateOrganizationSchema(opts: OrganizationSchemaOptions) {
   return {
     "@context": "https://schema.org",
-    "@type": "Organization",
+    "@type": "EducationalOrganization",
     name: opts.siteName,
     url: opts.url,
     logo: opts.logo,
+    description:
+      "Unit Kegiatan Mahasiswa bidang teknologi dan coding di Cyber University",
   };
 }
 
