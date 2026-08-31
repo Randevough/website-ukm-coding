@@ -746,6 +746,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   min-width: 0;
+  color: var(--mark);
 }
 
 .pcard__foot .arrow {
