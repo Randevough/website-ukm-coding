@@ -530,9 +530,9 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 0.7fr);
   gap: clamp(var(--s5), 5vw, var(--s8));
-  padding-top: var(--s6);
-  margin-top: var(--s6);
-  border-top: 1px solid var(--line);
+  padding-top: var(--s4);
+  margin-top: var(--s4);
+  border-top: none;
   align-items: start;
 }
 
@@ -626,8 +626,8 @@
 
 @media (max-width: 768px) {
   .updates-grid {
-    grid-template-columns: 1fr;
-    gap: var(--s6);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--s3);
   }
 }
 
@@ -976,6 +976,11 @@
 @media (max-width: 699px) {
   #projectGrid.bento,
   .bento {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--s3);
+  }
+
+  #projectGrid .pcard {
+    min-height: unset;
   }
 }

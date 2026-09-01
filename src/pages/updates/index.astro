@@ -167,15 +167,14 @@ const catCounts = {
           tabindex="0"
           role="combobox"
           aria-expanded="false"
-          style="width: 100%"
         >
           <span class="cselect__value" id="mobilePostDropdownValue"
             >Kategori: Semua</span
           >
           <svg
             class="cselect__arrow"
-            width="16"
-            height="16"
+            width="14"
+            height="14"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -185,7 +184,7 @@ const catCounts = {
           >
             <path d="m6 9 6 6 6-6"></path>
           </svg>
-          <ul class="cselect__list" role="listbox" style="width: 100%">
+          <ul class="cselect__list" role="listbox">
             <li
               class="cselect__opt is-selected"
               role="option"
@@ -242,7 +241,7 @@ const catCounts = {
         class="updates-grid"
         id="postGrid"
         data-stagger="80"
-        style="margin-top: var(--s6)"
+        style="margin-top: var(--s5)"
       >
         {initialPosts.map((p: any) => <PostCard post={p} />)}
       </div>

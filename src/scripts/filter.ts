@@ -368,7 +368,7 @@ export function initProjectsFilter() {
     });
     // Sync mobile category dropdown label
     if (mobileCatValue) {
-      mobileCatValue.textContent = `Kategori: ${currentCategory}`;
+      mobileCatValue.textContent = currentCategory;
     }
     if (mobileCatOpts) {
       mobileCatOpts.forEach((opt) => {

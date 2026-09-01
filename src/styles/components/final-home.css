@@ -339,18 +339,22 @@
 }
 
 /* ---------------- 3. Featured Projects Grid ---------------- */
-#featuredProjects.bento {
+#featuredProjects {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--s5);
   background: none;
   border: 0;
+  width: 100%;
+  min-width: 0;
 }
 
 #featuredProjects .pcard {
-  min-height: 320px;
-  grid-column: span 1 !important;
-  grid-row: span 1 !important;
+  min-height: unset;
+  height: 100%;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 /* ---------------- 4. Updates Section (Featured + Editorial List) ---------------- */
@@ -611,8 +615,9 @@
     padding-bottom: var(--s4);
   }
 
-  #featuredProjects.bento {
+  #featuredProjects {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--s4);
   }
 
   .updates-layout {
@@ -749,8 +754,11 @@
     padding-bottom: var(--s4);
   }
 
-  #featuredProjects.bento {
-    grid-template-columns: 1fr;
+  #featuredProjects {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--s3);
+    width: 100%;
+    min-width: 0;
   }
 
   .updates-layout {

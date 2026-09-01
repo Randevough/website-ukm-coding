@@ -60,7 +60,15 @@ export const project = defineType({
       type: "string",
       fieldset: "meta",
       options: {
-        list: ["Web App", "Mobile", "Data & AI", "IoT", "Tools", "Internal"],
+        list: [
+          "Web App",
+          "Mobile",
+          "Data & AI",
+          "IoT / Hardware",
+          "Tools",
+          "Internal",
+          "Lainnya",
+        ],
       },
       validation: (Rule) => Rule.required(),
     }),

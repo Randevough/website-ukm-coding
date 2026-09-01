@@ -69,7 +69,6 @@ const breadcrumb = [
           Tujuannya satu: agar kode-kode ini bisa dibedah dan dipelajari
           bersama.
         </p>
-        <span class="idx">12 PROJECT TERBUKA</span>
       </div>
     </div>
   </section>
@@ -86,126 +85,140 @@ const breadcrumb = [
           <button class="chip" type="button" disabled>Web App</button>
           <button class="chip" type="button" disabled>Mobile</button>
           <button class="chip" type="button" disabled>IoT / Hardware</button>
+          <button class="chip" type="button" disabled>Lainnya</button>
         </div>
 
-        <div
-          class="cselect only-sm"
-          id="mobileCatDropdown"
-          tabindex="0"
-          role="combobox"
-          aria-expanded="false"
-          style="width: 100%"
-        >
-          <span class="cselect__value" id="mobileCatDropdownValue"
-            >Kategori: Semua</span
+        <div class="filterbar__controls">
+          <div
+            class="cselect only-sm"
+            id="mobileCatDropdown"
+            tabindex="0"
+            role="combobox"
+            aria-expanded="false"
           >
-          <svg
-            class="cselect__arrow"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path d="m6 9 6 6 6-6"></path>
-          </svg>
-          <ul class="cselect__list" role="listbox" style="width: 100%">
-            <li
-              class="cselect__opt is-selected"
-              role="option"
-              aria-selected="true"
-              data-value="Semua"
-            >
-              Semua
-            </li>
-            <li
-              class="cselect__opt"
-              role="option"
-              aria-selected="false"
-              data-value="Web App"
-            >
-              Web App
-            </li>
-            <li
-              class="cselect__opt"
-              role="option"
-              aria-selected="false"
-              data-value="Mobile"
-            >
-              Mobile
-            </li>
-            <li
-              class="cselect__opt"
-              role="option"
-              aria-selected="false"
-              data-value="IoT / Hardware"
-            >
-              IoT / Hardware
-            </li>
-          </ul>
-        </div>
-
-        <div
-          class="cselect"
-          id="timeframeDropdown"
-          role="combobox"
-          aria-haspopup="listbox"
-          aria-expanded="false"
-          aria-label="Filter Waktu"
-          tabindex="0"
-        >
-          <span class="cselect__value" id="timeframeValue">Semua Waktu</span>
-          <svg
-            class="cselect__arrow"
-            width="12"
-            height="12"
-            viewBox="0 0 12 12"
-            fill="none"
-            aria-hidden="true"
-          >
-            <path
-              d="M2 4l4 4 4-4"
+            <span class="cselect__value" id="mobileCatDropdownValue">Semua</span>
+            <svg
+              class="cselect__arrow"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
               stroke="currentColor"
-              stroke-width="1.5"
+              stroke-width="2"
               stroke-linecap="round"
-              stroke-linejoin="round"></path>
-          </svg>
-          <ul class="cselect__list" role="listbox" aria-label="Filter Waktu">
-            <li
-              class="cselect__opt is-selected"
-              role="option"
-              aria-selected="true"
-              data-value="Semua Waktu"
+              stroke-linejoin="round"
             >
-              Semua Waktu
-            </li>
-            <li
-              class="cselect__opt"
-              role="option"
-              aria-selected="false"
-              data-value="Tahun 2026"
+              <path d="m6 9 6 6 6-6"></path>
+            </svg>
+            <ul class="cselect__list" role="listbox">
+              <li
+                class="cselect__opt is-selected"
+                role="option"
+                aria-selected="true"
+                data-value="Semua"
+              >
+                Semua
+              </li>
+              <li
+                class="cselect__opt"
+                role="option"
+                aria-selected="false"
+                data-value="Web App"
+              >
+                Web App
+              </li>
+              <li
+                class="cselect__opt"
+                role="option"
+                aria-selected="false"
+                data-value="Mobile"
+              >
+                Mobile
+              </li>
+              <li
+                class="cselect__opt"
+                role="option"
+                aria-selected="false"
+                data-value="IoT / Hardware"
+              >
+                IoT / Hardware
+              </li>
+              <li
+                class="cselect__opt"
+                role="option"
+                aria-selected="false"
+                data-value="Lainnya"
+              >
+                Lainnya
+              </li>
+            </ul>
+          </div>
+
+          <div
+            class="cselect"
+            id="timeframeDropdown"
+            role="combobox"
+            aria-haspopup="listbox"
+            aria-expanded="false"
+            aria-label="Filter Waktu"
+            tabindex="0"
+          >
+            <span class="cselect__value" id="timeframeValue">Semua Waktu</span>
+            <svg
+              class="cselect__arrow"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
             >
-              Tahun 2026
-            </li>
-            <li
-              class="cselect__opt"
-              role="option"
-              aria-selected="false"
-              data-value="Tahun 2025"
-            >
-              Tahun 2025
-            </li>
-          </ul>
+              <path d="m6 9 6 6 6-6"></path>
+            </svg>
+            <ul class="cselect__list" role="listbox" aria-label="Filter Waktu">
+              <li
+                class="cselect__opt is-selected"
+                role="option"
+                aria-selected="true"
+                data-value="Semua Waktu"
+              >
+                Semua Waktu
+              </li>
+              <li
+                class="cselect__opt"
+                role="option"
+                aria-selected="false"
+                data-value="Tahun 2026"
+              >
+                Tahun 2026
+              </li>
+              <li
+                class="cselect__opt"
+                role="option"
+                aria-selected="false"
+                data-value="Tahun 2025"
+              >
+                Tahun 2025
+              </li>
+              <li
+                class="cselect__opt"
+                role="option"
+                aria-selected="false"
+                data-value="Tahun 2024"
+              >
+                Tahun 2024
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
 
       <div
         class="bento"
         id="projectGrid"
-        style="margin-top: var(--s7)"
+        style="margin-top: var(--s5)"
         data-stagger="70"
         data-cursor="Lihat cepat"
       >
