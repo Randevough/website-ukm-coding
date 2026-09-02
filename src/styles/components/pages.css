@@ -486,7 +486,7 @@
 
 .cta__title em {
   font-style: normal;
-  color: var(--blue);
+  color: var(--mark, var(--blue));
 }
 
 .cta__actions {
