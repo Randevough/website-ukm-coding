@@ -1,4 +1,5 @@
 # Technical Specification & Developer Guide
+
 **UKM Coding Cyber University**
 
 Dokumen ini berisi spesifikasi teknis resmi, arsitektur kode, standar rekayasa perangkat lunak, dan panduan kontributor pengembang untuk repositori website UKM Coding.
@@ -63,7 +64,7 @@ Dokumen ini berisi spesifikasi teknis resmi, arsitektur kode, standar rekayasa p
 1. **Build-Time Fetching**:
    - Seluruh konten publik ditarik pada saat build (`getStaticPaths` dan server frontmatter Astro).
    - Menggunakan query GROQ teroptimasi di `src/lib/sanity/queries.ts`.
-   - Hanya dokumen dengan status *published* yang ditarik ke dalam static bundle.
+   - Hanya dokumen dengan status _published_ yang ditarik ke dalam static bundle.
 
 2. **Fallback Fixture (`fixture.ts`)**:
    - Jika koneksi API Sanity mengalami kendala saat proses development lokal atau dataset masih kosong, sistem otomatis fallback ke data lokal `src/lib/content/fixture.ts`.
@@ -92,27 +93,28 @@ PUBLIC_SITE_URL=https://ukmcoding.site
 PUBLIC_NOINDEX=false
 ```
 
-> ⚠️ **Catatan Keamanan**: Jangan pernah menyertakan `SANITY_API_TOKEN` berhak akses *write* di sisi klien (frontend). Frontend hanya memerlukan akses *read-only* ke dataset publik.
+> ⚠️ **Catatan Keamanan**: Jangan pernah menyertakan `SANITY_API_TOKEN` berhak akses _write_ di sisi klien (frontend). Frontend hanya memerlukan akses _read-only_ ke dataset publik.
 
 ---
 
 ## 5. Perintah Pengembang (NPM Scripts)
 
-| Perintah | Fungsi |
-| :--- | :--- |
-| `npm run dev` | Menjalankan server pengembangan lokal (`http://localhost:4321`) |
-| `npm run build` | Menjalankan type-check (`astro check`) dan build static ke folder `dist/` |
-| `npm run preview` | Menjalankan preview lokal dari hasil build statis di folder `dist/` |
-| `npm run format:check` | Memeriksa apakah seluruh berkas mematuhi standar format Prettier |
-| `npm run format` | Menjalankan auto-formatting Prettier ke seluruh berkas |
-| `npm run lint` | Menjalankan ESLint untuk mengecek kesalahan kode dan aksesibilitas |
-| `npm run test` | Menjalankan unit tests menggunakan Vitest |
+| Perintah               | Fungsi                                                                    |
+| :--------------------- | :------------------------------------------------------------------------ |
+| `npm run dev`          | Menjalankan server pengembangan lokal (`http://localhost:4321`)           |
+| `npm run build`        | Menjalankan type-check (`astro check`) dan build static ke folder `dist/` |
+| `npm run preview`      | Menjalankan preview lokal dari hasil build statis di folder `dist/`       |
+| `npm run format:check` | Memeriksa apakah seluruh berkas mematuhi standar format Prettier          |
+| `npm run format`       | Menjalankan auto-formatting Prettier ke seluruh berkas                    |
+| `npm run lint`         | Menjalankan ESLint untuk mengecek kesalahan kode dan aksesibilitas        |
+| `npm run test`         | Menjalankan unit tests menggunakan Vitest                                 |
 
 ---
 
 ## 6. Standar Kualitas (Definition of Done)
 
-Setiap kontribusi kode baru wajib memenuhi kriteria berikut sebelum digabungkan (*merge*):
+Setiap kontribusi kode baru wajib memenuhi kriteria berikut sebelum digabungkan (_merge_):
+
 1. **Type-Safety**: Lolos `astro check` dengan **0 error**.
 2. **Format & Lint**: Lolos `npm run format:check` dan `npm run lint`.
 3. **Responsif**: Teruji pada viewport Mobile (360px–414px), Tablet (768px–1024px), dan Desktop (1440px+).

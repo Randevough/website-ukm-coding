@@ -1,7 +1,8 @@
 # SEO, Performance, Accessibility & QA Standards
+
 **UKM Coding Cyber University**
 
-Dokumen ini berisi standar jaminan kualitas (*Quality Assurance*), pengoptimalan SEO, tolok ukur performa (*Performance Budget*), dan standar kepatuhan aksesibilitas.
+Dokumen ini berisi standar jaminan kualitas (_Quality Assurance_), pengoptimalan SEO, tolok ukur performa (_Performance Budget_), dan standar kepatuhan aksesibilitas.
 
 ---
 
@@ -27,12 +28,12 @@ Seluruh halaman publik secara otomatis menyertakan metadata SEO komprehensif mel
 
 Situs ditargetkan mempertahankan skor Google Lighthouse **≥ 90** pada seluruh rute utama:
 
-| Metrik | Target | Strategi Implementasi |
-| :--- | :--- | :--- |
-| **First Contentful Paint (FCP)** | < 1.0s | Kompilasi HTML statis murni tanpa ketergantungan render JS. |
-| **Largest Contentful Paint (LCP)** | < 2.0s | Pemuatan hero image prioritas (`fetchpriority="high"`, `loading="eager"`). |
-| **Cumulative Layout Shift (CLS)** | **0.00** | `scrollbar-gutter: stable`, aspect-ratio eksplisit pada gambar dan kartu. |
-| **Total Blocking Time (TBT)** | < 100ms | Zero-framework di sisi publik, script interaktif mini (< 15KB gzipped). |
+| Metrik                             | Target   | Strategi Implementasi                                                      |
+| :--------------------------------- | :------- | :------------------------------------------------------------------------- |
+| **First Contentful Paint (FCP)**   | < 1.0s   | Kompilasi HTML statis murni tanpa ketergantungan render JS.                |
+| **Largest Contentful Paint (LCP)** | < 2.0s   | Pemuatan hero image prioritas (`fetchpriority="high"`, `loading="eager"`). |
+| **Cumulative Layout Shift (CLS)**  | **0.00** | `scrollbar-gutter: stable`, aspect-ratio eksplisit pada gambar dan kartu.  |
+| **Total Blocking Time (TBT)**      | < 100ms  | Zero-framework di sisi publik, script interaktif mini (< 15KB gzipped).    |
 
 ---
 
@@ -54,7 +55,7 @@ Situs ditargetkan mempertahankan skor Google Lighthouse **≥ 90** pada seluruh 
 
 ## 4. Pipeline CI Quality Gates (`.github/workflows/deploy.yml`)
 
-Sebelum kode dapat digabungkan (*merge*) ke branch utama `main`, GitHub Actions menjalankan pemeriksaan:
+Sebelum kode dapat digabungkan (_merge_) ke branch utama `main`, GitHub Actions menjalankan pemeriksaan:
 
 1. **Dependency Audit**: `npm ci` instalasi bersih tanpa modifikasi package-lock.
 2. **Code Formatting**: `npm run format:check` (Prettier).
