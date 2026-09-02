@@ -73,12 +73,12 @@ const breadcrumb = [
   showRails={false}
 >
   <section
-    class="section section--tight"
-    style="padding-top: clamp(var(--s5), 4vw, var(--s7));"
+    class="section"
+    style="padding-top: clamp(var(--s4), 2.5vw, var(--s5)); padding-bottom: clamp(var(--s4), 2.5vw, var(--s5));"
   >
     <div class="container" id="case">
       <header class="case__head">
-        <div class="breadcrumb" style="margin-bottom: var(--s5)">
+        <div class="breadcrumb" style="margin-bottom: var(--s3);">
           <a href="/">Beranda</a><span>/</span><a href="/projects">Projects</a
           ><span>/</span><span>Detail</span>
         </div>
@@ -170,13 +170,13 @@ const breadcrumb = [
     </div>
   </section>
 
-  <section class="section section--tight section--hairline">
+  <section class="section section--nav section--hairline">
     <div class="container">
       <div class="pagenav" id="caseNav">
         {
           prev ? (
             <a class="pagenav__prev" href={`/projects/${prev.slug}`}>
-              <span class="label">← Sebelumnya</span>
+              <span class="label"><span class="arrow" aria-hidden="true">←</span> Sebelumnya</span>
               <span>{prev.nama || prev.title}</span>
             </a>
           ) : (
@@ -186,7 +186,7 @@ const breadcrumb = [
         {
           next ? (
             <a class="pagenav__next" href={`/projects/${next.slug}`}>
-              <span class="label">Selanjutnya →</span>
+              <span class="label">Selanjutnya <span class="arrow" aria-hidden="true">→</span></span>
               <span>{next.nama || next.title}</span>
             </a>
           ) : (

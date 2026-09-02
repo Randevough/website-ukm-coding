@@ -515,7 +515,8 @@ export function renderPagination(
   const prev = document.createElement("button");
   prev.className = "pagination__btn";
   prev.type = "button";
-  prev.textContent = "←";
+  prev.setAttribute("aria-label", "Halaman sebelumnya");
+  prev.innerHTML = '<span class="arrow" aria-hidden="true">←</span>';
   if (current === 1) prev.disabled = true;
   else prev.addEventListener("click", () => onPage(current - 1));
   container.appendChild(prev);
@@ -533,7 +534,8 @@ export function renderPagination(
   const next = document.createElement("button");
   next.className = "pagination__btn";
   next.type = "button";
-  next.textContent = "→";
+  next.setAttribute("aria-label", "Halaman selanjutnya");
+  next.innerHTML = '<span class="arrow" aria-hidden="true">→</span>';
   if (current === total) next.disabled = true;
   else next.addEventListener("click", () => onPage(current + 1));
   container.appendChild(next);
