@@ -554,6 +554,14 @@
   letter-spacing: -0.04em;
 }
 
+@media (max-width: 768px) {
+  .pagehead__title {
+    font-size: clamp(1.65rem, 7.8vw, 2.5rem);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+  }
+}
+
 .pagehead__title .lineMask {
   padding-bottom: 0.18em;
   margin-bottom: -0.18em;
