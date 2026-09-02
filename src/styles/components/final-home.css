@@ -147,12 +147,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* `mix-blend-mode: multiply` dihapus. Blend mode di dalam hero
-     memaksa hero jadi blend group yang di-composite ulang setiap
-     frame animasi grid. `filter` tetap dipakai karena hanya
-     dirasterisasi sekali, bukan per frame. Nuansa multiply-nya
-     digantikan overlay statis di .hero__cardImageWrap::after. */
-  filter: grayscale(0.2) contrast(1.05) saturate(0.95);
+  filter: contrast(1.02) saturate(0.98);
 }
 
 .hero__cardImageWrap::after {
@@ -160,7 +155,7 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: rgba(228, 223, 211, 0.22);
+  background: rgba(228, 223, 211, 0.06);
 }
 
 .hero__cardWord {
