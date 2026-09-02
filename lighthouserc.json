@@ -8,7 +8,7 @@
         "http://localhost/projects/index.html",
         "http://localhost/404.html"
       ],
-      "numberOfRuns": 1,
+      "numberOfRuns": 3,
       "settings": {
         "chromeFlags": "--no-sandbox --disable-gpu --headless"
       }

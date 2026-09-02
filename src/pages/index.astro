@@ -104,7 +104,7 @@ function tanggalPendek(iso: string) {
               ><span class="thin">membangun <em>yang berguna</em></span></span
             >
           </h1>
-          <p class="hero__lead" data-reveal="" style="--reveal-delay: 320ms">
+          <p class="hero__lead">
             UKM Coding Cyber University adalah ruang kolaborasi mahasiswa dengan
             minat yang sama pada coding dan tech untuk bertukar insight,
             mengembangkan project, serta menjalankan berbagai program bersama.
@@ -129,24 +129,29 @@ function tanggalPendek(iso: string) {
           aria-hidden="true"
           data-cursor="Lihat"
         >
-          <div class="hero__card hero__card--editorial">
+          <div class="hero__cardStage">
             <div class="hero__cardTack" aria-hidden="true"></div>
-            <div class="hero__cardHead">
-              <span class="hero__cardTag idx">LIFE AT UKM CODING</span>
-            </div>
-            <div class="hero__cardImageWrap">
-              <img
-                src="/hero-image.jpg"
-                alt="Mahasiswa UKM Coding Cyber University berkolaborasi membangun project teknologi"
-                class="hero__cardImg"
-                width="1200"
-                height="800"
-                loading="eager"
-                fetchpriority="high"
-              />
-            </div>
-            <div class="hero__cardFoot">
-              <span>PROJECT · PELATIHAN · EVENT · KOMPETISI</span>
+            <div class="hero__card hero__card--editorial">
+              <div class="hero__cardHead">
+                <span class="hero__cardTag idx">LIFE AT UKM CODING</span>
+              </div>
+              <div class="hero__cardImageWrap">
+                <picture>
+                  <source srcset="/hero-image.webp" type="image/webp" />
+                  <img
+                    src="/hero-image.jpg"
+                    alt="Mahasiswa UKM Coding Cyber University berkolaborasi membangun project teknologi"
+                    class="hero__cardImg"
+                    width="960"
+                    height="720"
+                    loading="eager"
+                    fetchpriority="high"
+                  />
+                </picture>
+              </div>
+              <div class="hero__cardFoot">
+                <span>PROJECT · PELATIHAN · EVENT · KOMPETISI</span>
+              </div>
             </div>
           </div>
         </div>

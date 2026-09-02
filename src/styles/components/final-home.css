@@ -111,6 +111,12 @@
   justify-content: center;
 }
 
+/* Option A: Card Stage with Stationary Tack and Pure Pendulum Pivot */
+.hero__cardStage {
+  position: relative;
+  width: 100%;
+}
+
 .hero__card {
   position: relative;
   width: 100%;
@@ -123,19 +129,20 @@
   gap: var(--s3);
   box-shadow: var(--shadow-1);
   overflow: visible;
-  transform-origin: 50% 0%;
+  transform-origin: 50% 0%; /* Anchored permanently at the pin point */
   transform: rotate(-1.8deg);
   transition:
-    transform 480ms cubic-bezier(0.34, 1.56, 0.64, 1),
-    box-shadow 360ms var(--ease);
+    transform 480ms cubic-bezier(0.25, 1, 0.5, 1),
+    box-shadow 480ms var(--ease);
 }
 
-.hero__card:hover {
-  transform: rotate(0deg) translateY(-4px);
+/* Option A: Pure Pendulum Pivot around the stationary tack */
+.hero__cardStage:hover .hero__card {
+  transform: rotate(0deg);
   box-shadow: var(--shadow-2);
 }
 
-/* Minimalist Beveled Metal Tack (Pilihan 3) */
+/* Minimalist Beveled Metal Tack (Permanently fixed to the wall) */
 .hero__cardTack {
   position: absolute;
   top: -5px;
@@ -753,7 +760,7 @@
     transform: rotate(-0.6deg);
   }
 
-  .hero__card:hover {
+  .hero__cardStage:hover .hero__card {
     transform: rotate(0deg);
   }
 
