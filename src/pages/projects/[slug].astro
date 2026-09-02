@@ -74,13 +74,17 @@ const breadcrumb = [
 >
   <section
     class="section"
-    style="padding-top: clamp(var(--s4), 2.5vw, var(--s5)); padding-bottom: clamp(var(--s4), 2.5vw, var(--s5));"
+    style="padding-top: clamp(var(--s5), 4vw, var(--s7)); padding-bottom: var(--s5);"
   >
-    <div class="container" id="case">
+    <div class="container container--text" id="case">
       <header class="case__head">
-        <div class="breadcrumb" style="margin-bottom: var(--s3);">
+        <div class="breadcrumb" style="margin-bottom: var(--s4);">
           <a href="/">Beranda</a><span>/</span><a href="/projects">Projects</a
           ><span>/</span><span>Detail</span>
+        </div>
+        <div class="case__tagRow">
+          <span class="label label--mark">{p.kategori}</span>
+          <span class="case__year">{p.tahun}</span>
         </div>
         <div class="case__titleBlock">
           <h1 class="case__title">{title}</h1>
@@ -88,22 +92,37 @@ const breadcrumb = [
         </div>
         <div class="case__meta">
           <div class="case__metaCol">
-            <span>Kategori</span><strong>{p.kategori}</strong>
-          </div>
-          <div class="case__metaCol">
-            <span>Tahun</span><strong>{p.tahun}</strong>
-          </div>
-          <div class="case__metaCol">
             <span>Stack Utama</span><strong class="mono"
-              >{stack.join(", ")}</strong
+              >{stack.length > 0 ? stack.join(" · ") : "—"}</strong
             >
           </div>
-          <div
-            class="case__metaCol"
-            style="margin-left: auto; justify-content: center;"
-          >
-            <button class="btn btn--sm" data-share type="button">Bagikan</button
+          <div class="case__metaCol case__metaCol--action">
+            <button
+              class="btn btn--sm btn--share"
+              data-share
+              type="button"
+              aria-label="Bagikan project ini"
             >
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+                class="btn__icon"
+              >
+                <circle cx="18" cy="5" r="3"></circle>
+                <circle cx="6" cy="12" r="3"></circle>
+                <circle cx="18" cy="19" r="3"></circle>
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+              </svg>
+              <span class="btn__text">Bagikan</span>
+            </button>
           </div>
         </div>
       </header>
@@ -171,13 +190,13 @@ const breadcrumb = [
   </section>
 
   <section class="section section--nav section--hairline">
-    <div class="container">
+    <div class="container container--text">
       <div class="pagenav" id="caseNav">
         {
           prev ? (
             <a class="pagenav__prev" href={`/projects/${prev.slug}`}>
               <span class="label"><span class="arrow" aria-hidden="true">←</span> Sebelumnya</span>
-              <span>{prev.nama || prev.title}</span>
+              <span class="pagenav__title">{prev.nama || prev.title}</span>
             </a>
           ) : (
             <div />
@@ -187,7 +206,7 @@ const breadcrumb = [
           next ? (
             <a class="pagenav__next" href={`/projects/${next.slug}`}>
               <span class="label">Selanjutnya <span class="arrow" aria-hidden="true">→</span></span>
-              <span>{next.nama || next.title}</span>
+              <span class="pagenav__title">{next.nama || next.title}</span>
             </a>
           ) : (
             <div />
@@ -205,7 +224,7 @@ const breadcrumb = [
           Butuh tim mahasiswa yang <em>bisa membangun</em> ini untuk Anda?
         </h2>
       </div>
-      <div style="display: flex; gap: var(--s3); flex-wrap: wrap;" data-reveal>
+      <div class="cta__actions" data-reveal>
         <a
           class="btn btn--mark btn--lg"
           data-mailto

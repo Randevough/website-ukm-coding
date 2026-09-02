@@ -359,28 +359,30 @@ export function initShare(root?: Element | Document) {
   qsa("[data-share]", scope).forEach((btn: any) => {
     btn.addEventListener("click", async () => {
       const url = window.location.href;
+      const textSpan = btn.querySelector(".btn__text");
+      const target = textSpan || btn;
+      const originalText = target.textContent;
+      const setFeedback = (msg: string) => {
+        target.textContent = msg;
+        setTimeout(() => {
+          target.textContent = originalText;
+        }, 2000);
+      };
+
       if (navigator.share) {
         try {
           await navigator.share({ url });
         } catch (err) {
           if ((err as Error).name !== "AbortError") {
-            const originalText = btn.textContent;
-            btn.textContent = "Gagal membagikan";
-            setTimeout(() => (btn.textContent = originalText), 2000);
+            setFeedback("Gagal membagikan");
           }
         }
       } else if (navigator.clipboard) {
         try {
           await navigator.clipboard.writeText(url);
-          const originalText = btn.textContent;
-          btn.textContent = "Disalin!";
-          setTimeout(() => {
-            btn.textContent = originalText;
-          }, 2000);
+          setFeedback("Disalin!");
         } catch {
-          const originalText = btn.textContent;
-          btn.textContent = "Gagal menyalin";
-          setTimeout(() => (btn.textContent = originalText), 2000);
+          setFeedback("Gagal menyalin");
         }
       }
     });
