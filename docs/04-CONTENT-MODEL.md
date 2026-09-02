@@ -1,139 +1,99 @@
-# Content Model — Sanity
+# Content Model & Schema Contract
+**UKM Coding Cyber University**
 
-## 1. Prinsip
+Dokumen ini mendefinisikan kontrak skema dokumen Sanity Content Lake, tipe field, aturan validasi, dan relasi data untuk website UKM Coding.
 
-- Nama field di Studio menggunakan bahasa Indonesia yang mudah dipahami editor.
-- Field teknis seperti slug dibuat otomatis tetapi tetap dapat dikoreksi.
-- Optional field tidak boleh merusak layout.
-- Validasi mencegah konten tidak lengkap, bukan mempersulit editor.
-- Satu koleksi `editorial` menampung berita, kegiatan, pengumuman, dan prestasi.
+---
 
-## 2. `siteSettings` — singleton
+## 1. Skema Dokumen: `siteSettings` (Singleton)
 
-Field:
+Dokumen pengaturan global website.
 
-- `namaSitus` — wajib.
-- `deskripsiSingkat` — wajib.
-- `email` — wajib dan valid.
-- `instagramUrl`, `linkedinUrl`, `githubUrl` — opsional, URL valid.
-- `lokasi` — default Jakarta, Indonesia bila telah diverifikasi.
-- `tahunBerdiri` — opsional; jangan tampilkan `EST. —` di production.
-- `statistik[]` — label, nilai, suffix, urutan.
-- `seoDefault` — title, description, ogImage.
-- `kontakKerjaSama` — heading, deskripsi, email/URL CTA.
+| Nama Field | Tipe Data | Wajib? | Keterangan |
+| :--- | :--- | :--- | :--- |
+| `nama` | string | Ya | Nama resmi situs (contoh: `UKM Coding Cyber University`). |
+| `tagline` | string | Tidak | Slogan singkat organisasi. |
+| `deskripsi` | text | Ya | Deskripsi global untuk meta tag default. |
+| `email` | string | Ya | Email resmi organisasi untuk tombol kontak/kerja sama. |
+| `mediaPartnerUrl` | url | Tidak | Tautan pengunduhan proposal media partner (Google Drive / PDF). |
+| `instagram` | url | Tidak | URL profil Instagram resmi. |
+| `github` | url | Tidak | URL profil GitHub organisasi. |
+| `linkedin` | url | Tidak | URL halaman LinkedIn organisasi. |
+| `stats` | array of object | Tidak | Data statistik (maksimal 4 item): `label`, `value`, `order`. |
+| `seo` | object (seo) | Tidak | Metadata fallback global. |
 
-## 3. `editorial`
+---
 
-Field utama:
+## 2. Skema Dokumen: `project`
 
-- `judul` — wajib, panjang yang wajar.
-- `slug` — wajib, unik, dibuat dari judul.
-- `tipe` — enum: `berita`, `kegiatan`, `pengumuman`, `prestasi`.
-- `ringkasan` — wajib, disarankan 120–180 karakter.
-- `isi` — Portable Text, wajib.
-- `cover` — opsional; hotspot/crop aktif.
-- `coverAlt` — wajib bila cover ada dan informatif.
-- `tanggalPublikasi` — wajib saat published.
-- `penulis` — referensi author atau string terkontrol.
-- `featured` — boolean.
-- `kategoriTambahan[]` — opsional.
-- `seo` — optional override.
+Dokumen etalase studi kasus dan aplikasi karya mahasiswa.
 
-Field khusus kegiatan:
+| Nama Field | Tipe Data | Wajib? | Keterangan |
+| :--- | :--- | :--- | :--- |
+| `nama` | string | Ya | Nama resmi aplikasi/project. |
+| `slug` | slug | Ya | Unique identifier URL (di-generate otomatis dari `nama`). |
+| `kategori` | string (enum) | Ya | Pilihan: `Web App`, `Mobile`, `Data & AI`, `IoT / Hardware`, `Tools`, `Internal`, `Lainnya`. |
+| `featured` | boolean | Tidak | Jika `true`, muncul di section *Project Pilihan* pada Beranda. |
+| `ringkasan` | text | Ya | Deskripsi singkat (one-liner) maksimal 160 karakter untuk kartu preview. |
+| `tahun` | string | Tidak | Tahun rilis (contoh: `2026`). |
+| `techStack` | array of string | Tidak | Daftar nama teknologi utama (contoh: `React`, `TypeScript`, `Supabase`). |
+| `kontributorUtama` | string | Tidak | Nama divisi atau tim pembuat. |
+| `cover` | image | Tidak | Gambar cover rasio 16:9 dengan dukungan hotspot visual. |
+| `coverAlt` | string | Tidak | Teks alternatif untuk aksesibilitas cover. |
+| `githubUrl` | url | Tidak | URL repositori publik project. |
+| `demoUrl` | url | Tidak | URL demo aplikasi aktif. |
+| `masalah` | array (PortableText) | Tidak | Penjelasan latar belakang masalah nyata. |
+| `pendekatan` | array (PortableText) | Tidak | Rincian arsitektur dan langkah penyelesaian. |
+| `hasil` | array (PortableText) | Tidak | Dampak terukur dan pencapaian sistem. |
+| `seo` | object (seo) | Tidak | Kustomisasi OpenGraph & meta description per project. |
 
-- `tanggalMulai`, `tanggalSelesai` — opsional untuk konten non-kegiatan; tanggal mulai wajib untuk kegiatan mendatang.
-- `lokasi` — teks atau objek online/offline.
-- `tautanPendaftaran` — opsional, URL valid.
-- `batasPendaftaran` — opsional.
-- `pembicara[]` — nama, peran, institusi, foto opsional.
-- `jadwal[]` — waktu, judul sesi, deskripsi opsional.
-- `statusKegiatan` — `mendatang`, `berlangsung`, `selesai`, `dibatalkan`; dapat dihitung tetapi editor boleh override untuk pembatalan.
+---
 
-Aturan:
+## 3. Skema Dokumen: `editorial`
 
-- Draft tidak muncul di production.
-- Slug yang sudah published tidak diubah tanpa redirect.
-- Jika cover kosong, frontend memakai visual geometris.
-- Jangan memaksa link pendaftaran pada kegiatan yang tidak membutuhkan registrasi.
+Dokumen koleksi konten artikel, dokumentasi kegiatan, pengumuman, dan prestasi.
 
-## 4. `project`
+| Nama Field | Tipe Data | Wajib? | Keterangan |
+| :--- | :--- | :--- | :--- |
+| `judul` | string | Ya | Judul artikel / kegiatan. |
+| `slug` | slug | Ya | Unique identifier URL (di-generate otomatis dari `judul`). |
+| `tipe` | string (enum) | Ya | Pilihan: `Berita`, `Kegiatan`, `Pengumuman`, `Prestasi`. |
+| `ringkasan` | text | Ya | 120–180 karakter untuk kartu preview artikel. |
+| `isi` | array (PortableText) | Ya | Konten lengkap tulisan dengan dukungan H2, H3, quotes, lists, dan inline image. |
+| `cover` | image | Tidak | Gambar cover rasio 16:9 dengan hotspot. |
+| `coverAlt` | string | Tidak | Alt text wajib diisi jika cover diunggah. |
+| `tanggalPublikasi` | date | Ya | Tanggal rilis artikel. |
+| `penulis` | reference (`author`) | Tidak | Referensi ke dokumen profil penulis. |
+| `featured` | boolean | Tidak | Jika `true`, menjadi *Sorotan Utama* pada halaman `/updates`. |
+| `seo` | object (seo) | Tidak | Kustomisasi SEO per artikel. |
 
-Field:
+### Field Khusus Tipe `Kegiatan`:
+- `tanggalMulai` & `tanggalSelesai` (datetime): Waktu pelaksanaan event.
+- `lokasi` (string): Lokasi fisik atau tautan ruang daring (contoh: *Lab Komputer Cyber University*).
+- `urlPendaftaran` (url): Tautan form registrasi peserta.
+- `statusKegiatan` (enum): `Akan Datang`, `Berlangsung`, `Selesai`.
 
-- `nama` — wajib.
-- `slug` — wajib dan unik.
-- `ringkasan` — wajib.
-- `deskripsi` — Portable Text.
-- `kategori` — wajib.
-- `status` — opsional.
-- `featured` — boolean.
-- `tahun` atau `tanggal` — opsional.
-- `tim[]` — nama dan peran; jangan mempublikasikan data personal tanpa izin.
-- `techStack[]` — string terkontrol.
-- `cover` dan `coverAlt` — cover opsional.
-- `galeri[]` — gambar, alt, caption.
-- `githubUrl` — opsional.
-- `demoUrl` — opsional.
-- `hasilDampak[]` — label dan nilai/teks.
-- `tantangan`, `solusi`, `pembelajaran` — rich text opsional.
-- `seo` — optional override.
+---
 
-Jika GitHub dan demo kosong, area CTA terkait disembunyikan.
+## 4. Skema Dokumen Pendukung: `partner`, `author`, `galleryItem`
 
-## 5. `galleryItem`
+### A. `partner` (Kolaborator & Sponsor Footer)
+- `nama` (string, wajib): Nama instansi / mitra.
+- `tipe` (enum): `Partner`, `Sponsor`, `Media`, `Institusi`, `Kolaborator`.
+- `logo` (image): Logo transparan rasio 1:1.
+- `izinTampilLogo` (boolean, wajib): Status persetujuan resmi pemasangan logo.
+- `url` (url): Website resmi partner.
+- `urutan` (number): Urutan posisi render.
+- `aktif` (boolean): Sakelar visibilitas dokumen.
 
-Field:
+### B. `author` (Profil Penulis)
+- `nama` (string, wajib): Nama lengkap penulis.
+- `peran` (string): Jabatan atau divisi (contoh: *Ketua UKM Coding*, *Divisi Web Dev*).
+- `foto` (image): Foto profil lingkaran.
+- `bio` (text): Profil singkat 1–2 kalimat.
 
-- `gambar` — wajib.
-- `alt` — wajib kecuali dekoratif.
-- `caption` — opsional.
-- `tanggal` — opsional.
-- `editorialRef` — referensi konten terkait.
-- `urutan` — number.
-- `tampilDiBeranda` — boolean.
-
-## 6. `partner`
-
-Field:
-
-- `nama` — wajib.
-- `tipe` — partner, sponsor, media, institusi, kolaborator.
-- `logo` — opsional.
-- `izinTampilLogo` — boolean wajib, default false.
-- `url` — opsional.
-- `urutan` — number.
-- `aktif` — boolean.
-
-Frontend hanya menampilkan logo jika `izinTampilLogo` true; jika false tampilkan nama secara tekstual bila masih relevan.
-
-## 7. `author`
-
-Field minimal:
-
-- `namaTampil`.
-- `peran` opsional.
-- `foto` opsional.
-- `bioSingkat` opsional.
-
-Jangan tampilkan email pribadi.
-
-## 8. SEO object reusable
-
-- `metaTitle`.
-- `metaDescription`.
-- `ogImage`.
-- `noIndex`.
-- Canonical umumnya dihitung frontend dan hanya dioverride bila diperlukan.
-
-## 9. Portable Text blocks
-
-Izinkan seperlunya:
-
-- Paragraf, H2, H3.
-- Bold, italic, link.
-- Bulleted/numbered list.
-- Quote.
-- Gambar dengan alt/caption.
-- Callout sederhana bila desain mendukung.
-
-Jangan mengizinkan arbitrary HTML, script, iframe bebas, warna teks bebas, atau layout builder kompleks pada MVP.
+### C. `galleryItem` (Foto Galeri Beranda)
+- `gambar` (image, wajib): Foto kegiatan resolusi tinggi.
+- `alt` (string, wajib): Deskripsi gambar untuk pembaca layar.
+- `caption` (string): Keterangan singkat foto.
+- `tampilDiBeranda` (boolean): Menampilkan foto di grid visual Beranda.

@@ -1,137 +1,120 @@
-# Technical Specification
+# Technical Specification & Developer Guide
+**UKM Coding Cyber University**
 
-## 1. Stack terkunci
+Dokumen ini berisi spesifikasi teknis resmi, arsitektur kode, standar rekayasa perangkat lunak, dan panduan kontributor pengembang untuk repositori website UKM Coding.
 
-- **Framework:** Astro versi stabil terbaru saat implementasi.
-- **Bahasa:** TypeScript dengan `strict: true`.
-- **Package manager:** npm.
-- **CMS:** Sanity Content Lake + Sanity Studio hosted.
-- **Hosting:** Cloudflare Pages.
-- **Source control:** repository GitHub baru.
-- **Styling:** CSS existing yang dirapikan; jangan rewrite penuh ke Tailwind.
-- **Interaktivitas:** JavaScript/TypeScript kecil atau Astro islands hanya saat diperlukan.
-- **Database tambahan:** tidak ada pada MVP.
+---
 
-## 2. Prinsip implementasi
+## 1. Stack Teknologi Resmi
 
-1. Port, jangan redesign.
-2. Static-first; hindari server runtime jika tidak dibutuhkan.
-3. Pertahankan design tokens, spacing, tipografi, dan motion behavior prototype.
-4. Hapus JavaScript global yang tidak perlu dan jangan mengirim CMS client privileged ke browser.
-5. Schema Sanity adalah kontrak konten; TypeScript types harus selaras.
-6. Konten published diambil saat build. Draft tidak boleh bocor ke production.
-7. Environment secret tidak boleh di-commit.
-8. Aksesibilitas dan reduced motion bukan fitur opsional.
+- **Core Framework**: [Astro 5](https://astro.build/) (Static Site Generation / SSG dengan ClientRouter view transitions)
+- **Bahasa**: [TypeScript 5](https://www.typescriptlang.org/) dengan konfigurasi ketat (`strict: true`)
+- **Headless CMS**: [Sanity v3](https://www.sanity.io/) (`@sanity/astro` & `@sanity/client`)
+- **Panel Admin**: Sanity Studio tertanam langsung pada rute `/admin` via `@sanity/astro` & React 19
+- **Styling**: Vanilla CSS murni berbasis Design Tokens (tanpa framework CSS eksternal seperti Tailwind/Bootstrap)
+- **Format & Linting**: Prettier (`prettier-plugin-astro`), ESLint 9 (`eslint-plugin-astro`, `eslint-plugin-jsx-a11y`)
+- **Testing**: Vitest untuk unit tests helper & formatter
+- **Deployment & Hosting**: Cloudflare Pages via GitHub Actions CI/CD pipeline
 
-## 3. Struktur project target
+---
+
+## 2. Struktur Direktori Proyek
 
 ```text
 /
-├── public/
-│   ├── favicon.*
-│   ├── robots.txt
-│   └── static/
+├── public/                     # Aset statis murni (logo, favicon, manifest, robots.txt, _headers)
+├── sanity/                     # Konfigurasi & Skema Dokumen Sanity Studio
+│   ├── schemaTypes/            # Skema: project, editorial, partner, author, settings, blockContent
+│   ├── sanity.config.ts        # Inisialisasi plugin & dataset Sanity Studio
+│   └── sanity.cli.ts           # CLI metadata Sanity
 ├── src/
-│   ├── components/
-│   │   ├── global/
-│   │   ├── home/
-│   │   ├── editorial/
-│   │   └── projects/
+│   ├── components/             # Komponen UI Astro
+│   │   ├── global/             # Header, Footer, Drawer, Rails, Modal, Art, SEO
+│   │   ├── sanity/             # PortableTextComponent, SanityImage
+│   │   └── ui/                 # ProjectCard, PostCard, MagazineCard, EmptyState
 │   ├── layouts/
-│   ├── pages/
-│   │   ├── index.astro
-│   │   ├── kegiatan/
-│   │   │   ├── index.astro
-│   │   │   └── [slug].astro
-│   │   ├── projects/
-│   │   │   ├── index.astro
-│   │   │   └── [slug].astro
-│   │   └── 404.astro
+│   │   └── Layout.astro        # Base HTML wrapper, font loader, meta tags, script inject
 │   ├── lib/
-│   │   ├── sanity/
-│   │   ├── seo/
-│   │   └── content/
-│   ├── scripts/
-│   ├── styles/
-│   │   ├── tokens.css
-│   │   ├── global.css
-│   │   └── components/
-│   └── types/
-├── sanity/
-│   ├── schemaTypes/
-│   └── sanity.config.ts
-├── tests/
-├── docs/
-├── ai-prompts/
-├── astro.config.mjs
-├── package.json
-└── tsconfig.json
+│   │   ├── content/            # Fixture lokal, helper format tanggal, sanitasi
+│   │   └── sanity/             # Sanity client, GROQ queries, image builder
+│   ├── pages/                  # Rute Halaman File-based Astro
+│   │   ├── index.astro         # Beranda (/)
+│   │   ├── admin/              # Sanity Studio CMS (/admin)
+│   │   ├── projects/           # Katalog (/projects) & Detail ([slug].astro)
+│   │   ├── updates/            # Arsip (/updates) & Detail ([slug].astro)
+│   │   └── 404.astro           # Halaman 404
+│   ├── scripts/                # Script interaksi klien (filter, hero-effects, motion, quick-view)
+│   ├── styles/                 # Sistem Styling CSS
+│   │   ├── tokens.css          # Variabel warna, tipografi, radius, shadow, easing
+│   │   ├── global.css          # CSS reset, base tags, grid utility, layout rules
+│   │   └── components/         # Modul komponen (components.css, pages.css, hero-effects.css, dll)
+│   └── types/                  # Definisi antarmuka TypeScript (content.ts)
+├── tests/                      # Unit test suites (Vitest)
+├── docs/                       # Dokumentasi resmi proyek
+├── astro.config.mjs            # Konfigurasi Astro & integrasi Sanity/React/Sitemap
+├── package.json                # Dependencies & NPM scripts
+└── tsconfig.json               # Konfigurasi compiler TypeScript
 ```
 
-Struktur dapat disesuaikan jika versi tooling memerlukan perubahan, tetapi pemisahan concern harus dipertahankan.
+---
 
-## 4. Pemetaan source prototype
+## 3. Strategi Data Fetching & Offline Resilience
 
-- `assets/css/tokens.css` → `src/styles/tokens.css`.
-- `base.css` → global/reset/layout dasar.
-- `components.css` → CSS komponen terpisah secara bertahap.
-- `pages.css`, `final-home.css`, `home-v2.css` → konsolidasikan berdasarkan route tanpa mengubah hasil visual.
-- `data.js` → seed fixture sementara, lalu Sanity queries.
-- `ui.js` → utility interaksi terisolasi.
-- `motion.js` → script/module motion; hormati reduced motion.
-- `render.js` → komponen Astro dan mapping data typed.
-- `router.js` → hapus; gunakan routing Astro/browser standar. Transisi halaman hanya dipertahankan jika stabil dan accessible.
-- `admin/*.html` → hapus dari production; fungsinya digantikan Sanity Studio.
+1. **Build-Time Fetching**:
+   - Seluruh konten publik ditarik pada saat build (`getStaticPaths` dan server frontmatter Astro).
+   - Menggunakan query GROQ teroptimasi di `src/lib/sanity/queries.ts`.
+   - Hanya dokumen dengan status *published* yang ditarik ke dalam static bundle.
 
-## 5. Data fetching
+2. **Fallback Fixture (`fixture.ts`)**:
+   - Jika koneksi API Sanity mengalami kendala saat proses development lokal atau dataset masih kosong, sistem otomatis fallback ke data lokal `src/lib/content/fixture.ts`.
+   - Hal ini menjamin halaman tetap dapat dirender tanpa memblokir proses pengembangan antarmuka.
 
-- Gunakan Sanity client read-only.
-- Gunakan API version berupa tanggal eksplisit.
-- Production hanya membaca dokumen published.
-- Query ditempatkan di `src/lib/sanity/queries.ts` atau folder terstruktur.
-- Validasi data yang mungkin kosong.
-- Sediakan fixture lokal untuk pengembangan dan test bila CMS belum tersedia.
-- Build harus gagal dengan pesan jelas untuk konfigurasi wajib yang hilang, tetapi dokumentasikan mode fixture jika digunakan.
+---
 
-## 6. Environment variables
+## 4. Environment Variables
 
-Contoh nama; sesuaikan dengan integrasi resmi terbaru:
+Berikut adalah konfigurasi variabel lingkungan yang digunakan (`.env`):
 
 ```dotenv
-PUBLIC_SANITY_PROJECT_ID=
+# Sanity CMS Public Keys
+PUBLIC_SANITY_PROJECT_ID=60a63q0u
 PUBLIC_SANITY_DATASET=production
-SANITY_API_VERSION=YYYY-MM-DD
-SANITY_STUDIO_PROJECT_ID=
+PUBLIC_SANITY_API_VERSION=2024-02-28
+
+# Sanity Studio Embedded Keys
+SANITY_STUDIO_PROJECT_ID=60a63q0u
 SANITY_STUDIO_DATASET=production
-PUBLIC_SITE_URL=https://subdomain-kampus.example
+
+# Canonical Base URL
+PUBLIC_SITE_URL=https://ukmcoding.site
+
+# Preview & Indexing Control
+PUBLIC_NOINDEX=false
 ```
 
-Token write tidak boleh dibutuhkan frontend. Token preview hanya digunakan di environment aman dan tidak diekspos sebagai `PUBLIC_*`.
+> ⚠️ **Catatan Keamanan**: Jangan pernah menyertakan `SANITY_API_TOKEN` berhak akses *write* di sisi klien (frontend). Frontend hanya memerlukan akses *read-only* ke dataset publik.
 
-## 7. Dependency policy
+---
 
-- Gunakan dependency sesedikit mungkin.
-- Jangan menambah framework UI besar hanya untuk satu komponen.
-- Gunakan package resmi Sanity/Astro bila tersedia.
-- Lockfile `package-lock.json` wajib di-commit.
-- Audit lisensi dan kerentanan dependency.
-- Hindari dependency yang memerlukan layanan berbayar untuk fungsi inti MVP.
+## 5. Perintah Pengembang (NPM Scripts)
 
-## 8. Testing
+| Perintah | Fungsi |
+| :--- | :--- |
+| `npm run dev` | Menjalankan server pengembangan lokal (`http://localhost:4321`) |
+| `npm run build` | Menjalankan type-check (`astro check`) dan build static ke folder `dist/` |
+| `npm run preview` | Menjalankan preview lokal dari hasil build statis di folder `dist/` |
+| `npm run format:check` | Memeriksa apakah seluruh berkas mematuhi standar format Prettier |
+| `npm run format` | Menjalankan auto-formatting Prettier ke seluruh berkas |
+| `npm run lint` | Menjalankan ESLint untuk mengecek kesalahan kode dan aksesibilitas |
+| `npm run test` | Menjalankan unit tests menggunakan Vitest |
 
-Minimal:
+---
 
-- Unit test untuk helper slug, tanggal, mapping konten, dan SEO.
-- Component/integration test untuk state penting bila tooling memungkinkan.
-- Build test seluruh static routes.
-- Link checker untuk route internal.
-- Lighthouse CI pada homepage, daftar kegiatan, detail kegiatan, daftar project, dan detail project fixture.
-- Visual regression screenshot desktop 1440×900 dan mobile sekitar 390×844 untuk route utama.
+## 6. Standar Kualitas (Definition of Done)
 
-## 9. Definition of done per perubahan
-
-- Lint, format, typecheck, test, dan build lolos.
-- Tidak ada perubahan desain yang tidak diminta.
-- Desktop dan mobile diperiksa.
-- Keyboard dan reduced-motion diperiksa jika interaksi berubah.
-- Dokumentasi diperbarui bila kontrak, schema, command, atau environment berubah.
+Setiap kontribusi kode baru wajib memenuhi kriteria berikut sebelum digabungkan (*merge*):
+1. **Type-Safety**: Lolos `astro check` dengan **0 error**.
+2. **Format & Lint**: Lolos `npm run format:check` dan `npm run lint`.
+3. **Responsif**: Teruji pada viewport Mobile (360px–414px), Tablet (768px–1024px), dan Desktop (1440px+).
+4. **Bebas Layout Shift**: Tidak ada pergeseran elemen yang merusak pengalaman baca (CLS 0).
+5. **Aksesibilitas**: Kontras warna memenuhi WCAG AA, interaksi keyboard berjalan lancar, dan mendukung `prefers-reduced-motion`.

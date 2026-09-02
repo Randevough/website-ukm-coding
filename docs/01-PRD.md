@@ -1,134 +1,81 @@
 # Product Requirements Document (PRD)
+**Portal Resmi UKM Coding Cyber University**
 
-## 1. Ringkasan
+---
 
-Website resmi **UKM Coding Cyber University** adalah portal publik untuk memperkenalkan UKM, mempublikasikan kegiatan dan pencapaian, menampilkan karya anggota, serta membangun kredibilitas kepada mahasiswa, publik, partner, dan sponsor.
+## 1. Ringkasan Eksekutif
 
-Prototype saat ini hanya HTML/CSS/JS dengan data contoh. MVP production harus mempertahankan tampilan sedekat mungkin, mengganti data hard-coded dengan Sanity CMS, dan dapat dikelola 1–2 editor nonteknis.
+Website resmi **UKM Coding Cyber University** (`ukmcoding.site`) adalah portal publik resmi untuk memperkenalkan UKM, mempublikasikan kegiatan dan pencapaian, menampilkan karya rekayasa perangkat lunak mahasiswa, serta membangun kredibilitas kepada mahasiswa, civitas akademika, partner industri, dan sponsor.
 
-## 2. Tujuan
+Situs ini beroperasi secara dinamis melalui integrasi Headless CMS (Sanity Studio) yang tersemat pada rute `/admin`, memungkinkan pengurus dan editor memperbarui konten secara mandiri tanpa menyentuh kode sumber.
 
-1. Menjelaskan identitas, aktivitas, dan nilai UKM.
-2. Menampilkan project/karya anggota secara meyakinkan.
-3. Menjadi arsip berita, kegiatan, pengumuman, dan prestasi.
-4. Menyediakan jalur kerja sama yang jelas melalui kontak; form publik belum termasuk MVP.
-5. Memungkinkan editor memperbarui konten 1–2 kali per minggu tanpa menyentuh kode.
-6. Beroperasi dengan target biaya Rp0/bulan di luar domain/subdomain.
+---
 
-## 3. Target pengguna
+## 2. Tujuan & Sasaran Produk
 
-### Primer
+1. **Eksplorasi & Identitas**: Menjelaskan identitas, visi, program kerja, dan nilai kolaborasi UKM Coding.
+2. **Showcase Karya**: Menjadi etalase studi kasus project mahasiswa (Web, Mobile, IoT, Data/AI, Tools) dengan rincian arsitektur, tantangan, dan teknologi.
+3. **Pusat Informasi & Arsip**: Menjadi arsip terstruktur untuk berita, dokumentasi kegiatan, pengumuman rekrutmen, dan prestasi.
+4. **Jalur Kolaborasi**: Menyediakan alur komunikasi langsung untuk pengajuan media partnership, sponsorship, dan kolaborasi project.
+5. **Kemandirian Konten**: Editor nonteknis dapat menerbitkan dan memperbarui konten kapan saja dengan antarmuka CMS yang intuitif.
+6. **Efisiensi Infrastruktur**: Beroperasi dengan keandalan tinggi dan biaya hosting Rp0/bulan menggunakan arsitektur Jamstack di Cloudflare Pages.
 
-- Mahasiswa Cyber University.
-- Calon partner dan sponsor.
-- Publik umum.
+---
 
-### Internal
+## 3. Profil Pengguna (User Personas)
 
-- 1–2 editor/pengurus nonteknis.
-- Developer mahasiswa atau AI coding agent sebagai maintainer teknis.
+### Pengguna Eksternal (Publik)
+- **Mahasiswa Cyber University**: Mencari informasi pendaftaran, jadwal workshop, materi belajar, dan inspirasi karya.
+- **Calon Partner & Sponsor**: Mempelajari portofolio organisasi, mengunduh proposal kerja sama, dan menghubungi tim via email.
+- **Komunitas & Publik**: Mengikuti perkembangan kegiatan tech dan membaca artikel edukatif.
 
-## 4. Aksi utama pengunjung
+### Pengguna Internal
+- **Editor & Pengurus UKM**: Memasukkan berita, mengelola data project, mengunggah foto kegiatan, dan memperbarui partner.
+- **Developer / Maintainer**: Menjaga integritas kode, performa, keamanan, dan pembaruan dependencies.
 
-- Mengenal UKM.
-- Melihat kegiatan dan perkembangan terbaru.
-- Melihat karya anggota.
-- Menghubungi UKM untuk kerja sama.
+---
 
-## 5. Ruang lingkup MVP
+## 4. Peta Halaman & Fitur Publik
 
-### Halaman publik
+| Rute Halaman | Fungsi & Komponen Utama |
+| :--- | :--- |
+| `/` | **Beranda**: Hero editorial interaktif (Grid reveal FX), section Tentang UKM, 3 Project Pilihan, Updates Terbaru, Galeri Instagram, Jalur Kerja Sama, dan Footer Partner. |
+| `/projects` | **Katalog Karya**: Direktori lengkap project mahasiswa dengan filter kategori dinamis (*Web App, Mobile, IoT, Data/AI, dll.*), filter tahun, dan pencarian instan sisi klien. |
+| `/projects/[slug]` | **Detail Studi Kasus**: Rincian latar belakang masalah, pendekatan arsitektur, tech stack, galeri tangkapan layar, link GitHub/Demo, dan navigasi previous/next. |
+| `/updates` | **Arsip Editorial**: Daftar berita, dokumentasi kegiatan, pengumuman, dan prestasi dengan sorotan utama (*magazine layout*) dan filter kategori. |
+| `/updates/[slug]` | **Detail Artikel / Kegiatan**: Isi artikel lengkap (Rich Text PortableText), info penulis, tanggal rilis, tombol bagikan sosial, serta info jadwal/lokasi/link pendaftaran khusus event. |
+| `/admin` | **Sanity Studio**: Dasbor pengelolaan konten terautentikasi langsung di browser. |
+| `/404` | **Halaman 404**: Desain responsif kustom dengan navigasi kembali ke Beranda. |
 
-- Beranda.
-- Profil/tentang UKM pada beranda.
-- `/kegiatan` untuk koleksi editorial terpadu.
-- `/kegiatan/[slug]` untuk detail konten.
-- `/projects` untuk katalog project.
-- `/projects/[slug]` untuk studi kasus project.
-- Galeri dan partner pada beranda atau section terkait.
-- Halaman 404.
+---
 
-### Jenis konten
+## 5. Ruang Lingkup & Batasan Sistem
 
-Satu koleksi editorial dengan tipe:
+### Termasuk dalam Lingkup (In-Scope)
+- Rendering statis berkecepatan tinggi dengan Astro SSG.
+- Pengelolaan konten headless terpusat di Sanity Content Lake.
+- Quick-view modal interaktif pada katalog project.
+- Sistem tema monokrom hangat (*Spec Sheet*) dengan aksen biru kobalt dan oranye.
+- Dukungan fallback grafis geometris otomatis jika konten tidak memiliki gambar cover.
+- Dukungan aksesibilitas penuh (WCAG 2.2 AA, keyboard navigation trap, reduced-motion).
+- Optimasi SEO lengkap (OpenGraph, Twitter Cards, Canonical URL, JSON-LD Schema.org, Sitemap XML).
 
-- Berita.
-- Kegiatan.
-- Pengumuman.
-- Prestasi.
+### Di Luar Lingkup (Out-of-Scope)
+- Sistem login/autentikasi umum untuk mahasiswa (hanya admin/editor yang login ke Sanity).
+- Database relasional transaksional atau sistem pembayaran.
+- Forum diskusi atau kolom komentar publik.
+- Sistem absensi otomatis atau generator sertifikat dinamis.
 
-Kegiatan dapat memiliki tanggal, lokasi, deskripsi, link pendaftaran, pembicara, dan jadwal.
+---
 
-### CMS
+## 6. Standar Kualitas & Non-Fungsional
 
-- Sanity Studio hosted oleh Sanity pada MVP.
-- Login ditangani Sanity.
-- Editor dapat membuat, mengedit, menyimpan draft, upload media, dan publish langsung.
-- Preview merupakan fitur yang diinginkan, tetapi tidak boleh menghambat rilis MVP bila kompleksitasnya tinggi.
-
-### Fitur publik
-
-- Daftar dan detail konten.
-- Filter kategori yang benar-benar bekerja.
-- Pencarian ringan di sisi klien atau build-time.
-- Pagination bila jumlah konten membutuhkannya.
-- Daftar/detail project.
-- Link GitHub dan demo bersifat opsional.
-- Fallback visual geometris bila gambar tidak tersedia.
-- Jalur kerja sama melalui email/tautan kontak, tanpa form publik.
-
-## 6. Di luar ruang lingkup
-
-- Akun anggota.
-- Dashboard internal.
-- Absensi.
-- Sertifikat otomatis.
-- Database operasional Supabase.
-- Pembayaran.
-- Komentar publik.
-- Newsletter automation.
-- Analytics pada MVP.
-- Redesign visual.
-- Aplikasi mobile.
-
-## 7. Persyaratan UX
-
-- Bahasa Indonesia saja.
-- Desain harus sedekat mungkin dengan prototype.
-- Reading order, interaksi keyboard, drawer mobile, modal, dan reduced motion harus tetap baik.
-- Konten tanpa gambar tetap terlihat disengaja melalui visual geometris yang sudah menjadi identitas prototype.
-- Editor tidak perlu mengetahui Git, Markdown, atau deployment.
-
-## 8. Persyaratan nonfungsional
-
-- Static-first dan dapat di-host di Cloudflare Pages.
-- Lighthouse minimal 90 untuk Performance, Accessibility, Best Practices, dan SEO pada halaman utama yang diuji, dengan toleransi deviasi lingkungan CI yang didokumentasikan.
-- Browser target: dua versi terbaru Chrome, Edge, Firefox, dan Safari; iOS Safari dan Chrome Android yang masih didukung vendor.
-- Tidak ada error console pada alur utama.
-- Tidak ada tautan internal rusak.
-- TypeScript strict.
-- SEO teknis lengkap.
-- Preview deployment untuk pull request dan production deployment dari branch utama.
-
-## 9. Acceptance criteria MVP
-
-- Semua halaman prototype berhasil dipetakan ke route Astro yang disepakati.
-- Tampilan desktop dan mobile tidak mengalami regresi visual besar.
-- Tidak ada lagi data publik utama yang bergantung pada `assets/js/data.js`.
-- Editor dapat membuat dan menerbitkan setiap tipe konten dari Sanity Studio.
-- Konten published tampil di website setelah build/deploy.
-- Draft tidak tampil di production.
-- Gambar dioptimalkan dan memiliki alt text atau ditandai dekoratif dengan benar.
-- Filter, pencarian, slug, navigasi previous/next, dan tautan share yang dipertahankan bekerja.
-- Metadata, canonical URL, Open Graph, sitemap, robots.txt, dan structured data yang relevan tersedia.
-- CI menjalankan lint, format check, typecheck, build, test, link check, dan Lighthouse CI.
-- Dokumentasi editor, runbook teknis, akses akun, dan prosedur handover tersedia.
-
-## 10. Indikator keberhasilan awal
-
-Karena analytics belum termasuk MVP, validasi awal dilakukan melalui:
-
-- Pengurus berhasil menerbitkan konten tanpa bantuan developer.
-- Waktu penerbitan konten sederhana kurang dari 10 menit setelah materi siap.
-- Tidak ada incident deployment pada empat minggu pertama.
-- Partner dan mahasiswa dapat menemukan profil, kegiatan, project, dan kontak dalam maksimal tiga interaksi.
+1. **Performa & Audit Web**:
+   - Skor Google Lighthouse minimal **90+** untuk *Performance, Accessibility, Best Practices, dan SEO*.
+   - Target Core Web Vitals: LCP < 2.5s, CLS < 0.1, FID/INP < 100ms.
+2. **Dukungan Peramban (Browser Support)**:
+   - Modern evergreen browsers: Google Chrome, Mozilla Firefox, Apple Safari, Microsoft Edge, Brave.
+   - Perangkat seluler: iOS Safari dan Android Chromium.
+3. **Keandalan & Aksesibilitas**:
+   - Bebas layout shift (CLS 0) saat membuka/menutup drawer dan modal.
+   - Mode *prefers-reduced-motion* menonaktifkan efek animasi berat secara otomatis.

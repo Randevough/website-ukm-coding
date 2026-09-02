@@ -1,31 +1,29 @@
-# Dokumentasi Production — UKM Coding Cyber University
+# Dokumentasi Resmi — UKM Coding Cyber University
 
-Dokumentasi ini menjadi sumber keputusan untuk mem-porting prototype HTML/CSS/JS ke website production.
+Dokumentasi ini adalah pusat referensi teknis, arsitektur sistem, panduan konten, dan standar operasional untuk situs web resmi **UKM Coding Cyber University** (`ukmcoding.site`).
 
-## Dokumen
+---
 
-1. [PRD](01-PRD.md) — tujuan, pengguna, ruang lingkup, dan acceptance criteria.
-2. [Technical Specification](02-TECH.md) — stack, struktur project, aturan implementasi.
-3. [Architecture](03-ARCHITECTURE.md) — alur data, build, keamanan, dan environment.
-4. [Content Model](04-CONTENT-MODEL.md) — schema Sanity dan aturan validasi.
-5. [Migration Plan](05-MIGRATION-PLAN.md) — pemetaan prototype dan tahapan porting.
-6. [Editorial Operations](06-EDITORIAL-OPERATIONS.md) — workflow editor nonteknis.
-7. [SEO, Performance & QA](07-SEO-PERFORMANCE-QA.md) — quality gates dan checklist rilis.
-8. [Deployment & Handover](08-DEPLOYMENT-HANDOVER.md) — preview, production, akun, dan serah terima.
-9. [Decisions & Risks](09-DECISIONS-AND-RISKS.md) — keputusan terkunci dan risiko.
-10. [AI Porting Prompts](../ai-prompts/README.md) — prompt eksekusi per fase.
+## 📚 Daftar Dokumen
 
-## Urutan penggunaan
+| No | Dokumen | Deskripsi | Target Pembaca |
+| :--- | :--- | :--- | :--- |
+| 1 | [01-PRD.md](01-PRD.md) | **Product Requirements Document** — Visi, audiens target, cakupan fitur, dan standar kualitas produk. | Tim Pengurus, Lead Developer |
+| 2 | [02-TECH.md](02-TECH.md) | **Technical Specification** — Stack teknologi, struktur direktori, data fetching, dan konvensi kode. | Developer, Maintainer |
+| 3 | [03-ARCHITECTURE.md](03-ARCHITECTURE.md) | **System Architecture** — Alur data headless, pipeline CI/CD, hosting Cloudflare Pages, dan keamanan. | Architect, DevOps, Maintainer |
+| 4 | [04-CONTENT-MODEL.md](04-CONTENT-MODEL.md) | **Content Model & Schemas** — Kontrak skema Sanity Studio, definisi field, tipe TypeScript, dan validasi data. | Developer, Content Admin |
+| 5 | [05-DESIGN-SYSTEM.md](05-DESIGN-SYSTEM.md) | **Design Tokens & Typography** — Panduan visual "Spec Sheet", token CSS (warna, spasi, tipografi), dan motion. | UI/UX Designer, Frontend |
+| 6 | [06-CMS-MANUAL.md](06-CMS-MANUAL.md) | **Panduan Pengelolaan Konten (CMS)** — SOP dan panduan praktis input project, artikel, dan partner di Sanity Studio. | Editor, Tim Media & Publikasi |
+| 7 | [07-SEO-PERFORMANCE-QA.md](07-SEO-PERFORMANCE-QA.md) | **SEO, Performance & QA** — Standar audit Lighthouse, metadata OpenGraph, aksesibilitas (WCAG 2.2 AA), dan testing. | QA, Developer |
+| 8 | [08-DEPLOYMENT-OPS.md](08-DEPLOYMENT-OPS.md) | **Deployment & Operations** — Panduan rilis, environment variables, GitHub Actions, DNS, dan serah terima akun. | DevOps, Lead Developer |
+| 9 | [09-DECISIONS-ADR.md](09-DECISIONS-ADR.md) | **Architecture Decision Records (ADR)** — Catatan keputusan teknis utama dan mitigasi risiko arsitektur. | Developer, Pengurus |
 
-- Manusia membaca PRD, Tech, Architecture, dan Decisions terlebih dahulu.
-- AI coding agent wajib membaca `AGENTS.md`, seluruh folder `docs/`, lalu prompt fase yang akan dijalankan.
-- Satu fase harus selesai dan lolos pemeriksaan sebelum fase berikutnya.
-- Jika implementasi membutuhkan perubahan desain atau ruang lingkup, berhenti dan minta persetujuan.
+---
 
-## Status
+## 🚀 Ringkasan Teknis Singkat
 
-- Produk: MVP production portal UKM.
-- Bahasa: Indonesia.
-- Desain: port semirip mungkin; tidak boleh redesign.
-- Stack: Astro + TypeScript + Sanity + Cloudflare Pages + GitHub.
-- Biaya: target Rp0/bulan di luar domain/subdomain kampus.
+- **Arsitektur**: Jamstack / Static Site Generation (SSG) dengan Astro 5 + TypeScript.
+- **Headless CMS**: Sanity Studio v3 tersemat pada rute `/admin`.
+- **Styling**: Vanilla CSS murni dengan sistem Design Token (`tokens.css`, `global.css`, `components.css`).
+- **Infrastruktur & Hosting**: GitHub Actions CI/CD ke Cloudflare Pages CDN.
+- **Biaya Operasional**: Target Rp0/bulan (memanfaatkan free-tier Cloudflare Pages, GitHub, dan Sanity Free).

@@ -1,118 +1,65 @@
-# SEO, Performance, Accessibility & QA
+# SEO, Performance, Accessibility & QA Standards
+**UKM Coding Cyber University**
 
-## 1. SEO teknis MVP
+Dokumen ini berisi standar jaminan kualitas (*Quality Assurance*), pengoptimalan SEO, tolok ukur performa (*Performance Budget*), dan standar kepatuhan aksesibilitas.
 
-Wajib:
+---
 
-- Title dan meta description unik.
-- Canonical URL absolut.
-- Open Graph dan Twitter/X card.
-- Sitemap XML.
-- `robots.txt`.
-- Preview deployment `noindex`.
-- Semantic headings.
-- Clean slug.
-- Redirect URL lama bila relevan.
-- JSON-LD `Organization` pada situs.
-- JSON-LD `Article`/`NewsArticle` untuk konten editorial sesuai tipe.
-- JSON-LD `Event` untuk kegiatan yang memenuhi data.
-- Breadcrumb structured data pada detail bila breadcrumb ditampilkan.
-- `lang="id"`.
+## 1. Standar SEO Teknis (Search Engine Optimization)
 
-Jangan mengarang alamat, nomor telepon, tahun berdiri, rating, atau fakta organisasi untuk structured data.
+Seluruh halaman publik secara otomatis menyertakan metadata SEO komprehensif melalui komponen `src/components/global/SEO.astro`:
 
-## 2. Performance budget
+- **Title & Description**: Judul terstruktur dengan format `[Nama Halaman] | UKM Coding Cyber University` dan deskripsi informatif maksimal 160 karakter.
+- **Canonical URL**: Tag `<link rel="canonical" href="..." />` absolut berbasis domain resmi `https://ukmcoding.site`.
+- **OpenGraph & Twitter Cards**: Metadata sosial dinamis lengkap dengan gambar pratinjau (`og:image`), rasio 1200×630 px.
+- **Sitemap & Robots**:
+  - `sitemap-index.xml` dihasilkan otomatis saat build via `@astrojs/sitemap`.
+  - `public/robots.txt` mengizinkan pengindeksan untuk mesin pencari publik dan memblokir rute pratinjau/staging jika `PUBLIC_NOINDEX=true`.
+- **Structured Data (JSON-LD)**:
+  - `Organization` pada Beranda.
+  - `Article` / `NewsArticle` pada detail `/updates/[slug]`.
+  - `Event` pada artikel dengan tipe kegiatan terisi jadwal/lokasi.
+  - `BreadcrumbList` pada rute katalog dan detail.
 
-Target Lighthouse minimal 90 pada route utama.
+---
 
-Pedoman:
+## 2. Performance Budget & Core Web Vitals
 
-- Static HTML sebagai default.
-- JavaScript client hanya untuk drawer, modal, filter/search, dan motion yang benar-benar dibutuhkan.
-- Hindari hydration seluruh halaman.
-- Optimalkan gambar responsif dan lazy-load di bawah fold.
-- Tetapkan dimensi media untuk mengurangi layout shift.
-- Font memiliki fallback dan strategi loading yang tidak memblokir berlebihan.
-- Hindari library animasi besar bila CSS/IntersectionObserver cukup.
-- Jangan autoplay video.
+Situs ditargetkan mempertahankan skor Google Lighthouse **≥ 90** pada seluruh rute utama:
 
-## 3. Accessibility
+| Metrik | Target | Strategi Implementasi |
+| :--- | :--- | :--- |
+| **First Contentful Paint (FCP)** | < 1.0s | Kompilasi HTML statis murni tanpa ketergantungan render JS. |
+| **Largest Contentful Paint (LCP)** | < 2.0s | Pemuatan hero image prioritas (`fetchpriority="high"`, `loading="eager"`). |
+| **Cumulative Layout Shift (CLS)** | **0.00** | `scrollbar-gutter: stable`, aspect-ratio eksplisit pada gambar dan kartu. |
+| **Total Blocking Time (TBT)** | < 100ms | Zero-framework di sisi publik, script interaktif mini (< 15KB gzipped). |
 
-- WCAG 2.2 AA sebagai target praktis.
-- Skip link berfungsi.
-- Semua fungsi dapat digunakan keyboard.
-- Focus visible jelas.
-- Dialog/modal mengelola fokus, Escape, label, dan focus return.
-- Drawer tidak membuat fokus masuk ke konten belakang.
-- Target sentuh minimal sekitar 44×44 px.
-- Normal text memenuhi kontras 4.5:1.
-- Respect `prefers-reduced-motion`.
-- Alt text tepat; gambar dekoratif memakai alt kosong.
-- Form CMS berada di Sanity; UI publik MVP tidak memiliki form custom.
+---
 
-## 4. Browser target
+## 3. Standar Aksesibilitas (WCAG 2.2 AA)
 
-Dukung dua versi terbaru:
+1. **Navigasi Keyboard**:
+   - Terdapat **Skip Link** (`SkipLink.astro`) untuk langsung melompat ke konten utama (`#page`).
+   - Focus outline terlihat jelas pada seluruh tautan, tombol, dan form input.
+   - Mobile Drawer dan Project Quick-View Modal mengimplementasikan **focus trap** aktif, menutup dengan tombol `Escape`, dan mengembalikan fokus ke tombol pemantik (`preventScroll: true`).
+2. **Kontras Teks**:
+   - Teks utama (`--ink`, `--ink-deep`) di atas kertas hangat (`--paper`) memiliki rasio kontras > 7:1 (melebihi standar minimum AA 4.5:1).
+3. **Reduced Motion**:
+   - Seluruh animasi CSS dan efek partikel grid (`.grid-fx`) dinonaktifkan otomatis saat pengguna mengaktifkan mode hemat gerak (`@media (prefers-reduced-motion: reduce)`).
+4. **Semantik HTML**:
+   - Struktur heading menggunakan satu `<h1>` per halaman dengan hierarki logis `<h2>` dan `<h3>`.
+   - Seluruh tombol memiliki `aria-label` yang deskriptif.
 
-- Chrome.
-- Edge.
-- Firefox.
-- Safari.
-- iOS Safari dan Chrome Android yang masih didukung vendor.
+---
 
-Progressive enhancement: konten dan navigasi inti harus tetap tersedia jika motion atau sebagian JavaScript gagal.
+## 4. Pipeline CI Quality Gates (`.github/workflows/deploy.yml`)
 
-## 5. CI quality gates
+Sebelum kode dapat digabungkan (*merge*) ke branch utama `main`, GitHub Actions menjalankan pemeriksaan:
 
-Setiap pull request menjalankan:
-
-1. `npm ci`.
-2. Format check.
-3. ESLint.
-4. TypeScript/Astro check.
-5. Unit/integration tests.
-6. Production build.
-7. Internal link check.
-8. Lighthouse CI.
-
-CI tidak boleh menyimpan secret di log.
-
-## 6. Matriks QA minimum
-
-Route:
-
-- `/`.
-- `/kegiatan`.
-- Satu detail dari tiap tipe editorial.
-- `/projects`.
-- Satu detail project dengan gambar/link lengkap.
-- Satu detail project tanpa gambar/link.
-- `/404`.
-
-Viewport:
-
-- Desktop 1440×900.
-- Mobile sekitar 390×844.
-- Tambahan tablet bila layout breakpoint bermasalah.
-
-State:
-
-- Menu mobile terbuka.
-- Modal project terbuka.
-- Empty search/filter.
-- Konten tanpa cover.
-- Judul panjang.
-- Reduced motion.
-- Keyboard-only.
-
-## 7. Release blockers
-
-- Build/typecheck gagal.
-- Draft atau secret terlihat publik.
-- Data prototype/karangan masih tampil sebagai fakta.
-- Tautan internal rusak.
-- Navigasi mobile atau keyboard tidak dapat dipakai.
-- Overflow/overlap signifikan.
-- Lighthouse di bawah target tanpa waiver tertulis dan issue tindak lanjut.
-- Canonical/domain production salah.
-- Gambar atau logo digunakan tanpa izin.
+1. **Dependency Audit**: `npm ci` instalasi bersih tanpa modifikasi package-lock.
+2. **Code Formatting**: `npm run format:check` (Prettier).
+3. **Static Analysis**: `npm run lint` (ESLint 9).
+4. **Type-Check**: `astro check` (0 error TypeScript & template Astro).
+5. **Unit Testing**: `npm run test` (Vitest).
+6. **Production Build**: `npm run build` mengompilasi seluruh rute statis.
+7. **Lighthouse CI**: Pengujian otomatis skor audit performa dan aksesibilitas.

@@ -1,118 +1,85 @@
-# Architecture
+# System Architecture & Infrastructure
+**UKM Coding Cyber University**
 
-## 1. Gambaran sistem
+Dokumen ini menjelaskan arsitektur sistem, alur data (*data pipeline*), topologi infrastruktur cloud, dan model keamanan untuk website resmi UKM Coding.
+
+---
+
+## 1. Topologi & Diagram Arsitektur
 
 ```text
-Editor nonteknis
-    │ login/edit/publish
-    ▼
-Sanity Studio hosted
-    │ menyimpan dokumen dan aset
-    ▼
-Sanity Content Lake + Asset CDN
-    │ webhook/build request
-    ▼
-GitHub / Cloudflare Pages build
-    │ Astro mengambil konten published
-    ▼
-Static HTML/CSS/JS
-    │
-    ▼
-Cloudflare CDN → Pengunjung
+┌────────────────────────┐
+│     Tim Editor /       │
+│      Pengurus          │
+└───────────┬────────────┘
+            │ 1. Kelola Konten & Media via `/admin`
+            ▼
+┌────────────────────────┐       2. Simpan Data & Aset        ┌────────────────────────┐
+│  Sanity Studio v3      ├───────────────────────────────────►│ Sanity Content Lake    │
+│  (Embedded at /admin)  │                                    │ & Asset CDN (Global)   │
+└────────────────────────┘                                    └───────────┬────────────┘
+                                                                          │
+                                                                          │ 3. GROQ Query via Webhook /
+                                                                          │    GitHub Actions Build
+                                                                          ▼
+┌────────────────────────┐       4. Compile Static HTML/CSS   ┌────────────────────────┐
+│ GitHub Repository      ├───────────────────────────────────►│ Astro 5 Build Engine   │
+│ (Source of Truth Code) │                                    │ (Static Generation)    │
+└────────────────────────┘                                    └───────────┬────────────┘
+                                                                          │
+                                                                          │ 5. Deploy Static Artifacts
+                                                                          ▼
+                                                              ┌────────────────────────┐
+                                                              │ Cloudflare Pages Edge  │
+                                                              │ (Global CDN + SSL)     │
+                                                              └───────────┬────────────┘
+                                                                          │
+                                                                          │ 6. Fast Edge Response (<100ms)
+                                                                          ▼
+                                                              ┌────────────────────────┐
+                                                              │      Pengunjung &      │
+                                                              │   Mahasiswa Kampus     │
+                                                              └────────────────────────┘
 ```
 
-## 2. Tanggung jawab komponen
+---
 
-### Astro
+## 2. Peran & Tanggung Jawab Komponen
 
-- Rendering halaman static.
-- Routing `/`, `/kegiatan`, `/kegiatan/[slug]`, `/projects`, dan `/projects/[slug]`.
-- SEO, sitemap, structured data, dan UI interaktif ringan.
+### A. Astro 5 Engine (Frontend & Static Generation)
+- Mengompilasi seluruh template menjadi berkas HTML, CSS, dan JS statis murni tanpa ketergantungan server Node.js aktif di runtime publik.
+- Mengelola rute statis: `/`, `/projects`, `/projects/[slug]`, `/updates`, `/updates/[slug]`, dan `/404`.
+- Mengimplementasikan `ClientRouter` untuk navigasi antar-halaman yang mulus (*instant transition*) tanpa memuat ulang aset global.
+- Menghasilkan metadata SEO dinamis, OpenGraph, JSON-LD Structured Data, dan sitemap XML otomatis.
 
-### Sanity
+### B. Sanity Studio & Content Lake (Headless CMS)
+- **Content Lake**: Database dokumen terkelola berbasis JSON dan Content Delivery Network (CDN) global untuk aset gambar.
+- **Embedded Studio**: Panel editor Sanity Studio v3 tertanam di rute `/admin`, memungkinkan pengurus login langsung dari situs tanpa perlu membuka dashboard pihak ketiga yang terpisah.
+- **Image Pipeline**: Pengoptimalan gambar otomatis melalui `@sanity/image-url` dengan format modern WebP/AVIF dan hotspot visual.
 
-- Database konten publik.
-- Penyimpanan gambar.
-- Autentikasi editor.
-- Draft/publish dan revision history sesuai kemampuan plan.
-- Panel editor hosted.
+### C. Cloudflare Pages (Edge Hosting & CDN)
+- Menghosting berkas statis di ratusan data center tepi (*edge*) di seluruh dunia.
+- Menyediakan sertifikat SSL/TLS otomatis dan perlindungan DDoS bawaan.
+- Memberikan waktu respons awal (TTFB) yang sangat cepat (< 50ms di Indonesia).
 
-### Cloudflare Pages
+### D. GitHub & GitHub Actions (CI/CD Pipeline)
+- Repositori utama (*source of truth*) untuk seluruh kode sumber dan riwayat komit.
+- Pipeline otomatisasi di `.github/workflows/deploy.yml` yang menjalankan pemeriksaan kualitas kode (*type-check, formatting, linting, testing, Lighthouse CI*) sebelum proses rilis ke Cloudflare Pages.
 
-- Build dan hosting static.
-- Preview deployment per branch/PR.
-- Production dari branch utama.
-- SSL/CDN/custom subdomain kampus.
+---
 
-### GitHub
+## 3. Alur Pembaruan Konten (Publishing Workflow)
 
-- Source of truth kode.
-- Pull request dan review.
-- CI dan riwayat perubahan.
+1. **Penyuntingan**: Editor membuat atau mengedit artikel/project di `/admin`.
+2. **Drafting**: Setiap perubahan otomatis tersimpan sebagai *draft* aman yang tidak terlihat oleh publik.
+3. **Penerbitan**: Saat editor menekan tombol **Publish**, dokumen masuk ke status *published* di Sanity Content Lake.
+4. **Build & Deploy**: Webhook Sanity memicu proses build di GitHub Actions / Cloudflare Pages untuk memperbarui halaman statis dalam kurun waktu 1–2 menit.
 
-## 3. Environment
+---
 
-### Preview
+## 4. Keamanan & Proteksi Data
 
-- Dibuat untuk pull request/branch.
-- Boleh memakai dataset production read-only atau dataset terpisah bila kuota dan workflow mendukung.
-- Harus diberi `noindex` bila dapat diakses publik.
-- Secret preview hanya berada di environment Cloudflare/GitHub.
-
-### Production
-
-- Branch utama, disarankan `main`.
-- Domain berupa subdomain kampus.
-- Hanya konten published.
-- Tidak pernah memuat token preview/write ke browser.
-
-## 4. Strategi build konten
-
-MVP menggunakan static generation:
-
-1. Editor publish di Sanity.
-2. Webhook memicu build Cloudflare.
-3. Astro mengambil konten published.
-4. Route detail dihasilkan dari slug.
-5. Cloudflare menyajikan hasil static.
-
-Konsekuensi yang diterima:
-
-- Perubahan konten tidak benar-benar instan; menunggu build.
-- Website tetap cepat dan aman tanpa server origin yang selalu aktif.
-- Jika webhook gagal, editor/maintainer perlu trigger rebuild manual.
-
-## 5. Keamanan
-
-- Editor login melalui Sanity; jangan buat autentikasi custom.
-- Aktifkan MFA pada akun GitHub, Cloudflare, Sanity, dan email pemilik.
-- Jangan memakai akun bersama bila platform mendukung akun individual.
-- Gunakan least privilege.
-- Jangan menyimpan token pada repository atau kode client.
-- Rotasi token saat serah terima.
-- Tetapkan minimal dua pemilik organisasi agar akun tidak terkunci pada satu orang.
-- Validasi URL eksternal dan file upload melalui schema.
-- Konten rich text harus dirender melalui renderer aman; jangan memasukkan HTML mentah tanpa sanitasi.
-
-## 6. Reliability dan fallback
-
-- Jika gambar kosong, render visual geometris prototype.
-- Jika optional field kosong, hilangkan elemen tanpa meninggalkan ruang rusak.
-- Jika Sanity tidak tersedia saat runtime, halaman static terakhir tetap dapat diakses.
-- Jika Sanity gagal saat build, build harus gagal tanpa mengganti production sebelumnya.
-- Sediakan prosedur rollback deployment dan export konten.
-
-## 7. Skalabilitas
-
-Arsitektur ini cukup untuk trafik <1.000 kunjungan/bulan dan dapat melayani trafik jauh lebih besar selama berbasis static. Dashboard internal masa depan secara eksplisit berada di luar proyek ini dan harus dievaluasi sebagai sistem terpisah, bukan dimasukkan diam-diam ke CMS portal publik.
-
-## 8. Keputusan lokasi CMS
-
-MVP memakai **Sanity-hosted Studio** karena:
-
-- Tidak bergantung pada akses DNS kampus.
-- Deployment CMS terpisah dari website publik.
-- Lebih mudah bagi 1–2 editor.
-- Mengurangi kompleksitas route `/admin` dan bundle website.
-
-Subdomain Studio dapat dipertimbangkan setelah kepemilikan DNS dan operasional stabil.
+- **Zero Client Privilege**: Frontend website hanya memiliki akses *read-only* ke dataset publik Sanity. Token dengan hak akses *write* tidak pernah disimpan di kode frontend.
+- **Autentikasi Terisolasi**: Autentikasi editor dikelola sepenuhnya oleh infrastruktur OAuth Sanity yang aman.
+- **Sanitasi Rich Text**: Konten teks bebas dari editor dirender secara aman menggunakan komponen `@portabletext/react` / `astro-portabletext`, mencegah injeksi Cross-Site Scripting (XSS).
+- **Enkripsi Transit**: Seluruh komunikasi data dilindungi protokol HTTPS/TLS secara mutlak.
