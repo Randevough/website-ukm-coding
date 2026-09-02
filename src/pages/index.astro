@@ -1,5 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import heroImage from "../assets/images/hero-image.jpg";
 import ProjectCard from "../components/ui/ProjectCard.astro";
 import PostCard from "../components/ui/PostCard.astro";
 import Art from "../components/global/Art.astro";
@@ -136,18 +138,17 @@ function tanggalPendek(iso: string) {
                 <span class="hero__cardTag idx">LIFE AT UKM CODING</span>
               </div>
               <div class="hero__cardImageWrap">
-                <picture>
-                  <source srcset="/hero-image.webp" type="image/webp" />
-                  <img
-                    src="/hero-image.jpg"
-                    alt="Mahasiswa UKM Coding Cyber University berkolaborasi membangun project teknologi"
-                    class="hero__cardImg"
-                    width="960"
-                    height="720"
-                    loading="eager"
-                    fetchpriority="high"
-                  />
-                </picture>
+                <Image
+                  src={heroImage}
+                  alt="Mahasiswa UKM Coding Cyber University berkolaborasi membangun project teknologi"
+                  class="hero__cardImg"
+                  width={960}
+                  height={720}
+                  format="webp"
+                  quality={80}
+                  loading="eager"
+                  fetchpriority="high"
+                />
               </div>
               <div class="hero__cardFoot">
                 <span>PROJECT · PELATIHAN · EVENT · KOMPETISI</span>

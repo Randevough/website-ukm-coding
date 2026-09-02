@@ -1,0 +1,49 @@
+/* =========================================================
+   FONTS — Local Self-Hosted @font-face Definitions
+   Eliminates external render-blocking network requests
+   ========================================================= */
+
+/* Plus Jakarta Sans (Variable wght 200-800) */
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src:
+    url("/fonts/PlusJakartaSans-VariableFont_wght.ttf")
+      format("truetype-variations"),
+    url("/fonts/PlusJakartaSans-VariableFont_wght.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  font-style: italic;
+  font-weight: 200 800;
+  font-display: swap;
+  src:
+    url("/fonts/PlusJakartaSans-Italic-VariableFont_wght.ttf")
+      format("truetype-variations"),
+    url("/fonts/PlusJakartaSans-Italic-VariableFont_wght.ttf")
+      format("truetype");
+}
+
+/* Instrument Serif (Display Serif Regular) */
+@font-face {
+  font-family: "Instrument Serif";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/InstrumentSerif-Regular.ttf") format("truetype");
+}
+
+/* JetBrains Mono (Variable wght 100-800) */
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 100 800;
+  font-display: swap;
+  src:
+    url("/fonts/JetBrainsMono-VariableFont_wght.ttf")
+      format("truetype-variations"),
+    url("/fonts/JetBrainsMono-VariableFont_wght.ttf") format("truetype");
+}
