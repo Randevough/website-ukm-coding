@@ -246,9 +246,8 @@
   z-index: 1;
 }
 
-/* Di perangkat sentuh dan mode hemat gerak, efeknya dimatikan total
-   supaya tidak ada satu layer pun yang dibuat. */
-@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+/* Pada mode hemat gerak, efek dimatikan untuk aksesibilitas. */
+@media (prefers-reduced-motion: reduce) {
   .grid-fx {
     display: none;
   }

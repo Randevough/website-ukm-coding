@@ -508,6 +508,7 @@
   inset: 0;
   z-index: var(--z-drawer);
   pointer-events: none;
+  overscroll-behavior: contain;
 }
 
 .drawer__backdrop {
@@ -515,10 +516,9 @@
   inset: 0;
   background: rgba(12, 14, 17, 0.4);
   opacity: 0;
-  backdrop-filter: blur(0px);
-  transition:
-    opacity 500ms var(--ease-out),
-    backdrop-filter 500ms var(--ease-out);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  transition: opacity var(--t) var(--ease-out);
 }
 
 .drawer__panel {
@@ -532,7 +532,8 @@
   flex-direction: column;
   gap: var(--s4);
   transform: translate3d(101%, 0, 0);
-  transition: transform 500ms var(--ease-out);
+  transition: transform var(--t) var(--ease-out);
+  overscroll-behavior: contain;
 }
 
 .drawer.is-open,
@@ -543,7 +544,6 @@
 .drawer.is-open .drawer__backdrop,
 .drawer[aria-hidden="false"] .drawer__backdrop {
   opacity: 1;
-  backdrop-filter: blur(6px);
 }
 
 .drawer.is-open .drawer__panel,
@@ -933,7 +933,6 @@
 
   .pcard__top .label {
     font-size: var(--xs);
-    padding: 2px 8px;
   }
 
   .pcard__top span:not(.label) {
@@ -1288,7 +1287,6 @@
 
   .ncard .label {
     font-size: var(--xs);
-    padding: 2px 8px;
   }
 
   .ncard__title {

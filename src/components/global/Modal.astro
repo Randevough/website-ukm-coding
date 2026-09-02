@@ -148,7 +148,7 @@ const projects = rawProjects.map((p) => ({
     const main = document.querySelector("main");
     if (main) main.inert = true;
     modal.setAttribute("tabindex", "-1");
-    modal.focus();
+    modal.focus({ preventScroll: true });
   }
 
   function closeModal() {
@@ -161,7 +161,7 @@ const projects = rawProjects.map((p) => ({
     const main = document.querySelector("main");
     if (main) main.inert = false;
     if (lastTrigger) {
-      lastTrigger.focus();
+      lastTrigger.focus({ preventScroll: true });
       lastTrigger = null;
     }
   }

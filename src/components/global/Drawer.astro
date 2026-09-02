@@ -98,7 +98,7 @@ const { settings } = UKM_FIXTURE;
     drawer.setAttribute("tabindex", "-1");
     const main = document.querySelector("main");
     if (main) main.inert = true;
-    drawer.focus();
+    drawer.focus({ preventScroll: true });
   }
 
   function closeDrawer() {
