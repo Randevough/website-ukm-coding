@@ -1,53 +1,47 @@
-# UKM Coding Cyber University - Frontend Prototype
+# UKM Coding Cyber University
 
-Proyek Astro ini adalah framework modern untuk UKM Coding Cyber University dengan antarmuka yang statis, responsif, dan terintegrasi dengan CMS Sanity.
+[![Astro](https://img.shields.io/badge/Astro-5.x-BC52EE?style=flat-square&logo=astro&logoColor=white)](https://astro.build/)
+[![Sanity](https://img.shields.io/badge/Sanity-v3-F03E2F?style=flat-square&logo=sanity&logoColor=white)](https://www.sanity.io/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=black)](https://react.dev/)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 
-## Memulai Pengembangan
+Situs web resmi dan arsip project UKM Coding Cyber University. Dibangun sebagai etalase editorial untuk karya rekayasa perangkat lunak mahasiswa, dokumentasi workshop teknis, dan inisiatif komunitas kampus.
 
-1. **Install dependensi**
-   ```bash
-   npm install
-   ```
-2. **Jalankan server pengembangan**
-   ```bash
-   npm run dev
-   ```
-3. **Akses web**
-   Buka `http://localhost:4321` di browser Anda.
+---
 
-## Integrasi Sanity CMS
+## Konsep Desain: "Spec Sheet"
 
-Situs ini menggunakan Sanity sebagai Headless CMS. Studio editor tertanam (embedded) langsung di rute `/admin`.
+Antarmuka dirancang dengan pendekatan visual lembar spesifikasi fisik (*spec sheet*), bukan tampilan dasbor web generik:
 
-### Langkah-langkah Setup Sanity
+- **Kertas & Tinta**: Latar bernuansa kertas hangat dipadukan dengan tipografi tinta kontras tinggi untuk kenyamanan membaca teks panjang.
+- **Rangka Hairline**: Garis pandu vertikal dan garis pemisah tipis menyusun tata letak tanpa mengandalkan bayangan tebal atau kotak kartu yang berlebihan.
+- **Tipografi Editorial**: Kombinasi terkurasi antara *Instrument Serif* untuk judul besar, *JetBrains Mono* untuk label dan metadata teknis, serta *Plus Jakarta Sans* untuk keterbacaan teks utama.
+- **Aksen Terukur**: Biru kobalt dan oranye digunakan secara selektif sebagai penanda fokus tunggal pada tiap halaman.
 
-1. Buat proyek baru di [Sanity.io](https://www.sanity.io/).
-2. Tambahkan URL website Anda (contoh: `http://localhost:4321` dan domain production) ke dalam **CORS Origins** pada pengaturan proyek Sanity dan aktifkan "Allow credentials" agar Studio dapat berjalan.
-3. Buka file `.env.example` dan salin isinya ke file baru bernama `.env`.
-4. Isi `PUBLIC_SANITY_PROJECT_ID` dengan ID proyek Sanity Anda.
-5. (Opsional) Jika ingin melakukan migrasi data contoh dari prototype ke Sanity, Anda dapat membuat token **Editor** (Write) di pengaturan API Sanity dan isikan ke variabel `SANITY_SECRET_TOKEN` di `.env`.
+---
 
-### Melakukan Migrasi / Seed Data Awal
+## Fitur & Kemampuan Utama
 
-Situs ini dilengkapi dengan skrip migrasi data yang akan mengirim _dummy fixtures_ ke Sanity Anda. Semua data contoh akan memiliki prefiks `[FIXTURE]` agar dapat dibedakan.
+- **Direktori & Studi Kasus Project**: Dokumentasi karya terstruktur (Web, Mobile, IoT, Data/AI, Tools) yang membedah masalah nyata, pendekatan teknis, teknologi yang dipakai, dan pelajaran yang didapat. Dilengkapi fitur pencarian instan dan filter kategori di sisi klien.
+- **Arsip Updates & Kegiatan**: Artikel editorial, pengumuman rekrutmen, dan liputan acara dengan kontrol filter terpadu.
+- **Sanity Studio Tertanam**: Alur kerja pengelolaan konten mandiri langsung di rute `/admin` tanpa memerlukan dasbor eksternal terpisah.
+- **Gaya Murni (Zero-Framework)**: Ditulis menggunakan Vanilla CSS murni berbasis variabel token desain, menjaga ukuran berkas akhir tetap ramping dan cepat dimuat.
+- **Ketahanan Offline / Fallback**: Dilengkapi data *fixtures* lokal bawaan sehingga situs tetap bisa dibangun dan dipratinjau dengan mulus meski tanpa koneksi langsung ke Sanity CMS.
 
-Jalankan perintah ini:
+---
 
-```bash
-npx tsx scripts/seed.ts
-```
+## Teknologi
 
-> **Catatan:** Jangan mempublikasikan `SANITY_SECRET_TOKEN` atau meng-commit file `.env` ke repository.
+- **Framework**: Astro 5 (ClientRouter View Transitions, Static Site Generation)
+- **CMS**: Sanity Studio v3 (`@sanity/astro`)
+- **Runtime / UI**: React 19 (Sanity Studio & komponen interaktif)
+- **Styling**: Vanilla CSS (Sistem Token Desain)
+- **Kualitas Kode**: TypeScript, ESLint, Prettier, Vitest
 
-## Menulis Konten
+---
 
-Akses `http://localhost:4321/admin` untuk membuka Sanity Studio. Login dengan akun Anda untuk mulai mengelola pengaturan, proyek, arsip kegiatan, dan galeri.
+## Lisensi
 
-## Lisensi / License
-
-Proyek ini menggunakan skema lisensi terpisah (split licensing):
-
-- **Kode Sumber (Source Code)**: Dilisensikan di bawah [MIT License](LICENSE). Anda bebas mempelajari, memodifikasi, dan menggunakan kembali kode ini sesuai ketentuan lisensi MIT.
-- **Aset Merek, Media & Konten**: Hak Cipta dilindungi undang-undang (All Rights Reserved) oleh **UKM Coding Cyber University**. Logo, identitas visual, foto kegiatan, dan materi editorial tidak termasuk dalam lisensi MIT dan tidak boleh disalahgunakan atau digunakan secara komersial tanpa izin tertulis.
-
-Copyright (c) 2026 UKM Coding Cyber University.
+- **Kode Sumber**: [MIT License](LICENSE) — bebas dipelajari, dimodifikasi, dan digunakan kembali sesuai ketentuan lisensi MIT.
+- **Merek & Konten**: Hak Cipta © 2026 UKM Coding Cyber University. Seluruh hak cipta dilindungi undang-undang. Logo, identitas visual, foto kegiatan, dan materi editorial tidak termasuk dalam lisensi MIT dan tidak boleh digunakan untuk keperluan komersial tanpa izin tertulis.

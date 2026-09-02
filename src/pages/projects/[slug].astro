@@ -141,50 +141,56 @@ const breadcrumb = [
         }
       </div>
       <div class="case__content">
-        <h3 class="label label--mark">Masalah</h3>
-        {
-          isSanityBlocks(p.masalah) ? (
-            <PortableTextComponent value={p.masalah} />
-          ) : isStringArray(p.masalah) ? (
-            <ul>
-              {p.masalah.map((item: string) => (
-                <li>{item}</li>
-              ))}
-            </ul>
-          ) : (
-            <p>{p.masalah}</p>
-          )
-        }
+        <div class="case__section">
+          <h3 class="label label--mark">Masalah</h3>
+          {
+            isSanityBlocks(p.masalah) ? (
+              <PortableTextComponent value={p.masalah} />
+            ) : isStringArray(p.masalah) ? (
+              <ul>
+                {p.masalah.map((item: string) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            ) : (
+              <p>{p.masalah}</p>
+            )
+          }
+        </div>
 
-        <h3 class="label label--mark">Pendekatan</h3>
-        {
-          isSanityBlocks(p.pendekatan) ? (
-            <PortableTextComponent value={p.pendekatan} />
-          ) : isStringArray(p.pendekatan) ? (
-            <ul>
-              {p.pendekatan.map((item: string) => (
-                <li>{item}</li>
-              ))}
-            </ul>
-          ) : (
-            <p>{p.pendekatan}</p>
-          )
-        }
+        <div class="case__section">
+          <h3 class="label label--mark">Pendekatan</h3>
+          {
+            isSanityBlocks(p.pendekatan) ? (
+              <PortableTextComponent value={p.pendekatan} />
+            ) : isStringArray(p.pendekatan) ? (
+              <ul>
+                {p.pendekatan.map((item: string) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            ) : (
+              <p>{p.pendekatan}</p>
+            )
+          }
+        </div>
 
-        <h3 class="label label--mark">Hasil</h3>
-        {
-          isSanityBlocks(p.hasil) ? (
-            <PortableTextComponent value={p.hasil} />
-          ) : isStringArray(p.hasil) ? (
-            <ul>
-              {p.hasil.map((item: string) => (
-                <li>{item}</li>
-              ))}
-            </ul>
-          ) : (
-            <p>{p.hasil}</p>
-          )
-        }
+        <div class="case__section">
+          <h3 class="label label--mark">Hasil</h3>
+          {
+            isSanityBlocks(p.hasil) ? (
+              <PortableTextComponent value={p.hasil} />
+            ) : isStringArray(p.hasil) ? (
+              <ul>
+                {p.hasil.map((item: string) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            ) : (
+              <p>{p.hasil}</p>
+            )
+          }
+        </div>
       </div>
     </div>
   </section>
