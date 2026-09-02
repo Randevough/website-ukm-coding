@@ -33,7 +33,7 @@ describe("Sanity Queries & Integration", () => {
       expect(queries.editorialBySlugQuery).toBeDefined();
       expect(queries.editorialBySlugQuery).toContain('_type == "editorial"');
       expect(queries.editorialBySlugQuery).toContain("slug.current == $slug");
-      expect(queries.editorialBySlugQuery).toContain("seo");
+      expect(queries.editorialBySlugQuery).toContain("isi");
     });
 
     it("should export valid allProjectsQuery with year ordering", () => {

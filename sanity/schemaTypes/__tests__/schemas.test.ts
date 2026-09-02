@@ -6,15 +6,13 @@ import { siteSettings } from "../siteSettings";
 import { partner } from "../partner";
 import { author } from "../author";
 import { galleryItem } from "../galleryItem";
-import { seo } from "../seo";
 
 describe("Sanity CMS Schema Definitions", () => {
-  it("should register all 7 required core schemas in schemaTypes", () => {
+  it("should register all 6 required core schemas in schemaTypes", () => {
     expect(schemaTypes).toBeDefined();
-    expect(schemaTypes.length).toBe(7);
+    expect(schemaTypes.length).toBe(6);
 
     const schemaNames = schemaTypes.map((s: any) => s.name);
-    expect(schemaNames).toContain("seo");
     expect(schemaNames).toContain("siteSettings");
     expect(schemaNames).toContain("author");
     expect(schemaNames).toContain("editorial");
@@ -60,7 +58,7 @@ describe("Sanity CMS Schema Definitions", () => {
   });
 
   describe("Site Settings Schema", () => {
-    it("should define global settings fields", () => {
+    it("should define active global settings fields", () => {
       expect(siteSettings.name).toBe("siteSettings");
       expect(siteSettings.type).toBe("document");
 
@@ -70,9 +68,7 @@ describe("Sanity CMS Schema Definitions", () => {
       expect(fieldNames).toContain("email");
       expect(fieldNames).toContain("instagramUrl");
       expect(fieldNames).toContain("linkedinUrl");
-      expect(fieldNames).toContain("githubUrl");
-      expect(fieldNames).toContain("statistik");
-      expect(fieldNames).toContain("seoDefault");
+      expect(fieldNames).toContain("proposalMediaPartner");
     });
   });
 
@@ -92,18 +88,6 @@ describe("Sanity CMS Schema Definitions", () => {
       expect(fieldNames).toContain("gambar");
       expect(fieldNames).toContain("alt");
       expect(fieldNames).toContain("tampilDiBeranda");
-    });
-  });
-
-  describe("SEO Schema", () => {
-    it("should define an object type for SEO overrides", () => {
-      expect(seo.name).toBe("seo");
-      expect(seo.type).toBe("object");
-      const fieldNames = seo.fields.map((f: any) => f.name);
-      expect(fieldNames).toContain("metaTitle");
-      expect(fieldNames).toContain("metaDescription");
-      expect(fieldNames).toContain("ogImage");
-      expect(fieldNames).toContain("noIndex");
     });
   });
 

@@ -34,50 +34,12 @@ export const siteSettings = defineType({
       type: "url",
     }),
     defineField({
-      name: "githubUrl",
-      title: "URL GitHub",
-      type: "url",
-    }),
-    defineField({
       name: "proposalMediaPartner",
       title: "File Proposal Media Partner (PDF)",
       type: "file",
       options: {
         accept: "application/pdf",
       },
-    }),
-    defineField({
-      name: "lokasi",
-      title: "Lokasi (Kota, Negara)",
-      type: "string",
-      initialValue: "Jakarta, Indonesia",
-    }),
-    defineField({
-      name: "tahunBerdiri",
-      title: "Tahun Berdiri",
-      type: "string",
-      description: "Misal: 2026. Kosongkan jika belum dipastikan.",
-    }),
-    defineField({
-      name: "statistik",
-      title: "Statistik Beranda",
-      type: "array",
-      of: [
-        {
-          type: "object",
-          fields: [
-            { name: "label", title: "Label", type: "string" },
-            { name: "value", title: "Nilai (Angka)", type: "number" },
-            { name: "suffix", title: "Akhiran (Misal: +)", type: "string" },
-          ],
-        },
-      ],
-      validation: (Rule) => Rule.max(4),
-    }),
-    defineField({
-      name: "seoDefault",
-      title: "SEO Default",
-      type: "seo",
     }),
   ],
 });

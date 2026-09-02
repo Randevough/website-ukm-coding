@@ -236,7 +236,10 @@ function glyphOf(name: string): string {
   </div>
 
   <div class="container site-footer__bottom">
-    <span>© 2026 UKM Coding Cyber University</span>
+    <span
+      >© {new Date().getFullYear()}
+      {settings.nama || "UKM Coding Cyber University"}</span
+    >
     <span>Belajar · Membangun · Berbagi</span>
   </div>
 </footer>

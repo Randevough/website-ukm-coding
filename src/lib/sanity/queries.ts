@@ -3,10 +3,8 @@ export const siteSettingsQuery = `
     "nama": namaSitus,
     "tagline": deskripsiSingkat,
     email,
-    instagram,
     instagramUrl,
     linkedinUrl,
-    github,
     "mediaPartnerUrl": proposalMediaPartner.asset->url
   }
 `;
@@ -47,8 +45,7 @@ export const editorialBySlugQuery = `
     tanggalMulai,
     tanggalSelesai,
     lokasi,
-    tautanPendaftaran,
-    seo
+    tautanPendaftaran
   }
 `;
 

@@ -45,7 +45,6 @@ export const editorial = defineType({
   fieldsets: [
     { name: "meta", title: "Metadata Konten" },
     { name: "event", title: "Detail Kegiatan (Hanya untuk tipe Kegiatan)" },
-    { name: "seo", title: "SEO & Visibilitas" },
   ],
   fields: [
     defineField({
@@ -63,25 +62,30 @@ export const editorial = defineType({
       type: "slug",
       fieldset: "meta",
       description:
-        "URL tautan. Peringatan: Mengubah slug yang sudah tayang dapat memunculkan error 404 pada pengunjung sebelumnya.",
+        "URL tautan. Klik 'Generate' setelah mengisi Judul. Peringatan: mengubah slug setelah dipublikasikan akan merusak tautan lama.",
       options: { source: "judul", maxLength: 96 },
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "tipe",
-      title: "Tipe",
+      title: "Tipe / Kategori Utama",
       type: "string",
       fieldset: "meta",
       description:
         "Pilih 'Kegiatan' untuk memunculkan input jadwal dan lokasi.",
       options: {
-        list: ["Berita", "Kegiatan", "Pengumuman", "Prestasi"],
+        list: [
+          { title: "Berita", value: "Berita" },
+          { title: "Kegiatan", value: "Kegiatan" },
+          { title: "Pengumuman", value: "Pengumuman" },
+          { title: "Prestasi", value: "Prestasi" },
+        ],
       },
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "ringkasan",
-      title: "Ringkasan",
+      title: "Ringkasan (Lead Paragraph)",
       type: "text",
       fieldset: "meta",
       rows: 3,
@@ -91,32 +95,36 @@ export const editorial = defineType({
     }),
     defineField({
       name: "isi",
-      title: "Isi Konten",
+      title: "Isi Lengkap",
       type: "array",
       of: blockContent,
-      description: "Isi tulisan secara lengkap.",
+      description:
+        "Konten lengkap artikel. Gunakan subjudul (H2/H3) dan daftar poin untuk keterbacaan.",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "cover",
-      title: "Cover Image",
+      title: "Foto Sampul",
       type: "image",
       fieldset: "meta",
       options: { hotspot: true },
+      description: "Format landscape 16:9 disarankan. Maksimal 2MB.",
     }),
     defineField({
       name: "coverAlt",
-      title: "Cover Alt Text",
+      title: "Teks Alternatif Foto Sampul (A11y)",
       type: "string",
       fieldset: "meta",
       description:
-        "Teks alternatif untuk aksesibilitas tunanetra. Jelaskan isi gambar secara deskriptif.",
+        "Deskripsikan isi foto untuk pembaca tunanetra dan SEO Google Images.",
     }),
     defineField({
       name: "tanggalPublikasi",
       title: "Tanggal Publikasi",
       type: "date",
       fieldset: "meta",
+      initialValue: () => new Date().toISOString().split("T")[0],
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "penulis",
@@ -128,7 +136,7 @@ export const editorial = defineType({
       name: "featured",
       title: "Tampil di Sorotan",
       type: "boolean",
-      fieldset: "seo",
+      fieldset: "meta",
       initialValue: false,
     }),
     defineField({
@@ -166,14 +174,6 @@ export const editorial = defineType({
       fieldset: "event",
       hidden: ({ document }) => document?.tipe !== "Kegiatan",
       validation: (Rule) => Rule.uri({ scheme: ["http", "https"] }),
-    }),
-    defineField({
-      name: "seo",
-      title: "SEO Override",
-      type: "seo",
-      fieldset: "seo",
-      description:
-        "Gunakan bila metadata bawaan dirasa kurang memadai untuk mesin pencari.",
     }),
   ],
 });
