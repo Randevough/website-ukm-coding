@@ -82,6 +82,12 @@
   padding: 0;
 }
 
+@media (max-width: 1023px) {
+  .hero__lead {
+    margin-top: clamp(16px, 2.5vw, 24px);
+  }
+}
+
 @media (max-width: 700px) {
   .hero__left .label {
     font-size: 8px !important;
@@ -638,7 +644,7 @@
   }
 
   #featuredProjects {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
     gap: var(--s4);
   }
 
