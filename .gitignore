@@ -17,7 +17,6 @@ pnpm-debug.log*
 .env
 .env.production
 AGENTS.md
-docs/
 .env*
 
 
