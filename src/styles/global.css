@@ -26,9 +26,6 @@ body {
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-feature-settings:
-    "ss01" 1,
-    "cv01" 1;
   min-height: 100vh;
   overflow-x: hidden;
 }
