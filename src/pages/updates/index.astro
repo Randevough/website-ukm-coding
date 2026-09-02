@@ -136,7 +136,8 @@ const catCounts = {
   >
     <div class="container">
       <div class="filterbar">
-        <div class="chips hide-sm" id="postChips" data-chips>
+        <div class="filterbar__group filterbar__group--left">
+          <div class="chips hide-sm" id="postChips" data-chips>
           <button
             class="chip is-active"
             type="button"
@@ -228,6 +229,39 @@ const catCounts = {
           </ul>
         </div>
 
+        <div
+          class="cselect"
+          id="timeframeDropdown"
+          role="combobox"
+          aria-haspopup="listbox"
+          aria-expanded="false"
+          aria-label="Filter Waktu"
+          tabindex="0"
+        >
+          <span class="cselect__value" id="timeframeValue">Semua Waktu</span>
+          <svg
+            class="cselect__arrow"
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="m6 9 6 6 6-6"></path>
+          </svg>
+          <ul class="cselect__list" role="listbox" aria-label="Filter Waktu">
+            <li class="cselect__opt is-selected" role="option" aria-selected="true" data-value="Semua Waktu">Semua Waktu</li>
+            <li class="cselect__opt" role="option" aria-selected="false" data-value="Tahun 2026">Tahun 2026</li>
+            <li class="cselect__opt" role="option" aria-selected="false" data-value="Tahun 2025">Tahun 2025</li>
+            <li class="cselect__opt" role="option" aria-selected="false" data-value="Tahun 2024">Tahun 2024</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="filterbar__group filterbar__group--right">
         <input
           class="search search--full-sm"
           type="search"
@@ -235,6 +269,7 @@ const catCounts = {
           aria-label="Cari berita"
           disabled
         />
+      </div>
       </div>
 
       <div
@@ -259,6 +294,7 @@ const catCounts = {
           data-post-item
           data-kategori={p.tipe || p.kategori}
           data-title={(p.judul || p.title || "").toLowerCase()}
+          data-date={(p.tanggalPublikasi || p.tanggal || "").substring(0, 4)}
         >
           <PostCard post={p} />
         </div>

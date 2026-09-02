@@ -685,15 +685,15 @@
 .article__head {
   display: flex;
   flex-direction: column;
-  gap: var(--s4);
-  padding-bottom: var(--s5);
+  gap: var(--s3);
+  padding-bottom: var(--s4);
   border-bottom: 1px solid var(--line);
 }
 
 .article__title {
-  font-size: clamp(2rem, 3.8vw, 3.1rem);
-  line-height: 1.12;
-  letter-spacing: -0.03em;
+  font-size: clamp(1.75rem, 2.8vw, 2.35rem);
+  line-height: 1.18;
+  letter-spacing: -0.025em;
   font-weight: 800;
   color: var(--ink-deep);
 }
@@ -721,12 +721,12 @@
   position: relative;
   width: 100%;
   aspect-ratio: 21 / 9;
-  max-height: 500px;
+  max-height: 480px;
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: var(--r1);
-  margin-top: var(--s5);
-  margin-bottom: var(--s6);
+  margin-top: var(--s4);
+  margin-bottom: var(--s5);
   background: var(--paper-2);
 }
 
@@ -786,8 +786,8 @@
 .case__head {
   display: flex;
   flex-direction: column;
-  gap: var(--s4);
-  padding-bottom: var(--s5);
+  gap: var(--s3);
+  padding-bottom: var(--s4);
   border-bottom: 1px solid var(--line);
 }
 
@@ -814,16 +814,16 @@
 }
 
 .case__title {
-  font-size: clamp(2rem, 3.8vw, 3.1rem);
-  line-height: 1.12;
-  letter-spacing: -0.03em;
+  font-size: clamp(1.75rem, 2.8vw, 2.35rem);
+  line-height: 1.18;
+  letter-spacing: -0.025em;
   font-weight: 800;
   color: var(--ink-deep);
 }
 
 .case__lead {
-  font-size: var(--body-lg);
-  line-height: 1.65;
+  font-size: var(--body);
+  line-height: 1.6;
   color: var(--ink-2);
   max-width: 65ch;
 }
@@ -845,7 +845,7 @@
   min-width: 0;
 }
 
-.case__metaCol span {
+.case__metaCol > span {
   font-family: var(--mono);
   font-size: var(--xxs);
   letter-spacing: var(--track-label);
@@ -869,12 +869,12 @@
   width: 100%;
   aspect-ratio: 21 / 9;
   min-height: 260px;
-  max-height: 500px;
+  max-height: 480px;
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: var(--r1);
-  margin-top: var(--s5);
-  margin-bottom: var(--s6);
+  margin-top: var(--s4);
+  margin-bottom: var(--s5);
   background: var(--paper-2);
 }
 

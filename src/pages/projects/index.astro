@@ -81,15 +81,15 @@ const breadcrumb = [
   >
     <div class="container">
       <div class="filterbar">
-        <div class="chips hide-sm" id="projectChips" data-chips>
-          <button class="chip is-active" type="button" disabled>Semua</button>
-          <button class="chip" type="button" disabled>Web App</button>
-          <button class="chip" type="button" disabled>Mobile</button>
-          <button class="chip" type="button" disabled>IoT / Hardware</button>
-          <button class="chip" type="button" disabled>Lainnya</button>
-        </div>
+        <div class="filterbar__group filterbar__group--left">
+          <div class="chips hide-sm" id="projectChips" data-chips>
+            <button class="chip is-active" type="button" disabled>Semua</button>
+            <button class="chip" type="button" disabled>Web App</button>
+            <button class="chip" type="button" disabled>Mobile</button>
+            <button class="chip" type="button" disabled>IoT / Hardware</button>
+            <button class="chip" type="button" disabled>Lainnya</button>
+          </div>
 
-        <div class="filterbar__controls">
           <div
             class="cselect only-sm"
             id="mobileCatDropdown"
@@ -214,6 +214,16 @@ const breadcrumb = [
               </li>
             </ul>
           </div>
+        </div>
+
+        <div class="filterbar__group filterbar__group--right">
+          <input
+            class="search search--full-sm"
+            type="search"
+            placeholder="Cari project…"
+            aria-label="Cari project"
+            disabled
+          />
         </div>
       </div>
 

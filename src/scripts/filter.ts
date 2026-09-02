@@ -25,6 +25,12 @@ export function initKegiatanFilter() {
   let currentPage = 1;
   let currentCategory = "Semua";
   let currentSearch = "";
+  let currentYear = "Semua";
+
+  // Elements for timeframe
+  const timeframeDropdown = document.getElementById("timeframeDropdown");
+  const timeframeValue = document.getElementById("timeframeValue");
+  const timeframeOpts = timeframeDropdown?.querySelectorAll(".cselect__opt") as NodeListOf<HTMLElement> | undefined;
 
   // Get all items from template
   const template = document.getElementById(
@@ -44,6 +50,9 @@ export function initKegiatanFilter() {
     if (currentSearch) url.searchParams.set("q", currentSearch);
     else url.searchParams.delete("q");
 
+    if (currentYear !== "Semua") url.searchParams.set("tahun", currentYear);
+    else url.searchParams.delete("tahun");
+
     if (currentPage > 1) url.searchParams.set("page", currentPage.toString());
     else url.searchParams.delete("page");
 
@@ -55,6 +64,7 @@ export function initKegiatanFilter() {
     const url = new URL(window.location.href);
     currentCategory = url.searchParams.get("kategori") || "Semua";
     currentSearch = url.searchParams.get("q") || "";
+    currentYear = url.searchParams.get("tahun") || "Semua";
     currentPage = parseInt(url.searchParams.get("page") || "1", 10);
   }
 
@@ -67,8 +77,15 @@ export function initKegiatanFilter() {
       currentCategory,
       (el) => el.getAttribute("data-kategori") || "",
     );
+    const yearFiltered =
+      currentYear === "Semua"
+        ? catFiltered
+        : catFiltered.filter((el) => {
+            const yr = el.getAttribute("data-date") || "";
+            return yr === currentYear || yr === `Tahun ${currentYear}`;
+          });
     const searchFiltered = filterBySearch(
-      catFiltered,
+      yearFiltered,
       currentSearch,
       (el) => el.getAttribute("data-title") || "",
     );
@@ -145,6 +162,22 @@ export function initKegiatanFilter() {
       });
     }
 
+    if (timeframeValue) {
+      timeframeValue.textContent =
+        currentYear === "Semua" ? "Semua Waktu" : `Tahun ${currentYear}`;
+    }
+    if (timeframeOpts) {
+      timeframeOpts.forEach((opt) => {
+        const val = opt.getAttribute("data-value") || "";
+        const matches =
+          val === "Semua Waktu"
+            ? currentYear === "Semua"
+            : val === `Tahun ${currentYear}`;
+        opt.classList.toggle("is-selected", matches);
+        opt.setAttribute("aria-selected", String(matches));
+      });
+    }
+
     // 5. Update Search UI
     if (searchInput) {
       searchInput.value = currentSearch;
@@ -212,6 +245,42 @@ export function initKegiatanFilter() {
     });
   }
 
+  if (timeframeDropdown) {
+    timeframeDropdown.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const isOpen = timeframeDropdown.classList.toggle("is-open");
+      timeframeDropdown.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    timeframeDropdown.addEventListener("keydown", (e) => {
+      if ((e as KeyboardEvent).key === "Escape") {
+        timeframeDropdown.classList.remove("is-open");
+        timeframeDropdown.setAttribute("aria-expanded", "false");
+      }
+    });
+
+    timeframeOpts?.forEach((opt) => {
+      opt.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const val = opt.getAttribute("data-value") || "Semua Waktu";
+        currentYear =
+          val === "Semua Waktu" ? "Semua" : val.replace("Tahun ", "");
+        timeframeDropdown.classList.remove("is-open");
+        timeframeDropdown.setAttribute("aria-expanded", "false");
+        currentPage = 1;
+        updateURL();
+        render();
+      });
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!timeframeDropdown.contains(e.target as Node)) {
+        timeframeDropdown.classList.remove("is-open");
+        timeframeDropdown.setAttribute("aria-expanded", "false");
+      }
+    });
+  }
+
   if (searchInput) {
     searchInput.addEventListener("input", (e) => {
       currentSearch = (e.target as HTMLInputElement).value;
@@ -238,6 +307,7 @@ export function initProjectsFilter() {
   const mobileCatValue = document.getElementById("mobileCatDropdownValue");
   const mobileCatOpts = mobileCatSelect?.querySelectorAll(".cselect__opt") as
     NodeListOf<HTMLElement> | undefined;
+  const searchInput = document.querySelector(".search") as HTMLInputElement;
   const gridContainer = document.getElementById("projectGrid");
   const paginationContainer = document.querySelector("[data-pagination]");
 
@@ -248,6 +318,7 @@ export function initProjectsFilter() {
   let currentCategory = "Semua";
   let currentSort = "Terbaru";
   let currentYear = "Semua";
+  let currentSearch = "";
 
   const template = document.getElementById(
     "all-projects-template",
@@ -269,6 +340,9 @@ export function initProjectsFilter() {
     if (currentYear !== "Semua") url.searchParams.set("tahun", currentYear);
     else url.searchParams.delete("tahun");
 
+    if (currentSearch) url.searchParams.set("q", currentSearch);
+    else url.searchParams.delete("q");
+
     if (currentPage > 1) url.searchParams.set("page", currentPage.toString());
     else url.searchParams.delete("page");
 
@@ -281,6 +355,7 @@ export function initProjectsFilter() {
     currentCategory = url.searchParams.get("kategori") || "Semua";
     currentSort = url.searchParams.get("sort") || "Terbaru";
     currentYear = url.searchParams.get("tahun") || "Semua";
+    currentSearch = url.searchParams.get("q") || "";
     currentPage = parseInt(url.searchParams.get("page") || "1", 10);
   }
 
@@ -303,8 +378,14 @@ export function initProjectsFilter() {
             return yr === currentYear || yr === `Tahun ${currentYear}`;
           });
 
+    const searchFiltered = filterBySearch(
+      yearFiltered,
+      currentSearch,
+      (el) => el.getAttribute("data-title") || "",
+    );
+
     // 2. Sort using Pure Engine
-    const sorted = sortItems(yearFiltered, currentSort, (el) => ({
+    const sorted = sortItems(searchFiltered, currentSort, (el) => ({
       title: el.getAttribute("data-title") || "",
       date: el.getAttribute("data-date") || 0,
     }));
@@ -393,6 +474,11 @@ export function initProjectsFilter() {
         opt.classList.toggle("is-selected", matches);
         opt.setAttribute("aria-selected", String(matches));
       });
+    }
+
+    if (searchInput) {
+      searchInput.value = currentSearch;
+      searchInput.removeAttribute("disabled");
     }
 
     renderPagination(paginationContainer, currentPage, totalPages, (page) => {
@@ -494,6 +580,15 @@ export function initProjectsFilter() {
         mobileCatSelect.classList.remove("is-open");
         mobileCatSelect.setAttribute("aria-expanded", "false");
       }
+    });
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener("input", (e) => {
+      currentSearch = (e.target as HTMLInputElement).value;
+      currentPage = 1;
+      updateURL();
+      render();
     });
   }
 
