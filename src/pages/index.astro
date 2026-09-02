@@ -3,6 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import ProjectCard from "../components/ui/ProjectCard.astro";
 import PostCard from "../components/ui/PostCard.astro";
 import Art from "../components/global/Art.astro";
+import Arrow from "../components/global/Arrow.astro";
 import SanityImage from "../components/sanity/SanityImage.astro";
 import { UKM_FIXTURE } from "../lib/content/fixture";
 import { fetchSanity } from "../lib/sanity/client";
@@ -116,9 +117,7 @@ function tanggalPendek(iso: string) {
             <a
               class="btn btn--primary btn--lg"
               href="#kerjasama"
-              data-cursor="Jelajahi"
-              >Mulai kolaborasi <span class="arrow" aria-hidden="true">→</span
-              ></a
+              data-cursor="Jelajahi">Mulai kolaborasi <Arrow /></a
             >
             <a class="btn btn--lg" href="#projects">Lihat project</a>
           </div>
@@ -253,10 +252,7 @@ function tanggalPendek(iso: string) {
       </div>
 
       <div class="row" style="margin-top: var(--s7); justify-content: flex-end">
-        <a class="tlink" href="/projects"
-          >Lihat semua Projects <span class="arrow" aria-hidden="true">→</span
-          ></a
-        >
+        <a class="tlink" href="/projects">Lihat semua Projects <Arrow /></a>
       </div>
     </div>
   </section>
@@ -311,9 +307,7 @@ function tanggalPendek(iso: string) {
                     <time class="editorial-row__date" datetime={date}>
                       {tanggalPendek(date)}
                     </time>
-                    <span class="editorial-row__arrow" aria-hidden="true">
-                      →
-                    </span>
+                    <Arrow class="editorial-row__arrow" />
                   </div>
                 </a>
               );
@@ -323,11 +317,7 @@ function tanggalPendek(iso: string) {
             class="row"
             style="margin-top: var(--s5); justify-content: flex-end"
           >
-            <a class="tlink" href="/updates"
-              >Lihat semua Updates <span class="arrow" aria-hidden="true"
-                >→</span
-              ></a
-            >
+            <a class="tlink" href="/updates">Lihat semua Updates <Arrow /></a>
           </div>
         </div>
       </div>

@@ -56,7 +56,9 @@
 }
 
 .btn--primary .arrow {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   transition: transform var(--t, 260ms) var(--ease, ease);
 }
 

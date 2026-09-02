@@ -1,4 +1,6 @@
 ---
+import Arrow from "../global/Arrow.astro";
+
 export interface Props {
   title: string;
   lead?: string;
@@ -25,7 +27,7 @@ const { title, lead, linkText, linkHref } = Astro.props;
     linkText && linkHref && (
       <div class="section__headRight" data-reveal style="--reveal-delay: 150ms">
         <a class="btn" href={linkHref}>
-          {linkText} <span class="arrow">→</span>
+          {linkText} <Arrow />
         </a>
       </div>
     )

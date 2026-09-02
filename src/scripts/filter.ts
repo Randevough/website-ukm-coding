@@ -593,7 +593,8 @@ export function renderPagination(
   prev.className = "pagination__btn";
   prev.type = "button";
   prev.setAttribute("aria-label", "Halaman sebelumnya");
-  prev.innerHTML = '<span class="arrow" aria-hidden="true">←</span>';
+  prev.innerHTML =
+    '<span class="arrow" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></span>';
   if (current === 1) prev.disabled = true;
   else prev.addEventListener("click", () => onPage(current - 1));
   container.appendChild(prev);
@@ -612,7 +613,8 @@ export function renderPagination(
   next.className = "pagination__btn";
   next.type = "button";
   next.setAttribute("aria-label", "Halaman selanjutnya");
-  next.innerHTML = '<span class="arrow" aria-hidden="true">→</span>';
+  next.innerHTML =
+    '<span class="arrow" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>';
   if (current === total) next.disabled = true;
   else next.addEventListener("click", () => onPage(current + 1));
   container.appendChild(next);

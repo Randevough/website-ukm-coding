@@ -1,6 +1,7 @@
 ---
 import type { Project } from "@/types/content";
 import Art from "../global/Art.astro";
+import Arrow from "../global/Arrow.astro";
 import SanityImage from "../sanity/SanityImage.astro";
 
 export interface Props {
@@ -54,6 +55,6 @@ const stack = p.techStack || p.stack || [];
     <span class="mono"
       >{stack.length > 0 ? stack.slice(0, 3).join(" / ") : "TBA"}</span
     >
-    <span class="arrow" aria-hidden="true">→</span>
+    <Arrow size={14} />
   </div>
 </a>

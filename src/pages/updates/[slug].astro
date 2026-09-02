@@ -1,6 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import Art from "../../components/global/Art.astro";
+import Arrow from "../../components/global/Arrow.astro";
 import SanityImage from "../../components/sanity/SanityImage.astro";
 import PortableTextComponent from "../../components/sanity/PortableTextComponent.astro";
 import { UKM_FIXTURE } from "../../lib/content/fixture";
@@ -182,9 +183,7 @@ const breadcrumb = [
           prev ? (
             <a class="pagenav__prev" href={`/updates/${prev.slug}`}>
               <span class="label">
-                <span class="arrow" aria-hidden="true">
-                  ←
-                </span>{" "}
+                <Arrow direction="left" size={13} />
                 Sebelumnya
               </span>
               <span class="pagenav__title">{prev.judul || prev.title}</span>
@@ -197,10 +196,8 @@ const breadcrumb = [
           next ? (
             <a class="pagenav__next" href={`/updates/${next.slug}`}>
               <span class="label">
-                Selanjutnya{" "}
-                <span class="arrow" aria-hidden="true">
-                  →
-                </span>
+                Selanjutnya
+                <Arrow direction="right" size={13} />
               </span>
               <span class="pagenav__title">{next.judul || next.title}</span>
             </a>
