@@ -90,13 +90,18 @@ Menu **Partner & Kolaborator** mengatur daftar instansi, komunitas, sponsor, dan
 
 ### D. Pengaturan Situs (Site Settings)
 
-Dokumen tunggal (_singleton_) untuk mengelola informasi global website:
+Dokumen tunggal (_singleton_) untuk mengelola informasi inti organisasi:
 
-- **Nama Situs & Tagline**: Identitas resmi UKM Coding.
-- **Email Resmi**: Alamat email yang menerima klik tombol kontak dan tombol kerja sama.
-- **Media Sosial**: Tautan resmi akun Instagram, LinkedIn, dan GitHub organisasi.
-- **Proposal Media Partner**: Unggah dokumen proposal resmi dalam format **PDF**.
-- **Statistik Beranda**: Data angka pencapaian di Beranda (maksimal 4 kartu, contoh: `300+ Anggota Aktif`, `12+ Project Selesai`).
+| Kolom (_Field_)                 | Tipe       | Status   | Panduan & Standar Penulisan                                                                             |
+| :------------------------------ | :--------- | :------- | :------------------------------------------------------------------------------------------------------ |
+| **Nama Situs**                  | Teks       | Wajib    | Identitas resmi UKM (contoh: `UKM Coding Cyber University`).                                            |
+| **Deskripsi Singkat / Tagline** | Teks       | Wajib    | Deskripsi singkat atau slogan resmi yang tampil di bawah logo pada area Footer.                         |
+| **Email Resmi**                 | Teks/Email | Wajib    | Alamat email resmi organisasi untuk menerima pesan dari tombol kerja sama dan narahubung.               |
+| **URL Instagram**               | URL        | Opsional | Tautan profil Instagram resmi organisasi (contoh: `https://www.instagram.com/coding.cyberuniversity/`). |
+| **URL LinkedIn**                | URL        | Opsional | Tautan profil/halaman LinkedIn resmi organisasi.                                                        |
+| **File Proposal Media Partner** | File (PDF) | Opsional | Unggah dokumen proposal resmi dalam format **PDF** untuk tombol unduh _Media Partner_ di Beranda.       |
+
+> **Catatan SEO & Copyright**: Seluruh metadata SEO (Google Search & pratinjau media sosial) di-generate secara otomatis oleh sistem web dari judul, ringkasan, dan cover gambar. Tahun hak cipta pada footer juga diperbarui secara otomatis setiap tahun tanpa perlu konfigurasi manual.
 
 ---
 
