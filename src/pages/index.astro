@@ -130,7 +130,10 @@ function tanggalPendek(iso: string) {
           data-cursor="Lihat"
         >
           <div class="hero__card hero__card--editorial">
-            <span class="hero__cardTag idx">LIFE AT UKM CODING</span>
+            <div class="hero__cardTack" aria-hidden="true"></div>
+            <div class="hero__cardHead">
+              <span class="hero__cardTag idx">LIFE AT UKM CODING</span>
+            </div>
             <div class="hero__cardImageWrap">
               <img
                 src="/hero-image.jpg"
@@ -142,21 +145,16 @@ function tanggalPendek(iso: string) {
                 fetchpriority="high"
               />
             </div>
-            <div class="hero__cardWord">
-              kode <em><Arrow size={20} strokeWidth={2.5} /></em> karya
-            </div>
             <div class="hero__cardFoot">
-              <span>PROJECT · PELATIHAN · EVENT · KOMPETISI</span><span
-                >2026</span
-              >
+              <span>PROJECT · PELATIHAN · EVENT · KOMPETISI</span>
             </div>
           </div>
         </div>
       </div>
       <div class="hero__meta">
         <span>JAKARTA · INDONESIA</span>
-        <span>TERBUKA UNTUK KOLABORASI</span>
-        <span class="hero__metaMark">DIBANGUN DAN DIJALANKAN BERSAMA</span>
+        <span>DIBANGUN DAN DIJALANKAN BERSAMA</span>
+        <span class="hero__metaMark">TERBUKA UNTUK KOLABORASI</span>
       </div>
     </div>
   </section>
