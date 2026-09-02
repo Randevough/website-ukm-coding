@@ -20,7 +20,10 @@ const paths = {
 };
 ---
 
-<span class={`arrow ${className}`.trim()} aria-hidden="true">
+<span
+  class={`arrow arrow--${direction} ${className}`.trim()}
+  aria-hidden="true"
+>
   <svg
     width={size}
     height={size}

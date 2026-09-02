@@ -143,7 +143,7 @@ export function initKegiatanFilter() {
     });
 
     if (cselectValue) {
-      cselectValue.textContent = `Kategori: ${currentCategory}`;
+      cselectValue.textContent = currentCategory;
     }
     if (cselectOpts) {
       cselectOpts.forEach((opt) => {

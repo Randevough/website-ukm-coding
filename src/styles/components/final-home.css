@@ -183,6 +183,9 @@
 .hero__cardWord em {
   color: var(--mark);
   font-style: normal;
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
 }
 
 .hero__cardTag,

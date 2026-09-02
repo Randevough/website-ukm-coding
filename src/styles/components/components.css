@@ -212,6 +212,11 @@
   transform: translateX(4px);
 }
 
+.btn:hover .arrow--left,
+.btn:focus-visible .arrow--left {
+  transform: translateX(-4px);
+}
+
 /* Tautan teks bergaya spesifikasi: label mono + garis penuh */
 .tlink {
   display: inline-flex;
