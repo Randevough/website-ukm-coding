@@ -1,4 +1,3 @@
-// filter.ts
 import {
   filterByCategory,
   filterBySearch,
@@ -6,7 +5,6 @@ import {
   paginateItems,
 } from "../lib/content/queryEngine";
 
-// KEGIATAN PAGE LOGIC
 export function initKegiatanFilter() {
   if (typeof document === "undefined") return;
 
@@ -27,12 +25,11 @@ export function initKegiatanFilter() {
   let currentSearch = "";
   let currentYear = "Semua";
 
-  // Elements for timeframe
   const timeframeDropdown = document.getElementById("timeframeDropdown");
   const timeframeValue = document.getElementById("timeframeValue");
-  const timeframeOpts = timeframeDropdown?.querySelectorAll(".cselect__opt") as NodeListOf<HTMLElement> | undefined;
+  const timeframeOpts = timeframeDropdown?.querySelectorAll(".cselect__opt") as
+    NodeListOf<HTMLElement> | undefined;
 
-  // Get all items from template
   const template = document.getElementById(
     "all-posts-template",
   ) as HTMLTemplateElement;
@@ -71,7 +68,6 @@ export function initKegiatanFilter() {
   let renderTimeout: ReturnType<typeof setTimeout> | null = null;
 
   function render(skipSkeleton = false) {
-    // 1. Filter by Category & Search using Pure Engine
     const catFiltered = filterByCategory(
       allItems,
       currentCategory,
@@ -90,7 +86,6 @@ export function initKegiatanFilter() {
       (el) => el.getAttribute("data-title") || "",
     );
 
-    // 2. Paginate using Pure Engine
     const {
       paginated,
       totalPages,
@@ -98,7 +93,6 @@ export function initKegiatanFilter() {
     } = paginateItems(searchFiltered, currentPage, ITEMS_PER_PAGE);
     currentPage = clampedPage;
 
-    // 3. Render Skeletons (if not skipped)
     if (renderTimeout) clearTimeout(renderTimeout);
 
     const skeletonTemplate = document.getElementById(
@@ -119,7 +113,6 @@ export function initKegiatanFilter() {
     const delay = skipSkeleton ? 0 : 2500;
 
     renderTimeout = setTimeout(() => {
-      // 4. Render Actual Items
       gridContainer!.innerHTML = "";
 
       if (paginated.length === 0) {
@@ -143,7 +136,6 @@ export function initKegiatanFilter() {
       }
     }, delay);
 
-    // 4. Update Chips UI
     filterChips.forEach((chip) => {
       const cat = chip.getAttribute("data-category");
       chip.classList.toggle("is-active", cat === currentCategory);
@@ -178,13 +170,11 @@ export function initKegiatanFilter() {
       });
     }
 
-    // 5. Update Search UI
     if (searchInput) {
       searchInput.value = currentSearch;
       searchInput.removeAttribute("disabled");
     }
 
-    // 6. Update Pagination UI
     renderPagination(paginationContainer, currentPage, totalPages, (page) => {
       currentPage = page;
       updateURL();
@@ -294,7 +284,6 @@ export function initKegiatanFilter() {
   render(true);
 }
 
-// PROJECT PAGE LOGIC
 export function initProjectsFilter() {
   if (typeof document === "undefined") return;
 
@@ -362,14 +351,12 @@ export function initProjectsFilter() {
   let renderTimeout: ReturnType<typeof setTimeout> | null = null;
 
   function render(skipSkeleton = false) {
-    // 1. Filter using Pure Engine
     const filtered = filterByCategory(
       allItems,
       currentCategory,
       (el) => el.getAttribute("data-kategori") || "",
     );
 
-    // 3. Filter by year (timeframe)
     const yearFiltered =
       currentYear === "Semua"
         ? filtered
@@ -384,13 +371,11 @@ export function initProjectsFilter() {
       (el) => el.getAttribute("data-title") || "",
     );
 
-    // 2. Sort using Pure Engine
     const sorted = sortItems(searchFiltered, currentSort, (el) => ({
       title: el.getAttribute("data-title") || "",
       date: el.getAttribute("data-date") || 0,
     }));
 
-    // 3. Paginate using Pure Engine
     const {
       paginated,
       totalPages,
@@ -398,7 +383,6 @@ export function initProjectsFilter() {
     } = paginateItems(sorted, currentPage, ITEMS_PER_PAGE);
     currentPage = clampedPage;
 
-    // 4. Render Skeletons (if not skipped)
     if (renderTimeout) clearTimeout(renderTimeout);
 
     const skeletonTemplate = document.getElementById(
@@ -419,7 +403,6 @@ export function initProjectsFilter() {
     const delay = skipSkeleton ? 0 : 2500;
 
     renderTimeout = setTimeout(() => {
-      // 5. Render Actual Items
       gridContainer!.innerHTML = "";
       if (paginated.length === 0) {
         const emptyTemplate = document.getElementById(
@@ -442,7 +425,6 @@ export function initProjectsFilter() {
       }
     }, delay);
 
-    // 5. Update UI
     filterChips.forEach((chip) => {
       chip.classList.toggle("is-active", chip.textContent === currentCategory);
       chip.removeAttribute("disabled");
@@ -459,7 +441,7 @@ export function initProjectsFilter() {
         opt.setAttribute("aria-selected", String(matches));
       });
     }
-    // Sync custom dropdown label
+
     if (cselectValue) {
       cselectValue.textContent =
         currentYear === "Semua" ? "Semua Waktu" : `Tahun ${currentYear}`;
@@ -636,7 +618,6 @@ export function renderPagination(
   container.appendChild(next);
 }
 
-// Auto-init
 function bootFilters() {
   initKegiatanFilter();
   initProjectsFilter();

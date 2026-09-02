@@ -1,11 +1,4 @@
-/* =========================================================
-   PAGES — hero, landing, showcase bento, berita majalah,
-   artikel, studi kasus sticky
-   ========================================================= */
-
-/* ---------------------------------------------------------
-   HERO — display type raksasa, parallax per baris
-   --------------------------------------------------------- */
+/* Hero */
 .hero {
   position: relative;
   padding-top: clamp(var(--s7), 7vw, var(--s10));
@@ -106,9 +99,7 @@
   margin-top: clamp(var(--s6), 5vw, var(--s8));
 }
 
-/* ---------------------------------------------------------
-   ANGKA BESAR — counter beranimasi
-   --------------------------------------------------------- */
+/* Counter Angka */
 .proof {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -158,9 +149,7 @@
   line-height: 1.4;
 }
 
-/* ---------------------------------------------------------
-   MANIFESTO — teks besar dengan parallax
-   --------------------------------------------------------- */
+/* Manifesto */
 .manifesto {
   display: grid;
   grid-template-columns: minmax(0, 0.34fr) minmax(0, 1fr);
@@ -199,9 +188,7 @@
   gap: var(--s3);
 }
 
-/* ---------------------------------------------------------
-   PILAR — baris bernomor, garis tumbuh saat hover
-   --------------------------------------------------------- */
+/* Pilar */
 .pillars {
   border-top: 1px solid var(--line);
 }
@@ -268,9 +255,7 @@
   }
 }
 
-/* ---------------------------------------------------------
-   SPOTLIGHT DECOMPE — blok tinta, parallax dalam
-   --------------------------------------------------------- */
+/* Spotlight */
 .spotlight {
   position: relative;
   overflow: clip;
@@ -358,9 +343,7 @@
   color: rgba(246, 245, 242, 0.5);
 }
 
-/* ---------------------------------------------------------
-   ORGANISASI — tiga divisi, teks saja
-   --------------------------------------------------------- */
+/* Organisasi */
 .org {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -413,9 +396,7 @@
   background: var(--mark);
 }
 
-/* ---------------------------------------------------------
-   INSTAGRAM
-   --------------------------------------------------------- */
+/* Galeri */
 .iggrid {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -457,9 +438,7 @@
   opacity: 1;
 }
 
-/* ---------------------------------------------------------
-   CTA PENUTUP
-   --------------------------------------------------------- */
+/* CTA Penutup */
 .cta {
   position: relative;
   overflow: clip;
@@ -517,9 +496,7 @@
   }
 }
 
-/* ---------------------------------------------------------
-   KEPALA HALAMAN DALAM
-   --------------------------------------------------------- */
+/* Kepala Halaman Dalam */
 .pagehead {
   position: relative;
   padding-top: clamp(var(--s6), 5vw, var(--s9));
@@ -584,9 +561,7 @@
   }
 }
 
-/* ---------------------------------------------------------
-   BERITA — hero majalah + kolom asimetris
-   --------------------------------------------------------- */
+/* Berita */
 .magazine {
   display: block;
   width: 100%;
@@ -679,9 +654,7 @@
   }
 }
 
-/* ---------------------------------------------------------
-   ARTIKEL DETAIL (/updates/[slug])
-   --------------------------------------------------------- */
+/* Artikel Detail */
 .article__head {
   display: flex;
   flex-direction: column;
@@ -780,9 +753,7 @@
   color: var(--ink-2);
 }
 
-/* ---------------------------------------------------------
-   STUDI KASUS DETAIL (/projects/[slug])
-   --------------------------------------------------------- */
+/* Studi Kasus Detail */
 .case__head {
   display: flex;
   flex-direction: column;
@@ -989,9 +960,7 @@
   }
 }
 
-/* ---------------------------------------------------------
-   PAGINASI NAVIGASI HALAMAN (Previous / Next)
-   --------------------------------------------------------- */
+/* Paginasi Navigasi */
 .section--nav {
   padding-block: clamp(16px, 2.2vw, 28px);
 }
@@ -1088,9 +1057,7 @@
   }
 }
 
-/* ---------------------------------------------------------
-   PILARES — 4 Tahap Cara Kerja (/projects)
-   --------------------------------------------------------- */
+/* 4 Tahap Cara Kerja */
 .pillars {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1145,9 +1112,7 @@
   }
 }
 
-/* ---------------------------------------------------------
-   BENTO / KISI PROJECTS (/projects)
-   --------------------------------------------------------- */
+/* Kisi Projects */
 #projectGrid.bento,
 .bento {
   display: grid;

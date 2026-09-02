@@ -104,9 +104,8 @@ const breadcrumb = [
       <article id="article">
         <header class="article__head">
           <div class="breadcrumb" style="margin-bottom: var(--s4);">
-            <a href="/">Beranda</a><span>/</span><a href="/updates">Updates</a><span
-              >/</span
-            ><span>Detail</span>
+            <a href="/">Beranda</a><span>/</span><a href="/updates">Updates</a
+            ><span>/</span><span>Detail</span>
           </div>
           <div class="article__tagRow">
             <span class="label label--mark">{kategori}</span>
@@ -182,7 +181,12 @@ const breadcrumb = [
         {
           prev ? (
             <a class="pagenav__prev" href={`/updates/${prev.slug}`}>
-              <span class="label"><span class="arrow" aria-hidden="true">←</span> Sebelumnya</span>
+              <span class="label">
+                <span class="arrow" aria-hidden="true">
+                  ←
+                </span>{" "}
+                Sebelumnya
+              </span>
               <span class="pagenav__title">{prev.judul || prev.title}</span>
             </a>
           ) : (
@@ -192,7 +196,12 @@ const breadcrumb = [
         {
           next ? (
             <a class="pagenav__next" href={`/updates/${next.slug}`}>
-              <span class="label">Selanjutnya <span class="arrow" aria-hidden="true">→</span></span>
+              <span class="label">
+                Selanjutnya{" "}
+                <span class="arrow" aria-hidden="true">
+                  →
+                </span>
+              </span>
               <span class="pagenav__title">{next.judul || next.title}</span>
             </a>
           ) : (

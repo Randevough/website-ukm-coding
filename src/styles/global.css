@@ -1,6 +1,4 @@
-/* =========================================================
-   BASE — reset, tekstur berlapis, grid, ritme seksi, utilitas
-   ========================================================= */
+/* Base reset & typography */
 
 *,
 *::before,
@@ -51,10 +49,7 @@ body.is-locked {
    terbesar di situs ini, jadi lapisannya dihapus total.
    --------------------------------------------------------- */
 
-/* ---------------------------------------------------------
-   LAPISAN TEKSTUR 2 — KERTAS GRAFIK
-   Dipakai selektif, tidak di seluruh halaman.
-   --------------------------------------------------------- */
+/* Lapisan Kertas Grafik */
 .graph {
   position: relative;
   isolation: isolate;
@@ -105,9 +100,7 @@ body.is-locked {
   }
 }
 
-/* ---------------------------------------------------------
-   TIPOGRAFI
-   --------------------------------------------------------- */
+/* Tipografi */
 h1,
 h2,
 h3,
@@ -238,9 +231,7 @@ hr {
   top: var(--s5);
 }
 
-/* ---------------------------------------------------------
-   LAYOUT
-   --------------------------------------------------------- */
+/* Layout */
 .container {
   width: min(100% - var(--gutter) * 2, var(--container));
   margin-inline: auto;
@@ -458,11 +449,7 @@ main {
   }
 }
 
-/* ---------------------------------------------------------
-   MOTION — dasar
-   Semua gerak masuk lewat dua atribut: data-reveal untuk
-   kemunculan, data-parallax untuk kedalaman.
-   --------------------------------------------------------- */
+/* Motion */
 [data-reveal] {
   opacity: 0;
   transform: translate3d(0, 22px, 0);

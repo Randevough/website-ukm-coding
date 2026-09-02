@@ -1,11 +1,4 @@
-/* =========================================================
-   FINAL HOMEPAGE REFINEMENT — UKM Coding Cyber University
-   Consolidated styles for Hero v2, Manifesto (About),
-   Featured Projects, Updates (Featured + List), Gallery Mosaic,
-   and Partnership Section.
-   ========================================================= */
-
-/* ---------------- 1. Hero Refinement ---------------- */
+/* Hero */
 .hero--v2 {
   position: relative;
   min-height: calc(100vh - var(--header-h, 68px));
@@ -230,7 +223,7 @@
   font-weight: 600;
 }
 
-/* ---------------- 2. Manifesto / Tentang UKM ---------------- */
+/* Tentang UKM */
 #tentang {
   background: var(--paper-2);
 }
@@ -344,7 +337,7 @@
   max-width: 52ch;
 }
 
-/* ---------------- 3. Featured Projects Grid ---------------- */
+/* Featured Projects */
 #featuredProjects {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -363,7 +356,7 @@
   box-sizing: border-box;
 }
 
-/* ---------------- 4. Updates Section (Featured + Editorial List) ---------------- */
+/* Updates */
 .updates-layout {
   display: grid;
   grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
@@ -383,7 +376,7 @@
   border-top: 1px solid var(--line);
 }
 
-/* ---------------- 5. Gallery Editorial Mosaic ---------------- */
+/* Gallery */
 .iggrid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -448,7 +441,7 @@
   transform: scale(1.03);
 }
 
-/* ---------------- 6. Kerja Sama (Partnership) ---------------- */
+/* Kerja Sama */
 .collab {
   background: var(--paper-2);
 }
@@ -598,7 +591,7 @@
   }
 }
 
-/* ---------------- 7. Responsive Breakpoints ---------------- */
+/* Responsive Breakpoints */
 @media (max-width: 1023px) and (min-width: 768px) {
   .hero--v2 {
     min-height: auto;

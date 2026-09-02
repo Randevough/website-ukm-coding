@@ -13,7 +13,7 @@ const qsa = (sel: string, root?: Element | Document): HTMLElement[] => {
   return Array.prototype.slice.call(scope.querySelectorAll(sel));
 };
 
-/* ---------------- 1 + 2. Reveal & lineMask ---------------- */
+// Reveal & lineMask
 let io: IntersectionObserver | null = null;
 
 export function initReveal(root?: Element | Document) {
@@ -92,7 +92,7 @@ export function playHero(root?: Element | Document) {
   }
 }
 
-/* ---------------- 3. Parallax ---------------- */
+// Parallax
 let pxItems: { el: HTMLElement; speed: number }[] = [];
 let pxTicking = false;
 
@@ -146,7 +146,7 @@ export function initParallax(root?: Element | Document) {
   window.addEventListener("resize", onScrollParallax, { passive: true });
 }
 
-/* ---------------- 4. Counter ---------------- */
+// Counter
 function runCounter(el: HTMLElement) {
   if (!isBrowser) return;
   const target = parseFloat(el.getAttribute("data-counter") || "0");
@@ -195,7 +195,7 @@ export function initCounters(root?: Element | Document) {
   items.forEach((el) => obs.observe(el));
 }
 
-/* ---------------- 5. Tilt ---------------- */
+// Tilt
 export function initTilt(root?: Element | Document) {
   if (
     !isBrowser ||
@@ -234,7 +234,7 @@ export function initTilt(root?: Element | Document) {
   });
 }
 
-/* ---------------- 6. Cursor ---------------- */
+// Cursor
 let cursorEl: HTMLElement | null = null;
 
 export function initCursor(root?: Element | Document) {
@@ -313,7 +313,7 @@ export function initCursor(root?: Element | Document) {
   });
 }
 
-/* ---------------- 7. Ticker ---------------- */
+// Ticker
 export function initTicker(root?: Element | Document) {
   if (!isBrowser && !root) return;
   const scope = root || document;
@@ -327,7 +327,7 @@ export function initTicker(root?: Element | Document) {
   });
 }
 
-/* ---------------- 8. Hero Wash ---------------- */
+// Hero Wash
 export function initHeroWash(root?: Element | Document) {
   if (!isBrowser && !root) return;
   const scope = root || document;
@@ -352,7 +352,7 @@ export function initHeroWash(root?: Element | Document) {
   });
 }
 
-/* ---------------- 9. Share Handler ---------------- */
+// Share Handler
 export function initShare(root?: Element | Document) {
   if (!isBrowser && !root) return;
   const scope = root || document;
@@ -389,7 +389,7 @@ export function initShare(root?: Element | Document) {
   });
 }
 
-/* ---------------- Boot ---------------- */
+// Boot
 export function initMotion() {
   if (!isBrowser) return;
   const scope = document;

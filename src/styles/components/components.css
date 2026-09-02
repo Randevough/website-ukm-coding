@@ -1,11 +1,4 @@
-/* =========================================================
-   COMPONENTS — tombol, label, header, drawer, kartu bento,
-   index bernomor, ticker, modal, kursor kustom, footer
-   ========================================================= */
-
-/* ---------------------------------------------------------
-   TOMBOL — kotak, hairline, isi menyapu dari bawah
-   --------------------------------------------------------- */
+/* Tombol */
 .btn {
   position: relative;
   display: inline-flex;
@@ -242,9 +235,7 @@
   transform: translateX(4px);
 }
 
-/* ---------------------------------------------------------
-   PENANDA & META
-   --------------------------------------------------------- */
+/* Penanda & Meta */
 .tag {
   display: inline-flex;
   align-items: center;
@@ -346,9 +337,7 @@
   background: var(--paper-raised);
 }
 
-/* ---------------------------------------------------------
-   HEADER
-   --------------------------------------------------------- */
+/* Header */
 .site-header {
   position: sticky;
   top: 0;
@@ -513,9 +502,7 @@
   padding: 7px var(--s4);
 }
 
-/* ---------------------------------------------------------
-   DRAWER
-   --------------------------------------------------------- */
+/* Drawer */
 .drawer {
   position: fixed;
   inset: 0;
@@ -674,9 +661,7 @@
   transform: translateY(0);
 }
 
-/* ---------------------------------------------------------
-   TICKER — baris berjalan
-   --------------------------------------------------------- */
+/* Ticker */
 .ticker {
   display: flex;
   overflow: hidden;
@@ -774,9 +759,7 @@
   color: var(--paper);
 }
 
-/* ---------------------------------------------------------
-   KARTU BENTO — tinggi & lebar bervariasi
-   --------------------------------------------------------- */
+/* Kartu Bento */
 .bento {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -1155,9 +1138,7 @@
   }
 }
 
-/* ---------------------------------------------------------
-   INDEX BERNOMOR — daftar bergaris untuk berita
-   --------------------------------------------------------- */
+/* Index Bernomor */
 .index {
   border-top: 1px solid var(--line);
 }
@@ -1222,9 +1203,7 @@
   }
 }
 
-/* ---------------------------------------------------------
-   KARTU BERITA (editorial, bukan kotak seragam)
-   --------------------------------------------------------- */
+/* Kartu Berita */
 .ncard {
   position: relative;
   display: flex;
@@ -1345,9 +1324,7 @@
   }
 }
 
-/* ---------------------------------------------------------
-   HIGHLIGHT & NEWEST BADGES
-   --------------------------------------------------------- */
+/* Badges */
 .badge-highlight {
   position: relative;
   display: inline-block;
@@ -1417,9 +1394,7 @@
   }
 }
 
-/* ---------------------------------------------------------
-   KARTU MAJALAH (Sorotan Berita Utama)
-   --------------------------------------------------------- */
+/* Kartu Majalah */
 .mcard {
   position: relative;
   display: flex;
@@ -1608,9 +1583,7 @@
   transform: translateY(-2px);
 }
 
-/* ---------------------------------------------------------
-   BARIS EDITORIAL (Updates List)
-   --------------------------------------------------------- */
+/* Baris Editorial */
 .editorial-row {
   display: flex;
   flex-direction: column;
@@ -1677,9 +1650,7 @@
   color: var(--mark);
 }
 
-/* ---------------------------------------------------------
-   LAYOUT UPDATES (Featured + List)
-   --------------------------------------------------------- */
+/* Layout Updates */
 .updates-layout {
   display: grid;
   grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
@@ -1706,9 +1677,7 @@
   }
 }
 
-/* ---------------------------------------------------------
-   FILTER & PAGINASI
-   --------------------------------------------------------- */
+/* Filter & Paginasi */
 .filterbar {
   display: flex;
   align-items: center;
@@ -1747,7 +1716,7 @@
     flex: 1 1 0;
     min-width: 0;
   }
-  
+
   .filterbar__group--left .cselect {
     width: 100%;
     justify-content: space-between;
@@ -1975,9 +1944,7 @@
   cursor: not-allowed;
 }
 
-/* ---------------------------------------------------------
-   FORM
-   --------------------------------------------------------- */
+/* Form */
 .field {
   display: flex;
   flex-direction: column;
@@ -2079,9 +2046,7 @@
   opacity: 1;
 }
 
-/* ---------------------------------------------------------
-   MODAL — lihat cepat project
-   --------------------------------------------------------- */
+/* Modal */
 .modal {
   position: fixed;
   inset: 0;
@@ -2216,9 +2181,7 @@
   background: var(--paper-2);
 }
 
-/* ---------------------------------------------------------
-   CALLOUT & KOSONG
-   --------------------------------------------------------- */
+/* Callout & Kosong */
 .callout {
   display: flex;
   gap: var(--s4);
@@ -2242,9 +2205,7 @@
   text-transform: uppercase;
 }
 
-/* ---------------------------------------------------------
-   FOOTER — termasuk media partner
-   --------------------------------------------------------- */
+/* Footer */
 .site-footer {
   background: var(--ink-deep);
   color: rgba(246, 245, 242, 0.66);
@@ -2531,9 +2492,7 @@
   color: rgba(246, 245, 242, 0.4);
 }
 
-/* ---------------------------------------------------------
-   SKELETON LOADERS (Warm Paper "Spec Sheet" Shimmer)
-   --------------------------------------------------------- */
+/* Skeleton Loaders */
 @keyframes skeleton-shimmer {
   0% {
     background-position: 200% 0;

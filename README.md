@@ -12,11 +12,11 @@ Situs web resmi dan arsip project UKM Coding Cyber University. Dibangun sebagai 
 
 ## Konsep Desain: "Spec Sheet"
 
-Antarmuka dirancang dengan pendekatan visual lembar spesifikasi fisik (*spec sheet*), bukan tampilan dasbor web generik:
+Antarmuka dirancang dengan pendekatan visual lembar spesifikasi fisik (_spec sheet_), bukan tampilan dasbor web generik:
 
 - **Kertas & Tinta**: Latar bernuansa kertas hangat dipadukan dengan tipografi tinta kontras tinggi untuk kenyamanan membaca teks panjang.
 - **Rangka Hairline**: Garis pandu vertikal dan garis pemisah tipis menyusun tata letak tanpa mengandalkan bayangan tebal atau kotak kartu yang berlebihan.
-- **Tipografi Editorial**: Kombinasi terkurasi antara *Instrument Serif* untuk judul besar, *JetBrains Mono* untuk label dan metadata teknis, serta *Plus Jakarta Sans* untuk keterbacaan teks utama.
+- **Tipografi Editorial**: Kombinasi terkurasi antara _Instrument Serif_ untuk judul besar, _JetBrains Mono_ untuk label dan metadata teknis, serta _Plus Jakarta Sans_ untuk keterbacaan teks utama.
 - **Aksen Terukur**: Biru kobalt dan oranye digunakan secara selektif sebagai penanda fokus tunggal pada tiap halaman.
 
 ---
@@ -27,7 +27,7 @@ Antarmuka dirancang dengan pendekatan visual lembar spesifikasi fisik (*spec she
 - **Arsip Updates & Kegiatan**: Artikel editorial, pengumuman rekrutmen, dan liputan acara dengan kontrol filter terpadu.
 - **Sanity Studio Tertanam**: Alur kerja pengelolaan konten mandiri langsung di rute `/admin` tanpa memerlukan dasbor eksternal terpisah.
 - **Gaya Murni (Zero-Framework)**: Ditulis menggunakan Vanilla CSS murni berbasis variabel token desain, menjaga ukuran berkas akhir tetap ramping dan cepat dimuat.
-- **Ketahanan Offline / Fallback**: Dilengkapi data *fixtures* lokal bawaan sehingga situs tetap bisa dibangun dan dipratinjau dengan mulus meski tanpa koneksi langsung ke Sanity CMS.
+- **Ketahanan Offline / Fallback**: Dilengkapi data _fixtures_ lokal bawaan sehingga situs tetap bisa dibangun dan dipratinjau dengan mulus meski tanpa koneksi langsung ke Sanity CMS.
 
 ---
 

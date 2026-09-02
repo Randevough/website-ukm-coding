@@ -201,7 +201,12 @@ const breadcrumb = [
         {
           prev ? (
             <a class="pagenav__prev" href={`/projects/${prev.slug}`}>
-              <span class="label"><span class="arrow" aria-hidden="true">←</span> Sebelumnya</span>
+              <span class="label">
+                <span class="arrow" aria-hidden="true">
+                  ←
+                </span>{" "}
+                Sebelumnya
+              </span>
               <span class="pagenav__title">{prev.nama || prev.title}</span>
             </a>
           ) : (
@@ -211,7 +216,12 @@ const breadcrumb = [
         {
           next ? (
             <a class="pagenav__next" href={`/projects/${next.slug}`}>
-              <span class="label">Selanjutnya <span class="arrow" aria-hidden="true">→</span></span>
+              <span class="label">
+                Selanjutnya{" "}
+                <span class="arrow" aria-hidden="true">
+                  →
+                </span>
+              </span>
               <span class="pagenav__title">{next.nama || next.title}</span>
             </a>
           ) : (

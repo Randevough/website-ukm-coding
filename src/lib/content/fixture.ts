@@ -1,16 +1,7 @@
-/* =========================================================
-   DATA DUMMY
-   Semua konten prototype ada di sini. Nanti file ini dibuang
-   dan diganti hasil query Payload CMS.
-
-   ANGKA DI SINI MASIH KARANGAN. Ganti dulu sebelum dipakai
-   ke publik — lihat aturan "tidak ada angka palsu" di design system.
-   ========================================================= */
-
-// FICTIONAL VALUES WARNING: Most values here are fictional for layout testing.
+// Fixture fallback data for offline development
 "use strict";
 
-/* ---------------- Pengaturan global (Payload: Globals/Settings) ---------------- */
+// Pengaturan global
 const settings = {
   nama: "UKM Coding Cyber University",
   tagline: "Unit kegiatan mahasiswa bidang teknologi di Cyber University",
@@ -24,14 +15,13 @@ const settings = {
   tahunBerdiri: "", // BELUM DIKETAHUI — sengaja dikosongkan
 };
 
-/* ---------------- Proof strip — 4 angka pilihan ---------------- */
-/* ANGKA KARANGAN, tinggal ganti di satu tempat ini. */
+// Proof strip stats
 const stats: any[] = [
   // TODO: Fakta statistik belum tersedia. Lihat CONTENT-QUESTIONS.md.
   // Data dummy telah dihapus untuk menghindari kebocoran sebagai fakta production.
 ];
 
-/* ---------------- Press strip "Diliput oleh" ---------------- */
+// Press strip
 const press = [
   {
     name: "Republika",
@@ -55,7 +45,7 @@ const press = [
   },
 ];
 
-/* ---------------- Empat pilar kegiatan ---------------- */
+// Empat pilar kegiatan
 const pillars = [
   {
     num: "01",
@@ -79,7 +69,7 @@ const pillars = [
   },
 ];
 
-/* ---------------- Struktur staf (teks saja, tanpa foto) ---------------- */
+// Struktur divisi
 const divisions = [
   {
     name: "Program Development",
@@ -98,7 +88,7 @@ const divisions = [
   },
 ];
 
-/* ---------------- Kategori berita ---------------- */
+// Kategori berita
 const postCategories = [
   "Semua",
   "DECOMPE",
@@ -108,7 +98,7 @@ const postCategories = [
   "Liputan Media",
 ];
 
-/* ---------------- Kategori showcase ---------------- */
+// Kategori showcase
 const projectCategories = [
   "Semua",
   "Web App",
@@ -120,9 +110,7 @@ const projectCategories = [
 
 const variants = ["blue", "orange", "mix", "neutral"];
 
-/* =========================================================
-	   PROJECTS — 12 entri (uji pagination di halaman showcase)
-	   ========================================================= */
+// Projects
 const projects = [
   {
     slug: "codequest",
@@ -703,7 +691,7 @@ const posts = [
   },
 ];
 
-/* ---------------- Kartu Instagram (6 tile) ---------------- */
+// Kartu Instagram
 const instagram = [
   { caption: "Pengumuman DECOMPE 5.0", variant: "mix" },
   { caption: "Sesi study club pekan ini", variant: "blue" },
@@ -713,7 +701,7 @@ const instagram = [
   { caption: "Demo project bootcamp", variant: "mix" },
 ];
 
-/* ---------------- Aktivitas admin (mockup dashboard) ---------------- */
+// Aktivitas admin
 const adminActivity = [
   {
     aksi: "Menerbitkan",
@@ -741,9 +729,7 @@ const adminActivity = [
   },
 ];
 
-/* ---------------- Media partner & sponsor (footer) ----------------
-	   izinTampil: false artinya logo TIDAK boleh dipasang, hanya nama.
-	   Slot logo sengaja dikosongkan sampai file resmi dikirim. */
+// Media partner & sponsor
 const partners = [
   { nama: "Republika", tier: "Media Partner", izinTampil: false, url: "" },
   { nama: "Milenianews", tier: "Media Partner", izinTampil: false, url: "" },

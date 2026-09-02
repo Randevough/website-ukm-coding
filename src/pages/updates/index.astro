@@ -54,7 +54,6 @@ const catCounts = {
   breadcrumb={breadcrumb}
   showRails={false}
 >
-  <!-- ================= KEPALA HALAMAN ================= -->
   <section
     class="pagehead"
     data-mark="green"
@@ -93,7 +92,6 @@ const catCounts = {
     </div>
   </section>
 
-  <!-- ================= HERO MAJALAH ================= -->
   <section
     class="section section--tight section--hairline"
     style="padding-top: var(--s6); padding-bottom: var(--s6);"
@@ -129,7 +127,6 @@ const catCounts = {
     </div>
   </section>
 
-  <!-- ================= DAFTAR ================= -->
   <section
     class="section"
     style="padding-top: var(--s6); padding-bottom: var(--s6);"
@@ -138,138 +135,171 @@ const catCounts = {
       <div class="filterbar">
         <div class="filterbar__group filterbar__group--left">
           <div class="chips hide-sm" id="postChips" data-chips>
-          <button
-            class="chip is-active"
-            type="button"
-            data-category="Semua"
+            <button
+              class="chip is-active"
+              type="button"
+              data-category="Semua"
+              disabled
+              >Semua <span class="chip__count">{catCounts.Semua}</span></button
+            >
+            <button class="chip" type="button" data-category="Berita" disabled
+              >Berita <span class="chip__count">{catCounts.Berita}</span
+              ></button
+            >
+            <button class="chip" type="button" data-category="Kegiatan" disabled
+              >Kegiatan <span class="chip__count">{catCounts.Kegiatan}</span
+              ></button
+            >
+            <button
+              class="chip"
+              type="button"
+              data-category="Pengumuman"
+              disabled
+              >Pengumuman <span class="chip__count">{catCounts.Pengumuman}</span
+              ></button
+            >
+            <button class="chip" type="button" data-category="Prestasi" disabled
+              >Prestasi <span class="chip__count">{catCounts.Prestasi}</span
+              ></button
+            >
+          </div>
+
+          <div
+            class="cselect only-sm"
+            id="mobilePostDropdown"
+            tabindex="0"
+            role="combobox"
+            aria-expanded="false"
+          >
+            <span class="cselect__value" id="mobilePostDropdownValue"
+              >Kategori: Semua</span
+            >
+            <svg
+              class="cselect__arrow"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="m6 9 6 6 6-6"></path>
+            </svg>
+            <ul class="cselect__list" role="listbox">
+              <li
+                class="cselect__opt is-selected"
+                role="option"
+                aria-selected="true"
+                data-value="Semua"
+              >
+                Semua ({catCounts.Semua})
+              </li>
+              <li
+                class="cselect__opt"
+                role="option"
+                aria-selected="false"
+                data-value="Berita"
+              >
+                Berita ({catCounts.Berita})
+              </li>
+              <li
+                class="cselect__opt"
+                role="option"
+                aria-selected="false"
+                data-value="Kegiatan"
+              >
+                Kegiatan ({catCounts.Kegiatan})
+              </li>
+              <li
+                class="cselect__opt"
+                role="option"
+                aria-selected="false"
+                data-value="Pengumuman"
+              >
+                Pengumuman ({catCounts.Pengumuman})
+              </li>
+              <li
+                class="cselect__opt"
+                role="option"
+                aria-selected="false"
+                data-value="Prestasi"
+              >
+                Prestasi ({catCounts.Prestasi})
+              </li>
+            </ul>
+          </div>
+
+          <div
+            class="cselect"
+            id="timeframeDropdown"
+            role="combobox"
+            aria-haspopup="listbox"
+            aria-expanded="false"
+            aria-label="Filter Waktu"
+            tabindex="0"
+          >
+            <span class="cselect__value" id="timeframeValue">Semua Waktu</span>
+            <svg
+              class="cselect__arrow"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="m6 9 6 6 6-6"></path>
+            </svg>
+            <ul class="cselect__list" role="listbox" aria-label="Filter Waktu">
+              <li
+                class="cselect__opt is-selected"
+                role="option"
+                aria-selected="true"
+                data-value="Semua Waktu"
+              >
+                Semua Waktu
+              </li>
+              <li
+                class="cselect__opt"
+                role="option"
+                aria-selected="false"
+                data-value="Tahun 2026"
+              >
+                Tahun 2026
+              </li>
+              <li
+                class="cselect__opt"
+                role="option"
+                aria-selected="false"
+                data-value="Tahun 2025"
+              >
+                Tahun 2025
+              </li>
+              <li
+                class="cselect__opt"
+                role="option"
+                aria-selected="false"
+                data-value="Tahun 2024"
+              >
+                Tahun 2024
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="filterbar__group filterbar__group--right">
+          <input
+            class="search search--full-sm"
+            type="search"
+            placeholder="Cari judul kegiatan…"
+            aria-label="Cari berita"
             disabled
-            >Semua <span class="chip__count">{catCounts.Semua}</span></button
-          >
-          <button class="chip" type="button" data-category="Berita" disabled
-            >Berita <span class="chip__count">{catCounts.Berita}</span></button
-          >
-          <button class="chip" type="button" data-category="Kegiatan" disabled
-            >Kegiatan <span class="chip__count">{catCounts.Kegiatan}</span
-            ></button
-          >
-          <button class="chip" type="button" data-category="Pengumuman" disabled
-            >Pengumuman <span class="chip__count">{catCounts.Pengumuman}</span
-            ></button
-          >
-          <button class="chip" type="button" data-category="Prestasi" disabled
-            >Prestasi <span class="chip__count">{catCounts.Prestasi}</span
-            ></button
-          >
+          />
         </div>
-
-        <div
-          class="cselect only-sm"
-          id="mobilePostDropdown"
-          tabindex="0"
-          role="combobox"
-          aria-expanded="false"
-        >
-          <span class="cselect__value" id="mobilePostDropdownValue"
-            >Kategori: Semua</span
-          >
-          <svg
-            class="cselect__arrow"
-            width="14"
-            height="14"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path d="m6 9 6 6 6-6"></path>
-          </svg>
-          <ul class="cselect__list" role="listbox">
-            <li
-              class="cselect__opt is-selected"
-              role="option"
-              aria-selected="true"
-              data-value="Semua"
-            >
-              Semua ({catCounts.Semua})
-            </li>
-            <li
-              class="cselect__opt"
-              role="option"
-              aria-selected="false"
-              data-value="Berita"
-            >
-              Berita ({catCounts.Berita})
-            </li>
-            <li
-              class="cselect__opt"
-              role="option"
-              aria-selected="false"
-              data-value="Kegiatan"
-            >
-              Kegiatan ({catCounts.Kegiatan})
-            </li>
-            <li
-              class="cselect__opt"
-              role="option"
-              aria-selected="false"
-              data-value="Pengumuman"
-            >
-              Pengumuman ({catCounts.Pengumuman})
-            </li>
-            <li
-              class="cselect__opt"
-              role="option"
-              aria-selected="false"
-              data-value="Prestasi"
-            >
-              Prestasi ({catCounts.Prestasi})
-            </li>
-          </ul>
-        </div>
-
-        <div
-          class="cselect"
-          id="timeframeDropdown"
-          role="combobox"
-          aria-haspopup="listbox"
-          aria-expanded="false"
-          aria-label="Filter Waktu"
-          tabindex="0"
-        >
-          <span class="cselect__value" id="timeframeValue">Semua Waktu</span>
-          <svg
-            class="cselect__arrow"
-            width="14"
-            height="14"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path d="m6 9 6 6 6-6"></path>
-          </svg>
-          <ul class="cselect__list" role="listbox" aria-label="Filter Waktu">
-            <li class="cselect__opt is-selected" role="option" aria-selected="true" data-value="Semua Waktu">Semua Waktu</li>
-            <li class="cselect__opt" role="option" aria-selected="false" data-value="Tahun 2026">Tahun 2026</li>
-            <li class="cselect__opt" role="option" aria-selected="false" data-value="Tahun 2025">Tahun 2025</li>
-            <li class="cselect__opt" role="option" aria-selected="false" data-value="Tahun 2024">Tahun 2024</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="filterbar__group filterbar__group--right">
-        <input
-          class="search search--full-sm"
-          type="search"
-          placeholder="Cari judul kegiatan…"
-          aria-label="Cari berita"
-          disabled
-        />
-      </div>
       </div>
 
       <div
@@ -281,9 +311,7 @@ const catCounts = {
         {initialPosts.map((p: any) => <PostCard post={p} />)}
       </div>
 
-      <div class="pagination" data-pagination>
-        <!-- Injected via JS -->
-      </div>
+      <div class="pagination" data-pagination></div>
     </div>
   </section>
 
