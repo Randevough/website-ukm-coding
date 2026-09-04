@@ -30,11 +30,13 @@ export function normalizeProject(raw: any): Project {
       ? [String(raw.hasil)]
       : [];
 
+  const rawKategori = raw.kategori === "Web App" ? "Website" : raw.kategori;
+
   return {
     slug: raw.slug || "",
     title: raw.nama || raw.title || "Untitled Project",
     oneLiner: raw.ringkasan || raw.oneLiner || "",
-    kategori: raw.kategori || "Web App",
+    kategori: rawKategori || "Website",
     tahun: Number(raw.tahun) || new Date().getFullYear(),
     jenis: raw.jenis || "Internal Project",
     stack,

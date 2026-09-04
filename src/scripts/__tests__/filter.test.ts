@@ -13,8 +13,8 @@ import {
 
 describe("Filter, Search, Sort & Pagination Engine", () => {
   const mockDataset = [
-    { title: "CodeQuest", kategori: "Web App", date: "2026-03-01" },
-    { title: "DECOMPE Portal", kategori: "Web App", date: "2026-01-15" },
+    { title: "CodeQuest", kategori: "Website", date: "2026-03-01" },
+    { title: "DECOMPE Portal", kategori: "Website", date: "2026-01-15" },
     { title: "Artakarsa Connect", kategori: "Mobile", date: "2026-02-10" },
     {
       title: "Smart Hydroponic",
@@ -26,13 +26,13 @@ describe("Filter, Search, Sort & Pagination Engine", () => {
 
   describe("Integration with Production queryEngine", () => {
     it("should filter items by category using production filterByCategory", () => {
-      const webApps = filterByCategory(
+      const websites = filterByCategory(
         mockDataset,
-        "web app",
+        "website",
         (i) => i.kategori,
       );
-      expect(webApps.length).toBe(2);
-      expect(webApps.every((i) => i.kategori === "Web App")).toBe(true);
+      expect(websites.length).toBe(2);
+      expect(websites.every((i) => i.kategori === "Website")).toBe(true);
 
       const all = filterByCategory(mockDataset, "Semua", (i) => i.kategori);
       expect(all.length).toBe(5);

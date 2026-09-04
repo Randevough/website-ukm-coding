@@ -18,14 +18,14 @@ const testItems: TestItem[] = [
   {
     id: 1,
     title: "CodeQuest Platform",
-    category: "Web App",
+    category: "Website",
     date: "2026-03-01",
     tags: ["astro", "react"],
   },
   {
     id: 2,
     title: "DECOMPE Portal",
-    category: "Web App",
+    category: "Website",
     date: "2026-01-15",
     tags: ["competition", "nextjs"],
   },
@@ -70,9 +70,13 @@ describe("Query Engine (Pure Business Logic)", () => {
     });
 
     it("should filter items by category case-insensitively and trim spaces", () => {
-      const webApps = filterByCategory(testItems, "web app", (i) => i.category);
-      expect(webApps).toHaveLength(2);
-      expect(webApps.map((w) => w.id)).toEqual([1, 2]);
+      const websites = filterByCategory(
+        testItems,
+        "website",
+        (i) => i.category,
+      );
+      expect(websites).toHaveLength(2);
+      expect(websites.map((w) => w.id)).toEqual([1, 2]);
 
       const mobile = filterByCategory(testItems, " Mobile ", (i) => i.category);
       expect(mobile).toHaveLength(1);
@@ -89,7 +93,7 @@ describe("Query Engine (Pure Business Logic)", () => {
     });
 
     it("should handle empty dataset safely", () => {
-      const res = filterByCategory([], "Web App", (i: any) => i.category);
+      const res = filterByCategory([], "Website", (i: any) => i.category);
       expect(res).toEqual([]);
     });
   });

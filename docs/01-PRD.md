@@ -43,7 +43,7 @@ Situs ini beroperasi secara dinamis melalui integrasi Headless CMS (Sanity Studi
 | Rute Halaman       | Fungsi & Komponen Utama                                                                                                                                                                  |
 | :----------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `/`                | **Beranda**: Hero editorial interaktif (Grid reveal FX), section Tentang UKM, 3 Project Pilihan, Updates Terbaru, Galeri Instagram, Jalur Kerja Sama, dan Footer Partner.                |
-| `/projects`        | **Katalog Karya**: Direktori lengkap project mahasiswa dengan filter kategori dinamis (_Web App, Mobile, IoT, Data/AI, dll._), filter tahun, dan pencarian instan sisi klien.            |
+| `/projects`        | **Katalog Karya**: Direktori lengkap project mahasiswa dengan filter kategori dinamis (_Website, Mobile, IoT, Data/AI, dll._), filter tahun, dan pencarian instan sisi klien.            |
 | `/projects/[slug]` | **Detail Studi Kasus**: Rincian latar belakang masalah, pendekatan arsitektur, tech stack, galeri tangkapan layar, link GitHub/Demo, dan navigasi previous/next.                         |
 | `/updates`         | **Arsip Editorial**: Daftar berita, dokumentasi kegiatan, pengumuman, dan prestasi dengan sorotan utama (_magazine layout_) dan filter kategori.                                         |
 | `/updates/[slug]`  | **Detail Artikel / Kegiatan**: Isi artikel lengkap (Rich Text PortableText), info penulis, tanggal rilis, tombol bagikan sosial, serta info jadwal/lokasi/link pendaftaran khusus event. |

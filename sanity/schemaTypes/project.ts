@@ -61,12 +61,11 @@ export const project = defineType({
       fieldset: "meta",
       options: {
         list: [
-          "Web App",
+          "Website",
           "Mobile",
           "Data & AI",
           "IoT / Hardware",
           "Tools",
-          "Internal",
           "Lainnya",
         ],
       },

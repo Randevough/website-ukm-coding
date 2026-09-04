@@ -101,7 +101,7 @@ const postCategories = [
 // Kategori showcase
 const projectCategories = [
   "Semua",
-  "Web App",
+  "Website",
   "Mobile",
   "Data & AI",
   "IoT",
@@ -117,7 +117,7 @@ const projects = [
     title: "CodeQuest",
     oneLiner:
       "Platform latihan soal pemrograman dengan penilaian otomatis, dipakai untuk seleksi internal UKM.",
-    kategori: "Web App",
+    kategori: "Website",
     tahun: 2026,
     jenis: "Internal",
     stack: ["Next.js", "TypeScript", "PostgreSQL", "Docker"],
@@ -149,7 +149,7 @@ const projects = [
     title: "DECOMPE Submission Portal",
     oneLiner:
       "Portal pendaftaran dan pengumpulan karya untuk kompetisi tingkat nasional, lengkap dengan kontrol akses juri.",
-    kategori: "Web App",
+    kategori: "Website",
     tahun: 2026,
     jenis: "Internal",
     stack: ["Next.js", "Supabase", "Tailwind", "Vercel"],
@@ -325,7 +325,7 @@ const projects = [
     title: "Jadwal Mentoring",
     oneLiner:
       "Penjadwalan sesi mentoring anggota dengan pencocokan waktu kosong mentor dan mentee.",
-    kategori: "Web App",
+    kategori: "Website",
     tahun: 2026,
     jenis: "Internal",
     stack: ["SvelteKit", "Postgres", "Prisma"],
@@ -379,7 +379,7 @@ const projects = [
     title: "Portal Alumni",
     oneLiner:
       "Direktori alumni UKM beserta jalur karier mereka, dipakai untuk mencari pembicara.",
-    kategori: "Web App",
+    kategori: "Website",
     tahun: 2025,
     jenis: "Internal",
     stack: ["Astro", "Sanity", "Netlify"],
@@ -433,7 +433,7 @@ const projects = [
     title: "Papan Skor DECOMPE",
     oneLiner:
       "Tampilan skor langsung untuk babak final, ditayangkan di layar panggung.",
-    kategori: "Web App",
+    kategori: "Website",
     tahun: 2026,
     jenis: "Internal",
     stack: ["React", "WebSocket", "Redis"],

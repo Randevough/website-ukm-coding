@@ -25,22 +25,22 @@ Dokumen pengaturan identitas inti website.
 
 Dokumen etalase studi kasus dan aplikasi karya mahasiswa.
 
-| Nama Field   | Tipe Data            | Wajib? | Keterangan                                                                                   |
-| :----------- | :------------------- | :----- | :------------------------------------------------------------------------------------------- |
-| `nama`       | string               | Ya     | Nama resmi aplikasi/project.                                                                 |
-| `slug`       | slug                 | Ya     | Unique identifier URL (di-generate otomatis dari `nama`).                                    |
-| `ringkasan`  | text                 | Ya     | Deskripsi singkat (one-liner) maksimal 160 karakter untuk kartu preview.                     |
-| `kategori`   | string (enum)        | Ya     | Pilihan: `Web App`, `Mobile`, `Data & AI`, `IoT / Hardware`, `Tools`, `Internal`, `Lainnya`. |
-| `featured`   | boolean              | Tidak  | Jika `true`, muncul di section _Project Pilihan_ pada Beranda.                               |
-| `tahun`      | string               | Tidak  | Tahun rilis (contoh: `2026`).                                                                |
-| `techStack`  | array of string      | Tidak  | Daftar nama teknologi utama (contoh: `React`, `TypeScript`, `Supabase`).                     |
-| `cover`      | image                | Tidak  | Gambar cover rasio 16:9 dengan dukungan hotspot visual.                                      |
-| `coverAlt`   | string               | Tidak  | Teks alternatif untuk aksesibilitas cover.                                                   |
-| `githubUrl`  | url                  | Tidak  | URL repositori publik project.                                                               |
-| `demoUrl`    | url                  | Tidak  | URL demo aplikasi aktif.                                                                     |
-| `masalah`    | array (PortableText) | Tidak  | Penjelasan latar belakang masalah nyata.                                                     |
-| `pendekatan` | array (PortableText) | Tidak  | Rincian arsitektur dan langkah penyelesaian.                                                 |
-| `hasil`      | array (PortableText) | Tidak  | Dampak terukur dan pencapaian sistem.                                                        |
+| Nama Field   | Tipe Data            | Wajib? | Keterangan                                                                       |
+| :----------- | :------------------- | :----- | :------------------------------------------------------------------------------- |
+| `nama`       | string               | Ya     | Nama resmi aplikasi/project.                                                     |
+| `slug`       | slug                 | Ya     | Unique identifier URL (di-generate otomatis dari `nama`).                        |
+| `ringkasan`  | text                 | Ya     | Deskripsi singkat (one-liner) maksimal 160 karakter untuk kartu preview.         |
+| `kategori`   | string (enum)        | Ya     | Pilihan: `Website`, `Mobile`, `Data & AI`, `IoT / Hardware`, `Tools`, `Lainnya`. |
+| `featured`   | boolean              | Tidak  | Jika `true`, muncul di section _Project Pilihan_ pada Beranda.                   |
+| `tahun`      | string               | Tidak  | Tahun rilis (contoh: `2026`).                                                    |
+| `techStack`  | array of string      | Tidak  | Daftar nama teknologi utama (contoh: `React`, `TypeScript`, `Supabase`).         |
+| `cover`      | image                | Tidak  | Gambar cover rasio 16:9 dengan dukungan hotspot visual.                          |
+| `coverAlt`   | string               | Tidak  | Teks alternatif untuk aksesibilitas cover.                                       |
+| `githubUrl`  | url                  | Tidak  | URL repositori publik project.                                                   |
+| `demoUrl`    | url                  | Tidak  | URL demo aplikasi aktif.                                                         |
+| `masalah`    | array (PortableText) | Tidak  | Penjelasan latar belakang masalah nyata.                                         |
+| `pendekatan` | array (PortableText) | Tidak  | Rincian arsitektur dan langkah penyelesaian.                                     |
+| `hasil`      | array (PortableText) | Tidak  | Dampak terukur dan pencapaian sistem.                                            |
 
 ---
 
