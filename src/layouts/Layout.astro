@@ -107,6 +107,7 @@ const {
     <ClientRouter />
   </head>
   <body data-mark="blue" data-page="home">
+    <div id="nav-progress" class="nav-progress" aria-hidden="true"></div>
     <SkipLink />
     {showRails && <Rails />}
     <Header />
@@ -130,6 +131,40 @@ const {
     -->
     <script is:inline data-astro-rerun>
       window.__gridReveal?.reinstall();
+    </script>
+
+    <script is:inline>
+      (function () {
+        if (window.__navProgressBound) return;
+        window.__navProgressBound = true;
+
+        let bar = null;
+        function getBar() {
+          if (!bar || !document.body.contains(bar)) {
+            bar = document.getElementById("nav-progress");
+          }
+          return bar;
+        }
+
+        document.addEventListener("astro:before-preparation", function () {
+          const el = getBar();
+          if (el) {
+            el.classList.remove("is-complete");
+            el.classList.add("is-loading");
+          }
+        });
+
+        document.addEventListener("astro:after-swap", function () {
+          const el = getBar();
+          if (el) {
+            el.classList.remove("is-loading");
+            el.classList.add("is-complete");
+            setTimeout(function () {
+              el.classList.remove("is-complete");
+            }, 350);
+          }
+        });
+      })();
     </script>
   </body>
 </html>

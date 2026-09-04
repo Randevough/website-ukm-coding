@@ -53,8 +53,11 @@ const projects = rawProjects.map((p) => ({
     </div>
     <div class="modal__content" id="modalContent"></div>
     <div class="modal__foot">
-      <a class="btn btn--primary btn--block" id="modalLink" href="/projects"
-        >Lihat Studi Kasus</a
+      <a
+        class="btn btn--primary btn--block"
+        id="modalLink"
+        href="/projects"
+        data-astro-prefetch="viewport">Lihat Studi Kasus</a
       >
     </div>
   </div>
@@ -153,6 +156,7 @@ const projects = rawProjects.map((p) => ({
     }
     if (link) {
       link.setAttribute("href", `/projects/${slug}`);
+      link.setAttribute("data-astro-prefetch", "viewport");
     }
 
     isOpen = true;

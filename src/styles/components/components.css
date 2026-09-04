@@ -2164,6 +2164,16 @@
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: var(--r1);
+  background: linear-gradient(
+    90deg,
+    var(--paper-3, #e9e6df) 0%,
+    var(--paper-2, #f0eee9) 25%,
+    var(--paper-raised, #fdfdfc) 50%,
+    var(--paper-2, #f0eee9) 75%,
+    var(--paper-3, #e9e6df) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.8s ease-in-out infinite;
 }
 
 .modal__title {
@@ -2590,4 +2600,48 @@
 
 .skeleton-text.long {
   width: 100%;
+}
+
+/* Navigation Progress Bar */
+.nav-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--blue, #2563eb);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition:
+    transform 0.2s cubic-bezier(0.1, 0.9, 0.2, 1),
+    opacity 0.3s ease;
+  z-index: 99999;
+  pointer-events: none;
+  opacity: 0;
+  box-shadow: 0 0 8px rgba(37, 99, 235, 0.6);
+}
+
+.nav-progress.is-loading {
+  opacity: 1;
+  transform: scaleX(0.78);
+  transition:
+    transform 8s cubic-bezier(0.1, 0.5, 0.1, 1),
+    opacity 0.1s linear;
+}
+
+.nav-progress.is-complete {
+  opacity: 1;
+  transform: scaleX(1);
+  transition:
+    transform 0.15s ease-out,
+    opacity 0.35s ease 0.18s;
+}
+
+/* Tactile Touch Feedback for Cards */
+.pcard:active,
+.ncard:active,
+.editorial-row:active {
+  transform: scale(0.985);
+  box-shadow: inset 0 1px 3px rgba(22, 24, 28, 0.08);
+  transition: transform 70ms ease-out;
 }

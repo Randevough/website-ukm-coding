@@ -722,7 +722,16 @@
   border-radius: var(--r1);
   margin-top: var(--s4);
   margin-bottom: var(--s5);
-  background: var(--paper-2);
+  background: linear-gradient(
+    90deg,
+    var(--paper-3, #e9e6df) 0%,
+    var(--paper-2, #f0eee9) 25%,
+    var(--paper-raised, #fdfdfc) 50%,
+    var(--paper-2, #f0eee9) 75%,
+    var(--paper-3, #e9e6df) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.8s ease-in-out infinite;
 }
 
 .article__artImg {
@@ -885,7 +894,16 @@
   border-radius: var(--r1);
   margin-top: var(--s4);
   margin-bottom: var(--s5);
-  background: var(--paper-2);
+  background: linear-gradient(
+    90deg,
+    var(--paper-3, #e9e6df) 0%,
+    var(--paper-2, #f0eee9) 25%,
+    var(--paper-raised, #fdfdfc) 50%,
+    var(--paper-2, #f0eee9) 75%,
+    var(--paper-3, #e9e6df) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.8s ease-in-out infinite;
 }
 
 .case__content {
