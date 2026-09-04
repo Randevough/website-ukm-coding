@@ -67,6 +67,20 @@ const breadcrumb = [
     item: new URL(Astro.url.pathname, Astro.site || Astro.url.origin).href,
   },
 ];
+
+const diskusiSubject = `Diskusi Kolaborasi Project: ${title}`;
+const diskusiBody = `Halo Tim UKM Coding Cyber University,
+
+Saya tertarik untuk berdiskusi lebih lanjut terkait kolaborasi atau pengembangan project "${title}".
+
+Berikut gambaran singkat ide atau kebutuhan kami:
+- Nama / Instansi: 
+- Gambaran Kebutuhan: 
+- Perkiraan Timeline: 
+
+Mohon informasi ketersediaan jadwal atau narahubung untuk diskusi lebih lanjut. Terima kasih!`;
+
+const diskusiGmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(settings.email || "ukmcoding@cyber-univ.ac.id")}&su=${encodeURIComponent(diskusiSubject)}&body=${encodeURIComponent(diskusiBody)}`;
 ---
 
 <Layout
@@ -296,8 +310,9 @@ const breadcrumb = [
       <div class="cta__actions" data-reveal>
         <a
           class="btn btn--mark btn--lg"
-          data-mailto
-          href={`mailto:${settings.email}`}>Diskusi project</a
+          href={diskusiGmailUrl}
+          target="_blank"
+          rel="noopener noreferrer">Diskusi project</a
         >
         <a class="btn btn--lg" href="/projects">Lihat project lain</a>
       </div>

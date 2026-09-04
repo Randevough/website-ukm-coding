@@ -86,6 +86,20 @@ const breadcrumb = [
     item: new URL(Astro.url.pathname, Astro.site || Astro.url.origin).href,
   },
 ];
+
+const mediaSubject = `Pertanyaan Media & Publikasi: ${title}`;
+const mediaBody = `Halo Tim Media & Komunikasi UKM Coding Cyber University,
+
+Saya tertarik untuk meliput atau bekerja sama terkait publikasi/kegiatan "${title}".
+
+Berikut informasi singkat:
+- Nama / Media: 
+- Bentuk Liputan / Kerja Sama: 
+- Kontak Narahubung: 
+
+Mohon informasi ketersediaan jadwal atau narahubung untuk koordinasi lebih lanjut. Terima kasih!`;
+
+const mediaGmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(settings.email || "ukmcoding@cyber-univ.ac.id")}&su=${encodeURIComponent(mediaSubject)}&body=${encodeURIComponent(mediaBody)}`;
 ---
 
 <Layout
@@ -220,8 +234,9 @@ const breadcrumb = [
       <div class="cta__actions" data-reveal>
         <a
           class="btn btn--mark btn--lg"
-          data-mailto
-          href={`mailto:${settings.email}`}>Hubungi tim media</a
+          href={mediaGmailUrl}
+          target="_blank"
+          rel="noopener noreferrer">Hubungi tim media</a
         >
         <a class="btn btn--lg" href="/updates">Kembali ke arsip</a>
       </div>
