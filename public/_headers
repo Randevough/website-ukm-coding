@@ -4,7 +4,7 @@
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=()
   # Strict-Transport-Security: max-age=31536000; includeSubDomains; preload (Ditunda hingga domain production aktif)
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.sanity.io; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob: https://cdn.sanity.io https://*.sanity.io https://images.unsplash.com; connect-src 'self' https://*.sanity.io https://*.api.sanity.io; worker-src 'self' blob:; frame-ancestors 'none';
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.sanity.io https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob: https://cdn.sanity.io https://*.sanity.io https://images.unsplash.com; connect-src 'self' https://*.sanity.io https://*.api.sanity.io https://cloudflareinsights.com https://static.cloudflareinsights.com; worker-src 'self' blob:; frame-ancestors 'none';
 
 /admin/*
   X-Frame-Options: SAMEORIGIN

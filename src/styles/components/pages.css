@@ -857,6 +857,17 @@
   justify-content: center;
 }
 
+.case__actions {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--s2);
+}
+
+.case__actions .btn {
+  text-decoration: none;
+}
+
 .case__art {
   position: relative;
   width: 100%;
@@ -932,6 +943,23 @@
   .case__meta {
     gap: var(--s3);
     padding-top: var(--s3);
+  }
+
+  .case__meta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .case__metaCol--action {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .case__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s2);
+    width: 100%;
   }
 
   .article__metaInfo {
