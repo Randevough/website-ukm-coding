@@ -16,7 +16,13 @@ export const partner = defineType({
       title: "Tipe",
       type: "string",
       options: {
-        list: ["Partner", "Sponsor", "Media", "Institusi", "Kolaborator"],
+        list: [
+          "Partner",
+          "Sponsor",
+          "Media Partner",
+          "Institusi",
+          "Kolaborator",
+        ],
       },
     }),
     defineField({

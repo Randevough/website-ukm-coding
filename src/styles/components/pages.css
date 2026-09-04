@@ -865,6 +865,12 @@
 }
 
 .case__actions .btn {
+  height: 38px;
+  min-height: 38px;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   text-decoration: none;
 }
 
@@ -1007,6 +1013,13 @@
   .case__lead {
     font-size: 0.95rem;
     line-height: 1.55;
+  }
+}
+
+@media (max-width: 520px) {
+  .case__actions .btn {
+    height: 44px;
+    min-height: 44px;
   }
 }
 

@@ -64,7 +64,9 @@ function glyphOf(name: string): string {
               <div class="plogo__meta">
                 <span class="plogo__name">{p.nama}</span>
                 <span class="plogo__tier">
-                  {p.tier || p.tipe || "KOLABORATOR"}
+                  {p.tier === "Media" || p.tipe === "Media"
+                    ? "Media Partner"
+                    : p.tier || p.tipe || "KOLABORATOR"}
                 </span>
               </div>
             </a>
@@ -237,8 +239,9 @@ function glyphOf(name: string): string {
 
   <div class="container site-footer__bottom">
     <span
-      >© {new Date().getFullYear()}
-      {settings.nama || "UKM Coding Cyber University"}</span
+      >{
+        `© ${new Date().getFullYear()} ${settings.nama || "UKM Coding Cyber University"}`
+      }</span
     >
     <span>Belajar · Membangun · Berbagi</span>
   </div>
