@@ -107,7 +107,7 @@ function glyphOf(name: string): string {
 
       <a
         class="fcol__contact-link"
-        href={`https://mail.google.com/mail/?view=cm&fs=1&to=${settings.email || "ukmcoding@cyberuniv.ac.id"}&su=Halo%20UKM%20Coding`}
+        href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(settings.email || "ukmcoding@cyber-univ.ac.id")}&su=Halo%20UKM%20Coding`}
         target="_blank"
         rel="noopener noreferrer"
       >

@@ -58,6 +58,21 @@ if (sanityGallery && sanityGallery.length > 0) {
 const featuredStory = latestPosts[0];
 const listStories = latestPosts.slice(1, 4);
 
+const hubungiSubject = "Diskusi Kerja Sama & Kolaborasi | UKM Coding";
+const hubungiBody = `Halo Tim UKM Coding Cyber University,
+
+Saya tertarik untuk menjalin kerja sama atau berkolaborasi dengan UKM Coding.
+
+Berikut informasi singkat terkait rencana kolaborasi:
+- Nama / Instansi: 
+- Bentuk Kolaborasi (Event / Media Partner / Project / Lainnya): 
+- Gambaran Singkat: 
+- Rencana Waktu / Timeline: 
+
+Mohon informasi ketersediaan jadwal atau narahubung untuk berdiskusi lebih lanjut. Terima kasih!`;
+
+const hubungiGmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(settings.email || "ukmcoding@cyber-univ.ac.id")}&su=${encodeURIComponent(hubungiSubject)}&body=${encodeURIComponent(hubungiBody)}`;
+
 const BULAN = [
   "Januari",
   "Februari",
@@ -398,7 +413,7 @@ function tanggalPendek(iso: string) {
         >
           <a
             class="btn btn--primary"
-            href={`https://mail.google.com/mail/?view=cm&fs=1&to=${settings.email}&su=Diskusi%20Kolaborasi`}
+            href={hubungiGmailUrl}
             target="_blank"
             rel="noopener noreferrer"
           >

@@ -1,7 +1,16 @@
 ---
 import { UKM_FIXTURE } from "@/lib/content/fixture";
+import { fetchSanity } from "@/lib/sanity/client";
+import { siteSettingsQuery } from "@/lib/sanity/queries";
 import Arrow from "./Arrow.astro";
-const { settings } = UKM_FIXTURE;
+
+let settings = UKM_FIXTURE.settings;
+const sanitySettings = await fetchSanity<any>(siteSettingsQuery);
+if (sanitySettings) {
+  settings = { ...settings, ...sanitySettings };
+}
+
+const contactGmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(settings.email || "ukmcoding@cyber-univ.ac.id")}&su=${encodeURIComponent("Halo UKM Coding")}`;
 ---
 
 <div aria-hidden="true" class="drawer" id="drawer">
@@ -42,9 +51,15 @@ const { settings } = UKM_FIXTURE;
     </nav>
     <div class="drawer__foot">
       <span class="label">Kontak</span>
-      <a class="tlink" data-mailto="" href={`mailto:${settings.email}`}
-        ><span>{settings.email}</span></a
+      <!--email_off-->
+      <a
+        class="tlink"
+        href={contactGmailUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        ><span>{settings.email || "ukmcoding@cyber-univ.ac.id"}</span></a
       >
+      <!--/email_off-->
       <a
         class="btn btn--primary btn--block"
         data-drawer-close=""
