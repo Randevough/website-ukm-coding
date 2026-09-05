@@ -127,13 +127,27 @@ export const editorial = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: "penulis",
+      name: "divisiPenulis",
       title: "Divisi Penulis",
+      type: "reference",
+      to: [{ type: "division" }],
+      fieldset: "meta",
+      description: "Pilih divisi resmi dari master data Divisi.",
+    }),
+    defineField({
+      name: "penulisKustom",
+      title: "Penulis Kustom / Kepanitiaan Ad-hoc",
       type: "string",
       fieldset: "meta",
       description:
-        "Nama divisi pembuat konten (contoh: Divisi Media & Komunikasi, Divisi Web Development, Tim Redaksi).",
-      initialValue: "Tim Redaksi",
+        "Opsional. Isi jika artikel dibuat oleh kepanitiaan khusus (contoh: Panitia DECOMPE 2026). Jika diisi, nama ini yang akan tampil di website.",
+    }),
+    defineField({
+      name: "penulis",
+      title: "Penulis (Cadangan)",
+      type: "string",
+      fieldset: "meta",
+      hidden: true,
     }),
     defineField({
       name: "featured",

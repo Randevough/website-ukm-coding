@@ -5,11 +5,12 @@ import { project } from "../project";
 import { siteSettings } from "../siteSettings";
 import { partner } from "../partner";
 import { galleryItem } from "../galleryItem";
+import { division } from "../division";
 
 describe("Sanity CMS Schema Definitions", () => {
-  it("should register all 5 required core schemas in schemaTypes", () => {
+  it("should register all 6 required core schemas in schemaTypes", () => {
     expect(schemaTypes).toBeDefined();
-    expect(schemaTypes.length).toBe(5);
+    expect(schemaTypes.length).toBe(6);
 
     const schemaNames = schemaTypes.map((s: any) => s.name);
     expect(schemaNames).toContain("siteSettings");
@@ -17,6 +18,7 @@ describe("Sanity CMS Schema Definitions", () => {
     expect(schemaNames).toContain("project");
     expect(schemaNames).toContain("galleryItem");
     expect(schemaNames).toContain("partner");
+    expect(schemaNames).toContain("division");
   });
 
   describe("Editorial Schema", () => {
@@ -32,6 +34,8 @@ describe("Sanity CMS Schema Definitions", () => {
       expect(fieldNames).toContain("isi");
       expect(fieldNames).toContain("cover");
       expect(fieldNames).toContain("tanggalPublikasi");
+      expect(fieldNames).toContain("divisiPenulis");
+      expect(fieldNames).toContain("penulisKustom");
       expect(fieldNames).toContain("penulis");
       expect(fieldNames).toContain("featured");
     });
@@ -87,6 +91,17 @@ describe("Sanity CMS Schema Definitions", () => {
       expect(fieldNames).toContain("gambar");
       expect(fieldNames).toContain("alt");
       expect(fieldNames).toContain("tampilDiBeranda");
+    });
+  });
+
+  describe("Division Schema", () => {
+    it("should define a division document with name and active status", () => {
+      expect(division.name).toBe("division");
+      expect(division.type).toBe("document");
+      const fieldNames = division.fields.map((f: any) => f.name);
+      expect(fieldNames).toContain("nama");
+      expect(fieldNames).toContain("aktif");
+      expect(fieldNames).toContain("urutan");
     });
   });
 });

@@ -3,6 +3,7 @@ import { editorial } from "./editorial";
 import { project } from "./project";
 import { galleryItem } from "./galleryItem";
 import { partner } from "./partner";
+import { division } from "./division";
 
 export const schemaTypes = [
   siteSettings,
@@ -10,4 +11,5 @@ export const schemaTypes = [
   project,
   galleryItem,
   partner,
+  division,
 ];
