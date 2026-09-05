@@ -51,6 +51,7 @@ describe("Sanity CMS Schema Definitions", () => {
       expect(fieldNames).toContain("kategori");
       expect(fieldNames).toContain("tahun");
       expect(fieldNames).toContain("techStack");
+      expect(fieldNames).toContain("kontributor");
       expect(fieldNames).toContain("masalah");
       expect(fieldNames).toContain("pendekatan");
       expect(fieldNames).toContain("hasil");

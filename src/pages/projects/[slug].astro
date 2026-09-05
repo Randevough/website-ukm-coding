@@ -43,6 +43,7 @@ if (sanitySettings) {
 const title = p.nama || p.title;
 const oneLiner = p.ringkasan || p.oneLiner;
 const stack = p.techStack || p.stack || [];
+const kontributor = p.kontributor || "UKM Coding Team";
 const githubUrl = p.githubUrl || p.repoUrl || null;
 const demoUrl = p.demoUrl || null;
 
@@ -102,6 +103,15 @@ const diskusiGmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeU
         <div class="case__tagRow">
           <span class="label label--mark">{p.kategori}</span>
           <span class="case__year">{p.tahun}</span>
+          {
+            kontributor && (
+              <span class="case__contributor">
+                <span class="case__dot" aria-hidden="true">·</span>
+                <span class="case__by">oleh</span>
+                <strong>{kontributor}</strong>
+              </span>
+            )
+          }
         </div>
         <div class="case__titleBlock">
           <h1 class="case__title">{title}</h1>
@@ -109,7 +119,8 @@ const diskusiGmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeU
         </div>
         <div class="case__meta">
           <div class="case__metaCol">
-            <span>Stack Utama</span><strong class="mono"
+            <span>Stack Utama</span>
+            <strong class="mono"
               >{stack.length > 0 ? stack.join(" · ") : "—"}</strong
             >
           </div>

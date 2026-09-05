@@ -809,6 +809,27 @@
   font-weight: 500;
 }
 
+.case__contributor {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  font-size: var(--xs);
+  color: var(--ink-3);
+}
+
+.case__dot {
+  color: var(--ink-4);
+}
+
+.case__by {
+  color: var(--ink-3);
+}
+
+.case__contributor strong {
+  color: var(--ink-deep);
+  font-weight: 600;
+}
+
 .case__titleBlock {
   display: flex;
   flex-direction: column;
@@ -832,7 +853,7 @@
 
 .case__meta {
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   justify-content: space-between;
   gap: var(--s4);
   align-items: center;

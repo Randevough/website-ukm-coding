@@ -102,6 +102,8 @@ export const project = defineType({
       type: "string",
       fieldset: "details",
       description: "Nama divisi atau anggota kunci yang mengerjakan.",
+      validation: (Rule) =>
+        Rule.max(45).warning("Disarankan maksimal 45 karakter agar pas di header."),
     }),
     defineField({
       name: "cover",
