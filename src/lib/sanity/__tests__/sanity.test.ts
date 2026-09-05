@@ -175,5 +175,21 @@ describe("Sanity Queries & Integration", () => {
       expect(normalized.baca).toBe(4);
       expect(normalized.body).toBe("Konten lengkap artikel...");
     });
+
+    it("should normalize Sanity editorial post with division name author", () => {
+      const rawEditorial = {
+        slug: "workshop-react-2026",
+        judul: "Workshop React Modern",
+        tipe: "Kegiatan",
+        tanggalPublikasi: "2026-07-10",
+        penulis: "Divisi Web Development",
+        ringkasan: "Belajar React dari dasar hingga mahir",
+        featured: false,
+        isi: "Konten workshop...",
+      };
+
+      const normalized = normalizeEditorial(rawEditorial);
+      expect(normalized.penulis).toBe("Divisi Web Development");
+    });
   });
 });

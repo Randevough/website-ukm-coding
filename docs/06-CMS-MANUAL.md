@@ -2,139 +2,119 @@
 
 **UKM Coding Cyber University**
 
-Dokumen ini adalah panduan praktis dan standar operasional resmi bagi admin, editor, dan pengurus untuk memasukkan, mengedit, serta mempublikasikan konten pada situs resmi UKM Coding Cyber University.
+Panduan ringkas ini dibuat untuk tim internal (Humas, Media, dan Pengurus) agar bisa menambah atau memperbarui konten di website UKM Coding lewat Sanity Studio dengan mudah dan rapi.
 
 ---
 
-## 1. Akses Sanity Studio
+## 1. Akses & Cara Kerja Dasar
 
-- **Lingkungan Lokal**: `http://localhost:4321/admin`
-- **Lingkungan Produksi**: `https://ukmcoding.site/admin` (atau domain produksi aktif)
-- **Login**: Gunakan akun email yang telah didaftarkan ke proyek Sanity.
+- **Link Akses Lokal**: `http://localhost:4321/admin`
+- **Link Akses Produksi**: `https://ukmcoding.site/admin` (atau domain aktif saat ini)
+- **Login**: Masuk menggunakan akun Google/email yang sudah didaftarkan ke proyek Sanity.
 
-> **Catatan Alur Kerja**: Setiap perubahan yang Anda ketik akan otomatis disimpan sebagai _Draft_. Perubahan baru akan muncul di website publik setelah Anda menekan tombol hijau **Publish** di pojok kanan bawah.
-
----
-
-## 2. Struktur Dokumen & Panduan Input
-
-### A. Project (Karya & Studi Kasus)
-
-Menu **Project** digunakan untuk mendokumentasikan aplikasi, prototipe, dan karya rekayasa perangkat lunak mahasiswa.
-
-| Kolom (_Field_)           | Tipe        | Status     | Panduan & Standar Penulisan                                                                                                                                                  |
-| :------------------------ | :---------- | :--------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Nama Project**          | Teks        | Wajib      | Tuliskan nama resmi aplikasi/produk (contoh: `Papan Skor DECOMPE`). Hindari nama yang terlalu panjang.                                                                       |
-| **Slug**                  | Slug        | Wajib      | Klik tombol **Generate** setelah mengisi nama. **Pantangan:** Jangan ubah slug setelah project dipublikasikan karena akan merusak tautan yang telah dibagikan.               |
-| **Ringkasan (One-liner)** | Teks Pendek | Wajib      | Maksimal 160 karakter. Tulis 1–2 kalimat padat yang menjelaskan fungsi utama aplikasi. Teks ini tampil di kartu pratinjau.                                                   |
-| **Kategori**              | Pilihan     | Wajib      | Pilih salah satu: `Website`, `Mobile`, `Data & AI`, `IoT / Hardware`, `Tools`, `Lainnya`.                                                                                    |
-| **Tampil di Sorotan**     | Toggle      | Opsional   | Aktifkan (`true`) jika ingin project ini muncul di section _Project Pilihan_ di halaman Beranda.                                                                             |
-| **Tahun**                 | Angka       | Opsional   | Tahun project selesai atau dirilis (contoh: `2026`).                                                                                                                         |
-| **Tech Stack**            | Tag / Array | Opsional   | Masukkan nama teknologi utama satu per satu (contoh: `React`, `Node.js`, `Supabase`, `Tailwind`).                                                                            |
-| **Kontributor Utama**     | Teks        | Opsional   | Nama divisi atau tim pembuat (contoh: `Divisi IT & Data`).                                                                                                                   |
-| **Cover Image**           | Gambar      | Opsional   | Gunakan gambar rasio horizontal **16:9** (minimal 1200×675 px). Klik gambar lalu sesuaikan lingkaran **Hotspot** ke titik fokus visual. Hindari gambar berisi teks berlebih. |
-| **Tautan GitHub / Demo**  | URL         | Opsional   | URL repositori publik atau situs live demo (wajib diawali `https://`).                                                                                                       |
-| **Masalah**               | Teks / Blok | Disarankan | Jelaskan permasalahan nyata di lapangan yang melatarbelakangi pembuatan aplikasi ini.                                                                                        |
-| **Pendekatan**            | Teks / Blok | Disarankan | Gunakan format daftar poin (_bullet points_) untuk menjelaskan arsitektur dan langkah penyelesaian tim.                                                                      |
-| **Hasil**                 | Teks / Blok | Disarankan | Uraikan hasil nyata atau dampak terukur setelah sistem digunakan.                                                                                                            |
+### Cara Simpan & Publikasi
+- Saat kamu mengetik atau mengunggah gambar, Sanity otomatis menyimpannya sebagai **Draft**.
+- Konten baru **belum muncul di website publik** sebelum kamu menekan tombol hijau **Publish** di pojok kanan bawah.
+- Setelah tombol Publish ditekan, website butuh waktu sekitar 1-2 menit untuk memperbarui halaman secara otomatis.
 
 ---
 
-### B. Editorial (Updates, Berita & Kegiatan)
+## 2. Mengisi Konten Karya (Project)
 
-Menu **Editorial** digunakan untuk mempublikasikan artikel, pengumuman, dokumentasi acara, dan rekapan kegiatan.
+Menu **Project** dipakai untuk memamerkan aplikasi atau karya buatan mahasiswa dan tim UKM Coding. Form ini dibagi menjadi 3 tab utama:
 
-| Kolom (_Field_)       | Tipe          | Status     | Panduan & Standar Penulisan                                                                                                                             |
-| :-------------------- | :------------ | :--------- | :------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Judul**             | Teks          | Wajib      | Judul artikel yang jelas, lugas, dan informatif.                                                                                                        |
-| **Slug**              | Slug          | Wajib      | Klik tombol **Generate** dari judul artikel.                                                                                                            |
-| **Tipe**              | Pilihan       | Wajib      | Pilih salah satu: `Berita`, `Kegiatan`, `Pengumuman`, atau `Prestasi`.                                                                                  |
-| **Ringkasan**         | Teks          | Wajib      | 120–180 karakter. Kalimat pengantar yang memikat pembaca di daftar artikel.                                                                             |
-| **Isi Konten**        | Rich Text     | Wajib      | Tulis isi lengkap tulisan. Gunakan heading `H2` atau `H3` untuk sub-bagian, bukan cetak tebal biasa. Anda bisa menambahkan gambar inline di dalam teks. |
-| **Cover & Cover Alt** | Gambar + Teks | Disarankan | Gambar utama rasio 16:9. Wajib mengisi _Cover Alt Text_ untuk aksesibilitas (jelaskan isi visual gambar secara singkat).                                |
-| **Tanggal Publikasi** | Tanggal       | Wajib      | Tanggal terbit artikel.                                                                                                                                 |
-| **Penulis**           | Referensi     | Opsional   | Pilih profil dari dokumen _Penulis_ yang sudah dibuat.                                                                                                  |
+### Tab 1: Metadata Utama
+- **Nama Project** (Wajib): Nama resmi aplikasi (contoh: `Papan Skor DECOMPE`).
+- **Slug** (Wajib): Klik tombol **Generate** setelah mengisi nama. Jangan ubah slug jika project sudah pernah disebar link-nya.
+- **Ringkasan (One-liner)** (Wajib): Maksimal 160 karakter (1-2 kalimat). Teks ini tampil di kartu preview halaman depan.
+- **Kategori** (Wajib): Pilih salah satu: `Website`, `Mobile`, `Data & AI`, `IoT / Hardware`, `Tools`, atau `Lainnya`.
+- **Status** (Opsional): Keterangan kondisi project (contoh: `Aktif`, `Selesai`, `Dalam Pengembangan`).
+- **Tampil di Sorotan** (Toggle): Nyalakan jika ingin karya ini muncul di bagian karya unggulan pada Beranda.
 
-> **Khusus Tipe "Kegiatan"**:
-> Jika memilih tipe `Kegiatan`, form detail jadwal akan muncul. Wajib melengkapi:
->
-> - **Tanggal Mulai & Selesai**
-> - **Lokasi** (contoh: `Lab Komputer Cyber University` atau `Online via Zoom`)
-> - **URL Pendaftaran** (tautan Google Form / formulir registrasi)
-> - **Status Kegiatan**: `Akan Datang`, `Berlangsung`, atau `Selesai`.
+### Tab 2: Detail Teknis & Tim
+- **Tahun** (Opsional): Tahun rilis project (contoh: `2026`).
+- **Tech Stack** (Opsional): Klik *Add item* lalu masukkan nama teknologi satu per satu (contoh: `React`, `Supabase`, `Tailwind`).
+- **Kontributor Utama** (Opsional): Nama divisi atau tim pembuat (contoh: `Divisi Web Development`). Disarankan maksimal 45 karakter agar pas di header.
+- **Cover Image** (Opsional): Gambar utama rasio 16:9 (disarankan minimal 1200x675 px). Setelah upload, klik gambar lalu atur lingkaran **Hotspot** ke titik fokus visual agar tidak terpotong sembarangan.
+- **Tautan GitHub** (Opsional): Link repositori publik (harus diawali `https://`).
+- **Tautan Demo** (Opsional): Link aplikasi live atau situs demo.
 
----
-
-### C. Partner & Kolaborator (Logo Footer)
-
-Menu **Partner & Kolaborator** mengatur daftar instansi, komunitas, sponsor, dan media partner di area footer.
-
-#### ⚠️ Standar Mutlak Aset Logo:
-
-1. **Format Wajib**: **PNG Transparan** atau **SVG**.
-2. **Latar Belakang**: **Wajib transparan (tanpa warna solid putih, hitam, abu-abu, pink, atau kotak warna bawaan gambar)**.
-3. **Bentuk & Rasio**: Rasio **1:1 (persegi)** dengan logo berada tepat di tengah kanvas.
-4. **Resolusi Minimal**: 300×300 px (kualitas tajam, tidak pecah).
-
-| Kolom (_Field_)      | Panduan Pengisian                                                                                                                                                          |
-| :------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Nama Organisasi**  | Nama resmi instansi / partner (contoh: `Cyber University`, `BEM Cyber University`).                                                                                        |
-| **Tipe**             | Pilih: `Partner`, `Sponsor`, `Media`, `Institusi`, atau `Kolaborator`.                                                                                                     |
-| **Logo**             | Unggah file logo transparan sesuai standar di atas.                                                                                                                        |
-| **Izin Tampil Logo** | **Wajib dicentang (`true`)** jika pihak partner telah menyetujui pemasangan logo. Jika belum, biarkan tidak dicentang agar nama tetap tampil tanpa logo placeholder rusak. |
-| **Tautan (URL)**     | URL website atau profil Instagram partner (opsional).                                                                                                                      |
-| **Urutan**           | Angka urutan tampilan (misal: `1`, `2`, `3`).                                                                                                                              |
-| **Aktif**            | Toggle untuk mengaktifkan / menonaktifkan tampilan partner tanpa menghapus datanya.                                                                                        |
+### Tab 3: Konten (Masalah, Pendekatan, Hasil)
+- **Masalah**: Jelaskan masalah apa yang melatarbelakangi pembuatan aplikasi ini.
+- **Pendekatan**: Ceritakan cara tim menyelesaikannya (bisa gunakan format daftar poin).
+- **Hasil**: Tulis dampak atau hasil nyata setelah sistem digunakan.
 
 ---
 
-### D. Pengaturan Situs (Site Settings)
+## 3. Menulis Berita, Acara, & Pengumuman (Editorial)
 
-Dokumen tunggal (_singleton_) untuk mengelola informasi inti organisasi:
+Menu **Editorial** dipakai untuk mempublikasikan artikel, rekapan kegiatan, kabar pengumuman, dan prestasi.
 
-| Kolom (_Field_)                 | Tipe       | Status   | Panduan & Standar Penulisan                                                                             |
-| :------------------------------ | :--------- | :------- | :------------------------------------------------------------------------------------------------------ |
-| **Nama Situs**                  | Teks       | Wajib    | Identitas resmi UKM (contoh: `UKM Coding Cyber University`).                                            |
-| **Deskripsi Singkat / Tagline** | Teks       | Wajib    | Deskripsi singkat atau slogan resmi yang tampil di bawah logo pada area Footer.                         |
-| **Email Resmi**                 | Teks/Email | Wajib    | Alamat email resmi organisasi untuk menerima pesan dari tombol kerja sama dan narahubung.               |
-| **URL Instagram**               | URL        | Opsional | Tautan profil Instagram resmi organisasi (contoh: `https://www.instagram.com/coding.cyberuniversity/`). |
-| **URL LinkedIn**                | URL        | Opsional | Tautan profil/halaman LinkedIn resmi organisasi.                                                        |
-| **File Proposal Media Partner** | File (PDF) | Opsional | Unggah dokumen proposal resmi dalam format **PDF** untuk tombol unduh _Media Partner_ di Beranda.       |
+### Kolom Utama
+- **Judul** (Wajib): Judul artikel yang jelas dan menarik.
+- **Slug** (Wajib): Klik tombol **Generate** dari judul.
+- **Tipe / Kategori Utama** (Wajib): Pilih antara `Berita`, `Kegiatan`, `Pengumuman`, atau `Prestasi`.
+- **Ringkasan (Lead Paragraph)** (Wajib): Tulis 1-2 kalimat pengantar (120-180 karakter) untuk teks preview kartu.
+- **Isi Lengkap** (Wajib): Tulis isi artikel. Gunakan subjudul `H2` atau `H3` untuk bagian topik baru. Kamu juga bisa menyisipkan gambar langsung di dalam teks.
+- **Divisi Penulis** (Opsional): Ketik nama divisi penanggung jawab artikel (contoh: `Divisi Web Development`, `Divisi Media & Komunikasi`, `Tim Redaksi`). Teks ini akan tampil rapi di samping tanggal publikasi.
+- **Tampil di Sorotan** (Toggle): Nyalakan jika artikel ini ingin dijadikan sorotan utama di bagian atas halaman `/updates`.
+- **Kategori Tambahan** (Opsional): Tag atau kata kunci tambahan terkait isi artikel.
 
-> **Catatan SEO & Copyright**: Seluruh metadata SEO (Google Search & pratinjau media sosial) di-generate secara otomatis oleh sistem web dari judul, ringkasan, dan cover gambar. Tahun hak cipta pada footer juga diperbarui secara otomatis setiap tahun tanpa perlu konfigurasi manual.
+### Khusus Jika Memilih Tipe "Kegiatan"
+Jika kamu memilih tipe `Kegiatan`, form detail jadwal akan muncul otomatis:
+- **Tanggal Mulai (Khusus Kegiatan)**: Tanggal acara dimulai.
+- **Tanggal Selesai (Khusus Kegiatan)**: Tanggal acara berakhir.
+- **Lokasi Kegiatan**: Tempat fisik atau link daring (contoh: `Lab Komputer Cyber University` atau `Zoom Meeting`).
+- **Tautan Pendaftaran**: Link Google Form / formulir registrasi peserta.
 
----
-
-### E. Penulis & Galeri
-
-- **Penulis (Author)**: Profil pengurus atau anggota penulis artikel (nama, divisi, foto profil lingkaran, bio singkat).
-- **Galeri (Gallery Item)**: Foto arsip kegiatan atau postingan Instagram terpilih (wajib gambar resolusi tajam, lengkapi kolom _Alt Text_, centang _Tampil di Beranda_ jika ingin ditampilkan di grid galeri depan).
-
----
-
-## 3. Checklist Sebelum Menekan Tombol "Publish"
-
-Gunakan daftar periksa ini sebelum mempublikasikan konten baru:
-
-- [ ] **Slug Valid**: Slug sudah di-generate dari judul dan tidak ada karakter aneh.
-- [ ] **Bebas Typo**: Nama project, judul artikel, dan nama instansi sudah diperiksa ejaannya.
-- [ ] **Aturan Gambar & Hotspot**: Gambar horizontal (16:9) dan titik fokus (_hotspot_) sudah diarahkan ke objek utama.
-- [ ] **Logo Transparan**: Logo partner tidak membawa kotak latar belakang warna solid.
-- [ ] **Izin Logo**: Toggle `Izin Tampil Logo` sudah sesuai status persetujuan partner.
-- [ ] **Validasi Sukses**: Tidak ada tanda seru merah / error validasi pada form Sanity.
+> **Catatan Status Kegiatan**: Di website, label status seperti *Akan Datang* atau *Selesai* dihitung secara otomatis dari tanggal yang kamu masukkan. Jadi kamu tidak perlu memilih status manual.
 
 ---
 
-## 4. Troubleshooting & Pertanyaan Umum
+## 4. Logo Mitra & Sponsor (Partner & Kolaborator)
 
-**T: Saya sudah klik Publish, tapi website belum berubah?**
+Menu ini mengatur logo instansi, komunitas, sponsor, dan media partner di bagian bawah (footer) website.
 
-> **J**: Cek apakah Sanity Studio Anda terhubung ke dataset `production`. Pada mode pengembangan lokal, lakukan _hard refresh_ browser (`Ctrl + Shift + R` atau `Cmd + Shift + R`). Di production, website akan melakukan build otomatis dalam 1–2 menit setelah publish.
+### Aturan Gambar Logo
+1. **Wajib format PNG transparan atau SVG**.
+2. **Tidak boleh ada background kotak warna** (tanpa latar putih, abu-abu, atau hitam).
+3. **Bentuk persegi (rasio 1:1)** dengan posisi logo pas di tengah.
 
-**T: Kenapa logo kolaborator tidak muncul di footer website?**
+### Kolom yang Diisi
+- **Nama Organisasi** (Wajib): Nama resmi mitra (contoh: `BEM Cyber University`).
+- **Tipe**: Pilih `Partner`, `Sponsor`, `Media Partner`, `Institusi`, atau `Kolaborator`.
+- **Logo**: Upload file logo transparan sesuai aturan di atas.
+- **Izin Tampil Logo** (Wajib): **Nyalakan toggle ini** jika pihak mitra sudah resmi memberi izin pemasangan logo. Jika belum dapat izin tertulis, matikan toggle agar aman secara legalitas.
+- **Tautan (URL)** (Opsional): Link ke website atau akun Instagram resmi mitra.
+- **Urutan Tampil** (Opsional): Angka urutan (misal: `1`, `2`, `3`).
+- **Aktif** (Toggle): Nyalakan untuk menampilkan di web. Matikan jika masa kerja sama sudah selesai tanpa perlu menghapus datanya.
 
-> **J**: Pastikan toggle **"Izin Tampil Logo"** dan toggle **"Aktif"** sudah dalam keadaan menyala (`true`).
+---
 
-**T: Apakah boleh mengubah slug project / artikel yang sudah lama tayang?**
+## 5. Pengaturan Dokumen Lainnya
 
-> **J**: Sangat tidak disarankan. Mengubah slug akan membuat URL lama menghasilkan halaman _404 Not Found_ jika tautan tersebut sudah terlanjur disebar di media sosial atau proposal.
+### A. Pengaturan Situs (Site Settings)
+Dokumen tunggal untuk profil utama website:
+- **Nama Situs & Deskripsi Singkat**: Teks identitas yang muncul di footer.
+- **Email Resmi**: Email penerima untuk tombol kontak kerja sama.
+- **URL Instagram & LinkedIn**: Link akun media sosial resmi UKM.
+- **File Proposal Media Partner (PDF)**: Upload file PDF proposal kerja sama terbaru untuk tombol unduh di Beranda.
+
+### B. Galeri (Gallery Item)
+- **Gambar & Alt**: Foto dokumentasi kegiatan resolusi tajam beserta deskripsi singkatnya.
+- **Caption & Tanggal**: Keterangan foto dan waktu kegiatan.
+- **Tampil di Beranda**: Nyalakan jika ingin foto ini masuk ke grid foto di halaman depan.
+
+---
+
+## 6. Kendala yang Sering Terjadi (FAQ)
+
+**Q: Saya sudah klik Publish, kenapa di website belum berubah?**  
+A: Website butuh waktu proses sekitar 1-2 menit setelah publish. Coba refresh halaman dengan tombol `Ctrl + Shift + R` (Windows) atau `Cmd + Shift + R` (Mac).
+
+**Q: Logo partner tidak muncul di footer?**  
+A: Cek dua hal: pastikan toggle **"Aktif"** menyala dan toggle **"Izin Tampil Logo"** juga menyala.
+
+**Q: Boleh tidak ganti slug artikel yang sudah lama dipublish?**  
+A: Jangan diubah jika link artikel tersebut sudah pernah disebar di media sosial atau grup, karena link lama akan menjadi rusak (error 404).
+

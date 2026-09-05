@@ -60,12 +60,17 @@ export function normalizeEditorial(raw: any): Post {
     throw new Error("Cannot normalize null or undefined editorial");
   }
 
+  const authorName =
+    typeof raw.penulis === "string"
+      ? raw.penulis
+      : raw.penulis?.namaTampil || raw.author?.namaTampil || "Tim Redaksi";
+
   return {
     slug: raw.slug || "",
     title: raw.judul || raw.title || "Untitled Post",
     kategori: raw.tipe || raw.kategori || "Artikel",
     tanggal: raw.tanggalPublikasi || raw.tanggal || new Date().toISOString(),
-    penulis: raw.penulis || "Redaksi UKM Coding",
+    penulis: authorName || "Tim Redaksi",
     excerpt: raw.ringkasan || raw.excerpt || "",
     variant: raw.variant || "neutral",
     featured: Boolean(raw.featured),

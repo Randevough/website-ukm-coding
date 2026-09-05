@@ -4,17 +4,15 @@ import { editorial } from "../editorial";
 import { project } from "../project";
 import { siteSettings } from "../siteSettings";
 import { partner } from "../partner";
-import { author } from "../author";
 import { galleryItem } from "../galleryItem";
 
 describe("Sanity CMS Schema Definitions", () => {
-  it("should register all 6 required core schemas in schemaTypes", () => {
+  it("should register all 5 required core schemas in schemaTypes", () => {
     expect(schemaTypes).toBeDefined();
-    expect(schemaTypes.length).toBe(6);
+    expect(schemaTypes.length).toBe(5);
 
     const schemaNames = schemaTypes.map((s: any) => s.name);
     expect(schemaNames).toContain("siteSettings");
-    expect(schemaNames).toContain("author");
     expect(schemaNames).toContain("editorial");
     expect(schemaNames).toContain("project");
     expect(schemaNames).toContain("galleryItem");
@@ -89,18 +87,6 @@ describe("Sanity CMS Schema Definitions", () => {
       expect(fieldNames).toContain("gambar");
       expect(fieldNames).toContain("alt");
       expect(fieldNames).toContain("tampilDiBeranda");
-    });
-  });
-
-  describe("Author Schema", () => {
-    it("should define an author document type with name and avatar", () => {
-      expect(author.name).toBe("author");
-      expect(author.type).toBe("document");
-      const fieldNames = author.fields.map((f: any) => f.name);
-      expect(fieldNames).toContain("namaTampil");
-      expect(fieldNames).toContain("peran");
-      expect(fieldNames).toContain("foto");
-      expect(fieldNames).toContain("bioSingkat");
     });
   });
 });

@@ -128,9 +128,12 @@ export const editorial = defineType({
     }),
     defineField({
       name: "penulis",
-      title: "Penulis",
+      title: "Divisi Penulis",
       type: "string",
       fieldset: "meta",
+      description:
+        "Nama divisi pembuat konten (contoh: Divisi Media & Komunikasi, Divisi Web Development, Tim Redaksi).",
+      initialValue: "Tim Redaksi",
     }),
     defineField({
       name: "featured",
