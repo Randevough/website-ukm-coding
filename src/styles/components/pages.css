@@ -751,6 +751,11 @@
   color: var(--ink);
 }
 
+.article__body p,
+.portable-text p {
+  white-space: pre-line;
+}
+
 .article__body h2 {
   font-size: var(--d3);
   letter-spacing: var(--track-tight);

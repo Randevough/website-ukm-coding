@@ -38,10 +38,12 @@ export async function fetchSanity<T>(
   const key = getCacheKey(query, params);
   const now = Date.now();
 
-  // Check valid cache entry
-  const cached = cache.get(key);
-  if (cached && cached.expiresAt > now) {
-    return cached.data as T;
+  // Check valid cache entry (bypassed in dev for instant CMS updates on refresh)
+  if (!import.meta.env.DEV) {
+    const cached = cache.get(key);
+    if (cached && cached.expiresAt > now) {
+      return cached.data as T;
+    }
   }
 
   // Deduplicate in-flight requests

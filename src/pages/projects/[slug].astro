@@ -6,7 +6,11 @@ import SanityImage from "../../components/sanity/SanityImage.astro";
 import PortableTextComponent from "../../components/sanity/PortableTextComponent.astro";
 import { UKM_FIXTURE } from "../../lib/content/fixture";
 import { fetchSanity } from "../../lib/sanity/client";
-import { siteSettingsQuery, allProjectsQuery } from "../../lib/sanity/queries";
+import {
+  siteSettingsQuery,
+  allProjectsQuery,
+  projectBySlugQuery,
+} from "../../lib/sanity/queries";
 
 export async function getStaticPaths() {
   let projects = UKM_FIXTURE.projects;
@@ -33,7 +37,16 @@ export async function getStaticPaths() {
   });
 }
 
-const { project: p, prev, next } = Astro.props as any;
+const { project: staticProject, prev, next } = Astro.props as any;
+let p = staticProject;
+if (import.meta.env.DEV && Astro.params.slug) {
+  const liveProject = await fetchSanity<any>(projectBySlugQuery, {
+    slug: Astro.params.slug,
+  });
+  if (liveProject) {
+    p = liveProject;
+  }
+}
 let settings = UKM_FIXTURE.settings;
 const sanitySettings = await fetchSanity<any>(siteSettingsQuery);
 if (sanitySettings) {

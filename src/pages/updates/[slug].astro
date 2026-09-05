@@ -9,6 +9,7 @@ import { fetchSanity } from "../../lib/sanity/client";
 import {
   siteSettingsQuery,
   allEditorialsQuery,
+  editorialBySlugQuery,
 } from "../../lib/sanity/queries";
 
 export async function getStaticPaths() {
@@ -40,7 +41,16 @@ export async function getStaticPaths() {
   });
 }
 
-const { post: p, prev, next } = Astro.props as any;
+const { post: staticPost, prev, next } = Astro.props as any;
+let p = staticPost;
+if (import.meta.env.DEV && Astro.params.slug) {
+  const livePost = await fetchSanity<any>(editorialBySlugQuery, {
+    slug: Astro.params.slug,
+  });
+  if (livePost) {
+    p = livePost;
+  }
+}
 let settings = UKM_FIXTURE.settings;
 const sanitySettings = await fetchSanity<any>(siteSettingsQuery);
 if (sanitySettings) {
