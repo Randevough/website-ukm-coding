@@ -741,9 +741,6 @@
 }
 
 .article__body {
-  display: flex;
-  flex-direction: column;
-  gap: var(--s5);
   max-width: 72ch;
   margin-inline: auto;
   font-size: var(--body-lg);
@@ -751,9 +748,17 @@
   color: var(--ink);
 }
 
+.article__body,
+.portable-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s5);
+}
+
 .article__body p,
 .portable-text p {
-  white-space: pre-line;
+  white-space: pre-wrap;
+  tab-size: 4;
 }
 
 .article__body h2 {
