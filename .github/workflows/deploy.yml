@@ -9,6 +9,7 @@ on:
       - main
   repository_dispatch:
     types: [sanity-publish]
+  workflow_dispatch:
 
 jobs:
   build-and-test:
@@ -28,12 +29,15 @@ jobs:
         run: npm ci
 
       - name: Format Check
+        if: github.event_name != 'repository_dispatch'
         run: npm run format:check
 
       - name: Lint
+        if: github.event_name != 'repository_dispatch'
         run: npm run lint
 
       - name: Unit Tests
+        if: github.event_name != 'repository_dispatch'
         run: npm run test -- --run
 
       - name: Build
@@ -54,6 +58,7 @@ jobs:
   link-check:
     name: Internal Link Check
     needs: build-and-test
+    if: github.event_name != 'repository_dispatch'
     runs-on: ubuntu-latest
     steps:
       - name: Download Build Artifact
@@ -71,6 +76,7 @@ jobs:
   lighthouse:
     name: Lighthouse CI
     needs: build-and-test
+    if: github.event_name != 'repository_dispatch'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -91,8 +97,13 @@ jobs:
 
   deploy:
     name: Deploy to Cloudflare Pages
-    if: github.ref == 'refs/heads/main' || github.event_name == 'repository_dispatch'
     needs: [build-and-test, link-check, lighthouse]
+    if: |
+      always() &&
+      (github.ref == 'refs/heads/main' || github.event_name == 'repository_dispatch' || github.event_name == 'workflow_dispatch') &&
+      needs.build-and-test.result == 'success' &&
+      (needs.link-check.result == 'success' || needs.link-check.result == 'skipped') &&
+      (needs.lighthouse.result == 'success' || needs.lighthouse.result == 'skipped')
     runs-on: ubuntu-latest
     permissions:
       contents: read

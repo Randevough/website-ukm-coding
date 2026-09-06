@@ -31,9 +31,9 @@ Berikut adalah daftar variabel lingkungan dan rahasia (_secrets_) yang dikelola:
 
 ### B. Public Environment Variables (`.env` & Cloudflare Settings):
 
-- `PUBLIC_SANITY_PROJECT_ID`: `60a63q0u`
+- `PUBLIC_SANITY_PROJECT_ID`: `n3mnxpum`
 - `PUBLIC_SANITY_DATASET`: `production`
-- `PUBLIC_SANITY_API_VERSION`: `2024-02-28`
+- `PUBLIC_SANITY_API_VERSION`: `2026-08-19`
 - `PUBLIC_SITE_URL`: `https://ukmcoding.site`
 - `PUBLIC_NOINDEX`: `false` (khusus production) / `true` (pada branch preview)
 
@@ -41,22 +41,45 @@ Berikut adalah daftar variabel lingkungan dan rahasia (_secrets_) yang dikelola:
 
 ## 3. Webhook Publikasi Otomatis (Sanity → GitHub)
 
-Untuk memicu build otomatis setiap kali admin menekan tombol **Publish** di Sanity Studio:
+Untuk memicu build dan deploy otomatis setiap kali admin menekan tombol **Publish** di Sanity Studio (tanpa perlu commit git manual):
+
+### A. Buat GitHub Personal Access Token (PAT):
+
+1. Buka GitHub: **Settings** → **Developer Settings** → **Personal Access Tokens** → **Tokens (classic)** (atau Fine-grained tokens).
+2. Buat token baru:
+   - **Note**: `Sanity CMS Auto Deploy Webhook`
+   - **Scopes**: Centang `repo` (Full control of private repositories) jika Classic token, atau izin `Contents: Read and write` jika Fine-grained token.
+   - **Expiration**: Pilih batas waktu sesuai kebijakan tim (atau set No Expiration / reminder kalender untuk rotasi).
+3. Salin token tersebut (contoh: `ghp_...`).
+
+### B. Konfigurasi Webhook di Sanity Dashboard:
 
 1. Buka dashboard Sanity di `https://sanity.io/manage`.
-2. Pilih proyek UKM Coding → **API** → **Webhooks** → **Create Webhook**.
-3. **URL**: `https://api.github.com/repos/<OWNER>/<REPO>/dispatches`
-4. **Headers**:
-   - `Accept`: `application/vnd.github.v3+json`
-   - `Authorization`: `Bearer <GITHUB_PERSONAL_ACCESS_TOKEN>`
-   - `User-Agent`: `Sanity-Webhook`
-5. **Payload Format**:
-   ```json
-   {
-     "event_type": "sanity-publish"
-   }
-   ```
-6. **Trigger on**: `Create`, `Update`, `Delete` pada dataset `production`.
+2. Pilih proyek UKM Coding (`n3mnxpum`) → Tab **API** → **Webhooks** → **Create Webhook**.
+3. Isi parameter konfigurasi berikut:
+   - **Name**: `GitHub Actions Auto Deploy`
+   - **URL**: `https://api.github.com/repos/randevough/website-ukm-coding/dispatches`
+   - **Dataset**: `production`
+   - **Trigger on**: `Create`, `Update`, `Delete`
+   - **Filter**: `_type in ["editorial", "project", "partner", "siteSettings"]`
+   - **HTTP method**: `POST`
+   - **HTTP Headers**:
+     - `Accept`: `application/vnd.github.v3+json`
+     - `Authorization`: `Bearer <MASUKKAN_GITHUB_PAT_ANDA>`
+     - `User-Agent`: `Sanity-Webhook`
+   - **Payload Format**: Klik **Custom**, lalu masukkan JSON berikut:
+     ```json
+     {
+       "event_type": "sanity-publish"
+     }
+     ```
+4. Klik **Save**.
+
+### C. Verifikasi & Debugging Webhook:
+
+- Setiap kali Anda mempublikasikan dokumen di Sanity Studio, Sanity akan mengirim payload ke GitHub Actions.
+- Pipeline akan menjalankan fast-track build & deploy ke Cloudflare Pages dalam kurun waktu ~60–90 detik.
+- Jika deploy tidak muncul, periksa tab **API** → **Webhooks** → Klik Webhook Anda → Periksa bagian **Attempt log** untuk melihat status response HTTP dari GitHub.
 
 ---
 
