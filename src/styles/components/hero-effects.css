@@ -252,3 +252,20 @@
     display: none;
   }
 }
+
+/* Pada perangkat mobile, gunakan hanya 1 spotlight yang lebih fokus dan hemat daya */
+@media (max-width: 768px) {
+  .grid-fx__spot--b {
+    display: none;
+  }
+
+  .grid-fx__spot--a {
+    --spot: 320px;
+    --amp: 60px;
+  }
+
+  .pagehead .grid-fx__spot--a {
+    --spot: 280px;
+    --amp: 50px;
+  }
+}

@@ -1248,6 +1248,17 @@
   border: 1px solid var(--line-soft);
 }
 
+.ncard__art :global(img) {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 700ms var(--ease-out);
+}
+
+.ncard:hover .ncard__art :global(img) {
+  transform: scale(1.05);
+}
+
 .ncard__art .art__wash {
   transition: transform 1100ms var(--ease-out);
 }
@@ -1287,8 +1298,31 @@
 .ncard__meta {
   display: flex;
   align-items: center;
-  gap: var(--s3);
-  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: var(--s3);
+  border-top: 1px solid var(--line-soft);
+}
+
+.ncard__date {
+  font-size: var(--xs);
+  color: var(--ink-3);
+  letter-spacing: 0.02em;
+}
+
+.ncard__arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-3);
+  transition:
+    transform var(--t) var(--ease),
+    color var(--t) var(--ease);
+}
+
+.ncard:hover .ncard__arrow {
+  color: var(--blue);
+  transform: translateX(4px);
 }
 
 @media (max-width: 768px) {
@@ -1333,10 +1367,14 @@
     max-height: unset;
   }
 
+  .ncard__meta {
+    margin-top: auto;
+    padding-top: var(--s2);
+  }
+
   .ncard__date {
     font-size: var(--xs);
     letter-spacing: 0.02em;
-    margin-top: auto;
   }
 }
 
