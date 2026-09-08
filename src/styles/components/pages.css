@@ -327,6 +327,29 @@
   tab-size: 4;
 }
 
+.article__body a,
+.portable-text a {
+  color: var(--ink-deep);
+  text-decoration: underline;
+  text-underline-offset: 3.5px;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--line-ink);
+  transition:
+    color 0.15s ease,
+    text-decoration-color 0.15s ease;
+}
+
+.article__body a:hover,
+.portable-text a:hover {
+  color: var(--blue);
+  text-decoration-color: var(--blue);
+}
+
+.article__body a:has(img),
+.portable-text a:has(img) {
+  text-decoration: none;
+}
+
 .article__body h2 {
   font-size: var(--d3);
   letter-spacing: var(--track-tight);
