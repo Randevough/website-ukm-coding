@@ -1,4 +1,12 @@
+/* =========================================================
+   HOME — UKM Coding
+   Styles dedicated to the Homepage (src/pages/index.astro):
+   Hero stage, Tentang UKM, Bento Gallery, Featured Projects,
+   and Collaboration sections.
+   ========================================================= */
+
 /* Hero */
+.hero,
 .hero--v2 {
   position: relative;
   min-height: calc(100vh - var(--header-h, 68px));

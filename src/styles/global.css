@@ -555,3 +555,8 @@ body.is-leaving #page {
     opacity 240ms var(--ease-in-out),
     transform 240ms var(--ease-in-out);
 }
+
+/* Kursor kustom dinonaktifkan demi aksesibilitas dan konsistensi */
+.cursor {
+  display: none !important;
+}

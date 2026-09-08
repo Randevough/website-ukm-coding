@@ -38,18 +38,52 @@
   color: var(--paper);
 }
 
-.btn--primary {
-  background: var(--ink-deep);
-  color: var(--paper);
+.btn--primary,
+.btn--primary:link,
+.btn--primary:visited {
+  background: var(--mark);
+  border-color: var(--mark);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    border-color var(--t, 260ms) var(--ease, ease),
+    color var(--t, 260ms) var(--ease, ease);
 }
 
 .btn--primary::before {
-  background: var(--mark);
+  content: "";
+  display: block !important;
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--mark-deep);
+  transform: translate3d(0, 101%, 0);
+  transition: transform var(--t, 260ms) var(--ease, ease);
 }
 
-.btn--primary:hover {
+.btn--primary:hover::before,
+.btn--primary:focus-visible::before {
+  transform: none;
+}
+
+.btn--primary:hover,
+.btn--primary:focus-visible {
   color: #fff;
-  border-color: var(--mark);
+  border-color: var(--mark-deep);
+}
+
+.btn--primary .arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--t, 260ms) var(--ease, ease);
+}
+
+.btn--primary:hover .arrow,
+.btn--primary:focus-visible .arrow {
+  transform: translateX(4px);
 }
 
 .btn--mark {

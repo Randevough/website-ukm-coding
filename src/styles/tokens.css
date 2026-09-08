@@ -43,6 +43,13 @@
   --orange-soft: #fdeee4;
   --orange-wash: rgba(220, 90, 18, 0.09);
 
+  /* ---------- KREM ---------- */
+  --cream: #f4ecdf;
+  --cream-2: #efe3d2;
+  --cream-ink: #1d1913;
+  --cream-ink-2: #5d5346;
+  --cream-line: rgba(29, 25, 19, 0.16);
+
   /* ---------- TIPOGRAFI ---------- */
   --sans:
     "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",

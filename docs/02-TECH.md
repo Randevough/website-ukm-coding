@@ -48,7 +48,7 @@ Dokumen ini berisi spesifikasi teknis resmi, arsitektur kode, standar rekayasa p
 │   ├── styles/                 # Sistem Styling CSS
 │   │   ├── tokens.css          # Variabel warna, tipografi, radius, shadow, easing
 │   │   ├── global.css          # CSS reset, base tags, grid utility, layout rules
-│   │   └── components/         # Modul komponen (components.css, pages.css, hero-effects.css, dll)
+│   │   └── components/         # Modul komponen & halaman (components.css, home.css, pages.css, hero-effects.css)
 │   └── types/                  # Definisi antarmuka TypeScript (content.ts)
 ├── tests/                      # Unit test suites (Vitest)
 ├── docs/                       # Dokumentasi resmi proyek
