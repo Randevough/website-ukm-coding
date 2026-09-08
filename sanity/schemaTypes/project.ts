@@ -12,6 +12,37 @@ const blockContent = [
       { title: "Bullet", value: "bullet" },
       { title: "Numbered", value: "number" },
     ],
+    marks: {
+      decorators: [
+        { title: "Strong", value: "strong" },
+        { title: "Emphasis", value: "em" },
+      ],
+      annotations: [
+        defineArrayMember({
+          name: "link",
+          type: "object",
+          title: "Tautan / Link",
+          fields: [
+            defineField({
+              name: "href",
+              type: "url",
+              title: "URL / Tautan",
+              validation: (Rule) =>
+                Rule.uri({
+                  scheme: ["http", "https", "mailto", "tel"],
+                  allowRelative: true,
+                }),
+            }),
+            defineField({
+              name: "blank",
+              type: "boolean",
+              title: "Buka di tab baru",
+              initialValue: true,
+            }),
+          ],
+        }),
+      ],
+    },
   }),
 ];
 

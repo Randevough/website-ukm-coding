@@ -1,11 +1,8 @@
 ---
-const { node } = Astro.props;
-const href = node?.href || node?.url || "#";
-const isExternal = href.startsWith("http");
+import { resolveLinkAttributes } from "../../lib/content/linkResolver";
+
+const { node, ...rest } = Astro.props as any;
+const { href, target, rel } = resolveLinkAttributes(node);
 ---
 
-<a
-  href={href}
-  target={isExternal ? "_blank" : undefined}
-  rel={isExternal ? "noopener noreferrer" : undefined}><slot /></a
->
+<a href={href} target={target} rel={rel} {...rest}><slot /></a>
