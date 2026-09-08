@@ -1,5 +1,6 @@
 ---
 import type { Post } from "@/types/content";
+import { formatShortDate } from "@/lib/content/formatters";
 import Art from "../global/Art.astro";
 import Arrow from "../global/Arrow.astro";
 import SanityImage from "../sanity/SanityImage.astro";
@@ -8,29 +9,6 @@ export interface Props {
   post: Post | any;
 }
 const { post: p } = Astro.props;
-
-const BULAN = [
-  "Januari",
-  "Februari",
-  "Maret",
-  "April",
-  "Mei",
-  "Juni",
-  "Juli",
-  "Agustus",
-  "September",
-  "Oktober",
-  "November",
-  "Desember",
-];
-function tanggalPendek(iso: string) {
-  if (!iso) return "";
-  const d = new Date(iso + (iso.includes("T") ? "" : "T00:00:00"));
-  if (isNaN(d.getTime())) return iso;
-  return (
-    d.getDate() + " " + BULAN[d.getMonth()].slice(0, 3) + " " + d.getFullYear()
-  );
-}
 
 const title = p.judul || p.title;
 const kategori = p.tipe || p.kategori;
@@ -61,7 +39,7 @@ const excerpt = p.ringkasan || p.excerpt;
   <h3 class="ncard__title">{title}</h3>
   {excerpt && <p class="ncard__excerpt">{excerpt}</p>}
   <div class="ncard__meta">
-    <time class="ncard__date" datetime={date}>{tanggalPendek(date)}</time>
+    <time class="ncard__date" datetime={date}>{formatShortDate(date)}</time>
     <span class="ncard__arrow" aria-hidden="true">
       <Arrow direction="right" size={13} />
     </span>

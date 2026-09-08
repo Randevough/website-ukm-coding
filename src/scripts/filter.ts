@@ -5,6 +5,43 @@ import {
   paginateItems,
 } from "../lib/content/queryEngine";
 
+function bindCustomSelect(
+  selectEl: HTMLElement | null,
+  onSelect: (value: string) => void,
+) {
+  if (!selectEl) return;
+
+  selectEl.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const isOpen = selectEl.classList.toggle("is-open");
+    selectEl.setAttribute("aria-expanded", String(isOpen));
+  });
+
+  selectEl.addEventListener("keydown", (e) => {
+    if ((e as KeyboardEvent).key === "Escape") {
+      selectEl.classList.remove("is-open");
+      selectEl.setAttribute("aria-expanded", "false");
+    }
+  });
+
+  const opts = selectEl.querySelectorAll(".cselect__opt");
+  opts.forEach((opt) => {
+    opt.addEventListener("click", (e) => {
+      e.stopPropagation();
+      selectEl.classList.remove("is-open");
+      selectEl.setAttribute("aria-expanded", "false");
+      onSelect(opt.getAttribute("data-value") || "");
+    });
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!selectEl.contains(e.target as Node)) {
+      selectEl.classList.remove("is-open");
+      selectEl.setAttribute("aria-expanded", "false");
+    }
+  });
+}
+
 export function initKegiatanFilter() {
   if (typeof document === "undefined") return;
 
@@ -19,7 +56,7 @@ export function initKegiatanFilter() {
 
   if (!gridContainer || !filterChips.length) return;
 
-  const ITEMS_PER_PAGE = 7; // 3 major, 4 minor
+  const ITEMS_PER_PAGE = 7;
   let currentPage = 1;
   let currentCategory = "Semua";
   let currentSearch = "";
@@ -40,18 +77,29 @@ export function initKegiatanFilter() {
   function updateURL() {
     if (typeof window === "undefined") return;
     const url = new URL(window.location.href);
-    if (currentCategory !== "Semua")
+    if (currentCategory !== "Semua") {
       url.searchParams.set("kategori", currentCategory);
-    else url.searchParams.delete("kategori");
+    } else {
+      url.searchParams.delete("kategori");
+    }
 
-    if (currentSearch) url.searchParams.set("q", currentSearch);
-    else url.searchParams.delete("q");
+    if (currentSearch) {
+      url.searchParams.set("q", currentSearch);
+    } else {
+      url.searchParams.delete("q");
+    }
 
-    if (currentYear !== "Semua") url.searchParams.set("tahun", currentYear);
-    else url.searchParams.delete("tahun");
+    if (currentYear !== "Semua") {
+      url.searchParams.set("tahun", currentYear);
+    } else {
+      url.searchParams.delete("tahun");
+    }
 
-    if (currentPage > 1) url.searchParams.set("page", currentPage.toString());
-    else url.searchParams.delete("page");
+    if (currentPage > 1) {
+      url.searchParams.set("page", currentPage.toString());
+    } else {
+      url.searchParams.delete("page");
+    }
 
     window.history.replaceState({}, "", url);
   }
@@ -99,20 +147,7 @@ export function initKegiatanFilter() {
       "skeleton-posts-template",
     ) as HTMLTemplateElement;
 
-    if (!skipSkeleton && skeletonTemplate) {
-      gridContainer!.innerHTML = "";
-      const skeletonCount = Math.min(
-        ITEMS_PER_PAGE,
-        searchFiltered.length || ITEMS_PER_PAGE,
-      );
-      for (let i = 0; i < (skeletonCount === 0 ? 3 : skeletonCount); i++) {
-        gridContainer!.appendChild(skeletonTemplate.content.cloneNode(true));
-      }
-    }
-
-    const delay = skipSkeleton ? 0 : 2500;
-
-    renderTimeout = setTimeout(() => {
+    const commitDOM = () => {
       gridContainer!.innerHTML = "";
 
       if (paginated.length === 0) {
@@ -127,14 +162,28 @@ export function initKegiatanFilter() {
           const clone = el.cloneNode(true) as HTMLElement;
           clone.classList.add("is-revealed");
           clone.removeAttribute("data-reveal");
-          clone.querySelectorAll("[data-reveal]").forEach((el) => {
-            el.classList.add("is-revealed");
-            el.removeAttribute("data-reveal");
+          clone.querySelectorAll("[data-reveal]").forEach((child) => {
+            child.classList.add("is-revealed");
+            child.removeAttribute("data-reveal");
           });
           gridContainer!.appendChild(clone);
         });
       }
-    }, delay);
+    };
+
+    if (skipSkeleton || !skeletonTemplate) {
+      commitDOM();
+    } else {
+      gridContainer!.innerHTML = "";
+      const skeletonCount = Math.min(
+        ITEMS_PER_PAGE,
+        searchFiltered.length || ITEMS_PER_PAGE,
+      );
+      for (let i = 0; i < (skeletonCount === 0 ? 3 : skeletonCount); i++) {
+        gridContainer!.appendChild(skeletonTemplate.content.cloneNode(true));
+      }
+      renderTimeout = setTimeout(commitDOM, 100);
+    }
 
     filterChips.forEach((chip) => {
       const cat = chip.getAttribute("data-category");
@@ -191,7 +240,6 @@ export function initKegiatanFilter() {
     });
   }
 
-  // Events
   filterChips.forEach((chip) => {
     chip.addEventListener("click", () => {
       currentCategory = chip.getAttribute("data-category") || "Semua";
@@ -201,75 +249,21 @@ export function initKegiatanFilter() {
     });
   });
 
-  if (cselect) {
-    cselect.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const isOpen = cselect.classList.toggle("is-open");
-      cselect.setAttribute("aria-expanded", String(isOpen));
-    });
+  bindCustomSelect(cselect, (val) => {
+    currentCategory = val || "Semua";
+    currentPage = 1;
+    updateURL();
+    render();
+  });
 
-    cselect.addEventListener("keydown", (e) => {
-      if ((e as KeyboardEvent).key === "Escape") {
-        cselect.classList.remove("is-open");
-        cselect.setAttribute("aria-expanded", "false");
-      }
-    });
-
-    cselectOpts?.forEach((opt) => {
-      opt.addEventListener("click", (e) => {
-        e.stopPropagation();
-        currentCategory = opt.getAttribute("data-value") || "Semua";
-        cselect.classList.remove("is-open");
-        cselect.setAttribute("aria-expanded", "false");
-        currentPage = 1;
-        updateURL();
-        render();
-      });
-    });
-
-    document.addEventListener("click", (e) => {
-      if (!cselect.contains(e.target as Node)) {
-        cselect.classList.remove("is-open");
-        cselect.setAttribute("aria-expanded", "false");
-      }
-    });
-  }
-
-  if (timeframeDropdown) {
-    timeframeDropdown.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const isOpen = timeframeDropdown.classList.toggle("is-open");
-      timeframeDropdown.setAttribute("aria-expanded", String(isOpen));
-    });
-
-    timeframeDropdown.addEventListener("keydown", (e) => {
-      if ((e as KeyboardEvent).key === "Escape") {
-        timeframeDropdown.classList.remove("is-open");
-        timeframeDropdown.setAttribute("aria-expanded", "false");
-      }
-    });
-
-    timeframeOpts?.forEach((opt) => {
-      opt.addEventListener("click", (e) => {
-        e.stopPropagation();
-        const val = opt.getAttribute("data-value") || "Semua Waktu";
-        currentYear =
-          val === "Semua Waktu" ? "Semua" : val.replace("Tahun ", "");
-        timeframeDropdown.classList.remove("is-open");
-        timeframeDropdown.setAttribute("aria-expanded", "false");
-        currentPage = 1;
-        updateURL();
-        render();
-      });
-    });
-
-    document.addEventListener("click", (e) => {
-      if (!timeframeDropdown.contains(e.target as Node)) {
-        timeframeDropdown.classList.remove("is-open");
-        timeframeDropdown.setAttribute("aria-expanded", "false");
-      }
-    });
-  }
+  bindCustomSelect(timeframeDropdown, (val) => {
+    const rawVal = val || "Semua Waktu";
+    currentYear =
+      rawVal === "Semua Waktu" ? "Semua" : rawVal.replace("Tahun ", "");
+    currentPage = 1;
+    updateURL();
+    render();
+  });
 
   if (searchInput) {
     searchInput.addEventListener("input", (e) => {
@@ -319,21 +313,35 @@ export function initProjectsFilter() {
   function updateURL() {
     if (typeof window === "undefined") return;
     const url = new URL(window.location.href);
-    if (currentCategory !== "Semua")
+    if (currentCategory !== "Semua") {
       url.searchParams.set("kategori", currentCategory);
-    else url.searchParams.delete("kategori");
+    } else {
+      url.searchParams.delete("kategori");
+    }
 
-    if (currentSort !== "Terbaru") url.searchParams.set("sort", currentSort);
-    else url.searchParams.delete("sort");
+    if (currentSort !== "Terbaru") {
+      url.searchParams.set("sort", currentSort);
+    } else {
+      url.searchParams.delete("sort");
+    }
 
-    if (currentYear !== "Semua") url.searchParams.set("tahun", currentYear);
-    else url.searchParams.delete("tahun");
+    if (currentYear !== "Semua") {
+      url.searchParams.set("tahun", currentYear);
+    } else {
+      url.searchParams.delete("tahun");
+    }
 
-    if (currentSearch) url.searchParams.set("q", currentSearch);
-    else url.searchParams.delete("q");
+    if (currentSearch) {
+      url.searchParams.set("q", currentSearch);
+    } else {
+      url.searchParams.delete("q");
+    }
 
-    if (currentPage > 1) url.searchParams.set("page", currentPage.toString());
-    else url.searchParams.delete("page");
+    if (currentPage > 1) {
+      url.searchParams.set("page", currentPage.toString());
+    } else {
+      url.searchParams.delete("page");
+    }
 
     window.history.replaceState({}, "", url);
   }
@@ -389,20 +397,7 @@ export function initProjectsFilter() {
       "skeleton-projects-template",
     ) as HTMLTemplateElement;
 
-    if (!skipSkeleton && skeletonTemplate) {
-      gridContainer!.innerHTML = "";
-      const skeletonCount = Math.min(
-        ITEMS_PER_PAGE,
-        sorted.length || ITEMS_PER_PAGE,
-      );
-      for (let i = 0; i < (skeletonCount === 0 ? 3 : skeletonCount); i++) {
-        gridContainer!.appendChild(skeletonTemplate.content.cloneNode(true));
-      }
-    }
-
-    const delay = skipSkeleton ? 0 : 2500;
-
-    renderTimeout = setTimeout(() => {
+    const commitDOM = () => {
       gridContainer!.innerHTML = "";
       if (paginated.length === 0) {
         const emptyTemplate = document.getElementById(
@@ -416,20 +411,34 @@ export function initProjectsFilter() {
           const clone = el.cloneNode(true) as HTMLElement;
           clone.classList.add("is-revealed");
           clone.removeAttribute("data-reveal");
-          clone.querySelectorAll("[data-reveal]").forEach((el) => {
-            el.classList.add("is-revealed");
-            el.removeAttribute("data-reveal");
+          clone.querySelectorAll("[data-reveal]").forEach((child) => {
+            child.classList.add("is-revealed");
+            child.removeAttribute("data-reveal");
           });
           gridContainer!.appendChild(clone);
         });
       }
-    }, delay);
+    };
+
+    if (skipSkeleton || !skeletonTemplate) {
+      commitDOM();
+    } else {
+      gridContainer!.innerHTML = "";
+      const skeletonCount = Math.min(
+        ITEMS_PER_PAGE,
+        sorted.length || ITEMS_PER_PAGE,
+      );
+      for (let i = 0; i < (skeletonCount === 0 ? 3 : skeletonCount); i++) {
+        gridContainer!.appendChild(skeletonTemplate.content.cloneNode(true));
+      }
+      renderTimeout = setTimeout(commitDOM, 100);
+    }
 
     filterChips.forEach((chip) => {
       chip.classList.toggle("is-active", chip.textContent === currentCategory);
       chip.removeAttribute("disabled");
     });
-    // Sync mobile category dropdown label
+
     if (mobileCatValue) {
       mobileCatValue.textContent = currentCategory;
     }
@@ -479,7 +488,6 @@ export function initProjectsFilter() {
     });
   }
 
-  // Events
   filterChips.forEach((chip) => {
     chip.addEventListener("click", () => {
       currentCategory = chip.textContent || "Semua";
@@ -489,81 +497,21 @@ export function initProjectsFilter() {
     });
   });
 
-  // Custom dropdown interactions
-  if (cselect) {
-    // Toggle open
-    cselect.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const isOpen = cselect.classList.toggle("is-open");
-      cselect.setAttribute("aria-expanded", String(isOpen));
-    });
+  bindCustomSelect(cselect, (val) => {
+    const rawVal = val || "Semua Waktu";
+    currentYear =
+      rawVal === "Semua Waktu" ? "Semua" : rawVal.replace("Tahun ", "");
+    currentPage = 1;
+    updateURL();
+    render();
+  });
 
-    // Keyboard: Escape closes
-    cselect.addEventListener("keydown", (e) => {
-      if ((e as KeyboardEvent).key === "Escape") {
-        cselect.classList.remove("is-open");
-        cselect.setAttribute("aria-expanded", "false");
-      }
-    });
-
-    // Option selection
-    cselectOpts?.forEach((opt) => {
-      opt.addEventListener("click", (e) => {
-        e.stopPropagation();
-        const val = opt.getAttribute("data-value") || "Semua Waktu";
-        currentYear =
-          val === "Semua Waktu" ? "Semua" : val.replace("Tahun ", "");
-        cselect.classList.remove("is-open");
-        cselect.setAttribute("aria-expanded", "false");
-        currentPage = 1;
-        updateURL();
-        render();
-      });
-    });
-
-    // Click outside to close
-    document.addEventListener("click", (e) => {
-      if (!cselect.contains(e.target as Node)) {
-        cselect.classList.remove("is-open");
-        cselect.setAttribute("aria-expanded", "false");
-      }
-    });
-  }
-
-  // Mobile category dropdown
-  if (mobileCatSelect) {
-    mobileCatSelect.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const isOpen = mobileCatSelect.classList.toggle("is-open");
-      mobileCatSelect.setAttribute("aria-expanded", String(isOpen));
-    });
-
-    mobileCatSelect.addEventListener("keydown", (e) => {
-      if ((e as KeyboardEvent).key === "Escape") {
-        mobileCatSelect.classList.remove("is-open");
-        mobileCatSelect.setAttribute("aria-expanded", "false");
-      }
-    });
-
-    mobileCatOpts?.forEach((opt) => {
-      opt.addEventListener("click", (e) => {
-        e.stopPropagation();
-        currentCategory = opt.getAttribute("data-value") || "Semua";
-        mobileCatSelect.classList.remove("is-open");
-        mobileCatSelect.setAttribute("aria-expanded", "false");
-        currentPage = 1;
-        updateURL();
-        render();
-      });
-    });
-
-    document.addEventListener("click", (e) => {
-      if (!mobileCatSelect.contains(e.target as Node)) {
-        mobileCatSelect.classList.remove("is-open");
-        mobileCatSelect.setAttribute("aria-expanded", "false");
-      }
-    });
-  }
+  bindCustomSelect(mobileCatSelect, (val) => {
+    currentCategory = val || "Semua";
+    currentPage = 1;
+    updateURL();
+    render();
+  });
 
   if (searchInput) {
     searchInput.addEventListener("input", (e) => {

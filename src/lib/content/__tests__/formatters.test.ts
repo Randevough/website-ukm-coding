@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import {
   formatIndonesianDate,
+  formatShortDate,
   calculateReadingTime,
   slugify,
 } from "../formatters";
@@ -33,6 +34,28 @@ describe("Content Formatters & String Utilities", () => {
       expect(formatIndonesianDate(undefined)).toBe("");
       expect(formatIndonesianDate("")).toBe("");
       expect(formatIndonesianDate("invalid-date-string")).toBe("");
+    });
+  });
+
+  describe("formatShortDate", () => {
+    it("should format ISO date strings to abbreviated Indonesian date", () => {
+      expect(formatShortDate("2026-01-15T00:00:00.000Z")).toBe("15 Jan 2026");
+      expect(formatShortDate("2026-08-17")).toBe("17 Agu 2026");
+      expect(formatShortDate("2025-12-31")).toBe("31 Des 2025");
+    });
+
+    it("should handle Date objects and numeric timestamps", () => {
+      const d = new Date(2026, 4, 10);
+      expect(formatShortDate(d)).toBe("10 Mei 2026");
+
+      const timestamp = new Date(2026, 0, 1).getTime();
+      expect(formatShortDate(timestamp)).toBe("1 Jan 2026");
+    });
+
+    it("should return empty string or fallback gracefully for null, undefined, or invalid date values", () => {
+      expect(formatShortDate(null)).toBe("");
+      expect(formatShortDate(undefined)).toBe("");
+      expect(formatShortDate("")).toBe("");
     });
   });
 

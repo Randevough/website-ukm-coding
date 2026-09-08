@@ -1,5 +1,6 @@
 ---
 import type { Post } from "@/types/content";
+import { formatShortDate } from "@/lib/content/formatters";
 import Art from "../global/Art.astro";
 import SanityImage from "../sanity/SanityImage.astro";
 
@@ -7,29 +8,6 @@ export interface Props {
   post: Post | any;
 }
 const { post: p } = Astro.props;
-
-const BULAN = [
-  "Januari",
-  "Februari",
-  "Maret",
-  "April",
-  "Mei",
-  "Juni",
-  "Juli",
-  "Agustus",
-  "September",
-  "Oktober",
-  "November",
-  "Desember",
-];
-function tanggalPendek(iso: string) {
-  if (!iso) return "";
-  const d = new Date(iso + (iso.includes("T") ? "" : "T00:00:00"));
-  if (isNaN(d.getTime())) return iso;
-  return (
-    d.getDate() + " " + BULAN[d.getMonth()].slice(0, 3) + " " + d.getFullYear()
-  );
-}
 
 const title = p.judul || p.title;
 const kategori = p.tipe || p.kategori;
@@ -57,7 +35,7 @@ const baca = p.baca || 3;
     <h2 class="mcard__title">{title}</h2>
     <p class="mcard__excerpt">{excerpt}</p>
     <div class="mcard__meta">
-      <span>{tanggalPendek(date)}</span>
+      <span>{formatShortDate(date)}</span>
       <span>{baca} menit baca</span>
     </div>
   </div>

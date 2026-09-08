@@ -9,6 +9,7 @@ export default [
       "node_modules/**",
       "dist/**",
       ".github/**",
+      ".astro/**",
     ],
   },
   ...tsEslint.configs.recommended,

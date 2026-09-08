@@ -40,6 +40,30 @@ export function formatIndonesianDate(
 }
 
 /**
+ * Formats a Date object, ISO string, or timestamp into short Indonesian date:
+ * e.g., "15 Jan 2026"
+ */
+export function formatShortDate(
+  dateInput: string | number | Date | null | undefined,
+): string {
+  if (!dateInput) return "";
+
+  const d =
+    typeof dateInput === "string" && !dateInput.includes("T")
+      ? new Date(dateInput + "T00:00:00")
+      : new Date(dateInput);
+  if (isNaN(d.getTime())) return typeof dateInput === "string" ? dateInput : "";
+
+  const day = d.getDate();
+  const month = BULAN_INDONESIA[d.getMonth()];
+  const year = d.getFullYear();
+
+  if (!month) return typeof dateInput === "string" ? dateInput : "";
+
+  return `${day} ${month.slice(0, 3)} ${year}`;
+}
+
+/**
  * Calculates estimated reading time in minutes based on text length.
  * Standard average reading speed: 200 words per minute.
  */
