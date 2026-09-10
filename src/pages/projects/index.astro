@@ -232,7 +232,7 @@ const breadcrumb = [
         data-cursor="Lihat cepat"
       >
         {
-          projects.map((p) => {
+          projects.slice(0, 6).map((p) => {
             return <ProjectCard project={p} />;
           })
         }

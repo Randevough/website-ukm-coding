@@ -56,7 +56,7 @@ export function initKegiatanFilter() {
 
   if (!gridContainer || !filterChips.length) return;
 
-  const ITEMS_PER_PAGE = 7;
+  const ITEMS_PER_PAGE = 6;
   let currentPage = 1;
   let currentCategory = "Semua";
   let currentSearch = "";
@@ -296,7 +296,7 @@ export function initProjectsFilter() {
 
   if (!gridContainer || !filterChips.length) return;
 
-  const ITEMS_PER_PAGE = 10;
+  const ITEMS_PER_PAGE = 6;
   let currentPage = 1;
   let currentCategory = "Semua";
   let currentSort = "Terbaru";
@@ -537,35 +537,83 @@ export function renderPagination(
 
   if (total <= 1) return;
 
+  const pad = (n: number) =>
+    total < 100 ? String(n).padStart(2, "0") : String(n);
+
+  // Segmented instrument console bar
+  const bar = document.createElement("div");
+  bar.className = "pagination__bar";
+  bar.setAttribute("role", "navigation");
+  bar.setAttribute("aria-label", "Navigasi halaman");
+
+  // Prev Button
   const prev = document.createElement("button");
-  prev.className = "pagination__btn";
+  prev.className = "pagination__btn pagination__btn--prev";
   prev.type = "button";
   prev.setAttribute("aria-label", "Halaman sebelumnya");
   prev.innerHTML =
     '<span class="arrow" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></span>';
-  if (current === 1) prev.disabled = true;
-  else prev.addEventListener("click", () => onPage(current - 1));
-  container.appendChild(prev);
+  if (current === 1) {
+    prev.disabled = true;
+  } else {
+    prev.addEventListener("click", () => onPage(current - 1));
+  }
+  bar.appendChild(prev);
 
-  for (let i = 1; i <= total; i++) {
-    const btn = document.createElement("button");
-    btn.className = `pagination__btn ${i === current ? "is-active" : ""}`;
-    btn.type = "button";
-    btn.textContent = i.toString();
-    if (i === current) btn.disabled = true;
-    else btn.addEventListener("click", () => onPage(i));
-    container.appendChild(btn);
+  // Page Numbers with smart truncation if total > 7
+  const getPageItems = (curr: number, max: number): (number | "...")[] => {
+    if (max <= 7) {
+      return Array.from({ length: max }, (_, i) => i + 1);
+    }
+    if (curr <= 4) {
+      return [1, 2, 3, 4, 5, "...", max];
+    }
+    if (curr >= max - 3) {
+      return [1, "...", max - 4, max - 3, max - 2, max - 1, max];
+    }
+    return [1, "...", curr - 1, curr, curr + 1, "...", max];
+  };
+
+  const pageItems = getPageItems(current, total);
+  for (const item of pageItems) {
+    if (item === "...") {
+      const ellipsis = document.createElement("span");
+      ellipsis.className = "pagination__ellipsis";
+      ellipsis.textContent = "…";
+      ellipsis.setAttribute("aria-hidden", "true");
+      bar.appendChild(ellipsis);
+    } else {
+      const btn = document.createElement("button");
+      const isActive = item === current;
+      btn.className = `pagination__btn pagination__btn--num ${isActive ? "is-active" : ""}`;
+      btn.type = "button";
+      btn.textContent = pad(item);
+      btn.setAttribute("aria-label", `Halaman ${item}`);
+      if (isActive) {
+        btn.setAttribute("aria-current", "page");
+        btn.disabled = true;
+      } else {
+        btn.addEventListener("click", () => onPage(item));
+      }
+      bar.appendChild(btn);
+    }
   }
 
+  // Next Button
   const next = document.createElement("button");
-  next.className = "pagination__btn";
+  next.className = "pagination__btn pagination__btn--next";
   next.type = "button";
   next.setAttribute("aria-label", "Halaman selanjutnya");
   next.innerHTML =
     '<span class="arrow" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>';
-  if (current === total) next.disabled = true;
-  else next.addEventListener("click", () => onPage(current + 1));
-  container.appendChild(next);
+  if (current === total) {
+    next.disabled = true;
+  } else {
+    next.addEventListener("click", () => onPage(current + 1));
+  }
+  bar.appendChild(next);
+
+  container.appendChild(bar);
 }
 
 function bootFilters() {

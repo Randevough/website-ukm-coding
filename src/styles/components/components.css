@@ -1993,43 +1993,114 @@
 
 .pagination {
   display: flex;
-  gap: var(--s2);
   align-items: center;
   justify-content: center;
-  padding-top: var(--s7);
+  padding-top: var(--s8);
+  padding-bottom: var(--s4);
+}
+
+/* Segmented Instrument Console Bar */
+.pagination__bar {
+  display: inline-flex;
+  align-items: stretch;
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--r1);
+  box-shadow: var(--shadow-1);
+  overflow: hidden;
+  position: relative;
 }
 
 .pagination__btn {
-  min-width: 40px;
-  height: 40px;
-  padding: 0 12px;
-  border: 1px solid var(--line);
-  border-radius: var(--r1);
-  font-family: var(--mono);
-  font-size: var(--xxs);
-  letter-spacing: 0.08em;
-  color: var(--ink-2);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 42px;
+  height: 42px;
+  padding: 0 14px;
+  border: none;
+  border-right: 1px solid var(--line);
+  border-radius: 0;
   background: transparent;
+  color: var(--ink-2);
+  font-family: var(--mono);
+  font-size: var(--xs);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  user-select: none;
   transition:
-    background var(--t) var(--ease),
-    color var(--t) var(--ease),
-    border-color var(--t) var(--ease);
+    background var(--t-fast) var(--ease),
+    color var(--t-fast) var(--ease);
 }
 
-.pagination__btn:hover:not(:disabled) {
-  border-color: var(--ink-deep);
+.pagination__btn:last-child {
+  border-right: none;
+}
+
+.pagination__btn:hover:not(:disabled):not(.is-active) {
+  background: var(--paper-2);
   color: var(--ink-deep);
 }
 
-.pagination__btn.is-active {
-  background: var(--ink-deep);
-  border-color: var(--ink-deep);
-  color: var(--paper);
+.pagination__btn:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: -2px;
+  z-index: 2;
 }
 
-.pagination__btn:disabled {
-  opacity: 0.35;
+.pagination__btn--num {
+  min-width: 44px;
+}
+
+/* Active Page State — Solid Brand Orange with White Text */
+.pagination__btn.is-active {
+  background: var(--orange);
+  color: #fff;
+  font-weight: 700;
+  cursor: default;
+  opacity: 1 !important;
+}
+
+/* Disabled Prev/Next Arrows */
+.pagination__btn:disabled:not(.is-active) {
+  opacity: 0.28;
   cursor: not-allowed;
+  color: var(--ink-4);
+  background: transparent;
+}
+
+/* Arrow Micro-Interactions */
+.pagination__btn .arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--t-fast) var(--ease);
+}
+
+.pagination__btn--prev:hover:not(:disabled) .arrow {
+  transform: translateX(-2px);
+}
+
+.pagination__btn--next:hover:not(:disabled) .arrow {
+  transform: translateX(2px);
+}
+
+/* Truncation Ellipsis */
+.pagination__ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 42px;
+  font-family: var(--mono);
+  font-size: var(--xs);
+  color: var(--ink-3);
+  border-right: 1px solid var(--line);
+  background: var(--paper-raised);
+  user-select: none;
 }
 
 /* Form */

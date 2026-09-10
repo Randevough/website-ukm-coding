@@ -72,5 +72,74 @@ describe("Filter, Search, Sort & Pagination Engine", () => {
     it("should handle null or invalid container in renderPagination safely", () => {
       expect(() => renderPagination(null, 1, 5, () => {})).not.toThrow();
     });
+
+    it("should render pagination structure when document and container are provided", () => {
+      const createdElements: any[] = [];
+      const mockContainer = {
+        innerHTML: "old",
+        appendChild: (child: any) => {
+          createdElements.push(child);
+        },
+      };
+
+      const originalDoc = (globalThis as any).document;
+      (globalThis as any).document = {
+        createElement: (tag: string) => {
+          const el: any = {
+            tagName: tag.toUpperCase(),
+            className: "",
+            attributes: {} as Record<string, string>,
+            children: [] as any[],
+            setAttribute: (k: string, v: string) => {
+              el.attributes[k] = v;
+            },
+            getAttribute: (k: string) => el.attributes[k],
+            appendChild: (c: any) => {
+              el.children.push(c);
+            },
+            addEventListener: (event: string, fn: () => void) => {
+              el.listeners = el.listeners || {};
+              el.listeners[event] = fn;
+            },
+          };
+          return el;
+        },
+      };
+
+      try {
+        let selectedPage = -1;
+        renderPagination(mockContainer as any, 1, 3, (p) => {
+          selectedPage = p;
+        });
+
+        expect(mockContainer.innerHTML).toBe("");
+        expect(createdElements.length).toBe(1); // bar
+
+        const bar = createdElements[0];
+        expect(bar.className).toBe("pagination__bar");
+        expect(bar.children.length).toBe(5); // prev + 3 pages + next
+
+        const prevBtn = bar.children[0];
+        expect(prevBtn.className).toContain("pagination__btn--prev");
+        expect(prevBtn.disabled).toBe(true);
+
+        const page1 = bar.children[1];
+        expect(page1.className).toContain("is-active");
+        expect(page1.textContent).toBe("01");
+        expect(page1.disabled).toBe(true);
+
+        const page2 = bar.children[2];
+        expect(page2.className).not.toContain("is-active");
+        expect(page2.textContent).toBe("02");
+        page2.listeners?.click?.();
+        expect(selectedPage).toBe(2);
+
+        const nextBtn = bar.children[4];
+        expect(nextBtn.className).toContain("pagination__btn--next");
+        expect(nextBtn.disabled).toBeFalsy();
+      } finally {
+        (globalThis as any).document = originalDoc;
+      }
+    });
   });
 });
