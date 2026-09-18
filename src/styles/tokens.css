@@ -1,15 +1,7 @@
-/* =========================================================
-   TOKENS — UKM Coding
-   Arah visual: "Spec Sheet" — kertas hangat, garis hairline,
-   label monospace, display type sangat besar, warna sebagai
-   tanda tunggal (bukan tebaran).
-   ========================================================= */
+/* Design tokens */
 
 :root {
-  /* ---------- KERTAS & TINTA ----------
-	   Basis hangat, bukan putih murni dan bukan abu kebiruan.
-	   Warna hangat inilah yang bikin halaman terasa "kertas",
-	   bukan "dashboard". */
+  /* Paper & ink */
   --paper: #f6f5f2;
   --paper-2: #f0eee9;
   --paper-3: #e9e6df;
@@ -20,18 +12,13 @@
   --ink-3: #8b9098;
   --ink-4: #b4b8be;
 
-  /* ---------- GARIS ----------
-	   Tiga tingkat: struktur, pemisah, dan bayangan garis.
-	   Hampir semua batas di situs ini hairline, bukan kotak. */
+  /* Lines & borders */
   --line: rgba(22, 24, 28, 0.14);
   --line-mid: rgba(22, 24, 28, 0.09);
   --line-soft: rgba(22, 24, 28, 0.055);
   --line-ink: rgba(22, 24, 28, 0.28);
 
-  /* ---------- AKSEN ----------
-	   Biru = tanda utama. Oranye = tanda tunggal per halaman.
-	   Keduanya dipakai sedikit, dalam ukuran besar, bukan
-	   ditebar jadi pil kecil di mana-mana. */
+  /* Accent colors */
   --blue: #2340d8;
   --blue-deep: #1a32a6;
   --blue-soft: #e9ecfd;
@@ -43,22 +30,21 @@
   --orange-soft: #fdeee4;
   --orange-wash: rgba(220, 90, 18, 0.09);
 
-  /* ---------- KREM ---------- */
+  /* Cream palette */
   --cream: #f4ecdf;
   --cream-2: #efe3d2;
   --cream-ink: #1d1913;
   --cream-ink-2: #5d5346;
   --cream-line: rgba(29, 25, 19, 0.16);
 
-  /* ---------- TIPOGRAFI ---------- */
+  /* Typography */
   --sans:
     "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;
   --serif: "Instrument Serif", "Iowan Old Style", Georgia, serif;
   --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  /* Skala display berani. Kontras besar antara judul dan body
-	   adalah satu-satunya alasan halaman terasa mahal. */
+  /* Display scale */
   --d0: clamp(3.4rem, 12.5vw, 11rem);
   --d1: clamp(2.8rem, 7.4vw, 6.5rem);
   --d2: clamp(2.1rem, 4.6vw, 3.9rem);
@@ -76,13 +62,13 @@
   --lh-body: 1.62;
   --lh-loose: 1.75;
 
-  /* Tracking: display selalu rapat, label mono selalu lebar. */
+  /* Letter spacing */
   --track-display: -0.032em;
   --track-tight: -0.018em;
   --track-label: 0.16em;
   --track-label-wide: 0.24em;
 
-  /* ---------- RUANG ---------- */
+  /* Spacing scale */
   --s1: 4px;
   --s2: 8px;
   --s3: 12px;
@@ -96,32 +82,26 @@
   --s11: 168px;
   --section-y: clamp(40px, 4vw, 64px);
 
-  /* ---------- LAYOUT ---------- */
+  /* Layout containers */
   --wide: 1440px;
   --container: 1240px;
   --text: 960px;
   --gutter: clamp(20px, 4vw, 56px);
 
-  /* ---------- RADIUS ----------
-	   Sengaja kecil. Sudut tumpul besar adalah salah satu penanda
-	   paling cepat terbaca sebagai template. */
+  /* Border radii */
   --r1: 2px;
   --r2: 4px;
   --r3: 10px;
   --r-full: 999px;
 
-  /* ---------- BAYANGAN ----------
-	   Satu bayangan halus untuk lapisan mengapung, satu untuk
-	   kartu yang diangkat saat hover. Tidak ada lagi. */
+  /* Shadows */
   --shadow-1:
     0 1px 2px rgba(16, 18, 22, 0.04), 0 8px 24px -12px rgba(16, 18, 22, 0.12);
   --shadow-2:
     0 2px 4px rgba(16, 18, 22, 0.05), 0 28px 60px -24px rgba(16, 18, 22, 0.22);
   --shadow-cursor: 0 6px 20px -6px rgba(12, 14, 17, 0.45);
 
-  /* ---------- GERAK ----------
-	   Satu kurva untuk semuanya supaya seluruh situs terasa
-	   digerakkan oleh tangan yang sama. */
+  /* Motion & timing */
   --ease: cubic-bezier(0.22, 0.61, 0.24, 1);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
@@ -130,7 +110,7 @@
   --t-slow: 620ms;
   --t-page: 480ms;
 
-  /* ---------- TEKSTUR ---------- */
+  /* Textures & layers */
   --grain-opacity: 0.042;
   --graph-size: 34px;
 
@@ -142,8 +122,7 @@
   --z-grain: 100;
 }
 
-/* Aksen oranye hanya boleh muncul sekali per halaman sebagai
-   tanda. Kelas ini dipakai untuk menukar tanda halaman. */
+/* Page accent mark theme overrides */
 [data-mark="orange"] {
   --mark: var(--orange);
   --mark-deep: var(--orange-deep);

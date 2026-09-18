@@ -101,7 +101,7 @@ export function sortItems<T>(
       return timeA - timeB;
     }
 
-    // Default 'Terbaru'
+    // Default latest sorting
     return timeB - timeA;
   });
 

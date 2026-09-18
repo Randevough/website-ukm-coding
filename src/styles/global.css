@@ -36,7 +36,7 @@ body.is-locked {
   overscroll-behavior: none;
 }
 
-/* Lapisan Kertas Grafik */
+/* Blueprint graph paper layer */
 .graph {
   position: relative;
   isolation: isolate;
@@ -85,7 +85,7 @@ body.is-locked {
   }
 }
 
-/* Tipografi */
+/* Typography */
 h1,
 h2,
 h3,
@@ -130,8 +130,7 @@ a {
   text-decoration: none;
 }
 
-/* Garis bawah yang tumbuh dari kiri — dipakai untuk semua
-   tautan teks dalam prosa. */
+/* Prose text link underline animation */
 .link {
   position: relative;
   color: var(--ink);
@@ -266,8 +265,7 @@ main {
   color: var(--paper);
 }
 
-/* Kepala seksi bergaya lembar spesifikasi:
-   nomor mono di kiri, judul besar, deskripsi di kolom sempit. */
+/* Section header */
 .shead {
   display: grid;
   grid-template-columns: 1fr;
@@ -462,7 +460,7 @@ main {
   transform: none;
 }
 
-/* Garis yang menggambar dirinya sendiri saat masuk layar. */
+/* Animated divider line */
 [data-rule] {
   transform: scaleX(0);
   transform-origin: left;
@@ -474,7 +472,7 @@ main {
   transform: scaleX(1);
 }
 
-/* Kata per baris di hero — masker naik. */
+/* Hero text line mask reveal */
 .lineMask {
   display: block;
   overflow: hidden;
@@ -514,10 +512,7 @@ main {
   }
 }
 
-/* Transisi halaman — fade + geser halus.
-   Hanya untuk load pertama. Begitu ClientRouter mengambil alih
-   (class .is-swapped dipasang oleh scripts/hero-effects.ts),
-   animasi ini dimatikan agar halaman tidak dianimasikan dua kali. */
+/* Initial page load transition */
 #page {
   animation: pageIn var(--t-page) var(--ease-out) both;
 }
@@ -546,7 +541,7 @@ body.is-leaving #page {
     transform 240ms var(--ease-in-out);
 }
 
-/* Kursor kustom dinonaktifkan demi aksesibilitas dan konsistensi */
+/* Custom cursor disabled for accessibility */
 .cursor {
   display: none !important;
 }

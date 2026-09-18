@@ -1,20 +1,4 @@
-/**
- * Grid FX controller.
- *
- * Tugasnya cuma satu: mem-pause animasi yang tidak sedang dilihat.
- * Tidak ada perhitungan per frame di sini, tidak ada requestAnimationFrame,
- * dan tidak ada listener pointer. Seluruh gerakan dikerjakan oleh compositor
- * lewat CSS di styles/components/hero-effects.css.
- *
- * Yang di-pause:
- * - .grid-fx dan .ticker yang keluar viewport (IntersectionObserver)
- * - seluruh halaman saat tab tidak aktif (visibilitychange)
- * - seluruh halaman selama ViewTransition (astro:before-swap)
- *
- * Script ini aman terhadap Astro ViewTransitions. Bundled script hanya
- * dieksekusi SEKALI per sesi, jadi state-nya disimpan di window.__gridReveal
- * dan DOM di-scan ulang setiap kali ditukar.
- */
+// Grid effects and off-screen animation pause controller
 
 const PAUSE_CLASS = "is-anim-paused";
 const SWAPPED_CLASS = "is-swapped";
@@ -22,9 +6,9 @@ const TARGET_SELECTOR = ".grid-fx, .ticker, [data-anim-pause]";
 const OBSERVED_ATTR = "data-anim-observed";
 
 export type GridFxApi = {
-  /** Scan ulang DOM dan sinkronkan status pause. */
+  /** Rescan DOM and synchronize pause status. */
   reinstall: () => void;
-  /** Lepas semua observer dan listener. */
+  /** Disconnect all observers and listeners. */
   destroy: () => void;
 };
 
@@ -58,11 +42,7 @@ function install(): GridFxApi {
     }
   }
 
-  /**
-   * Daftarkan elemen animasi yang belum terdaftar. Elemen baru dimulai dalam
-   * kondisi paused, lalu IntersectionObserver yang membukanya. Jadi tidak ada
-   * satu frame pun yang teranimasi di luar layar.
-   */
+  // Register unobserved animation elements and pause off-screen nodes
   function scan(): void {
     if (typeof IntersectionObserver !== "function") return;
 
@@ -93,15 +73,10 @@ function install(): GridFxApi {
     syncDocumentState();
   }
 
-  /**
-   * Sebelum DOM ditukar: pause semuanya supaya browser tidak perlu
-   * meng-composite layer yang sedang bergerak saat mengambil snapshot view
-   * transition, dan lepas observer supaya elemen lama tidak ditahan di memori.
-   */
+  // Pause animations and disconnect observer before DOM swap
   function onBeforeSwap(): void {
     root.classList.add(PAUSE_CLASS);
-    /* Setelah navigasi pertama, ViewTransitions yang memegang animasi halaman,
-       jadi animasi #page milik situs dimatikan agar tidak dobel. */
+    // Disable initial entry animation after navigation
     root.classList.add(SWAPPED_CLASS);
     if (io) {
       io.disconnect();
@@ -115,9 +90,7 @@ function install(): GridFxApi {
   listen(doc, "astro:page-load", refresh as EventListener);
   listen(window, "pageshow", refresh as EventListener);
 
-  /* Jaring pengaman: kalau event Astro tidak sampai karena alasan apa pun,
-     pergantian <body> tetap terdeteksi. documentElement tidak pernah diganti,
-     dan childList tanpa subtree biayanya nyaris nol. */
+  // Fallback observer for DOM changes during client-side navigation
   if (typeof MutationObserver === "function") {
     const mo = new MutationObserver(() => {
       refresh();

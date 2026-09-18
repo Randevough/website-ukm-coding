@@ -1,11 +1,6 @@
-/* =========================================================
-   HOME — UKM Coding
-   Styles dedicated to the Homepage (src/pages/index.astro):
-   Hero stage, Tentang UKM, Bento Gallery, Featured Projects,
-   and Collaboration sections.
-   ========================================================= */
+/* Homepage styles */
 
-/* Hero */
+/* Hero section */
 .hero,
 .hero--v2 {
   position: relative;
@@ -119,7 +114,6 @@
   justify-content: center;
 }
 
-/* Option A: Card Stage with Stationary Tack and Pure Pendulum Pivot */
 .hero__cardStage {
   position: relative;
   width: 100%;
@@ -137,20 +131,19 @@
   gap: var(--s3);
   box-shadow: var(--shadow-1);
   overflow: visible;
-  transform-origin: 50% 0%; /* Anchored permanently at the pin point */
+  transform-origin: 50% 0%;
   transform: rotate(-1.8deg);
   transition:
     transform 480ms cubic-bezier(0.25, 1, 0.5, 1),
     box-shadow 480ms var(--ease);
 }
 
-/* Option A: Pure Pendulum Pivot around the stationary tack */
 .hero__cardStage:hover .hero__card {
   transform: rotate(0deg);
   box-shadow: var(--shadow-2);
 }
 
-/* Minimalist Beveled Metal Tack (Permanently fixed to the wall) */
+/* Card tack pin */
 .hero__cardTack {
   position: absolute;
   top: -5px;
@@ -270,7 +263,7 @@
   font-weight: 600;
 }
 
-/* Tentang UKM */
+/* About section */
 #tentang {
   background: var(--paper-2);
 }
@@ -384,7 +377,7 @@
   max-width: 52ch;
 }
 
-/* Featured Projects */
+/* Featured projects */
 #featuredProjects {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -403,15 +396,13 @@
   box-sizing: border-box;
 }
 
-/* Updates */
+/* Updates section */
 .updates-layout {
   display: grid;
   grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
   gap: clamp(var(--s5), 5vw, var(--s9));
   align-items: start;
 }
-
-/* Featured card default spacing is now preserved to prevent hitting the top edge */
 
 .updates-layout__featured .ncard__art {
   aspect-ratio: 16 / 10;
@@ -423,7 +414,7 @@
   border-top: 1px solid var(--line);
 }
 
-/* Gallery */
+/* Gallery section */
 .iggrid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -488,7 +479,7 @@
   transform: scale(1.03);
 }
 
-/* Kerja Sama */
+/* Collaboration section */
 .collab {
   background: var(--paper-2);
 }
@@ -638,7 +629,7 @@
   }
 }
 
-/* Responsive Breakpoints */
+/* Responsive breakpoints */
 @media (max-width: 1023px) and (min-width: 768px) {
   .hero--v2 {
     min-height: auto;
@@ -713,7 +704,6 @@
     min-height: auto;
     padding-top: var(--s5);
     padding-bottom: 0;
-    /* Remove bottom padding for edge-to-edge banner */
   }
 
   .hero__split {
@@ -730,7 +720,6 @@
 
   .hero__display {
     font-size: clamp(2.4rem, 9.5vw, 3.2rem);
-    /* Slightly larger for middle align */
     max-width: 100%;
   }
 
@@ -749,7 +738,7 @@
     justify-content: center;
   }
 
-  /* MOBILE HERO CARD */
+  /* Mobile hero card */
   .hero__visual {
     margin-top: var(--s3);
     width: 100%;
@@ -859,7 +848,6 @@
   }
 }
 
-/* Hide hero image on tablet and mobile */
 @media (max-width: 1024px) {
   .hero__visual {
     display: none !important;

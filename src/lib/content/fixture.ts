@@ -1,7 +1,7 @@
 // Fixture fallback data for offline development
 "use strict";
 
-// Pengaturan global
+// Global settings
 const settings = {
   nama: "UKM Coding Cyber University",
   tagline: "Unit kegiatan mahasiswa bidang teknologi di Cyber University",
@@ -11,17 +11,16 @@ const settings = {
   linkedinUrl:
     "https://id.linkedin.com/in/ukm-coding-cyber-university-541459379",
   github: "github.com/ukmcoding",
-  mediaPartnerUrl: "/?dummy-media-partner", // ganti dengan # jika ingin disembunyikan
-  tahunBerdiri: "", // BELUM DIKETAHUI — sengaja dikosongkan
+  mediaPartnerUrl: "/?dummy-media-partner", // Set to '#' if hidden
+  tahunBerdiri: "", // Pending verification - left blank intentionally
 };
 
-// Proof strip stats
+// Proof strip statistics
 const stats: any[] = [
-  // TODO: Fakta statistik belum tersedia. Lihat CONTENT-QUESTIONS.md.
-  // Data dummy telah dihapus untuk menghindari kebocoran sebagai fakta production.
+  // Statistics pending verification
 ];
 
-// Press strip
+// Press coverage list
 const press = [
   {
     name: "Republika",
@@ -45,7 +44,7 @@ const press = [
   },
 ];
 
-// Empat pilar kegiatan
+// Four activity pillars
 const pillars = [
   {
     num: "01",
@@ -69,7 +68,7 @@ const pillars = [
   },
 ];
 
-// Struktur divisi
+// Division organizational structure
 const divisions = [
   {
     name: "Program Development",
@@ -88,7 +87,7 @@ const divisions = [
   },
 ];
 
-// Kategori berita
+// News categories
 const postCategories = [
   "Semua",
   "DECOMPE",
@@ -98,7 +97,7 @@ const postCategories = [
   "Liputan Media",
 ];
 
-// Kategori showcase
+// Project showcase categories
 const projectCategories = [
   "Semua",
   "Website",
@@ -110,7 +109,7 @@ const projectCategories = [
 
 const variants = ["blue", "orange", "mix", "neutral"];
 
-// Projects
+// Project showcase items
 const projects = [
   {
     slug: "codequest",
@@ -691,7 +690,7 @@ const posts = [
   },
 ];
 
-// Kartu Instagram
+// Instagram showcase cards
 const instagram = [
   { caption: "Pengumuman DECOMPE 5.0", variant: "mix" },
   { caption: "Sesi study club pekan ini", variant: "blue" },
@@ -701,7 +700,7 @@ const instagram = [
   { caption: "Demo project bootcamp", variant: "mix" },
 ];
 
-// Aktivitas admin
+// Admin activity feed
 const adminActivity = [
   {
     aksi: "Menerbitkan",
@@ -729,7 +728,7 @@ const adminActivity = [
   },
 ];
 
-// Media partner & sponsor
+// Media partners and sponsors
 const partners = [
   { nama: "Republika", tier: "Media Partner", izinTampil: false, url: "" },
   { nama: "Milenianews", tier: "Media Partner", izinTampil: false, url: "" },

@@ -1,4 +1,4 @@
-/* Tombol */
+/* Buttons */
 .btn {
   position: relative;
   display: inline-flex;
@@ -216,7 +216,7 @@
   background: #a52222;
 }
 
-/* Standard arrow icon styles & interactive motion */
+/* Arrow icon */
 .arrow {
   display: inline-flex;
   align-items: center;
@@ -254,7 +254,7 @@
   transform: translateX(-4px);
 }
 
-/* Tautan teks bergaya spesifikasi: label mono + garis penuh */
+/* Text link with underline */
 .tlink {
   display: inline-flex;
   align-items: center;
@@ -287,7 +287,7 @@
   transform: translateX(4px);
 }
 
-/* Penanda & Meta */
+/* Badges and metadata tags */
 .tag {
   display: inline-flex;
   align-items: center;
@@ -343,7 +343,7 @@
   background: var(--orange-soft);
 }
 
-/* Deret metadata bergaya spesifikasi */
+/* Specification metadata list */
 .spec {
   display: grid;
   gap: 0;
@@ -542,7 +542,7 @@
   transition: transform var(--t) var(--ease);
 }
 
-/* Bar prototype — tipis, mono, tidak mengganggu */
+/* Prototype banner */
 .protobar {
   background: var(--ink-deep);
   color: rgba(246, 245, 242, 0.7);
@@ -554,7 +554,7 @@
   padding: 7px var(--s4);
 }
 
-/* Drawer */
+/* Mobile navigation drawer */
 .drawer {
   position: fixed;
   inset: 0;
@@ -713,7 +713,7 @@
   transform: translateY(0);
 }
 
-/* Ticker */
+/* Marquee ticker */
 .ticker {
   display: flex;
   overflow: hidden;
@@ -811,7 +811,7 @@
   color: var(--paper);
 }
 
-/* Kartu Bento */
+/* Bento grid */
 .bento {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -862,7 +862,7 @@
   }
 }
 
-/* Kartu project — tilt mengikuti kursor, isi menyapu naik */
+/* Project card */
 .pcard {
   position: relative;
   display: flex;
@@ -1063,7 +1063,7 @@
   }
 }
 
-/* Seni geometris — dua lapis, ikut brand, tanpa gambar */
+/* Geometric artwork background */
 .art {
   position: absolute;
   inset: 0;
@@ -1170,7 +1170,7 @@
   transform: translateY(-6px);
 }
 
-/* Kursor kustom — label mengikuti pointer di area showcase */
+/* Custom cursor follower */
 .cursor {
   position: fixed;
   top: 0;
@@ -1204,7 +1204,7 @@
   }
 }
 
-/* Index Bernomor */
+/* Numbered index list */
 .index {
   border-top: 1px solid var(--line);
 }
@@ -1269,7 +1269,7 @@
   }
 }
 
-/* Kartu Berita */
+/* News card */
 .ncard {
   position: relative;
   display: flex;
@@ -1427,7 +1427,7 @@
   }
 }
 
-/* Badges */
+/* Animated badges */
 .badge-highlight {
   position: relative;
   display: inline-block;
@@ -1497,7 +1497,7 @@
   }
 }
 
-/* Kartu Majalah */
+/* Magazine card */
 .mcard {
   position: relative;
   display: flex;
@@ -1520,10 +1520,9 @@
 
 .mcard:hover {
   transform: scale(0.995);
-  box-shadow: 0 32px 64px -16px rgba(0, 0, 0, 0.3); /* Shadow Intensification */
+  box-shadow: 0 32px 64px -16px rgba(0, 0, 0, 0.3);
 }
 
-/* Base Gradient (Hardware accelerated) */
 .mcard::before {
   content: "";
   position: absolute;
@@ -1539,7 +1538,6 @@
   pointer-events: none;
 }
 
-/* Hover Gradient (Hardware accelerated) */
 .mcard::after {
   content: "";
   position: absolute;
@@ -1567,7 +1565,7 @@
   height: 100%;
   z-index: 0;
   background: var(--ink-deep);
-  transition: transform 1.2s var(--ease-out); /* Cinematic Zoom transition */
+  transition: transform 1.2s var(--ease-out);
 }
 .mcard__bg :global(img),
 .mcard__bg :global(svg) {
@@ -1579,7 +1577,7 @@
 
 .mcard__overlay {
   position: relative;
-  z-index: 2; /* Ensure it's above the gradients */
+  z-index: 2;
   padding: clamp(var(--s6), 6vw, var(--s8));
   display: flex;
   flex-direction: column;
@@ -1601,7 +1599,7 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  transition: transform 0.8s var(--ease-out); /* Text Lift transition */
+  transition: transform 0.8s var(--ease-out);
 }
 
 @media (max-width: 700px) {
@@ -1631,25 +1629,20 @@
   text-transform: uppercase;
 }
 
-/* REVEAL & HOVER ANIMATIONS */
-/* Elements start hidden/scaled if not in viewport */
+/* Magazine card reveal animations */
 .mcard:not(.is-in) .mcard__bg :global(img),
 .mcard:not(.is-in) .mcard__bg :global(svg) {
-  /* Slow Image Scale-In: Starts at 105% */
   transform: scale(1.05);
 }
 .mcard:not(.is-in) .mcard__title,
 .mcard:not(.is-in) .mcard__excerpt,
 .mcard:not(.is-in) .mcard__meta {
-  /* Staggered Text Fade-Up: Starts at 20px down */
   transform: translateY(20px);
   opacity: 0;
 }
 
-/* Entering viewport (staggered) */
 .mcard.is-in .mcard__bg :global(img),
 .mcard.is-in .mcard__bg :global(svg) {
-  /* Scales to 100% over 1.5s */
   transform: scale(1);
   transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -1675,18 +1668,15 @@
     opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.4s;
 }
 
-/* Hover lift on elements */
 .mcard:hover .mcard__bg :global(img),
 .mcard:hover .mcard__bg :global(svg) {
-  /* Cinematic Zoom */
   transform: scale(1.04);
 }
 .mcard:hover .mcard__title {
-  /* Text Lift (Title only, -2px) */
   transform: translateY(-2px);
 }
 
-/* Baris Editorial */
+/* Editorial row */
 .editorial-row {
   display: flex;
   flex-direction: column;
@@ -1753,15 +1743,13 @@
   color: var(--mark);
 }
 
-/* Layout Updates */
+/* Updates page layout */
 .updates-layout {
   display: grid;
   grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
   gap: clamp(var(--s5), 5vw, var(--s9));
   align-items: start;
 }
-
-/* Featured card default spacing is now preserved to prevent hitting the top edge */
 
 .updates-layout__featured .ncard__art {
   aspect-ratio: 16 / 10;
@@ -1780,7 +1768,7 @@
   }
 }
 
-/* Filter & Paginasi */
+/* Filter bar */
 .filterbar {
   display: flex;
   align-items: center;
@@ -1881,7 +1869,7 @@
   opacity: 0.6;
 }
 
-/* ── Custom Select Dropdown ─────────────────── */
+/* Custom select dropdown */
 .cselect {
   position: relative;
   display: inline-flex;
@@ -2014,7 +2002,7 @@
   padding-bottom: var(--s4);
 }
 
-/* Segmented Instrument Console Bar */
+/* Pagination bar */
 .pagination__bar {
   display: inline-flex;
   align-items: stretch;
@@ -2070,7 +2058,6 @@
   min-width: 44px;
 }
 
-/* Active Page State — Solid Brand Orange with White Text */
 .pagination__btn.is-active {
   background: var(--orange);
   color: #fff;
@@ -2079,7 +2066,6 @@
   opacity: 1 !important;
 }
 
-/* Disabled Prev/Next Arrows */
 .pagination__btn:disabled:not(.is-active) {
   opacity: 0.28;
   cursor: not-allowed;
@@ -2087,7 +2073,6 @@
   background: transparent;
 }
 
-/* Arrow Micro-Interactions */
 .pagination__btn .arrow {
   display: inline-flex;
   align-items: center;
@@ -2103,7 +2088,6 @@
   transform: translateX(2px);
 }
 
-/* Truncation Ellipsis */
 .pagination__ellipsis {
   display: inline-flex;
   align-items: center;
@@ -2118,7 +2102,7 @@
   user-select: none;
 }
 
-/* Form */
+/* Form fields */
 .field {
   display: flex;
   flex-direction: column;
@@ -2220,7 +2204,7 @@
   opacity: 1;
 }
 
-/* Modal */
+/* Modal dialog */
 .modal {
   position: fixed;
   inset: 0;
@@ -2365,7 +2349,7 @@
   background: var(--paper-2);
 }
 
-/* Callout & Kosong */
+/* Callout and empty state */
 .callout {
   display: flex;
   gap: var(--s4);
@@ -2408,7 +2392,7 @@
   color: var(--paper);
 }
 
-/* Blok mitra: grid logo monokrom, berwarna saat hover */
+/* Partner logos grid */
 .partners {
   border-bottom: 1px solid rgba(246, 245, 242, 0.12);
   padding-block: var(--s8);
@@ -2614,7 +2598,7 @@
   font-size: var(--sm);
 }
 
-/* Contact links with icon + label + arrow */
+/* Footer contact links */
 .fcol__contact-link {
   display: flex;
   align-items: center;
@@ -2676,7 +2660,7 @@
   color: rgba(246, 245, 242, 0.4);
 }
 
-/* Skeleton Loaders */
+/* Skeleton loaders */
 @keyframes skeleton-shimmer {
   0% {
     background-position: 200% 0;
@@ -2760,7 +2744,7 @@
   width: 100%;
 }
 
-/* Navigation Progress Bar */
+/* Navigation progress bar */
 .nav-progress {
   position: fixed;
   top: 0;
@@ -2795,7 +2779,7 @@
     opacity 0.35s ease 0.18s;
 }
 
-/* Tactile Touch Feedback for Cards */
+/* Card touch feedback */
 .pcard:active,
 .ncard:active,
 .editorial-row:active {

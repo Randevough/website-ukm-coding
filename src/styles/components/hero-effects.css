@@ -1,15 +1,4 @@
-/* =========================================================
-   HERO EFFECTS — versi teroptimasi
-
-   Prinsip desain file ini:
-   1. NOL repaint per frame. Yang dianimasikan hanya `transform`.
-   2. Layer kecil. Ukuran setiap layer dihitung presisi, bukan 200vw/200vh.
-   3. TANPA mix-blend-mode di dalam hero. Blend mode memaksa compositor
-      membaca ulang backdrop setiap frame dan membatalkan seluruh
-      keuntungan layer promotion.
-   4. Semua animasi bisa di-pause lewat satu class (`is-anim-paused`)
-      yang dikendalikan oleh src/scripts/hero-effects.ts.
-   ========================================================= */
+/* Hero visual effects */
 
 .hero--v2,
 .pagehead {
@@ -18,15 +7,7 @@
   background-color: var(--paper);
 }
 
-/* ---------------------------------------------------------
-   Efek 1: Paper Wash
-
-   Dulu: 2 pseudo-element dengan mix-blend-mode screen + multiply.
-   Sekarang: 1 elemen, 2 background gradient rgba biasa.
-   Hasil visual nyaris identik di atas --paper yang opaque, tapi
-   hero tidak lagi jadi blend group yang harus di-composite ulang
-   setiap kali ada animasi di dalamnya.
-   --------------------------------------------------------- */
+/* Paper wash gradient background */
 .hero__paper-wash,
 .pagehead__paper-wash {
   position: absolute;
@@ -46,25 +27,12 @@
     );
 }
 
-/* ---------------------------------------------------------
-   Efek 2: Drafting-table Grid
-
-   Cara kerja: dua "spotlight" bergerak sendiri memakai transform.
-   Di dalam setiap spotlight ada satu layer pola grid yang bergerak
-   berlawanan arah dengan nilai persis kebalikannya, sehingga pola
-   grid terlihat DIAM sementara jendela reveal-nya yang bergerak.
-
-   Kunci performanya ada di ukuran layer:
-     ukuran pola = ukuran spotlight + (2 x amplitudo gerak)
-   Tidak lebih besar dari itu. Sepiksel pun tidak terbuang.
-   --------------------------------------------------------- */
+/* Drafting-table grid animation */
 .grid-fx {
   position: absolute;
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  /* Menggantikan `overflow: hidden`. Selain memotong, `contain: paint`
-     juga mengurung invalidasi paint supaya tidak menjalar ke section. */
   contain: paint;
 }
 
@@ -77,10 +45,6 @@
   margin-top: calc(var(--spot) / -2);
   margin-left: calc(var(--spot) / -2);
 
-  /* Fade-nya ditaruh di alpha mask, BUKAN di property `opacity`.
-     Mask alpha sudah mengalikan alpha konten, jadi ini menghemat
-     satu render surface per spotlight. Ubah dua nilai di bawah
-     kalau mau grid lebih tegas atau lebih samar. */
   --fx-a1: 0.2;
   --fx-a2: 0.11;
 
@@ -111,12 +75,10 @@
     linear-gradient(to right, var(--ink) 1px, transparent 1px),
     linear-gradient(to bottom, var(--ink) 1px, transparent 1px);
   background-size: var(--graph-size) var(--graph-size);
-  /* Tiling di-anchor dari titik tengah supaya fase grid kedua
-     spotlight identik dan garisnya tidak dobel saat saling tumpang. */
   background-position: 50% 50%;
 }
 
-/* -------- Spotlight 1 -------- */
+/* Spotlight 1 */
 .grid-fx__spot--a {
   --spot: 560px;
   --amp: 150px;
@@ -127,7 +89,7 @@
   animation: gridFxCounterA 25s ease-in-out infinite alternate;
 }
 
-/* -------- Spotlight 2 -------- */
+/* Spotlight 2 */
 .grid-fx__spot--b {
   --spot: 420px;
   --amp: 120px;
@@ -138,7 +100,7 @@
   animation: gridFxCounterB 19s ease-in-out infinite alternate;
 }
 
-/* Pagehead lebih pendek dari hero, jadi layernya dikecilkan lagi. */
+/* Subpage header spotlight dimensions */
 .pagehead .grid-fx__spot--a {
   --spot: 460px;
   --amp: 130px;
@@ -149,18 +111,7 @@
   --amp: 100px;
 }
 
-/* ---------------------------------------------------------
-   Keyframes
-
-   PENTING: pasangan drift dan counter WAJIB punya durasi,
-   timing function, dan arah yang sama persis, dan nilainya harus
-   kebalikan eksak. Kalau salah satu diubah tanpa mengubah
-   pasangannya, pola grid akan ikut bergeser.
-
-   Semua nilai adalah kelipatan var(--amp) dalam rentang -1..1,
-   sehingga pergeseran tidak pernah melebihi amplitudo yang sudah
-   dihitung di ukuran layer pola.
-   --------------------------------------------------------- */
+/* Counter-movement keyframes */
 @keyframes gridFxDriftA {
   0% {
     transform: translate3d(calc(var(--amp) * -1), calc(var(--amp) * -0.55), 0);
@@ -225,35 +176,27 @@
   }
 }
 
-/* ---------------------------------------------------------
-   Kontrol pause terpusat
-
-   Class ini dipasang oleh src/scripts/hero-effects.ts pada:
-   - elemen .grid-fx dan .ticker yang keluar viewport
-   - <html> saat tab tidak aktif
-   - <html> selama ViewTransition berlangsung
-   Animasi yang di-pause tidak memakai GPU maupun baterai sama sekali.
-   --------------------------------------------------------- */
+/* Central animation pause control */
 .is-anim-paused,
 .is-anim-paused * {
   animation-play-state: paused !important;
 }
 
-/* Konten hero tetap di atas paper wash dan grid tanpa z-index negatif. */
+/* Foreground content stacking */
 .hero--v2 > .hero__inner,
 .pagehead > .pagehead__inner {
   position: relative;
   z-index: 1;
 }
 
-/* Pada mode hemat gerak, efek dimatikan untuk aksesibilitas. */
+/* Accessibility reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .grid-fx {
     display: none;
   }
 }
 
-/* Pada perangkat mobile, gunakan hanya 1 spotlight yang lebih fokus dan hemat daya */
+/* Mobile spotlight sizing */
 @media (max-width: 768px) {
   .grid-fx__spot--b {
     display: none;

@@ -1,7 +1,4 @@
-/* =========================================================
-   FONTS — Local Self-Hosted @font-face Definitions
-   Eliminates external render-blocking network requests
-   ========================================================= */
+/* Self-hosted font declarations */
 
 /* Plus Jakarta Sans (Variable wght 200-800) */
 @font-face {

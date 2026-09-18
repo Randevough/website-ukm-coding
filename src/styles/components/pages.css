@@ -1,10 +1,6 @@
-/* =========================================================
-   PAGES — UKM Coding
-   Styles for subpages: Updates archive & detail, Projects archive & detail,
-   and shared subpage sections (CTA banner, Pagehead).
-   ========================================================= */
+/* Subpage shared styles: updates, projects, headers */
 
-/* CTA Penutup */
+/* CTA banner */
 .cta {
   position: relative;
   overflow: clip;
@@ -62,7 +58,7 @@
   }
 }
 
-/* Kepala Halaman Dalam */
+/* Subpage header */
 .pagehead {
   position: relative;
   padding-top: clamp(var(--s6), 5vw, var(--s9));
@@ -149,7 +145,7 @@
   }
 }
 
-/* Berita */
+/* News magazine lead */
 .magazine {
   display: block;
   width: 100%;
@@ -219,8 +215,7 @@
   color: var(--mark-deep);
 }
 
-/* Kolom grid untuk berita: 
-   menggunakan grid auto-fill yang rapi untuk mencegah kotak kosong. */
+/* Updates grid */
 .updates-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -247,7 +242,7 @@
   }
 }
 
-/* Artikel Detail */
+/* Article detail */
 .article__head {
   display: flex;
   flex-direction: column;
@@ -388,7 +383,7 @@
   color: var(--ink-2);
 }
 
-/* Studi Kasus Detail */
+/* Case study detail */
 .case__head {
   display: flex;
   flex-direction: column;
@@ -666,7 +661,7 @@
   }
 }
 
-/* Paginasi Navigasi */
+/* Subpage navigation */
 .section--nav {
   padding-block: clamp(16px, 2.2vw, 28px);
 }
@@ -763,7 +758,7 @@
   }
 }
 
-/* 4 Tahap Cara Kerja */
+/* Workflow pillars */
 .pillars {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -818,7 +813,7 @@
   }
 }
 
-/* Kisi Projects */
+/* Projects grid */
 #projectGrid.bento,
 .bento {
   display: grid;
