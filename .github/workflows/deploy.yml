@@ -118,12 +118,18 @@ jobs:
           name: dist
           path: dist
 
-      - name: Deploy to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: ${{ vars.CLOUDFLARE_PROJECT_NAME || 'ukm-coding-website' }}
-          directory: dist
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref == 'refs/heads/main' && 'main' || github.event.pull_request.head.ref }}
+          node-version: 22
+
+      - name: Deploy to Cloudflare Pages
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ] || [ -z "$CLOUDFLARE_ACCOUNT_ID" ]; then
+            echo "::error::CLOUDFLARE_API_TOKEN or CLOUDFLARE_ACCOUNT_ID is missing in GitHub Repository Secrets. Please configure them in Settings -> Secrets and variables -> Actions."
+            exit 1
+          fi
+          npx wrangler pages deploy dist --project-name="${{ vars.CLOUDFLARE_PROJECT_NAME || 'ukm-coding-website' }}" --branch="${{ github.ref == 'refs/heads/main' && 'main' || github.event.pull_request.head.ref || 'preview' }}"
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
