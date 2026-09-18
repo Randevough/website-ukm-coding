@@ -15,6 +15,7 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: calc(var(--header-h) + 24px);
   scrollbar-gutter: stable;
+  overflow-x: clip;
 }
 
 body {
@@ -27,26 +28,13 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body.is-locked {
   overflow: hidden;
   overscroll-behavior: none;
 }
-
-/* ---------------------------------------------------------
-   LAPISAN TEKSTUR 1 — GRAIN (DIHAPUS)
-
-   Dulu di sini ada `body::after` fullscreen dengan
-   `position: fixed` + `mix-blend-mode: multiply`, dan di
-   hero-effects.css ia dianimasikan 0.85s infinite.
-
-   Blend mode fullscreen memaksa SELURUH halaman masuk satu
-   blend group, sehingga setiap scroll dan setiap animasi
-   memicu blending ulang seluruh viewport. Ini penyumbang lag
-   terbesar di situs ini, jadi lapisannya dihapus total.
-   --------------------------------------------------------- */
 
 /* Lapisan Kertas Grafik */
 .graph {
@@ -76,8 +64,6 @@ body.is-locked {
   );
 }
 
-/* Kolom hairline vertikal — rangka grid yang sengaja terlihat.
-   Perangkat brand utama: seluruh situs berdiri di atas 4 garis. */
 .rails {
   position: fixed;
   inset: 0;
@@ -443,6 +429,7 @@ main {
   .hide-sm {
     display: none !important;
   }
+
   .only-sm {
     display: inline-flex !important;
   }
@@ -510,6 +497,7 @@ main {
   html {
     scroll-behavior: auto;
   }
+
   *,
   *::before,
   *::after {
@@ -517,6 +505,7 @@ main {
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
   }
+
   [data-reveal],
   .lineMask > span,
   [data-rule] {
@@ -542,6 +531,7 @@ html.is-swapped #page {
     opacity: 0;
     transform: translate3d(0, 14px, 0);
   }
+
   to {
     opacity: 1;
     transform: none;

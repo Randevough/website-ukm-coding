@@ -237,8 +237,13 @@
 
 @media (max-width: 767px) {
   .updates-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: var(--s4);
+  }
+
+  .updates-grid > * {
+    min-width: 0;
+    max-width: 100%;
   }
 }
 
@@ -823,10 +828,17 @@
   border: 0;
 }
 
+#projectGrid > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
 #projectGrid .pcard {
   min-height: 420px;
   grid-column: span 1 !important;
   grid-row: span 1 !important;
+  min-width: 0;
+  max-width: 100%;
 }
 
 @media (max-width: 1023px) and (min-width: 768px) {
@@ -839,7 +851,7 @@
 @media (max-width: 767px) {
   #projectGrid.bento,
   .bento {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: var(--s4);
   }
 
