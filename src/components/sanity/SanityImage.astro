@@ -9,6 +9,7 @@ interface Props {
   className?: string;
   loading?: "lazy" | "eager";
   objectFit?: "cover" | "contain" | "fill" | "none" | "scale-down";
+  style?: string;
 }
 
 const {
@@ -18,9 +19,14 @@ const {
   className,
   loading = "lazy",
   objectFit = "cover",
+  style: customStyle,
 } = Astro.props;
 const src = node ? urlFor(node)?.width(1200).auto("format").url() : null;
 const alt = node?.alt || "";
+const inlineStyle =
+  customStyle !== undefined
+    ? customStyle
+    : `width: 100%; height: 100%; object-fit: ${objectFit};`;
 ---
 
 {
@@ -29,7 +35,7 @@ const alt = node?.alt || "";
       src={src}
       alt={alt}
       class={className}
-      style={`width: 100%; height: 100%; object-fit: ${objectFit};`}
+      style={inlineStyle}
       loading={loading}
       decoding="async"
     />

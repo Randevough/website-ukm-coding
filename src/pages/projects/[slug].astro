@@ -223,7 +223,7 @@ const diskusiGmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeU
           </div>
         </div>
       </header>
-      <div class="case__art" style="overflow: hidden; position: relative;">
+      <div class={`case__art ${!p.cover ? "case__art--fallback" : ""}`}>
         {
           p.cover ? (
             <SanityImage
@@ -231,6 +231,9 @@ const diskusiGmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeU
               variantFallback={p.variant}
               glyphFallback={title}
               loading="eager"
+              objectFit="contain"
+              className="case__img"
+              style="display: block; width: auto; max-width: 100%; height: auto; max-height: min(72vh, 620px); object-fit: contain; margin: 0 auto;"
             />
           ) : (
             <Art variant={p.variant || "mix"} glyph={title} />
