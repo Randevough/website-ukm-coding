@@ -169,10 +169,7 @@ const mediaGmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURI
             </button>
           </div>
         </header>
-        <div
-          class="article__art"
-          style="overflow: hidden; max-height: 520px; position: relative;"
-        >
+        <div class={`article__art ${!p.cover ? "article__art--fallback" : ""}`}>
           {
             p.cover ? (
               <SanityImage
@@ -181,6 +178,8 @@ const mediaGmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURI
                 glyphFallback={kategori}
                 className="article__artImg"
                 loading="eager"
+                objectFit="contain"
+                style="display: block; width: auto; max-width: 100%; height: auto; max-height: min(72vh, 620px); object-fit: contain; margin: 0 auto;"
               />
             ) : (
               <Art variant={p.variant || "neutral"} glyph={kategori} />
