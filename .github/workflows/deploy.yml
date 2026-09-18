@@ -125,10 +125,25 @@ jobs:
 
       - name: Deploy to Cloudflare Pages
         run: |
-          if [ -z "$CLOUDFLARE_API_TOKEN" ] || [ -z "$CLOUDFLARE_ACCOUNT_ID" ]; then
-            echo "::error::CLOUDFLARE_API_TOKEN or CLOUDFLARE_ACCOUNT_ID is missing in GitHub Repository Secrets. Please configure them in Settings -> Secrets and variables -> Actions."
+          if [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+            echo "::error::CLOUDFLARE_API_TOKEN is missing in GitHub Repository Secrets."
             exit 1
           fi
+
+          # Clean accidental quotes, whitespace, or full URLs from Account ID
+          CLEAN_ACCOUNT_ID=$(echo "$CLOUDFLARE_ACCOUNT_ID" | tr -d '\r\n"' | sed "s/'//g" | sed 's|.*/||g' | awk '{$1=$1};1')
+
+          if [ -z "$CLEAN_ACCOUNT_ID" ]; then
+            echo "::error::CLOUDFLARE_ACCOUNT_ID is missing or empty in GitHub Repository Secrets."
+            exit 1
+          fi
+
+          if echo "$CLEAN_ACCOUNT_ID" | grep -qE "[@\.]"; then
+            echo "::error::CLOUDFLARE_ACCOUNT_ID contains invalid characters ('@' or '.'). It must be the 32-character hexadecimal Account ID from your Cloudflare dashboard (https://dash.cloudflare.com/<ACCOUNT_ID>), not your email address or domain name."
+            exit 1
+          fi
+
+          export CLOUDFLARE_ACCOUNT_ID="$CLEAN_ACCOUNT_ID"
           npx wrangler pages deploy dist --project-name="${{ vars.CLOUDFLARE_PROJECT_NAME || 'ukm-coding-website' }}" --branch="${{ github.ref == 'refs/heads/main' && 'main' || github.event.pull_request.head.ref || 'preview' }}"
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
