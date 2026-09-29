@@ -12,36 +12,76 @@ const measurementId = getGaMeasurementId(Astro.props.id);
 const enabled = isAnalyticsEnabled();
 
 const gaScript = `
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  window.gtag = gtag;
-  gtag('js', new Date());
-  gtag('config', '${measurementId}', { send_page_view: false });
+  (function () {
+    const hostname = window.location.hostname;
+    const isLocal =
+      hostname === 'localhost' ||
+      hostname === '127.0.0.1' ||
+      hostname.endsWith('.local') ||
+      hostname === '';
 
-  if (!window.__gaPageLoadBound) {
-    window.__gaPageLoadBound = true;
-    document.addEventListener('astro:page-load', function () {
-      if (typeof window.gtag === 'function') {
-        window.gtag('event', 'page_view', {
-          page_title: document.title,
-          page_location: window.location.href,
-          page_path: window.location.pathname,
-        });
+    // Never run analytics on localhost or CI audits to protect performance and avoid skewed metrics
+    if (isLocal && !window.__GA_FORCE_DEV__) {
+      return;
+    }
+
+    function initGA() {
+      if (window.__gaLoaded) return;
+      window.__gaLoaded = true;
+
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = 'https://www.googletagmanager.com/gtag/js?id=${measurementId}';
+      document.head.appendChild(script);
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
       }
+      window.gtag = gtag;
+
+      gtag('js', new Date());
+      gtag('config', '${measurementId}', { send_page_view: false });
+
+      function trackPageView() {
+        if (typeof window.gtag === 'function') {
+          window.gtag('event', 'page_view', {
+            page_title: document.title,
+            page_location: window.location.href,
+            page_path: window.location.pathname,
+          });
+        }
+      }
+
+      trackPageView();
+
+      if (!window.__gaPageLoadBound) {
+        window.__gaPageLoadBound = true;
+        document.addEventListener('astro:page-load', trackPageView);
+      }
+    }
+
+    // Initialize on first interaction, client navigation, or when idle
+    const interactionEvents = ['pointerdown', 'keydown', 'scroll', 'touchstart'];
+    function triggerInit() {
+      interactionEvents.forEach(function (e) {
+        window.removeEventListener(e, triggerInit);
+      });
+      initGA();
+    }
+    interactionEvents.forEach(function (e) {
+      window.addEventListener(e, triggerInit, { once: true, passive: true });
     });
-  }
+
+    document.addEventListener('astro:before-preparation', initGA, { once: true });
+
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(initGA, { timeout: 3000 });
+    } else {
+      setTimeout(initGA, 2000);
+    }
+  })();
 `;
 ---
 
-{
-  enabled && measurementId && (
-    <>
-      <script
-        is:inline
-        async
-        src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}
-      />
-      <script is:inline set:html={gaScript} />
-    </>
-  )
-}
+{enabled && measurementId && <script is:inline set:html={gaScript} />}
