@@ -46,6 +46,7 @@ jobs:
           PUBLIC_SANITY_PROJECT_ID: ${{ secrets.PUBLIC_SANITY_PROJECT_ID || 'n3mnxpum' }}
           PUBLIC_SANITY_DATASET: ${{ secrets.PUBLIC_SANITY_DATASET || 'production' }}
           PUBLIC_SITE_URL: ${{ secrets.PUBLIC_SITE_URL || vars.PUBLIC_SITE_URL || 'https://ukmcoding.site' }}
+          PUBLIC_GA_MEASUREMENT_ID: ${{ secrets.PUBLIC_GA_MEASUREMENT_ID || vars.PUBLIC_GA_MEASUREMENT_ID || 'G-FLFLZX2TGF' }}
           PUBLIC_NOINDEX: ${{ github.ref != 'refs/heads/main' && 'true' || 'false' }}
 
       - name: Upload Build Artifact
