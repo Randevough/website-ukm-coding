@@ -303,7 +303,7 @@ const diskusiGmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeU
             <a class="pagenav__prev" href={`/projects/${prev.slug}`}>
               <span class="label">
                 <Arrow direction="left" size={13} />
-                Sebelumnya
+                <span>Sebelumnya</span>
               </span>
               <span class="pagenav__title">{prev.nama || prev.title}</span>
             </a>
@@ -315,7 +315,7 @@ const diskusiGmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeU
           next ? (
             <a class="pagenav__next" href={`/projects/${next.slug}`}>
               <span class="label">
-                Selanjutnya
+                <span>Selanjutnya</span>
                 <Arrow direction="right" size={13} />
               </span>
               <span class="pagenav__title">{next.nama || next.title}</span>

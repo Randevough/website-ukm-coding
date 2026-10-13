@@ -757,9 +757,18 @@
   align-items: flex-end;
 }
 
+.pagenav .label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s1, 4px);
+  line-height: 1;
+}
+
 .pagenav__prev .arrow,
 .pagenav__next .arrow {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   transition: transform var(--t) var(--ease);
 }
 

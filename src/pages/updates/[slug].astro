@@ -207,7 +207,7 @@ const mediaGmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURI
             <a class="pagenav__prev" href={`/updates/${prev.slug}`}>
               <span class="label">
                 <Arrow direction="left" size={13} />
-                Sebelumnya
+                <span>Sebelumnya</span>
               </span>
               <span class="pagenav__title">{prev.judul || prev.title}</span>
             </a>
@@ -219,7 +219,7 @@ const mediaGmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURI
           next ? (
             <a class="pagenav__next" href={`/updates/${next.slug}`}>
               <span class="label">
-                Selanjutnya
+                <span>Selanjutnya</span>
                 <Arrow direction="right" size={13} />
               </span>
               <span class="pagenav__title">{next.judul || next.title}</span>
