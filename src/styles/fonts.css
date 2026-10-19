@@ -18,7 +18,8 @@
   font-display: swap;
   src:
     url("/fonts/PlusJakartaSans-Italic-VariableFont_wght.woff2") format("woff2"),
-    url("/fonts/PlusJakartaSans-Italic-VariableFont_wght.ttf") format("truetype");
+    url("/fonts/PlusJakartaSans-Italic-VariableFont_wght.ttf")
+      format("truetype");
 }
 
 /* Instrument Serif (Display Serif Regular) */

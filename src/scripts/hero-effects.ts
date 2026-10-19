@@ -90,7 +90,6 @@ function install(): GridFxApi {
   listen(doc, "astro:page-load", refresh as EventListener);
   listen(window, "pageshow", refresh as EventListener);
 
-
   refresh();
 
   function destroy(): void {

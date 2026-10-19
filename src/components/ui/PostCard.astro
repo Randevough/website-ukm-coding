@@ -16,11 +16,7 @@ const date = p.tanggalPublikasi || p.tanggal;
 const excerpt = p.ringkasan || p.excerpt;
 ---
 
-<a
-  class="ncard"
-  href={`/updates/${p.slug?.current || p.slug}`}
-  data-reveal
->
+<a class="ncard" href={`/updates/${p.slug?.current || p.slug}`} data-reveal>
   <div class="ncard__art">
     {
       p.cover ? (

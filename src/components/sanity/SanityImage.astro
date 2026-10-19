@@ -30,8 +30,7 @@ const inlineStyle =
     ? customStyle
     : `width: 100%; height: 100%; object-fit: ${objectFit};`;
 const ref = node?.asset?._ref || node?.asset?._id || "";
-const dimMatch =
-  typeof ref === "string" ? ref.match(/-(\d+)x(\d+)-/) : null;
+const dimMatch = typeof ref === "string" ? ref.match(/-(\d+)x(\d+)-/) : null;
 const naturalW = dimMatch ? parseInt(dimMatch[1], 10) : undefined;
 const naturalH = dimMatch ? parseInt(dimMatch[2], 10) : undefined;
 const computedHeight =
