@@ -9,7 +9,7 @@ const isProjects = currentPath.startsWith("/projects");
   <div class="container site-header__inner">
     <a class="site-header__brand" href="/">
       <img
-        src="/Logo UKM Coding Transparent.webp"
+        src="/logo-ukm-coding-transparent.v2.webp"
         alt="Logo UKM Coding"
         class="site-header__logo"
         width="38"
@@ -63,5 +63,9 @@ const isProjects = currentPath.startsWith("/projects");
     (window as any).__headerScrollBound = true;
     window.addEventListener("scroll", onScroll, { passive: true });
   }
-  document.addEventListener("astro:page-load", onScroll);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", onScroll, { once: true });
+  } else {
+    onScroll();
+  }
 </script>

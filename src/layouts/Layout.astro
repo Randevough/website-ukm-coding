@@ -1,5 +1,4 @@
 ---
-import { ClientRouter } from "astro:transitions";
 import "../styles/fonts.css";
 import "../styles/tokens.css";
 import "../styles/global.css";
@@ -93,19 +92,18 @@ const {
     <meta name="apple-mobile-web-app-title" content="UKM Coding" />
     <link
       rel="preload"
-      href="/fonts/PlusJakartaSans-VariableFont_wght.woff2"
+      href="/fonts/PlusJakartaSans.v2.woff2"
       as="font"
       type="font/woff2"
       crossorigin
     />
     <link
       rel="preload"
-      href="/fonts/InstrumentSerif-Regular.woff2"
+      href="/fonts/InstrumentSerif.v2.woff2"
       as="font"
       type="font/woff2"
       crossorigin
     />
-    <ClientRouter />
   </head>
   <body data-mark="blue" data-page="home">
     <div id="nav-progress" class="nav-progress" aria-hidden="true"></div>
@@ -123,49 +121,5 @@ const {
 
     <script src="../scripts/motion.ts"></script>
     <script src="../scripts/hero-effects.ts"></script>
-
-    <!--
-      Bundled script hanya dieksekusi SEKALI per sesi. Astro tidak
-      menjalankannya ulang setelah ViewTransition, jadi tanpa bootstrap
-      ini tidak ada yang menginisialisasi ulang efek pada DOM baru.
-      `data-astro-rerun` memaksa blok ini jalan di setiap navigasi.
-    -->
-    <script is:inline data-astro-rerun>
-      window.__gridReveal?.reinstall();
-    </script>
-
-    <script is:inline>
-      (function () {
-        if (window.__navProgressBound) return;
-        window.__navProgressBound = true;
-
-        let bar = null;
-        function getBar() {
-          if (!bar || !document.body.contains(bar)) {
-            bar = document.getElementById("nav-progress");
-          }
-          return bar;
-        }
-
-        document.addEventListener("astro:before-preparation", function () {
-          const el = getBar();
-          if (el) {
-            el.classList.remove("is-complete");
-            el.classList.add("is-loading");
-          }
-        });
-
-        document.addEventListener("astro:after-swap", function () {
-          const el = getBar();
-          if (el) {
-            el.classList.remove("is-loading");
-            el.classList.add("is-complete");
-            setTimeout(function () {
-              el.classList.remove("is-complete");
-            }, 350);
-          }
-        });
-      })();
-    </script>
   </body>
 </html>
