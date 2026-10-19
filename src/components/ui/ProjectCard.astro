@@ -24,7 +24,6 @@ const stack = p.techStack || p.stack || [];
 <a
   class={`pcard${mod}`}
   href={`/projects/${p.slug?.current || p.slug}`}
-  data-astro-prefetch="viewport"
   data-tilt
   data-reveal
   tabindex="0"
@@ -36,6 +35,7 @@ const stack = p.techStack || p.stack || [];
       p.cover ? (
         <SanityImage
           node={p.cover}
+          width={600}
           variantFallback={p.variant}
           glyphFallback={title}
         />

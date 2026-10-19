@@ -849,15 +849,29 @@
 }
 
 @media (max-width: 1024px) {
+  #page {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
   .hero__visual {
     display: none !important;
   }
 
   .hero__display .lineMask {
-    overflow: visible;
+    overflow: visible !important;
   }
 
   .hero__display .lineMask > span {
+    transform: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+  }
+
+  .hero [data-reveal],
+  .about2 [data-reveal] {
+    opacity: 1 !important;
     transform: none !important;
     transition: none !important;
   }

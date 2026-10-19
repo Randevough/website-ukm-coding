@@ -29,6 +29,15 @@ const inlineStyle =
   customStyle !== undefined
     ? customStyle
     : `width: 100%; height: 100%; object-fit: ${objectFit};`;
+const ref = node?.asset?._ref || node?.asset?._id || "";
+const dimMatch =
+  typeof ref === "string" ? ref.match(/-(\d+)x(\d+)-/) : null;
+const naturalW = dimMatch ? parseInt(dimMatch[1], 10) : undefined;
+const naturalH = dimMatch ? parseInt(dimMatch[2], 10) : undefined;
+const computedHeight =
+  naturalW && naturalH && width
+    ? Math.round((naturalH / naturalW) * width)
+    : undefined;
 ---
 
 {
@@ -37,6 +46,8 @@ const inlineStyle =
       src={src}
       alt={alt}
       class={className}
+      width={width}
+      height={computedHeight}
       style={inlineStyle}
       loading={loading}
       decoding="async"

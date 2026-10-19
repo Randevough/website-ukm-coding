@@ -134,7 +134,13 @@ function onScrollParallax() {
 }
 
 export function initParallax(root?: Element | Document) {
-  if (!isBrowser || reduce) return;
+  if (
+    !isBrowser ||
+    reduce ||
+    (typeof window !== "undefined" && window.innerWidth <= 1024)
+  ) {
+    return;
+  }
   collectParallax(root);
   window.removeEventListener("scroll", onScrollParallax);
   window.removeEventListener("resize", onScrollParallax);

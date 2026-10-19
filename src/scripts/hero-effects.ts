@@ -90,14 +90,6 @@ function install(): GridFxApi {
   listen(doc, "astro:page-load", refresh as EventListener);
   listen(window, "pageshow", refresh as EventListener);
 
-  // Fallback observer for DOM changes during client-side navigation
-  if (typeof MutationObserver === "function") {
-    const mo = new MutationObserver(() => {
-      refresh();
-    });
-    mo.observe(root, { childList: true });
-    teardowns.push(() => mo.disconnect());
-  }
 
   refresh();
 
