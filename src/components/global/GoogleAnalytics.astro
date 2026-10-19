@@ -61,7 +61,7 @@ const gaScript = `
       }
     }
 
-    // Initialize on first interaction, client navigation, or when idle
+    // Initialize on first interaction, client navigation, or when fully loaded and idle
     const interactionEvents = ['pointerdown', 'keydown', 'scroll', 'touchstart'];
     function triggerInit() {
       interactionEvents.forEach(function (e) {
@@ -75,11 +75,14 @@ const gaScript = `
 
     document.addEventListener('astro:before-preparation', initGA, { once: true });
 
-    if ('requestIdleCallback' in window) {
-      window.requestIdleCallback(initGA, { timeout: 3000 });
-    } else {
-      setTimeout(initGA, 2000);
-    }
+    // Fallback for non-interactive sessions: trigger only after window load and prolonged idle
+    window.addEventListener('load', function () {
+      if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(initGA, { timeout: 8000 });
+      } else {
+        setTimeout(initGA, 8000);
+      }
+    }, { once: true });
   })();
 `;
 ---

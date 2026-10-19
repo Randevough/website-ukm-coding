@@ -4,6 +4,7 @@ import Art from "../global/Art.astro";
 
 interface Props {
   node: any;
+  width?: number;
   variantFallback?: string;
   glyphFallback?: string;
   className?: string;
@@ -14,6 +15,7 @@ interface Props {
 
 const {
   node,
+  width = 800,
   variantFallback = "neutral",
   glyphFallback,
   className,
@@ -21,7 +23,7 @@ const {
   objectFit = "cover",
   style: customStyle,
 } = Astro.props;
-const src = node ? urlFor(node)?.width(1200).auto("format").url() : null;
+const src = node ? urlFor(node)?.width(width).auto("format").url() : null;
 const alt = node?.alt || "";
 const inlineStyle =
   customStyle !== undefined

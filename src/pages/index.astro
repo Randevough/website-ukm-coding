@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { Image } from "astro:assets";
+import { getImage } from "astro:assets";
 import heroImage from "../assets/images/hero-image.jpg";
 import ProjectCard from "../components/ui/ProjectCard.astro";
 import PostCard from "../components/ui/PostCard.astro";
@@ -58,6 +58,14 @@ if (sanityGallery && sanityGallery.length > 0) {
 
 const featuredStory = latestPosts[0];
 const listStories = latestPosts.slice(1, 4);
+
+const optimizedHero = await getImage({
+  src: heroImage,
+  width: 960,
+  height: 720,
+  format: "webp",
+  quality: 80,
+});
 
 const hubungiSubject = "Diskusi Kerja Sama & Kolaborasi | UKM Coding";
 const hubungiBody = `Halo Tim UKM Coding Cyber University,
@@ -131,17 +139,22 @@ const hubungiGmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeU
                 <span class="hero__cardTag idx">LIFE AT UKM CODING</span>
               </div>
               <div class="hero__cardImageWrap">
-                <Image
-                  src={heroImage}
-                  alt="Mahasiswa UKM Coding Cyber University berkolaborasi membangun project teknologi"
-                  class="hero__cardImg"
-                  width={960}
-                  height={720}
-                  format="webp"
-                  quality={80}
-                  loading="eager"
-                  fetchpriority="high"
-                />
+                <picture>
+                  <source
+                    media="(min-width: 1025px)"
+                    srcset={optimizedHero.src}
+                    type="image/webp"
+                  />
+                  <img
+                    src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 960 720'%3E%3C/svg%3E"
+                    alt="Mahasiswa UKM Coding Cyber University berkolaborasi membangun project teknologi"
+                    class="hero__cardImg"
+                    width={960}
+                    height={720}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
               </div>
               <div class="hero__cardFoot">
                 <span>PROJECT · PELATIHAN · EVENT · KOMPETISI</span>
@@ -354,7 +367,7 @@ const hubungiGmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeU
                 {item._type === "placeholder" ? (
                   <Art variant={["blue", "mix", "orange"][i % 3]} />
                 ) : (
-                  <SanityImage node={item.gambar} />
+                  <SanityImage node={item.gambar} width={600} />
                 )}
               </div>
             </div>

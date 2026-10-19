@@ -7,6 +7,9 @@
   font-weight: 200 800;
   font-display: swap;
   src:
+    url("/fonts/PlusJakartaSans-VariableFont_wght.woff2")
+      format("woff2-variations"),
+    url("/fonts/PlusJakartaSans-VariableFont_wght.woff2") format("woff2"),
     url("/fonts/PlusJakartaSans-VariableFont_wght.ttf")
       format("truetype-variations"),
     url("/fonts/PlusJakartaSans-VariableFont_wght.ttf") format("truetype");
@@ -18,6 +21,9 @@
   font-weight: 200 800;
   font-display: swap;
   src:
+    url("/fonts/PlusJakartaSans-Italic-VariableFont_wght.woff2")
+      format("woff2-variations"),
+    url("/fonts/PlusJakartaSans-Italic-VariableFont_wght.woff2") format("woff2"),
     url("/fonts/PlusJakartaSans-Italic-VariableFont_wght.ttf")
       format("truetype-variations"),
     url("/fonts/PlusJakartaSans-Italic-VariableFont_wght.ttf")
@@ -30,7 +36,9 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url("/fonts/InstrumentSerif-Regular.ttf") format("truetype");
+  src:
+    url("/fonts/InstrumentSerif-Regular.woff2") format("woff2"),
+    url("/fonts/InstrumentSerif-Regular.ttf") format("truetype");
 }
 
 /* JetBrains Mono (Variable wght 100-800) */
@@ -40,6 +48,9 @@
   font-weight: 100 800;
   font-display: swap;
   src:
+    url("/fonts/JetBrainsMono-VariableFont_wght.woff2")
+      format("woff2-variations"),
+    url("/fonts/JetBrainsMono-VariableFont_wght.woff2") format("woff2"),
     url("/fonts/JetBrainsMono-VariableFont_wght.ttf")
       format("truetype-variations"),
     url("/fonts/JetBrainsMono-VariableFont_wght.ttf") format("truetype");

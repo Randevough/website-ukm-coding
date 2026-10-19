@@ -56,7 +56,7 @@ function glyphOf(name: string): string {
             >
               <span class="plogo__slot">
                 {p.logo ? (
-                  <SanityImage node={p.logo} objectFit="contain" />
+                  <SanityImage node={p.logo} width={240} objectFit="contain" />
                 ) : (
                   <span>{glyphOf(p.nama)}</span>
                 )}

@@ -852,6 +852,15 @@
   .hero__visual {
     display: none !important;
   }
+
+  .hero__display .lineMask {
+    overflow: visible;
+  }
+
+  .hero__display .lineMask > span {
+    transform: none !important;
+    transition: none !important;
+  }
 }
 
 .collab .btn--primary {
