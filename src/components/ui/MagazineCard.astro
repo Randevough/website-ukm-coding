@@ -20,7 +20,7 @@ const baca = p.baca || 3;
   <div class="mcard__bg">
     {
       p.cover ? (
-        <SanityImage node={p.cover} variantFallback={p.variant} />
+        <SanityImage node={p.cover} width={1200} variantFallback={p.variant} />
       ) : (
         <Art variant={p.variant || "mix"} />
       )
