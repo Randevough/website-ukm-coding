@@ -561,6 +561,8 @@
   z-index: var(--z-drawer);
   pointer-events: none;
   overscroll-behavior: contain;
+  visibility: hidden;
+  transition: visibility var(--t) var(--ease-out);
 }
 
 .drawer__backdrop {
@@ -591,6 +593,7 @@
 .drawer.is-open,
 .drawer[aria-hidden="false"] {
   pointer-events: auto;
+  visibility: visible;
 }
 
 .drawer.is-open .drawer__backdrop,
@@ -2210,6 +2213,8 @@
   inset: 0;
   z-index: var(--z-modal);
   pointer-events: none;
+  visibility: hidden;
+  transition: visibility var(--t) var(--ease);
 }
 
 .modal__backdrop {
@@ -2245,6 +2250,7 @@
 .modal.is-open,
 .modal[aria-hidden="false"] {
   pointer-events: auto;
+  visibility: visible;
 }
 
 .modal.is-open .modal__backdrop,

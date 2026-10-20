@@ -20,7 +20,7 @@ const projects = rawProjects.map((p) => ({
 }));
 ---
 
-<div aria-hidden="true" class="modal" id="projectModal">
+<div aria-hidden="true" inert class="modal" id="projectModal">
   <div class="modal__backdrop" data-modal-close=""></div>
   <div
     aria-label="Detail project"
@@ -158,6 +158,7 @@ const projects = rawProjects.map((p) => ({
     isOpen = true;
     modal.classList.add("is-open");
     modal.setAttribute("aria-hidden", "false");
+    modal.inert = false;
     document.body.classList.add("is-locked");
     const main = document.querySelector("main");
     if (main) main.inert = true;
@@ -171,6 +172,7 @@ const projects = rawProjects.map((p) => ({
     isOpen = false;
     modal.classList.remove("is-open");
     modal.setAttribute("aria-hidden", "true");
+    modal.inert = true;
     document.body.classList.remove("is-locked");
     const main = document.querySelector("main");
     if (main) main.inert = false;

@@ -63,8 +63,4 @@ const isProjects = currentPath.startsWith("/projects");
     (window as any).__headerScrollBound = true;
     window.addEventListener("scroll", onScroll, { passive: true });
   }
-  // If user refreshed midway down the page, schedule stuck check on next animation frame without blocking DOM parsing
-  if (typeof window !== "undefined" && window.scrollY > 8) {
-    requestAnimationFrame(onScroll);
-  }
 </script>

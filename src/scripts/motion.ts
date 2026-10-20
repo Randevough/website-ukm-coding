@@ -137,7 +137,8 @@ export function initParallax(root?: Element | Document) {
   if (
     !isBrowser ||
     reduce ||
-    (typeof window !== "undefined" && window.innerWidth <= 1024)
+    (typeof window !== "undefined" &&
+      window.matchMedia("(max-width: 1024px)").matches)
   ) {
     return;
   }

@@ -38,12 +38,32 @@ const computedHeight =
 const src = node
   ? urlFor(node)?.width(width).auto("format").quality(85).url()
   : null;
-const targetWidth2x = naturalW ? Math.min(width * 2, naturalW) : width * 2;
-const src2x =
-  node && targetWidth2x > width
-    ? urlFor(node)?.width(targetWidth2x).auto("format").quality(80).url()
-    : null;
-const srcset = src && src2x ? `${src} 1x, ${src2x} 2x` : undefined;
+let srcset: string | undefined = undefined;
+if (node && src) {
+  if (width <= 640) {
+    const w15 = Math.round(width * 1.35);
+    const targetWidth2x = naturalW ? Math.min(width * 2, naturalW) : width * 2;
+    const src15 = urlFor(node)?.width(w15).auto("format").quality(82).url();
+    const src2 =
+      targetWidth2x > width
+        ? urlFor(node)?.width(targetWidth2x).auto("format").quality(80).url()
+        : null;
+    if (src15 && src2) {
+      srcset = `${src} ${width}w, ${src15} ${w15}w, ${src2} ${targetWidth2x}w`;
+    } else if (src2) {
+      srcset = `${src} 1x, ${src2} 2x`;
+    }
+  } else {
+    const targetWidth2x = naturalW ? Math.min(width * 2, naturalW) : width * 2;
+    const src2 =
+      targetWidth2x > width
+        ? urlFor(node)?.width(targetWidth2x).auto("format").quality(80).url()
+        : null;
+    if (src2) {
+      srcset = `${src} 1x, ${src2} 2x`;
+    }
+  }
+}
 
 const alt = node?.alt || "";
 const inlineStyle =
@@ -51,7 +71,7 @@ const inlineStyle =
     ? customStyle
     : `width: 100%; height: 100%; object-fit: ${objectFit};`;
 const computedSizes =
-  sizes || (width <= 640 ? `(max-width: 640px) 100vw, ${width}px` : undefined);
+  sizes || (width <= 640 ? `(max-width: 640px) 340px, ${width}px` : undefined);
 ---
 
 {
