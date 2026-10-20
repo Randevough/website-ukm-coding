@@ -13,7 +13,7 @@ if (sanitySettings) {
 const contactGmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(settings.email || "ukmcoding@cyber-univ.ac.id")}&su=${encodeURIComponent("Halo UKM Coding")}`;
 ---
 
-<div aria-hidden="true" inert class="drawer" id="drawer">
+<div inert class="drawer" id="drawer">
   <div class="drawer__backdrop" data-drawer-close=""></div>
   <div aria-label="Menu" class="drawer__panel" role="dialog" aria-modal="true">
     <div class="drawer__top">
@@ -107,7 +107,6 @@ const contactGmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeU
     if (!drawer || !burger) return;
     isOpen = true;
     drawer.classList.add("is-open");
-    drawer.setAttribute("aria-hidden", "false");
     drawer.inert = false;
     burger.setAttribute("aria-expanded", "true");
     document.body.classList.add("is-locked");
@@ -123,7 +122,6 @@ const contactGmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeU
     if (!drawer || !isOpen) return;
     isOpen = false;
     drawer.classList.remove("is-open");
-    drawer.setAttribute("aria-hidden", "true");
     drawer.inert = true;
     if (burger) {
       burger.setAttribute("aria-expanded", "false");
