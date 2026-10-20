@@ -50,6 +50,8 @@ const inlineStyle =
   customStyle !== undefined
     ? customStyle
     : `width: 100%; height: 100%; object-fit: ${objectFit};`;
+const computedSizes =
+  sizes || (width <= 640 ? `(max-width: 640px) 100vw, ${width}px` : undefined);
 ---
 
 {
@@ -57,7 +59,7 @@ const inlineStyle =
     <img
       src={src}
       srcset={srcset}
-      sizes={sizes}
+      sizes={computedSizes}
       alt={alt}
       class={className}
       width={width}
